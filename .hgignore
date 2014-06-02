@@ -1,0 +1,9 @@
+
+syntax: glob
+*.suo
+*.Cache
+*.user
+*.orig
+bin/Debug/*
+obj/*
+_ReSharper.Inferno/*

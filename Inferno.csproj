@@ -1,0 +1,1081 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{750ECA0E-A6B0-46BB-A725-37496BFB19F2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>Resources\dante.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Inferno</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DAnTE</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\AnkhSVN\extensibility.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Tools\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="InputBox, Version=1.0.3418.30166, Culture=neutral, PublicKeyToken=40c884ac8d283c1d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExtraControls\InputBox.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>RDN\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>RDN\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="ZedGraph, Version=5.1.4.31904, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Tools\zedgraph\ZedGraph.dll</HintPath>
+    </Reference>
+    <COMReference Include="IasHelperLib">
+      <Guid>{6BC096BB-0CE6-11D1-BAAE-00C04FC2E20D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\DAnTEdatagridview.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\EtchedLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ExternalWizardPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\InternalWizardPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\PictureBoxEx\Annotation.cs" />
+    <Compile Include="ExtraControls\PictureBoxEx\AnnotationColor.cs" />
+    <Compile Include="ExtraControls\PictureBoxEx\AnnotationFont.cs" />
+    <Compile Include="ExtraControls\PictureBoxEx\picturebox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\RangeBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucDataGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucDataGridView.Designer.cs">
+      <DependentUpon>ucDataGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraControls\ucNiceLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucTransparentLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucTransparentLabel.Designer.cs">
+      <DependentUpon>ucTransparentLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraControls\WizardBanner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\WizardPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\WizardPageEventArgs.cs" />
+    <Compile Include="ExtraControls\WizardSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmDAnTE.MiscFileIO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectExcelSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectExcelSheet.designer.cs">
+      <DependentUpon>frmSelectExcelSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.ExploreEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.StatisticsEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.PlotEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.SessionEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.FileIOEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.RollupEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Events\frmDAnTE.PreProcessEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmDAnTE.ExploreMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPatterns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPatterns.Designer.cs">
+      <DependentUpon>frmPatterns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmDAnTE.Main.Designer.cs">
+      <DependentUpon>frmDAnTE.Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLogPar.Designer.cs">
+      <DependentUpon>frmLogPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmRRollUpPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmRRollUpPar.designer.cs">
+      <DependentUpon>frmRRollUpPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmZRollupPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmZRollupPar.designer.cs">
+      <DependentUpon>frmZRollupPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSLabKeyParaWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSLabKeyParaWizPage.Designer.cs">
+      <DependentUpon>ctlMSMSLabKeyParaWizPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSPerformWizPage.Designer.cs">
+      <DependentUpon>ctlMSMSPerformWizPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmOneSampleTtestPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmOneSampleTtestPar.Designer.cs">
+      <DependentUpon>frmOneSampleTtestPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmTamuQpar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmTamuQpar.designer.cs">
+      <DependentUpon>frmTamuQpar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmAbundanceFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmAbundanceFilter.Designer.cs">
+      <DependentUpon>frmAbundanceFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmAnalysisSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmAnalysisSummary.Designer.cs">
+      <DependentUpon>frmAnalysisSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmDAnTE.ToolsMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmArrangeColumns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmArrangeColumns.Designer.cs">
+      <DependentUpon>frmArrangeColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmVennDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmVennDisplay.Designer.cs">
+      <DependentUpon>frmVennDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmVennDiagramPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmVennDiagramPar.Designer.cs">
+      <DependentUpon>frmVennDiagramPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmMADPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmMADPar.Designer.cs">
+      <DependentUpon>frmMADPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmFilterBasedOnRowIDs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmFilterBasedOnRowIDs.Designer.cs">
+      <DependentUpon>frmFilterBasedOnRowIDs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmFoldChangePar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmFoldChangePar.Designer.cs">
+      <DependentUpon>frmFoldChangePar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSPerformWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSSelectFilesFromDBFilterWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSSelectFromHDDWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmMergeColsPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmMergeColsPar.Designer.cs">
+      <DependentUpon>frmMergeColsPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmMissingFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmMissingFilter.Designer.cs">
+      <DependentUpon>frmMissingFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmShapiroWilksPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmShapiroWilksPar.Designer.cs">
+      <DependentUpon>frmShapiroWilksPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmWilcoxonPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmWilcoxonPar.Designer.cs">
+      <DependentUpon>frmWilcoxonPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmKruskalWpar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmKruskalWpar.Designer.cs">
+      <DependentUpon>frmKruskalWpar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmQQplotDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmQQplotDisplay.Designer.cs">
+      <DependentUpon>frmQQplotDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmQQPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmQQPar.Designer.cs">
+      <DependentUpon>frmQQPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSparaWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSparaWizPage.Designer.cs">
+      <DependentUpon>ctlMSMSparaWizPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSCompleteWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSCompleteWizPage.Designer.cs">
+      <DependentUpon>ctlMSMSCompleteWizPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSWelcomeWizPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\ctlMSMSWelcomeWizPage.Designer.cs">
+      <DependentUpon>ctlMSMSWelcomeWizPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmANOVApar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmANOVApar.Designer.cs">
+      <DependentUpon>frmANOVApar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\frmMSMSWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\SpectralCounts\frmMSMSWizard.Designer.cs">
+      <DependentUpon>frmMSMSWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmBoxPlotDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmBoxPlotDisplay.Designer.cs">
+      <DependentUpon>frmBoxPlotDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmColorPalette.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmColorPalette.Designer.cs">
+      <DependentUpon>frmColorPalette.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmCorrDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmCorrDisplay.Designer.cs">
+      <DependentUpon>frmCorrDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmDAnTEmdi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmDAnTEmdi.Designer.cs">
+      <DependentUpon>frmDAnTEmdi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmDAnTE.Rollup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmDAnTE.DataTypeSpecificMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmFilterAnova.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\ToolsMenu\frmFilterAnova.Designer.cs">
+      <DependentUpon>frmFilterAnova.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmHeatmapDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmHeatmapDisplay.Designer.cs">
+      <DependentUpon>frmHeatmapDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmHeatMapPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmHeatMapPar.Designer.cs">
+      <DependentUpon>frmHeatMapPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmHistDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmHistDisplay.Designer.cs">
+      <DependentUpon>frmHistDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmImputePar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmImputePar.Designer.cs">
+      <DependentUpon>frmImputePar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLinRegPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLinRegPar.Designer.cs">
+      <DependentUpon>frmLinRegPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLogPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmMAplotDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmMAplotDisplay.Designer.cs">
+      <DependentUpon>frmMAplotDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmMAplotsPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmMAplotsPar.Designer.cs">
+      <DependentUpon>frmMAplotsPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmInputBlockSize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Statistics\frmDAnTE.StatisticsMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmDefFactors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmFactorInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Grouping\frmFactorInformation.Designer.cs">
+      <DependentUpon>frmFactorInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmMeanCenterPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmMeanCenterPar.Designer.cs">
+      <DependentUpon>frmMeanCenterPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPCAPlotDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPCAPlotDisplay.Designer.cs">
+      <DependentUpon>frmPCAPlotDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPCAplotPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Explore\frmPCAplotPar.Designer.cs">
+      <DependentUpon>frmPCAplotPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLOESSPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmLOESSPar.Designer.cs">
+      <DependentUpon>frmLOESSPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotDisplay.Designer.cs">
+      <DependentUpon>frmPlotDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotProteinRollup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotProteinRollup.Designer.cs">
+      <DependentUpon>frmPlotProteinRollup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmQRollupPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Proteins\frmQRollupPar.Designer.cs">
+      <DependentUpon>frmQRollupPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectProtInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectProtInfo.Designer.cs">
+      <DependentUpon>frmSelectProtInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmBoxPlotPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmBoxPlotPar.Designer.cs">
+      <DependentUpon>frmBoxPlotPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmCorrelationPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmCorrelationPar.Designer.cs">
+      <DependentUpon>frmCorrelationPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmDAnTE.PlotMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Data\frmDAnTE.PreProcessMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmDAnTE.FileMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotDev.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmPlotDev.Designer.cs">
+      <DependentUpon>frmPlotDev.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmHistogramPar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Plotting\frmHistogramPar.Designer.cs">
+      <DependentUpon>frmHistogramPar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectColumns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\DataIO\frmSelectColumns.Designer.cs">
+      <DependentUpon>frmSelectColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmShowProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmShowProgress.Designer.cs">
+      <DependentUpon>frmShowProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paradiso\frmAbout2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmAbout2.Designer.cs">
+      <DependentUpon>frmAbout2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paradiso\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paradiso\frmRmsg.cs">
+      <SubType>Form</SubType>
+      <CustomToolNamespace>AppNormalize</CustomToolNamespace>
+    </Compile>
+    <Compile Include="ExtraControls\ucDataGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inferno\Forms\frmDAnTE.Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucPicViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtraControls\ucPicViewer.Designer.cs">
+      <DependentUpon>ucPicViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraControls\ucStatusBarProgressPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmBugReportEmail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmSplash.designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paradiso\frmTracWebBugReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\ISplashForm.cs" />
+    <Compile Include="Paradiso\Splasher.cs" />
+    <Compile Include="Paradiso\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Purgatorio\clsAnovaPar.cs" />
+    <Compile Include="Purgatorio\clsBoxPlotPar.cs" />
+    <Compile Include="Purgatorio\clsCorrelationPar.cs" />
+    <Compile Include="Purgatorio\clsFoldChangePar.cs" />
+    <Compile Include="Purgatorio\clsHeatmapPar.cs" />
+    <Compile Include="Purgatorio\clsHistogramPar.cs" />
+    <Compile Include="Purgatorio\clsImputePar.cs" />
+    <Compile Include="Purgatorio\clsLinRegrnPar.cs" />
+    <Compile Include="Purgatorio\clsLoessPar.cs" />
+    <Compile Include="Purgatorio\clsLogTransformPar.cs" />
+    <Compile Include="Purgatorio\clsMAplotsPar.cs" />
+    <Compile Include="Purgatorio\clsPCAplotPar.cs" />
+    <Compile Include="Purgatorio\clsQnormPar.cs" />
+    <Compile Include="Purgatorio\clsQQPar.cs" />
+    <Compile Include="Purgatorio\clsKruskalWPar.cs" />
+    <Compile Include="Purgatorio\clsQRollupPar.cs" />
+    <Compile Include="Purgatorio\clsRRollupPar.cs" />
+    <Compile Include="Purgatorio\clsSpectralCountPar.cs" />
+    <Compile Include="Purgatorio\clsTamuQPar.cs" />
+    <Compile Include="Purgatorio\clsWilcoxonPar.cs" />
+    <Compile Include="Purgatorio\clsShapiroWilksPar.cs" />
+    <Compile Include="Purgatorio\clsVennPar.cs" />
+    <Compile Include="Purgatorio\clsCentralTendencyPar.cs" />
+    <Compile Include="Purgatorio\clsMADPar.cs" />
+    <Compile Include="Purgatorio\clsZRollupPar.cs" />
+    <Compile Include="Purgatorio\clsPatternSearchPar.cs" />
+    <Compile Include="Purgatorio\clsOneSampleTtestPar.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Tools\clsAnalysisAttribute.cs" />
+    <Compile Include="Tools\clsAnalysisObject.cs" />
+    <Compile Include="Tools\clsDatasetInfo.cs" />
+    <Compile Include="Tools\clsDatasetTreeNode.cs" />
+    <Compile Include="Tools\clsDataTable.cs" />
+    <Compile Include="Tools\clsFactorInfo.cs" />
+    <Compile Include="Tools\clsGenericParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tools\clsHexColorUtil.cs" />
+    <Compile Include="Tools\clsParseCommandLineArguments.cs" />
+    <Compile Include="Tools\clsRCmdLog.cs" />
+    <Compile Include="Tools\clsRconnect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tools\CsvParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tools\CsvWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tools\Engine.cs" />
+    <Compile Include="Tools\Parameter.cs" />
+    <Compile Include="Tools\RdnConnector.cs" />
+    <Compile Include="Tools\xmlIO.cs" />
+    <EmbeddedResource Include="Inferno\Plotting\frmBoxPlotPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmBoxPlotPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmCorrelationPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmCorrelationPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmPlotDev.resx">
+      <DependentUpon>frmPlotDev.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmHistogramPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHistogramPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Forms\frmShowProgress.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmShowProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmRmsg.resx">
+      <DependentUpon>frmRmsg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraControls\ucDataGrid.resx">
+      <DependentUpon>ucDataGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Forms\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Forms\frmDAnTE.Main.resx">
+      <DependentUpon>frmDAnTE.Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraControls\ucPicViewer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ucPicViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ExtraControls\RangeBar.resx">
+      <DependentUpon>RangeBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraControls\ucNiceLine.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ucNiceLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmColorPalette.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmColorPalette.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Forms\frmDAnTEmdi.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDAnTEmdi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmImputePar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmImputePar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmLinRegPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmLinRegPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmLogPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmLogPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmMAplotsPar.resx">
+      <DependentUpon>frmMAplotsPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Grouping\frmDefFactors.resx">
+      <DependentUpon>frmDefFactors.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Grouping\frmFactorInformation.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmFactorInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Grouping\frmInputBlockSize.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmInputBlockSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmMeanCenterPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMeanCenterPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Explore\frmPCAplotPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPCAplotPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmLOESSPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmLOESSPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmPlotProteinRollup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPlotProteinRollup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Proteins\frmQRollupPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmQRollupPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\DataIO\frmSelectProtInfo.resx">
+      <DependentUpon>frmSelectProtInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\DataIO\frmSelectColumns.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSelectColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmTracWebBugReport.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTracWebBugReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\dante.ico" />
+    <EmbeddedResource Include="Resources\DAnTElogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExtraControls\PictureBoxEx\Annotation.cur" />
+    <None Include="Resources\exit.ico" />
+    <None Include="Resources\AboutInfernoBack.png" />
+    <None Include="Resources\AboutInferno.png" />
+    <None Include="Resources\folder_open.png" />
+    <None Include="Resources\folder_tar.png" />
+    <None Include="Resources\folder_orange_open.png" />
+    <None Include="Resources\zrollup.ico" />
+    <None Include="Resources\rrollup.ico" />
+    <None Include="Resources\qrollup.ico" />
+    <None Include="Resources\Tunselect.png" />
+    <None Include="Resources\Tselect.png" />
+    <None Include="Resources\inferno_small.ico" />
+    <None Include="Resources\InfernoSplash2.png" />
+    <None Include="Resources\InfernoSplash.png" />
+    <None Include="Resources\DAnTEicon.bmp" />
+    <None Include="Resources\DAnTElogo3.png" />
+    <None Include="Resources\DAnTElogo2.png" />
+    <None Include="Resources\AboutDAnTE.png" />
+    <None Include="Resources\AboutDAnTE2.png" />
+    <None Include="Resources\ResizeHS.png" />
+    <None Include="Resources\EditInformationHS.png" />
+    <None Include="Resources\ExpirationHS.png" />
+    <None Include="Resources\AlignToGridHS.png" />
+    <None Include="Resources\Calendar_scheduleHS.png" />
+    <None Include="Resources\PrintHS.png" />
+    <None Include="Resources\OrgChartHS.png" />
+    <None Include="Resources\SychronizeListHS.png" />
+    <None Include="Resources\Filter2HS.png" />
+    <None Include="Resources\SymbolHS.png" />
+    <None Include="Resources\OpenSelectedItemHS.png" />
+    <None Include="Resources\SaveAllHS.png" />
+    <None Include="Resources\saveHS.png" />
+    <None Include="Resources\venn2.png" />
+    <EmbeddedResource Include="ExtraControls\ExternalWizardPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ExternalWizardPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraControls\ucDataGridView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ucDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\DataIO\frmSelectExcelSheet.resx">
+      <DependentUpon>frmSelectExcelSheet.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Explore\frmPatterns.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPatterns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmHistDisplay.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHistDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmPlotDisplay.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPlotDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Proteins\frmRRollUpPar.resx">
+      <DependentUpon>frmRRollUpPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Proteins\frmZRollupPar.resx">
+      <DependentUpon>frmZRollupPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSLabKeyParaWizPage.resx">
+      <DependentUpon>ctlMSMSLabKeyParaWizPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSPerformWizPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ctlMSMSPerformWizPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmOneSampleTtestPar.resx">
+      <DependentUpon>frmOneSampleTtestPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmTamuQpar.resx">
+      <DependentUpon>frmTamuQpar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\ToolsMenu\frmAbundanceFilter.resx">
+      <DependentUpon>frmAbundanceFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\ToolsMenu\frmAnalysisSummary.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAnalysisSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Grouping\frmArrangeColumns.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmArrangeColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmVennDiagramPar.resx">
+      <DependentUpon>frmVennDiagramPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Data\frmMADPar.resx">
+      <DependentUpon>frmMADPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\ToolsMenu\frmFilterBasedOnRowIDs.resx">
+      <DependentUpon>frmFilterBasedOnRowIDs.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmFoldChangePar.resx">
+      <DependentUpon>frmFoldChangePar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSSelectFilesFromDBFilterWizPage.resx">
+      <DependentUpon>ctlMSMSSelectFilesFromDBFilterWizPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSSelectFromHDDWizPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ctlMSMSSelectFromHDDWizPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Grouping\frmMergeColsPar.resx">
+      <DependentUpon>frmMergeColsPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\ToolsMenu\frmMissingFilter.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMissingFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmShapiroWilksPar.resx">
+      <DependentUpon>frmShapiroWilksPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmWilcoxonPar.resx">
+      <DependentUpon>frmWilcoxonPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmKruskalWpar.resx">
+      <DependentUpon>frmKruskalWpar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Plotting\frmQQPar.resx">
+      <DependentUpon>frmQQPar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSparaWizPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ctlMSMSparaWizPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSCompleteWizPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ctlMSMSCompleteWizPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\ctlMSMSWelcomeWizPage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ctlMSMSWelcomeWizPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Statistics\frmANOVApar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmANOVApar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\SpectralCounts\frmMSMSWizard.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMSMSWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\ToolsMenu\frmFilterAnova.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmFilterAnova.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inferno\Explore\frmHeatMapPar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHeatMapPar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmAbout2.resx">
+      <DependentUpon>frmAbout2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmBugReportEmail.resx">
+      <DependentUpon>frmBugReportEmail.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\SplashScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ExampleSidebar.bmp" />
+    <None Include="app.config" />
+    <None Include="Resources\ktip.png" />
+    <None Include="Resources\repair.ico" />
+    <None Include="Resources\ksysguard.png" />
+    <None Include="Resources\open folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Tools\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
+      <Project>{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}</Project>
+      <Name>LumenWorks.Framework.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
