@@ -7,3 +7,4 @@ syntax: glob
 bin/Debug/*
 obj/*
 _ReSharper.Inferno/*
+Tools/LumenWorks.Framework.IO/bin/Release/LumenWorks.Framework.IO.XML
