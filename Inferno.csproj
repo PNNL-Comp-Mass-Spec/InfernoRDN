@@ -1075,7 +1075,11 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(ProjectDir)inferno.conf" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy /y "$(ProjectDir)Rscripts\Inferno.RData" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy /y "$(ProjectDir)Rscripts\Inferno_ggplots.RData" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy /y "$(ProjectDir)Rscripts\Inferno_stdplots.RData" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy /y "$(ProjectDir)License.rtf" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy /y "$(ProjectDir)InfernoHelp.chm" "$(ProjectDir)bin\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
