@@ -1,10 +1,11 @@
-
 syntax: glob
 *.suo
 *.Cache
 *.user
 *.orig
+*.msi
 bin/Debug/*
+bin/Release/*
 obj/*
 _ReSharper.Inferno/*
 Tools/LumenWorks.Framework.IO/bin/Release/LumenWorks.Framework.IO.XML

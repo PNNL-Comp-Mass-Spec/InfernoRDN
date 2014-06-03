@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inferno", "Inferno.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumenWorks.Framework.IO", "Tools\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj", "{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InfernoRDNSetup", "InfernoRDNSetup\InfernoRDNSetup.vdproj", "{74B107E6-A8F7-4A93-B8CE-42B98B1CCF01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B107E6-A8F7-4A93-B8CE-42B98B1CCF01}.Debug|Any CPU.ActiveCfg = Debug
+		{74B107E6-A8F7-4A93-B8CE-42B98B1CCF01}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
