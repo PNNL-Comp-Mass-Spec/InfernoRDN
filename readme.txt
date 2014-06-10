@@ -16,8 +16,8 @@ Among many features of InfernoRDN are:
 * ANOVA (multi-way, unbalanced, random effects)
 * Heatmaps with Hierarchical and K-means cluster options
 
-InfernoRDN uses R.NET to communicate with R.  
-It is an updated version of Inferno, which uses StatconnDCOM.
+InfernoRDN uses R.NET (http://rdotnet.codeplex.com/) to communicate with R. 
+InfernoRDN is an updated version of Inferno (which used StatconnDCOM)
 InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR, and Inferno versions.
 
 
@@ -51,6 +51,7 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 	- Choose Plot, Correlation
 	- Enable checkbox Toggle All, then click OK
 
+
 == Dependencies ==
 
 InfernoRDN depends on the following:
@@ -80,13 +81,14 @@ _______________________________________________________________________________
 Developed by Ashoka Polpitiya for the US Department of Energy
 Includes contributions from Gary Kiebel and Matthew Monroe
 PNNL, Richland, WA, USA.
-Copyright 2007, Battelle Memorial Institute.  All Rights Reserved.
+Copyright 2007, 2014, Battelle Memorial Institute.  All Rights Reserved.
 
 E-mail: ashoka@tgen.org or matthew.monroe@pnnl.gov
 Website: http://omics.pnl.gov/software/InfernoRDN
+_______________________________________________________________________________
 
---------------------------------------------------------
-License Agreement
+
+== License Agreement ==
 
 InfernoRDN is licensed under the Apache License, Version 2.0; you may not use this file except in compliance with the License.  
 You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -110,3 +112,27 @@ No. DE-AC05-76RL0 1830 with the Department of Energy (DOE).  All rights in the c
 behalf of the United States Government and the Contractor as provided in the Contract.  NEITHER THE GOVERNMENT NOR THE 
 CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY LIABILITY FOR THE USE OF THIS SOFTWARE. 
 This notice including this sentence must appear on any copies of this computer software.
+
+
+== R.NET License ==
+
+R.NET is Copyright (c) 2010, RecycleBin
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted 
+provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this list of conditions 
+  and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions 
+  and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR 
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

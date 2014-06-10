@@ -110,7 +110,9 @@ namespace DAnTE.Paradiso
 				Environment.NewLine +
 				Environment.NewLine + "Gary Kiebel and Matthew Monroe" +
 				Environment.NewLine + "at Pacific Northwest National Laboratory" +
-			    Environment.NewLine + "(matthew.monroe@pnnl.gov)";
+			    Environment.NewLine + "(matthew.monroe@pnnl.gov)" +
+				Environment.NewLine +
+				Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
 
 			mlblCredits.Visible = true;			
 			mlblCredits.Text = credits;
