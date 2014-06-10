@@ -142,8 +142,9 @@ namespace DAnTE.Inferno
       }
       System.Threading.Thread.Sleep(10);
 
-      SplashScreen.SetStatus("Checking R Packages Required...");
-      if (!InstallRequiredRPackages()) {
+	  SplashScreen.SetStatus(SplashScreen.VALIDATING_R_PACKAGES);
+
+	  if (!InstallRequiredRPackages()) {
         startupErrString.Append("* R failed to install required packages.").AppendLine();
         //SplashScreen.CloseForm();
         //MessageBox.Show("Try again. R failed to install required packages." + Environment.NewLine +
@@ -550,16 +551,11 @@ namespace DAnTE.Inferno
 
     private void mnuItemBugs_Click(object sender, EventArgs e)
     {
-      string mstrDomain = Environment.UserDomainName;
-      if (mstrDomain.Equals("PNL")) {
-        frmTracWebBugReport mfrmTracWeb = new frmTracWebBugReport();
-        mfrmTracWeb.Show();
-      } else {
-        frmBugReportEmail mfrmBugEmail = new frmBugReportEmail();
-        mfrmBugEmail.Show();
-      }
-      //frmBugReportEmail mfrmBugEmail = new frmBugReportEmail();
-      //mfrmBugEmail.Show();
+	  // frmTracWebBugReport mfrmTracWeb = new frmTracWebBugReport();
+	  //mfrmTracWeb.Show();
+
+	  frmBugReportEmail mfrmBugEmail = new frmBugReportEmail();
+      mfrmBugEmail.Show();
     }
 
     private void mnuItemAbout_Click(object sender, EventArgs e)

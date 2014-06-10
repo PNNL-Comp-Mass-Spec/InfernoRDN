@@ -45,8 +45,7 @@ namespace DAnTE.Purgatorio
             RplotType = 2;
             
             paletteType = Settings.Default.colorMapType;
-            if (paletteType == null)
-                paletteType = 4;
+           
             palettename = Settings.Default.colorMap;
             if (palettename == "")
                 palettename = "Black-Body";

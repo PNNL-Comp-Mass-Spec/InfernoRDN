@@ -10,7 +10,7 @@ using DAnTE.Properties;
 namespace DAnTE.Paradiso
 {
 	/// <summary>
-	/// Summary description for frmTracWebBugReport.
+	/// Summary description for frmBugReportEmail.
 	/// </summary>
 	public class frmBugReportEmail : System.Windows.Forms.Form
     {
@@ -331,10 +331,10 @@ namespace DAnTE.Paradiso
             Settings.Default.email = mstrUserEmail;
             Settings.Default.Save();
 
-            mSBemail.Append("mailto:ashoka.pol@gmail.com?");
+			mSBemail.Append("mailto:matthew.monroe@pnnl.gov; ashoka.pol@gmail.com?");
 
 
-            mSBemail.Append("subject=DAnTE - v");
+            mSBemail.Append("subject=InfernoRDN - v");
             mSBemail.Append(version + " : ");
             mSBemail.Append(this.mcmbBoxRequest.Text + "&body=");
 			

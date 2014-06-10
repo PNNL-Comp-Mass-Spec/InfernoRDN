@@ -34,7 +34,7 @@ namespace DAnTE.Inferno
                 if ((minP > 100) || (minP < 0) || (top > 100) || (top < 0) || (topN < 0))
                     success = false;
             }
-            catch (Exception ex)
+            catch
             {
                 success = false;
                 //Console.WriteLine(ex.Message);

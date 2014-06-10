@@ -69,7 +69,7 @@ namespace DAnTE.Inferno
                 {
                     MessageBox.Show("Either you cancelled the operation or an error ocurred." +
                         " Hint: check if the factor and dataset columns match.",
-                        "Try again...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        " Try again...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }

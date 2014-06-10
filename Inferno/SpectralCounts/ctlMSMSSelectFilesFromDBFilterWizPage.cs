@@ -484,8 +484,7 @@ namespace DAnTE.Inferno
 
     private void SelectCheckedItems()
     {
-      int originalIndex;
-      string archPath = "";
+           
       marrDatasetInfo.Clear();
       ListView.CheckedIndexCollection indexes = mlstViewJobs.CheckedIndices;
 

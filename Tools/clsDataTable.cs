@@ -499,8 +499,7 @@ namespace DAnTE.Tools
 
         public static DataTable RemoveDuplicateRows2(DataTable dTable, string colName)
         {
-            Hashtable hTable = new Hashtable();
-            DataRow prevRow;
+            Hashtable hTable = new Hashtable();            
             ArrayList duplicateList = new ArrayList();
 
             foreach (DataColumn dC in dTable.Columns)
@@ -515,18 +514,19 @@ namespace DAnTE.Tools
                 else
                     try
                     {
-                        hTable.Add(thisRow[colName], thisRow);
+						if (hTable.ContainsKey(thisRow[colName]))
+						{
+							AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
+						}
+	                    else
+	                    {
+							hTable.Add(thisRow[colName], thisRow);    
+	                    }
+                        
                     }
                     catch
                     {
-                        duplicateList.Add(thisRow);
-                        prevRow = (DataRow)hTable[thisRow[colName]];
-                        if (!RowsIdentical(thisRow, prevRow))
-                        {
-                            DataRow currentRow = addRows(prevRow, thisRow);
-                            hTable[thisRow[colName]] = currentRow;
-                            dTable.AcceptChanges();
-                        }
+						AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
                     }
             }
 
@@ -536,7 +536,19 @@ namespace DAnTE.Tools
             return dTable;
         }
 
-        public static bool RowsIdentical(DataRow row1, DataRow row2)
+		private static void AddDuplicateRow(DataTable dTable, Hashtable hTable, DataRow thisRow, ArrayList duplicateList, string keyColName)
+	    {
+			duplicateList.Add(thisRow);
+			var prevRow = (DataRow)hTable[thisRow[keyColName]];
+			if (!RowsIdentical(thisRow, prevRow))
+			{
+				DataRow currentRow = addRows(prevRow, thisRow);
+				hTable[thisRow[keyColName]] = currentRow;
+				dTable.AcceptChanges();
+			}
+	    }
+
+	    public static bool RowsIdentical(DataRow row1, DataRow row2)
         {
             bool success = true;
             for (int i = 0; i < row1.ItemArray.Length; i++)
