@@ -97,8 +97,7 @@ namespace LumenWorks.Framework.IO.Csv
 
 				if (_reader.ReadNextRecord())
 				{
-					if (_current == null)
-						_current = new string[_reader._fieldCount];
+					_current = new string[_reader._fieldCount];
 
 					_reader.CopyCurrentRecordTo(_current);
 					_currentRecordIndex = _reader._currentRecordIndex;

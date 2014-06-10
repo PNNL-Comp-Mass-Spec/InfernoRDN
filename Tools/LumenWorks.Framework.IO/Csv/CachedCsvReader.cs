@@ -91,7 +91,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CachedCsvReader(TextReader reader, bool hasHeaders, int bufferSize)
-			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, true, bufferSize)
+			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, bufferSize)
 		{
 		}
 
@@ -108,7 +108,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter)
-			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, true, DefaultBufferSize)
+			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, DefaultBufferSize)
 		{
 		}
 
@@ -126,7 +126,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter, int bufferSize)
-			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, true, bufferSize)
+			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, bufferSize)
 		{
 		}
 
@@ -142,15 +142,15 @@ namespace LumenWorks.Framework.IO.Csv
 		/// If no escape character, set to '\0' to gain some performance.
 		/// </param>
 		/// <param name="comment">The comment character indicating that a line is commented out (default is '#').</param>
-		/// <param name="trimSpaces"><see langword="true"/> if spaces at the start and end of a field are trimmed, otherwise, <see langword="false"/>. Default is <see langword="true"/>.</param>
+		/// <param name="trimmingOptions">Determines how values should be trimmed.</param>
 		/// <exception cref="T:ArgumentNullException">
 		///		<paramref name="reader"/> is a <see langword="null"/>.
 		/// </exception>
 		/// <exception cref="T:ArgumentException">
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
-		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, bool trimSpaces)
-			: this(reader, hasHeaders, delimiter, quote, escape, comment, trimSpaces, DefaultBufferSize)
+		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, ValueTrimmingOptions trimmingOptions)
+			: this(reader, hasHeaders, delimiter, quote, escape, comment, trimmingOptions, DefaultBufferSize)
 		{
 		}
 
@@ -174,8 +174,8 @@ namespace LumenWorks.Framework.IO.Csv
 		/// <exception cref="ArgumentOutOfRangeException">
 		///		<paramref name="bufferSize"/> must be 1 or more.
 		/// </exception>
-		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, bool trimSpaces, int bufferSize)
-			: base(reader, hasHeaders, delimiter, quote, escape, comment, trimSpaces, bufferSize)
+		public CachedCsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, ValueTrimmingOptions trimmingOptions, int bufferSize)
+			: base(reader, hasHeaders, delimiter, quote, escape, comment, trimmingOptions, bufferSize)
 		{
 			_records = new List<string[]>();
 			_currentRecordIndex = -1;
@@ -309,11 +309,22 @@ namespace LumenWorks.Framework.IO.Csv
 					if (canRead)
 					{
 						string[] record = new string[this.FieldCount];
-						CopyCurrentRecordTo(record);
 
-						_records.Add(record);
+						if (base.CurrentRecordIndex > -1)
+						{
+							CopyCurrentRecordTo(record);
+							_records.Add(record);
+						}
+						else
+						{
+							if (MoveTo(0))
+								CopyCurrentRecordTo(record);
 
-						_currentRecordIndex++;
+							MoveTo(-1);
+						}
+
+						if (!onlyReadHeaders)
+							_currentRecordIndex++;
 					}
 					else
 					{
@@ -354,27 +365,24 @@ namespace LumenWorks.Framework.IO.Csv
 		/// Moves to the specified record index.
 		/// </summary>
 		/// <param name="record">The record index.</param>
-		/// <exception cref="T:ArgumentOutOfRangeException">
-		///		Record index must be > 0.
-		/// </exception>
+		/// <returns><c>true</c> if the operation was successful; otherwise, <c>false</c>.</returns>
 		/// <exception cref="T:System.ComponentModel.ObjectDisposedException">
 		///		The instance has been disposed of.
 		/// </exception>
-		public override void MoveTo(long record)
+		public override bool MoveTo(long record)
 		{
 			if (record < -1)
-				throw new ArgumentOutOfRangeException("record", record, ExceptionMessage.RecordIndexLessThanZero);
+				record = -1;
 
 			if (record <= base.CurrentRecordIndex)
+			{
 				_currentRecordIndex = record;
+				return true;
+			}
 			else
 			{
 				_currentRecordIndex = base.CurrentRecordIndex;
-
-				long offset = record - _currentRecordIndex;
-
-				// read to the last record before the one we want
-				while (offset-- > 0 && ReadNextRecord()) ;
+				return base.MoveTo(record);
 			}
 		}
 

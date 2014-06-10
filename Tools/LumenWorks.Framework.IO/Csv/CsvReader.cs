@@ -107,9 +107,9 @@ namespace LumenWorks.Framework.IO.Csv
 		private char _quote;
 
 		/// <summary>
-		/// Indicates if spaces at the start and end of a field are trimmed.
+		/// Determines which values should be trimmed.
 		/// </summary>
-		private bool _trimSpaces;
+		private ValueTrimmingOptions _trimmingOptions;
 
 		/// <summary>
 		/// Indicates if field names are located on the first non commented line.
@@ -199,6 +199,11 @@ namespace LumenWorks.Framework.IO.Csv
 		private bool _eof;
 
 		/// <summary>
+		/// Indicates if the last read operation reached an EOL character.
+		/// </summary>
+		private bool _eol;
+
+		/// <summary>
 		/// Indicates if the first record is in cache.
 		/// This can happen when initializing a reader with no headers
 		/// because one record must be read to get the field count automatically
@@ -206,10 +211,16 @@ namespace LumenWorks.Framework.IO.Csv
 		private bool _firstRecordInCache;
 
 		/// <summary>
-		/// Indicates if fields are missing for the current record.
+		/// Indicates if one or more field are missing for the current record.
 		/// Resets after each successful record read.
 		/// </summary>
-		private bool _missingFieldsFlag;
+		private bool _missingFieldFlag;
+
+		/// <summary>
+		/// Indicates if a parse error occured for the current record.
+		/// Resets after each successful record read.
+		/// </summary>
+		private bool _parseErrorFlag;
 
 		#endregion
 
@@ -229,7 +240,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CsvReader(TextReader reader, bool hasHeaders)
-			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, true, DefaultBufferSize)
+			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, DefaultBufferSize)
 		{
 		}
 
@@ -246,7 +257,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CsvReader(TextReader reader, bool hasHeaders, int bufferSize)
-			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, true, bufferSize)
+			: this(reader, hasHeaders, DefaultDelimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, bufferSize)
 		{
 		}
 
@@ -263,7 +274,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CsvReader(TextReader reader, bool hasHeaders, char delimiter)
-			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, true, DefaultBufferSize)
+			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, DefaultBufferSize)
 		{
 		}
 
@@ -281,7 +292,7 @@ namespace LumenWorks.Framework.IO.Csv
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
 		public CsvReader(TextReader reader, bool hasHeaders, char delimiter, int bufferSize)
-			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, true, bufferSize)
+			: this(reader, hasHeaders, delimiter, DefaultQuote, DefaultEscape, DefaultComment, ValueTrimmingOptions.UnquotedOnly, bufferSize)
 		{
 		}
 
@@ -297,15 +308,15 @@ namespace LumenWorks.Framework.IO.Csv
 		/// If no escape character, set to '\0' to gain some performance.
 		/// </param>
 		/// <param name="comment">The comment character indicating that a line is commented out (default is '#').</param>
-		/// <param name="trimSpaces"><see langword="true"/> if spaces at the start and end of a field are trimmed, otherwise, <see langword="false"/>. Default is <see langword="true"/>.</param>
+		/// <param name="trimmingOptions">Determines which values should be trimmed.</param>
 		/// <exception cref="T:ArgumentNullException">
 		///		<paramref name="reader"/> is a <see langword="null"/>.
 		/// </exception>
 		/// <exception cref="T:ArgumentException">
 		///		Cannot read from <paramref name="reader"/>.
 		/// </exception>
-		public CsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, bool trimSpaces)
-			: this(reader, hasHeaders, delimiter, quote, escape, comment, trimSpaces, DefaultBufferSize)
+		public CsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, ValueTrimmingOptions trimmingOptions)
+			: this(reader, hasHeaders, delimiter, quote, escape, comment, trimmingOptions, DefaultBufferSize)
 		{
 		}
 
@@ -321,7 +332,7 @@ namespace LumenWorks.Framework.IO.Csv
 		/// If no escape character, set to '\0' to gain some performance.
 		/// </param>
 		/// <param name="comment">The comment character indicating that a line is commented out (default is '#').</param>
-		/// <param name="trimSpaces"><see langword="true"/> if spaces at the start and end of a field are trimmed, otherwise, <see langword="false"/>. Default is <see langword="true"/>.</param>
+		/// <param name="trimmingOptions">Determines which values should be trimmed.</param>
 		/// <param name="bufferSize">The buffer size in bytes.</param>
 		/// <exception cref="T:ArgumentNullException">
 		///		<paramref name="reader"/> is a <see langword="null"/>.
@@ -329,7 +340,7 @@ namespace LumenWorks.Framework.IO.Csv
 		/// <exception cref="ArgumentOutOfRangeException">
 		///		<paramref name="bufferSize"/> must be 1 or more.
 		/// </exception>
-		public CsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, bool trimSpaces, int bufferSize)
+		public CsvReader(TextReader reader, bool hasHeaders, char delimiter, char quote, char escape, char comment, ValueTrimmingOptions trimmingOptions, int bufferSize)
 		{
 #if DEBUG
 			_allocStack = new System.Diagnostics.StackTrace();
@@ -362,9 +373,10 @@ namespace LumenWorks.Framework.IO.Csv
 			_comment = comment;
 
 			_hasHeaders = hasHeaders;
-			_trimSpaces = trimSpaces;
+			_trimmingOptions = trimmingOptions;
 			_supportsMultiline = true;
 			_skipEmptyLines = true;
+			this.DefaultHeaderName = "Column";
 
 			_currentRecordIndex = -1;
 			_defaultParseErrorAction = ParseErrorAction.RaiseEvent;
@@ -461,11 +473,11 @@ namespace LumenWorks.Framework.IO.Csv
 		/// Indicates if spaces at the start and end of a field are trimmed.
 		/// </summary>
 		/// <value><see langword="true"/> if spaces at the start and end of a field are trimmed, otherwise, <see langword="false"/>.</value>
-		public bool TrimSpaces
+		public ValueTrimmingOptions TrimmingOption
 		{
 			get
 			{
-				return _trimSpaces;
+				return _trimmingOptions;
 			}
 		}
 
@@ -544,6 +556,13 @@ namespace LumenWorks.Framework.IO.Csv
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the default header name when it is an empty string or only whitespaces.
+		/// The header index will be appended to the specified name.
+		/// </summary>
+		/// <value>The default header name when it is an empty string or only whitespaces.</value>
+		public string DefaultHeaderName { get; set; }
+
 		#endregion
 
 		#region State
@@ -608,6 +627,24 @@ namespace LumenWorks.Framework.IO.Csv
 			}
 		}
 
+		/// <summary>
+		/// Indicates if one or more field are missing for the current record.
+		/// Resets after each successful record read.
+		/// </summary>
+		public bool MissingFieldFlag
+		{
+			get { return _missingFieldFlag; }
+		}
+
+		/// <summary>
+		/// Indicates if a parse error occured for the current record.
+		/// Resets after each successful record read.
+		/// </summary>
+		public bool ParseErrorFlag
+		{
+			get { return _parseErrorFlag; }
+		}
+
 		#endregion
 
 		#endregion
@@ -648,7 +685,9 @@ namespace LumenWorks.Framework.IO.Csv
 		{
 			get
 			{
-				MoveTo(record);
+				if (!MoveTo(record))
+					throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, ExceptionMessage.CannotReadRecordAtIndex, record));
+
 				return this[field];
 			}
 		}
@@ -682,7 +721,9 @@ namespace LumenWorks.Framework.IO.Csv
 		{
 			get
 			{
-				MoveTo(record);
+				if (!MoveTo(record))
+					throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, ExceptionMessage.CannotReadRecordAtIndex, record));
+
 				return this[field];
 			}
 		}
@@ -844,7 +885,12 @@ namespace LumenWorks.Framework.IO.Csv
 				throw new ArgumentException(ExceptionMessage.NotEnoughSpaceInArray, "array");
 
 			for (int i = 0; i < _fieldCount; i++)
-				array[index + i] = this[i];
+			{
+				if (_parseErrorFlag)
+					array[index + i] = null;
+				else
+					array[index + i] = this[i];
+			}
 		}
 
 		#endregion
@@ -896,36 +942,27 @@ namespace LumenWorks.Framework.IO.Csv
 		/// Moves to the specified record index.
 		/// </summary>
 		/// <param name="record">The record index.</param>
-		/// <exception cref="T:ArgumentOutOfRangeException">
-		///		Record index must be > 0.
-		/// </exception>
-		/// <exception cref="T:InvalidOperationException">
-		///		Cannot move to a previous record in forward-only mode.
-		/// </exception>
+		/// <returns><c>true</c> if the operation was successful; otherwise, <c>false</c>.</returns>
 		/// <exception cref="T:System.ComponentModel.ObjectDisposedException">
 		///	The instance has been disposed of.
 		/// </exception>
-		public virtual void MoveTo(long record)
+		public virtual bool MoveTo(long record)
 		{
-			if (record < 0)
-				throw new ArgumentOutOfRangeException("record", record, ExceptionMessage.RecordIndexLessThanZero);
-
 			if (record < _currentRecordIndex)
-				throw new InvalidOperationException(ExceptionMessage.CannotMovePreviousRecordInForwardOnly);
+				return false;
 
 			// Get number of record to read
-
 			long offset = record - _currentRecordIndex;
 
-			if (offset > 0)
+			while (offset > 0)
 			{
-				do
-				{
-					if (!ReadNextRecord())
-						throw new EndOfStreamException(string.Format(CultureInfo.InvariantCulture, ExceptionMessage.CannotReadRecordAtIndex, _currentRecordIndex - offset));
-				}
-				while (--offset > 0);
+				if (!ReadNextRecord())
+					return false;
+
+				offset--;
 			}
+
+			return true;
 		}
 
 		#endregion
@@ -1003,6 +1040,27 @@ namespace LumenWorks.Framework.IO.Csv
 			return false;
 		}
 
+		/// <summary>
+		/// Determines whether the character at the specified position is a new line delimiter.
+		/// </summary>
+		/// <param name="pos">The position of the character to verify.</param>
+		/// <returns>
+		/// 	<see langword="true"/> if the character at the specified position is a new line delimiter; otherwise, <see langword="false"/>.
+		/// </returns>
+		private bool IsNewLine(int pos)
+		{
+			Debug.Assert(pos < _bufferLength);
+
+			char c = _buffer[pos];
+
+			if (c == '\n')
+				return true;
+			else if (c == '\r' && _delimiter != '\r')
+				return true;
+			else
+				return false;
+		}
+
 		#endregion
 
 		#region ReadBuffer
@@ -1073,13 +1131,13 @@ namespace LumenWorks.Framework.IO.Csv
 
 				if (_currentRecordIndex < 0)
 					throw new InvalidOperationException(ExceptionMessage.NoCurrentRecord);
-			}
 
-			// Directly return field if cached
-			if (_fields[field] != null)
-				return _fields[field];
-			else if (_missingFieldsFlag)
-				return HandleMissingField(null, field, ref _nextFieldStart);
+				// Directly return field if cached
+				if (_fields[field] != null)
+					return _fields[field];
+				else if (_missingFieldFlag)
+					return HandleMissingField(null, field, ref _nextFieldStart);
+			}
 
 			CheckDisposed();
 
@@ -1098,9 +1156,8 @@ namespace LumenWorks.Framework.IO.Csv
 				}
 
 				string value = null;
-				bool eol = false;
 
-				if (_missingFieldsFlag)
+				if (_missingFieldFlag)
 				{
 					value = HandleMissingField(value, index, ref _nextFieldStart);
 				}
@@ -1118,6 +1175,8 @@ namespace LumenWorks.Framework.IO.Csv
 							value = string.Empty;
 							_fields[index] = value;
 						}
+
+						_missingFieldFlag = true;
 					}
 					else
 					{
@@ -1127,11 +1186,17 @@ namespace LumenWorks.Framework.IO.Csv
 				else
 				{
 					// Trim spaces at start
-					if (_trimSpaces)
+					if ((_trimmingOptions & ValueTrimmingOptions.UnquotedOnly) != 0)
 						SkipWhiteSpaces(ref _nextFieldStart);
 
 					if (_eof)
+					{
 						value = string.Empty;
+						_fields[field] = value;
+
+						if (field < _fieldCount)
+							_missingFieldFlag = true;
+					}
 					else if (_buffer[_nextFieldStart] != _quote)
 					{
 						// Non-quoted field
@@ -1154,7 +1219,7 @@ namespace LumenWorks.Framework.IO.Csv
 								else if (c == '\r' || c == '\n')
 								{
 									_nextFieldStart = pos;
-									eol = true;
+									_eol = true;
 
 									break;
 								}
@@ -1180,7 +1245,7 @@ namespace LumenWorks.Framework.IO.Csv
 
 						if (!discardValue)
 						{
-							if (!_trimSpaces)
+							if ((_trimmingOptions & ValueTrimmingOptions.UnquotedOnly) == 0)
 							{
 								if (!_eof && pos > start)
 									value += new string(_buffer, start, pos - start);
@@ -1201,9 +1266,9 @@ namespace LumenWorks.Framework.IO.Csv
 								else
 									pos = -1;
 
-								// If pos < 0, that means the trimming went past buffer start,
+								// If pos <= 0, that means the trimming went past buffer start,
 								// and the concatenated value needs to be trimmed too.
-								if (pos < 0)
+								if (pos <= 0)
 								{
 									pos = (value == null ? -1 : value.Length - 1);
 
@@ -1222,9 +1287,9 @@ namespace LumenWorks.Framework.IO.Csv
 								value = string.Empty;
 						}
 
-						if (eol || _eof)
+						if (_eol || _eof)
 						{
-							eol = ParseNewLine(ref _nextFieldStart);
+							_eol = ParseNewLine(ref _nextFieldStart);
 
 							// Reaching a new line is ok as long as the parser is initializing or it is the last field
 							if (!initializing && index != _fieldCount - 1)
@@ -1249,6 +1314,12 @@ namespace LumenWorks.Framework.IO.Csv
 
 						bool quoted = true;
 						bool escaped = false;
+
+						if ((_trimmingOptions & ValueTrimmingOptions.QuotedOnly) != 0)
+						{
+							SkipWhiteSpaces(ref start);
+							pos = start;
+						}
 
 						for (; ; )
 						{
@@ -1291,7 +1362,7 @@ namespace LumenWorks.Framework.IO.Csv
 
 								if (!ReadBuffer())
 								{
-									HandleParseError(new MalformedCsvException(GetCurrentRawData(), _nextFieldStart, _currentRecordIndex, index), ref _nextFieldStart);
+									HandleParseError(new MalformedCsvException(GetCurrentRawData(), _nextFieldStart, Math.Max(0, _currentRecordIndex), index), ref _nextFieldStart);
 									return null;
 								}
 							}
@@ -1302,6 +1373,16 @@ namespace LumenWorks.Framework.IO.Csv
 							// Append remaining parsed buffer content
 							if (!discardValue && pos > start)
 								value += new string(_buffer, start, pos - start);
+
+							if (!discardValue && value != null && (_trimmingOptions & ValueTrimmingOptions.QuotedOnly) != 0)
+							{
+								int newLength = value.Length;
+								while (newLength > 0 && IsWhiteSpace(value[newLength - 1]))
+									newLength--;
+
+								if (newLength < value.Length)
+									value = value.Substring(0, newLength);
+							}
 
 							// Skip quote
 							_nextFieldStart = pos + 1;
@@ -1324,7 +1405,11 @@ namespace LumenWorks.Framework.IO.Csv
 							// Skip new line delimiter if initializing or last field
 							// (if the next field is missing, it will be caught when parsed)
 							if (!_eof && !delimiterSkipped && (initializing || index == _fieldCount - 1))
-								eol = ParseNewLine(ref _nextFieldStart);
+								_eol = ParseNewLine(ref _nextFieldStart);
+
+							// If no delimiter is present after the quoted field and it is not the last field, then it is a parsing error
+							if (!delimiterSkipped && !_eof && !(_eol || IsNewLine(_nextFieldStart)))
+								HandleParseError(new MalformedCsvException(GetCurrentRawData(), _nextFieldStart, Math.Max(0, _currentRecordIndex), index), ref _nextFieldStart);
 						}
 
 						if (!discardValue)
@@ -1337,17 +1422,19 @@ namespace LumenWorks.Framework.IO.Csv
 					}
 				}
 
-				if (initializing || index < _fieldCount - 1)
-					_nextFieldIndex = Math.Max(index + 1, _nextFieldIndex);
-				else
-					_nextFieldIndex = 0;
+				_nextFieldIndex = Math.Max(index + 1, _nextFieldIndex);
 
 				if (index == field)
 				{
 					// If initializing, return null to signify the last field has been reached
 
-					if (initializing && (eol || _eof))
-						return null;
+					if (initializing)
+					{
+						if (_eol || _eof)
+							return null;
+						else
+							return string.IsNullOrEmpty(value) ? string.Empty : value;
+					}
 					else
 						return value;
 				}
@@ -1356,7 +1443,7 @@ namespace LumenWorks.Framework.IO.Csv
 			}
 
 			// Getting here is bad ...
-			HandleParseError(new MalformedCsvException(GetCurrentRawData(), _nextFieldStart, _currentRecordIndex, index), ref _nextFieldStart);
+			HandleParseError(new MalformedCsvException(GetCurrentRawData(), _nextFieldStart, Math.Max(0, _currentRecordIndex), index), ref _nextFieldStart);
 			return null;
 		}
 
@@ -1429,10 +1516,20 @@ namespace LumenWorks.Framework.IO.Csv
 
 				while (ReadField(_fieldCount, true, false) != null)
 				{
-					_fieldCount++;
+					if (_parseErrorFlag)
+					{
+						_fieldCount = 0;
+						Array.Clear(_fields, 0, _fields.Length);
+						_parseErrorFlag = false;
+						_nextFieldIndex = 0;
+					}
+					else
+					{
+						_fieldCount++;
 
-					if (_fieldCount == _fields.Length)
-						Array.Resize<string>(ref _fields, (_fieldCount + 1) * 2);
+						if (_fieldCount == _fields.Length)
+							Array.Resize<string>(ref _fields, (_fieldCount + 1) * 2);
+					}
 				}
 
 				// _fieldCount contains the last field index, but it must contains the field count,
@@ -1457,15 +1554,19 @@ namespace LumenWorks.Framework.IO.Csv
 
 					for (int i = 0; i < _fields.Length; i++)
 					{
-						_fieldHeaders[i] = _fields[i];
-						_fieldHeaderIndexes.Add(_fields[i], i);
+						string headerName = _fields[i];
+						if (string.IsNullOrEmpty(headerName) || headerName.Trim().Length == 0)
+							headerName = this.DefaultHeaderName + i.ToString();
+
+						_fieldHeaders[i] = headerName;
+						_fieldHeaderIndexes.Add(headerName, i);
 					}
 
 					// Proceed to first record
 					if (!onlyReadHeaders)
 					{
 						// Calling again ReadNextRecord() seems to be simpler, 
-						// but in fact would probably cause many subtle bugs because the derived does not expect a recursive behavior
+						// but in fact would probably cause many subtle bugs because a derived class does not expect a recursive behavior
 						// so simply do what is needed here and no more.
 
 						if (!SkipEmptyAndCommentedLines(ref _nextFieldStart))
@@ -1473,6 +1574,7 @@ namespace LumenWorks.Framework.IO.Csv
 
 						Array.Clear(_fields, 0, _fields.Length);
 						_nextFieldIndex = 0;
+						_eol = false;
 
 						_currentRecordIndex++;
 						return true;
@@ -1494,19 +1596,30 @@ namespace LumenWorks.Framework.IO.Csv
 			}
 			else
 			{
-				// Advance to next line or last field
 				if (skipToNextLine)
 					SkipToNextLine(ref _nextFieldStart);
-				else if (_currentRecordIndex > -1 && !_missingFieldsFlag)
+				else if (_currentRecordIndex > -1 && !_missingFieldFlag)
 				{
-					if (_supportsMultiline)
-						ReadField(_fieldCount - 1, false, true);
-					else if (_nextFieldIndex > 0 && _nextFieldIndex < _fieldCount)
-						SkipToNextLine(ref _nextFieldStart);
+					// If not already at end of record, move there
+					if (!_eol && !_eof)
+					{
+						if (!_supportsMultiline)
+							SkipToNextLine(ref _nextFieldStart);
+						else
+						{
+							// a dirty trick to handle the case where extra fields are present
+							while (ReadField(_nextFieldIndex, true, true) != null)
+							{
+							}
+						}
+					}
 				}
 
 				if (!_firstRecordInCache && !SkipEmptyAndCommentedLines(ref _nextFieldStart))
 					return false;
+
+				if (_hasHeaders || !_firstRecordInCache)
+					_eol = false;
 
 				// Check to see if the first record is in cache.
 				// This can happen when initializing a reader with no headers
@@ -1519,7 +1632,8 @@ namespace LumenWorks.Framework.IO.Csv
 					_nextFieldIndex = 0;
 				}
 
-				_missingFieldsFlag = false;
+				_missingFieldFlag = false;
+				_parseErrorFlag = false;
 				_currentRecordIndex++;
 			}
 
@@ -1663,6 +1777,8 @@ namespace LumenWorks.Framework.IO.Csv
 			if (error == null)
 				throw new ArgumentNullException("error");
 
+			_parseErrorFlag = true;
+
 			switch (_defaultParseErrorAction)
 			{
 				case ParseErrorAction.ThrowException:
@@ -1681,8 +1797,9 @@ namespace LumenWorks.Framework.IO.Csv
 							throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, ExceptionMessage.ParseErrorActionInvalidInsideParseErrorEvent, e.Action), e.Error);
 
 						case ParseErrorAction.AdvanceToNextLine:
-							if (pos >= 0)
-								ReadNextRecord(false, true);
+							// already at EOL when fields are missing, so don't skip to next line in that case
+							if (!_missingFieldFlag && pos >= 0)
+								SkipToNextLine(ref pos);
 							break;
 
 						default:
@@ -1691,8 +1808,9 @@ namespace LumenWorks.Framework.IO.Csv
 					break;
 
 				case ParseErrorAction.AdvanceToNextLine:
-					if (pos >= 0)
-						ReadNextRecord(false, true);
+					// already at EOL when fields are missing, so don't skip to next line in that case
+					if (!_missingFieldFlag && pos >= 0)
+						SkipToNextLine(ref pos);
 					break;
 
 				default:
@@ -1720,7 +1838,7 @@ namespace LumenWorks.Framework.IO.Csv
 			if (fieldIndex < 0 || fieldIndex >= _fieldCount)
 				throw new ArgumentOutOfRangeException("fieldIndex", fieldIndex, string.Format(CultureInfo.InvariantCulture, ExceptionMessage.FieldIndexOutOfRange, fieldIndex));
 
-			_missingFieldsFlag = true;
+			_missingFieldFlag = true;
 
 			for (int i = fieldIndex + 1; i < _fieldCount; i++)
 				_fields[i] = null;
@@ -1732,7 +1850,7 @@ namespace LumenWorks.Framework.IO.Csv
 				switch (_missingFieldAction)
 				{
 					case MissingFieldAction.ParseError:
-						HandleParseError(new MissingFieldCsvException(GetCurrentRawData(), currentPosition, _currentRecordIndex, fieldIndex), ref currentPosition);
+						HandleParseError(new MissingFieldCsvException(GetCurrentRawData(), currentPosition, Math.Max(0, _currentRecordIndex), fieldIndex), ref currentPosition);
 						return value;
 
 					case MissingFieldAction.ReplaceByEmpty:
@@ -1810,7 +1928,8 @@ namespace LumenWorks.Framework.IO.Csv
 			else
 			{
 				char[] chars = value.ToCharArray((int) fieldOffset, length);
-				byte[] source = new byte[chars.Length]; ;
+				byte[] source = new byte[chars.Length];
+				;
 
 				for (int i = 0; i < chars.Length; i++)
 					source[i] = Convert.ToByte(chars[i]);
@@ -1989,7 +2108,11 @@ namespace LumenWorks.Framework.IO.Csv
 		object IDataRecord.GetValue(int i)
 		{
 			ValidateDataReader(DataReaderValidations.IsInitialized | DataReaderValidations.IsNotClosed);
-			return this[i];
+
+			if (((IDataRecord) this).IsDBNull(i))
+				return DBNull.Value;
+			else
+				return this[i];
 		}
 
 		bool IDataRecord.IsDBNull(int i)
@@ -2032,8 +2155,10 @@ namespace LumenWorks.Framework.IO.Csv
 		{
 			ValidateDataReader(DataReaderValidations.IsInitialized | DataReaderValidations.IsNotClosed);
 
+			IDataRecord record = (IDataRecord) this;
+
 			for (int i = 0; i < _fieldCount; i++)
-				values[i] = this[i];
+				values[i] = record.GetValue(i);
 
 			return _fieldCount;
 		}
