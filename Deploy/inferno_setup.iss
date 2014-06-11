@@ -1,7 +1,7 @@
 [CustomMessages]
 AppName=InfernoRDN
 [Messages]
-WelcomeLabel2=This will install [name/ver] on your computer.%n%nInfernoRDN can perform various downstream analyses on large scale datasets from proteomics and microarrays.%n%nPlease install R 3.x prior to running InfernoRDN for the first time.
+WelcomeLabel2=This will install [name/ver] on your computer.%n%nInfernoRDN can perform various downstream data analysis, data reduction, and data comparison tasks including normalization, hypothesis testing, clustering, and heatmap generation.%n%nPlease install R 3.x prior to running InfernoRDN for the first time.
 [Files]
 ; Application files
 ; R scripts

@@ -1,11 +1,12 @@
-InfernoRDN can perform various downstream analyses on large scale datasets 
-from proteomics and microarrays.
+InfernoRDN can perform various downstream data analysis, data reduction, 
+and data comparison tasks including normalization, hypothesis testing, 
+clustering, and heatmap generation.
 
-Among many features of InfernoRDN are:
+Some of the features included with InfernoRDN:
 * A set of diagnostic plots (Histograms, boxplots, correlation plots, 
-  qq-plots, peptide-protein rollup plots, MA plots, PCA plots, etc).
-* Log transforming.
-* Rolling up to proteins (3 methods are available).
+  qq-plots, peptide-protein rollup plots, MA plots, PCA plots, etc)
+* Log transforming
+* Rolling up to proteins (3 methods are available)
 * LOESS normalization
 * Linear Regression Normalization
 * Mean Centering
