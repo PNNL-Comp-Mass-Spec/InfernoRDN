@@ -1,3 +1,5 @@
 .hg/
 Sample_Input_Files/SampleInput4DAnTE.txt
 .hgignore
+Deploy/Output/
+InfernoRDN_SourceCode/

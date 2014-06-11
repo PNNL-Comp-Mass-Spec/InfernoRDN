@@ -1,78 +1,72 @@
 [CustomMessages]
-AppName=Inferno
+AppName=InfernoRDN
+[Messages]
+WelcomeLabel2=This will install [name/ver] on your computer.%n%nInfernoRDN can perform various downstream analyses on large scale datasets from proteomics and microarrays.%n%nPlease install R 3.x prior to running InfernoRDN for the first time.
 [Files]
 ; Application files
 ; R scripts
-Source: temp.png; DestDir: {commonappdata}\Inferno
 ; Icon, readme, help, config and license files
-; Tools (Peptide File Extractor etc)
-Source: ..\bin\Debug\Tools\PRISM.dll; DestDir: {app}\Tools
-Source: ..\bin\Debug\Tools\FileConcatenator.dll; DestDir: {app}\Tools
-Source: ..\bin\Debug\Tools\PeptideFileExtractor.dll; DestDir: {app}\Tools
-Source: ..\bin\Debug\Tools\PeptideFileExtractorConsole.exe; DestDir: {app}\Tools
-Source: ..\bin\Release\Inferno.vshost.exe; DestDir: {app}
-Source: ..\bin\Release\Inferno.exe; DestDir: {app}
-Source: ..\bin\Release\Interop.IasHelperLib.dll; DestDir: {app}
-Source: ..\bin\Release\Interop.StatConnControls.dll; DestDir: {app}
-Source: ..\bin\Release\Interop.STATCONNECTORCLNTLib.dll; DestDir: {app}
-Source: ..\bin\Release\LumenWorks.Framework.IO.dll; DestDir: {app}
-Source: ..\bin\Release\LumenWorks.Framework.IO.pdb; DestDir: {app}
-Source: ..\bin\Release\LumenWorks.Framework.IO.xml; DestDir: {app}
-Source: ..\bin\Release\Inferno.exe.config; DestDir: {app}
-Source: ..\bin\Release\Inferno.vshost.exe.config; DestDir: {app}
-Source: ..\bin\Release\Inferno.vshost.exe.manifest; DestDir: {app}
-Source: ..\bin\Release\InputBox.dll; DestDir: {app}
-Source: ..\bin\Release\AxInterop.STATCONNECTORCLNTLib.dll; DestDir: {app}
-Source: ..\bin\Release\Interop.StatConnectorCommonLib.dll; DestDir: {app}
-Source: ..\bin\Release\Interop.STATCONNECTORSRVLib.dll; DestDir: {app}
-Source: ..\bin\Release\ICSharpCode.SharpZipLib.dll; DestDir: {app}
-Source: ..\bin\Release\ZedGraph.dll; DestDir: {app}
-Source: ..\bin\Release\ZedGraph.xml; DestDir: {app}
+Source: ..\bin\Debug\InfernoHelp.chm; DestDir: {app}
 Source: ..\bin\Debug\inferno.conf; DestDir: {app}
+Source: ..\bin\Debug\Inferno.exe.config; DestDir: {app}
+Source: ..\bin\Debug\ICSharpCode.SharpZipLib.dll; DestDir: {app}
+Source: ..\bin\Debug\InputBox.dll; DestDir: {app}
+Source: ..\bin\Debug\Interop.IasHelperLib.dll; DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.dll; DestDir: {app}
+Source: ..\bin\Debug\RDotNet.dll; DestDir: {app}
+Source: ..\bin\Debug\RDotNet.NativeLibrary.dll; DestDir: {app}
+Source: ..\bin\Debug\ZedGraph.dll; DestDir: {app}
+Source: ..\bin\Debug\Inferno.exe; DestDir: {app}
+Source: ..\bin\Debug\Inferno.pdb; DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.pdb; DestDir: {app}
 Source: ..\bin\Debug\Inferno.RData; DestDir: {app}
 Source: ..\bin\Debug\Inferno_ggplots.RData; DestDir: {app}
 Source: ..\bin\Debug\Inferno_stdplots.RData; DestDir: {app}
-Source: ..\bin\Debug\InfernoHelp.chm; DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.xml; DestDir: {app}
+Source: ..\bin\Debug\RDotNet.NativeLibrary.xml; DestDir: {app}
+Source: ..\bin\Debug\RDotNet.xml; DestDir: {app}
+Source: ..\bin\Debug\ZedGraph.xml; DestDir: {app}
+
 Source: Images\textdoc.ico; DestDir: {app}
 Source: ..\Resources\delete_16x.ico; DestDir: {app}
 Source: ..\Resources\inferno.ico; DestDir: {app}
 Source: ..\Resources\inferno_help.ico; DestDir: {app}
-Source: readme.txt; DestDir: {app}
+Source: ..\Readme.txt; DestDir: {app}
 Source: License.rtf; DestDir: {app}
 Source: readme.rtf; DestDir: {app}
 
 [Dirs]
-Name: {commonappdata}\Inferno; Flags: uninsalwaysuninstall
-Name: {app}\Tools; Flags: uninsalwaysuninstall
+Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
+
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 [Icons]
-Name: {group}\Inferno; Filename: {app}\inferno.exe; IconFilename: {app}\inferno.ico; IconIndex: 0; Comment: Inferno for Proteomics
+Name: {group}\InfernoRDN; Filename: {app}\inferno.exe; IconFilename: {app}\inferno.ico; IconIndex: 0; Comment: InfernoRDN for Proteomics
 Name: {group}\Inferno Help; Filename: {app}\InfernoHelp.chm; IconFilename: {app}\inferno_help.ico; Comment: Inferno Help File; IconIndex: 0
 Name: {group}\ReadMe File; Filename: {app}\readme.rtf; IconFilename: {app}\textdoc.ico; Comment: Inferno ReadMe; IconIndex: 0
 Name: {group}\License File; Filename: {app}\License.rtf; IconFilename: {app}\textdoc.ico; Comment: Inferno License; IconIndex: 0
 Name: {group}\Uninstall Inferno; Filename: {uninstallexe}; IconFilename: {app}\delete_16x.ico; IconIndex: 0
-Name: {commondesktop}\{cm:AppName}; Filename: {app}\{cm:AppName}.exe; Tasks: desktopicon; IconFilename: {app}\inferno.ico; Comment: Inferno; IconIndex: 0
-Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{cm:AppName}; Filename: {app}\{cm:AppName}.exe; Tasks: quicklaunchicon; IconFilename: {app}\inferno.ico; Comment: Inferno for Proteomics; IconIndex: 0
+Name: {commondesktop}\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: desktopicon; IconFilename: {app}\inferno.ico; Comment: Inferno; IconIndex: 0
+Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: quicklaunchicon; IconFilename: {app}\inferno.ico; Comment: Inferno for Proteomics; IconIndex: 0
 [Setup]
-AppName={cm:AppName}
-AppVerName=Inferno
+AppName=InfernoRDN
+AppVerName=InfernoRDN
 AppID=InfernoId
-AppPublisher=Translational Genomics Research Institute
-AppPublisherURL=http://www.tgen.org
-AppSupportURL=http://www.tgen.org
-AppUpdatesURL=http://www.tgen.org
-DefaultDirName={pf}\Inferno
-DefaultGroupName=Inferno
-AppCopyright=© Translational Genomics Research Institute
+AppPublisher=Pacific Northwest National Laboratory
+AppPublisherURL=http://omics.pnl.gov/software
+AppSupportURL=http://omics.pnl.gov/software
+AppUpdatesURL=http://omics.pnl.gov/software
+DefaultDirName={pf}\InfernoRDN
+DefaultGroupName=InfernoRDN
+AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
-OutputBaseFilename=InfernoSetup
-VersionInfoVersion=1.0
-VersionInfoCompany=TGen
-VersionInfoDescription=Inferno for Proteomics
-VersionInfoCopyright=TGen
+OutputBaseFilename=InfernoRDNSetup
+VersionInfoVersion=1.1
+VersionInfoCompany=PNNL
+VersionInfoDescription=InfernoRDN for Proteomics
+VersionInfoCopyright=PNNL
 DisableFinishedPage=true
 ShowLanguageDialog=no
 SetupIconFile=..\Deploy\Images\infernoSetup.ico
