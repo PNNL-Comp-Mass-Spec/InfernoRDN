@@ -7,7 +7,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("DAnTE")]
+[assembly: AssemblyTitle("InfernoRDN")]
 [assembly: AssemblyDescription("Data Analysis Tool Extension")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Battelle Memorial Institute")]
@@ -57,5 +57,5 @@ using System.Resources;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyFileVersionAttribute("1.1")]
+//[assembly: AssemblyFileVersionAttribute("1.1")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]

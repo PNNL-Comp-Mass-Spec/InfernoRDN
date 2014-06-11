@@ -23,10 +23,10 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 
 == Installation ==
 
-1) Download and install the latest version of R 3 from 
+1) Download and install the latest version of R 3.x from 
    http://cran.r-project.org/bin/windows/base/
 
-2) Run setup.exe (or InfernoRDNSetup.msi)
+2) Run the installer, InfernoRDNSetup.exe
 
 3) Start InfernoRDN using the Start Menu or desktop shortcut
 
@@ -78,10 +78,13 @@ InfernoRDN uses the following R packages (from http://cran.r-project.org/):
 * colorspace: Colorspace Manipulation
 
 _______________________________________________________________________________
-Developed by Ashoka Polpitiya for the US Department of Energy
-Includes contributions from Gary Kiebel and Matthew Monroe
+Developed by Ashoka Polpitiya for the US Department of Energy and TGen
+Includes contributions from Gary Kiebel and Matthew Monroe at PNNL
 PNNL, Richland, WA, USA.
+TGen, Phoenix, AZ, USA.
+
 Copyright 2007, 2014, Battelle Memorial Institute.  All Rights Reserved.
+Copyright 2010, Translational Genomics Research Institute.  All Rights Reserved.
 
 E-mail: ashoka@tgen.org or matthew.monroe@pnnl.gov
 Website: http://omics.pnl.gov/software/InfernoRDN
@@ -93,7 +96,11 @@ _______________________________________________________________________________
 InfernoRDN is licensed under the Apache License, Version 2.0; you may not use this file except in compliance with the License.  
 You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-All publications that utilize this software should provide the citation below and appropriate acknowledgement to PNNL and the OMICS.PNL.GOV website. 
+All publications that result from the use of this software should include the following acknowledgment statement: 
+
+Portions of this research were supported by NIH, DOE, and Pacific Northwest National Laboratory (PNNL), 
+in addition to the Center for Proteomics, Translational Genomics Research Institute (TGEN).
+
 However, if the software is extended or modified, then any subsequent publications should include a more extensive statement, 
 using this text or a similar variant: 
  
