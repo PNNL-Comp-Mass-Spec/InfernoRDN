@@ -35,6 +35,9 @@ Source: ..\Readme.txt; DestDir: {app}
 Source: License.rtf; DestDir: {app}
 Source: readme.rtf; DestDir: {app}
 
+Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv; DestDir: {app}
+Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv; DestDir: {app}
+
 [Dirs]
 Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
 

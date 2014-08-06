@@ -1,12 +1,11 @@
-InfernoRDN can perform various downstream data analysis, data reduction, 
-and data comparison tasks including normalization, hypothesis testing, 
-clustering, and heatmap generation.
+InfernoRDN can perform various downstream analyses on large scale datasets 
+from proteomics and microarrays.
 
-Some of the features included with InfernoRDN:
+Among many features of InfernoRDN are:
 * A set of diagnostic plots (Histograms, boxplots, correlation plots, 
-  qq-plots, peptide-protein rollup plots, MA plots, PCA plots, etc)
-* Log transforming
-* Rolling up to proteins (3 methods are available)
+  qq-plots, peptide-protein rollup plots, MA plots, PCA plots, etc).
+* Log transforming.
+* Rolling up to proteins (3 methods are available).
 * LOESS normalization
 * Linear Regression Normalization
 * Mean Centering
@@ -39,7 +38,7 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 
 5) Test loading a data file	
 	- Choose File, Open, Expression File
-	- Navigate to "C:\Program Files (x86)\PNNL\InfernoRDN"
+	- Navigate to "C:\Program Files (x86)\InfernoRDN"
 	  (or C:\Program Files\PNNL\InfernoRDN)
 	- Select SampleInput4DAnTE.csv and click Open
 	- Choose column Mass_Tag_ID then click the ">>" button to the left (and just below) "Unique Row ID"
