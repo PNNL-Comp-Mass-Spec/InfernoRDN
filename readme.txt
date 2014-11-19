@@ -57,7 +57,7 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 InfernoRDN depends on the following:
 1) Windows 7 (or newer) with the .NET 4.0 framework 
 	* http://www.microsoft.com/en-us/download/details.aspx?id=17718
-2) R Statistical Environment, version 2.8 or newer
+2) R Statistical Environment, version 3.0 or newer
 	* http://cran.r-project.org/bin/windows/base/
 
 InfernoRDN uses the following R packages (from http://cran.r-project.org/):
