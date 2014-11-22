@@ -1,0 +1,8 @@
+InfernoRDN Change Log
+
+Version 1.1.5438; November 21, 2014
+	- Speed up data loading by removing call to dTable.AcceptChanges
+	- Now checking for DBNull when combining data rows while loading (rows from the same peptide have their abundance values summed)
+
+Version 1.1.5274; June 10, 2014
+	- Initial release of InfernoRDN (the R.NET version of Inferno)
