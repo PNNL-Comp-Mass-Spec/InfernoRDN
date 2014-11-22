@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -13,8 +14,17 @@ namespace DAnTE.Inferno
 {
 	partial class frmDAnTE
 	{
+	    private enum FileTypeExtension
+	    {
+	        Txt = 0,
+            Csv = 1,
+            Xls = 2,
+            Xlsx = 3
+	    }
 
-		private bool DeleteTempFile(string tempfile)
+        private bool mProgressEventWired = false;
+
+	    private bool DeleteTempFile(string tempfile)
 		{
 			bool ok = true;
 			tempfile = tempfile.Replace("/", "\\");
@@ -35,7 +45,29 @@ namespace DAnTE.Inferno
 			return ok;
 		}
 
-		/// <summary>
+	    private FileTypeExtension GetFileType(string filePath, FileTypeExtension defaultValue)
+	    {
+            var fileExtension = Path.GetExtension(filePath);
+	        if (string.IsNullOrEmpty(fileExtension))
+	            return defaultValue;
+
+	        if (fileExtension.StartsWith("."))
+	            fileExtension = fileExtension.Substring(1);
+
+            foreach (string enumName in Enum.GetNames(typeof(FileTypeExtension)))
+            {
+                if (string.Equals(enumName, fileExtension, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    var enumValue = (FileTypeExtension)Enum.Parse(typeof(FileTypeExtension), enumName);
+                    return enumValue;
+                }
+
+            }
+
+	        return defaultValue;
+	    }
+
+	    /// <summary>
 		/// Get the Image from file "tempFile" and delete the tempFile
 		/// </summary>
 		private Image LoadImage(string tempFile)
@@ -53,7 +85,30 @@ namespace DAnTE.Inferno
 			return currImg;
 		}
 
-		/// <summary>
+        private void GetOpenFileName(FileTypeExtension preferredFileType)
+        {
+            var fileTypesUsed = new List<FileTypeExtension>
+            {
+                FileTypeExtension.Txt,
+                FileTypeExtension.Csv,
+                FileTypeExtension.Xls,
+                FileTypeExtension.Xlsx
+            };
+
+            string filter = GetFilterSpec(preferredFileType);
+
+            foreach (var fileType in fileTypesUsed)
+            {
+                if (fileType != preferredFileType)
+                    filter += GetFilterSpec(fileType);
+            }
+
+            filter += "All files (*.*)|*.*";
+
+	        GetOpenFileName(filter);
+	    }
+
+	    /// <summary>
 		/// Fireup a file open dialog and get the file name to open.
 		/// </summary>
 		private void GetOpenFileName(string filter)
@@ -100,7 +155,7 @@ namespace DAnTE.Inferno
 				fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			}
 			fdlg.Filter = filter;
-			fdlg.FilterIndex = 1;
+            fdlg.FilterIndex = 1;
 			fdlg.RestoreDirectory = false;
 			if (fdlg.ShowDialog() == DialogResult.OK)
 			{
@@ -124,7 +179,24 @@ namespace DAnTE.Inferno
 				mstrLoadedfileName = null;
 		}
 
-		private void GetSaveFileName(string filter)
+	    private string GetFilterSpec(FileTypeExtension fileType)
+	    {
+	        switch (fileType)
+	        {
+                case FileTypeExtension.Txt:
+	                return "Tab delimited txt files (*.txt)|*.txt|";
+                case FileTypeExtension.Csv:
+	                return "CSV files (*.csv)|*.csv|";
+                case FileTypeExtension.Xls:
+	                return "Excel files (*.xls)|*.xls|";
+                case FileTypeExtension.Xlsx:
+	                return "Excel 2007 files (*.xlsx)|*.xlsx|";
+                default:
+                    throw new ArgumentException("fileType", "Unrecognized value for fileType: " + fileType);
+	        }
+	    }
+
+	    private void GetSaveFileName(string filter)
 		{
 			string workingFolder = Settings.Default.WorkingFolder;
 
@@ -354,7 +426,7 @@ namespace DAnTE.Inferno
 			string rcmd = null;
 			bool success = true;
 			bool FactorsValid = true;
-			string fExt = ".csv";
+			string fExt;
 			DataTable mDTtmp = new DataTable();
 			DataTable mDTloaded = new DataTable();
 			DataTable mDTselectedEset1 = new DataTable();
@@ -366,7 +438,7 @@ namespace DAnTE.Inferno
 				fExt = Path.GetExtension(filename);
 				if (!(fExt.Equals(".csv") || fExt.Equals(".txt") || fExt.Equals(".xls") || fExt.Equals(".xlsx")))
 				{
-					MessageBox.Show("Filetype not allowed.", "Error!");
+					MessageBox.Show("Filetype not allowed (must be csv, txt, xls, or xlsx)", "Error!");
 					return false;
 				}
 
@@ -375,7 +447,14 @@ namespace DAnTE.Inferno
 					case enmDataType.ESET:
 						#region Load Expressions
 						FactorsValid = true;
-						mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+
+				        if (!mProgressEventWired)
+				        {
+				            clsDataTable.OnProgress += clsDataTable_OnProgress;
+                            mProgressEventWired = true;
+				        }
+
+				        mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
 						if (mDTloaded == null)
 						{
 							return false;
@@ -786,5 +865,20 @@ namespace DAnTE.Inferno
 
 			return vars;
 		}
+
+        void clsDataTable_OnProgress(object sender, ProgressEventArgs e)
+        {
+            if (mfrmShowProgress != null)
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new EventHandler<ProgressEventArgs>(clsDataTable_OnProgress), sender, e);
+                    return;
+                }
+
+                mfrmShowProgress.PercentComplete = (int)e.PercentComplete;
+            }
+        }
+
 	}
 }

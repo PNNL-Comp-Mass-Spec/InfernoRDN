@@ -1,37 +1,48 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Globalization;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Windows.Forms;
 using LumenWorks.Framework.IO.Csv;
-using DAnTE.Tools;
 
 
 namespace DAnTE.Tools
 {
     public static class clsDataTable
     {
+        #region Events
+        /// <summary>
+        /// Progress event handler.
+        /// </summary>
+        public static event EventHandler<ProgressEventArgs> OnProgress;
+
+        private static void OnProgressUpdate(ProgressEventArgs e)
+        {          
+            EventHandler<ProgressEventArgs> handler = OnProgress;
+            if (handler != null)
+            {
+                handler(null, e);
+            }
+        }
+
+        #endregion
+
         #region File loading methods
         public static DataTable LoadFile2DataTable(string FileName)
         {
-            string fileName = FileName;
-            string filePath = FileName;
-            string fExt;
             String sConnectionString = "";
-            DataTable mdtOut = new DataTable();
-            DataTable mdtIn = new DataTable();
+            var mdtOut = new DataTable();
+            DataTable mdtIn;
 
-            fileName = Path.GetFileName(FileName);
-            filePath = Path.GetDirectoryName(FileName);
-            fExt = Path.GetExtension(fileName);
+            string fileName = Path.GetFileName(FileName);
+            string fExt = Path.GetExtension(fileName);
 
             switch (fExt)
             {
                 case ".csv":// CSV files
-                    using (clsGenericParserAdapter parser = new clsGenericParserAdapter())
+                    using (var parser = new clsGenericParserAdapter())
                     {
                         parser.SetDataSource(FileName);
                         parser.ColumnDelimiter = ",".ToCharArray();
@@ -40,11 +51,11 @@ namespace DAnTE.Tools
                         parser.TextQualifier = '\"';
                         mdtIn = parser.GetDataTable();
                         parser.Close();
-                        mdtOut = clsDataTable.ReplaceMissingStr(mdtIn);
+                        mdtOut = ReplaceMissingStr(mdtIn);
                     }
                     break;
                 case ".txt":
-                    using (clsGenericParserAdapter parser = new clsGenericParserAdapter())
+                    using (var parser = new clsGenericParserAdapter())
                     {
                         parser.SetDataSource(FileName);
                         parser.ColumnDelimiter = "\t".ToCharArray();
@@ -53,7 +64,7 @@ namespace DAnTE.Tools
                         parser.TextQualifier = '\"';
                         mdtIn = parser.GetDataTable();
                         parser.Close();
-                        mdtOut = clsDataTable.ReplaceMissingStr(mdtIn);
+                        mdtOut = ReplaceMissingStr(mdtIn);
                     }
                     break;
                 case ".xls"://Excel files
@@ -346,11 +357,9 @@ namespace DAnTE.Tools
 
         public static DataTable Array2DataTable(double[,] matrix, string[] rowNames, string[] colHeaders)
         {
-            DataTable mDataTable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
+            var mDataTable = new DataTable();
 
-            mDataColumn = new DataColumn();
+            DataColumn mDataColumn = new DataColumn();
             mDataColumn.DataType = System.Type.GetType("System.String");
             mDataColumn.ColumnName = "Row_ID";
             //mDataColumn.ReadOnly = true ;
@@ -358,15 +367,17 @@ namespace DAnTE.Tools
 
             for (int i = 0; i < colHeaders.Length; i++)
             {
-                mDataColumn = new DataColumn();
-                mDataColumn.DataType = System.Type.GetType("System.String");
-                mDataColumn.ColumnName = colHeaders[i];
+                mDataColumn = new DataColumn
+                {
+                    DataType = System.Type.GetType("System.String"),
+                    ColumnName = colHeaders[i]
+                };
                 //mDataColumn.ReadOnly = true ;
                 mDataTable.Columns.Add(mDataColumn);
             }
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                mDataRow = mDataTable.NewRow();
+                DataRow mDataRow = mDataTable.NewRow();
                 mDataRow[0] = rowNames[i];
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
@@ -507,6 +518,9 @@ namespace DAnTE.Tools
                 dC.ReadOnly = false;
             }
 
+            int rowCountLoaded = 0;
+            int rowCountTotal = dTable.Rows.Count;
+
             foreach (DataRow thisRow in dTable.Rows)
             {
                 if (!ValidRow(thisRow))
@@ -524,11 +538,19 @@ namespace DAnTE.Tools
 	                    }
                         
                     }
-                    catch
+                    catch (Exception ex)
                     {
 						AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
                     }
+
+                rowCountLoaded += 1;
+                float percentComplete = rowCountLoaded / (float)rowCountTotal * 100;
+
+                if (rowCountLoaded % 100 == 0)
+                    OnProgressUpdate(new ProgressEventArgs(percentComplete));
             }
+
+            dTable.AcceptChanges();
 
             foreach (DataRow dRow in duplicateList)
                 dTable.Rows.Remove(dRow);
@@ -544,7 +566,6 @@ namespace DAnTE.Tools
 			{
 				DataRow currentRow = addRows(prevRow, thisRow);
 				hTable[thisRow[keyColName]] = currentRow;
-				dTable.AcceptChanges();
 			}
 	    }
 
@@ -553,14 +574,22 @@ namespace DAnTE.Tools
             bool success = true;
             for (int i = 0; i < row1.ItemArray.Length; i++)
             {
-                if (!(row1.ItemArray[i].Equals(row2.ItemArray[i])))
-                {
-                    success = false;
-                    break;
-                }
+                var item1 = row1.ItemArray[i];
+                var item2 = row2.ItemArray[i];
 
+                if (item1 == null && item2 != null)
+                    return false;
+
+                if (item1 != null && item2 == null)
+                    return false;
+
+                if (item1 != null && item2 != null)
+                {
+                    if (!item1.Equals(item2))
+                        return false;
+                }               
             }
-            return success;
+            return true;
         }
 
         public static bool ValidRow(DataRow row) // not all empty
@@ -580,16 +609,27 @@ namespace DAnTE.Tools
 
         public static DataRow addRows(DataRow row1, DataRow row2)
         {
-            Double val1, val2, val3;
             for (int i = 1; i < row1.ItemArray.Length; i++)
             {
-                val1 = row1.ItemArray[i].Equals("") ? 0 : Convert.ToDouble(row1.ItemArray[i]);
-                val2 = row2.ItemArray[i].Equals("") ? 0 : Convert.ToDouble(row2.ItemArray[i]);
-                val3 = val1 + val2;
-                if (Math.Abs(val3) > Double.Epsilon)
-                    row1[i] = val3.ToString();
+                double val1 = CDblSafe(row1.ItemArray[i]);
+                double val2 = CDblSafe(row2.ItemArray[i]);
+                double val3 = val1 + val2;
+                if (Math.Abs(val3) > double.Epsilon)
+                    row1[i] = val3.ToString(CultureInfo.InvariantCulture);
             }
             return row1;
+        }
+
+        private static double CDblSafe(object item)
+        {
+            if (item == null || item == DBNull.Value)
+                return 0;
+
+            double value;
+            if (double.TryParse((string)item, out value))
+                return value;
+
+            return 0;            
         }
 
         //----------------------------------------------------------------------------

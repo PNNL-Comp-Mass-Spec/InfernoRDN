@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -688,6 +688,7 @@
     <Compile Include="Tools\clsDatasetInfo.cs" />
     <Compile Include="Tools\clsDatasetTreeNode.cs" />
     <Compile Include="Tools\clsDataTable.cs" />
+    <Compile Include="Tools\clsEventArgs.cs" />
     <Compile Include="Tools\clsFactorInfo.cs" />
     <Compile Include="Tools\clsGenericParser.cs">
       <SubType>Code</SubType>

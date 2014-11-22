@@ -142,43 +142,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_00939729F76F6739AF603347764767D5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D950762A1E71ED6D7FBB34D699EA622C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F1ABA81B4228FD68238763C6C8F395E2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C2AFAA98723DDE758DCC31497F76443D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_752D52FAD044F33B3A3610083B8476FA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3D5716BB5430214E3C4ADA77FD3C555E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C8A7CB51123B4B9A6B8897F965966FB1"
+        "OwnerKey" = "8:_59EF170760A04B0E805931766645A61F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -190,7 +154,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_59EF170760A04B0E805931766645A61F"
+        "OwnerKey" = "8:_C8A7CB51123B4B9A6B8897F965966FB1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3D5716BB5430214E3C4ADA77FD3C555E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_752D52FAD044F33B3A3610083B8476FA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C2AFAA98723DDE758DCC31497F76443D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F1ABA81B4228FD68238763C6C8F395E2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D950762A1E71ED6D7FBB34D699EA622C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_00939729F76F6739AF603347764767D5"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -305,6 +305,11 @@
             "AssemblyAsmDisplayName" = "8:Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_00939729F76F6739AF603347764767D5"
+                    {
+                    "Name" = "8:extensibility.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:extensibility.dll"
             "TargetName" = "8:"
@@ -462,6 +467,11 @@
             "AssemblyAsmDisplayName" = "8:ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3D5716BB5430214E3C4ADA77FD3C555E"
+                    {
+                    "Name" = "8:ICSharpCode.SharpZipLib.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ICSharpCode.SharpZipLib.dll"
             "TargetName" = "8:"
@@ -508,6 +518,11 @@
             "AssemblyAsmDisplayName" = "8:RDotNet, Version=1.5.9.35317, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_752D52FAD044F33B3A3610083B8476FA"
+                    {
+                    "Name" = "8:RDotNet.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:RDotNet.dll"
             "TargetName" = "8:"
@@ -574,6 +589,11 @@
             "AssemblyAsmDisplayName" = "8:RDotNet.NativeLibrary, Version=1.5.9.31002, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_C2AFAA98723DDE758DCC31497F76443D"
+                    {
+                    "Name" = "8:RDotNet.NativeLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:RDotNet.NativeLibrary.dll"
             "TargetName" = "8:"
@@ -600,6 +620,11 @@
             "AssemblyAsmDisplayName" = "8:LumenWorks.Framework.IO, Version=3.8.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_C8A7CB51123B4B9A6B8897F965966FB1"
+                    {
+                    "Name" = "8:LumenWorks.Framework.IO.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:LumenWorks.Framework.IO.dll"
             "TargetName" = "8:"
@@ -626,6 +651,11 @@
             "AssemblyAsmDisplayName" = "8:ZedGraph, Version=5.1.4.31904, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_C96A67D6FE25C29F5F3064ECD954A4D2"
+                    {
+                    "Name" = "8:ZedGraph.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ZedGraph.dll"
             "TargetName" = "8:"
@@ -672,6 +702,11 @@
             "AssemblyAsmDisplayName" = "8:InputBox, Version=1.0.3418.30718, Culture=neutral, PublicKeyToken=40c884ac8d283c1d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D950762A1E71ED6D7FBB34D699EA622C"
+                    {
+                    "Name" = "8:InputBox.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:InputBox.dll"
             "TargetName" = "8:"
@@ -698,6 +733,11 @@
             "AssemblyAsmDisplayName" = "8:Interop.IasHelperLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_F1ABA81B4228FD68238763C6C8F395E2"
+                    {
+                    "Name" = "8:Interop.IasHelperLib.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Interop.IasHelperLib.dll"
             "TargetName" = "8:"
@@ -784,15 +824,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:InfernoRDN"
-        "ProductCode" = "8:{AD34A506-9B0C-4BA3-A01B-B6C6C954C08F}"
-        "PackageCode" = "8:{4CE3BC76-B797-430B-99F4-78A4EA770FEE}"
+        "ProductCode" = "8:{D6906E3F-C037-4ACB-A336-D58D0130E01E}"
+        "PackageCode" = "8:{2291DDE6-D38D-459B-8B81-14E15956C056}"
         "UpgradeCode" = "8:{31B68B75-24CC-4BBC-8D5B-70C0C1EDB1D4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.1"
+        "ProductVersion" = "8:1.1.2"
         "Manufacturer" = "8:PNNL"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
