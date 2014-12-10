@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.5456; December 9, 2014
+	- Right clicking a table in the data list and choosing "Save with Protein Info" now supports saving as tab-delimited text
+
 Version 1.1.5438; November 21, 2014
 	- Speed up data loading by removing call to dTable.AcceptChanges
 	- Now checking for DBNull when combining data rows while loading (rows from the same peptide have their abundance values summed)

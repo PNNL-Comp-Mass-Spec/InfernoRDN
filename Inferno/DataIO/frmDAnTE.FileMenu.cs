@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
@@ -42,7 +43,7 @@ namespace DAnTE.Inferno
                             mfrmShowProgress.Show();
                             OpenFile(mstrLoadedfileName);
                         }
-                        
+
                     }
                 }
             }
@@ -54,7 +55,7 @@ namespace DAnTE.Inferno
                 {
                     dataSetType = enmDataType.PROTINFO;
                     mstrFldgTitle = "Open Protein information";
-                    GetOpenFileName(mMostRecentFileType);           
+                    GetOpenFileName(mMostRecentFileType);
                     if (mstrLoadedfileName != null)
                     {
                         mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
@@ -231,7 +232,7 @@ namespace DAnTE.Inferno
                 {
                     rcmd2 = rcmd + ",\"vars\")";
                     mstrLoadedfileName = Settings.Default.SessionFileName;
-                    if (mstrLoadedfileName == null)
+                    if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
                     {
                         mstrFldgTitle = "Select a file to save the session";
                         GetSaveFileName("DAnTE files (*.dnt)|*.dnt|All files (*.*)|*.*");
@@ -378,7 +379,6 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 SaveFileDialog saveFdlg = new SaveFileDialog();
-                string fExt = null;
 
                 saveFdlg.Filter = "CSV files (*.csv)|*.csv|Tab delimited TXT files (*.txt)|*.txt|All files (*.*)|*.*";
                 saveFdlg.FilterIndex = 1;
@@ -386,11 +386,12 @@ namespace DAnTE.Inferno
 
                 if (saveFdlg.ShowDialog() == DialogResult.OK)
                 {
-                    fExt = Path.GetExtension(saveFdlg.FileName);
-                    using (TextWriter streamWriter = new StreamWriter(saveFdlg.OpenFile()))
+                    var outputFile = new FileInfo(saveFdlg.FileName);
+
+                    using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
                     {
-                        CsvWriter.WriteToStream(streamWriter, mclsSelected.mDTable, true, false,
-                            fExt.Equals(".txt"));
+                        CsvWriter.WriteToStream(writer, mclsSelected.mDTable, true, false,
+                            outputFile.Extension.ToLower().Equals(".txt"));
                         this.statusBarPanelMsg.Text = "File saved successfully.";
                     }
                 }
@@ -442,38 +443,148 @@ namespace DAnTE.Inferno
 
         private void mCtxtMenuSave_Click(object sender, EventArgs e)
         {
-            clsDatasetTreeNode mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedTable = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (mhtDatasets.ContainsKey("Protein Info"))
+            if (!mhtDatasets.ContainsKey("Protein Info"))
             {
-                mstrFldgTitle = "Select a file to save";
-                GetSaveFileName("CSV files (*.csv)|*.csv|Tab delimited txt files (*.txt)|*.txt|" +
-                        "All files (*.*)|*.*");
-                if (mstrLoadedfileName != null)
-                {
-                    string rcmd = "SaveWithProts(Data=" + mclsSelected.mstrRdatasetName + ",filename=\"" +
-                        mstrLoadedfileName.Replace("\\", "/") + "\")";
-                    try
-                    {
-                        rConnector.EvaluateNoReturn(rcmd);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
-                    }
-                }
+                MessageBox.Show("No protein information found!", "Insufficient data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            mstrFldgTitle = "Select a file to save";
+            GetSaveFileName("CSV files (*.csv)|*.csv|Tab delimited txt files (*.txt)|*.txt|" + "All files (*.*)|*.*");
+            if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
+            {
+                return;
+            }
+
+            var outputFile = new FileInfo(mstrLoadedfileName);
+
+            if (mhtDatasets.ContainsKey(selectedTable.mstrDataText))
+            {
+                SaveTableWithProteinIDs(selectedTable, outputFile);
             }
             else
-                MessageBox.Show("No protein information found!", "Insufficient data", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+            {
+                // Match not found; this is unexpected; export the data using R
+                string rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" +
+                   mstrLoadedfileName.Replace("\\", "/") + "\")";
+                try
+                {
+                    rConnector.EvaluateNoReturn(rcmd);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
+                }
+            }
+
+
+        }
+
+        private void SaveTableWithProteinIDs(clsDatasetTreeNode selectedTable, FileInfo outputFile)
+        {
+            // Write out the current dataset, but with the the protein info included
+            var currentDataset = (clsDatasetTreeNode)mhtDatasets[selectedTable.mstrDataText];
+            var proteinDataset = (clsDatasetTreeNode)mhtDatasets["Protein Info"];
+
+            // Store the proteins in a dictionary so that we can quickly lookup the info
+            // Keys are row_id, values are Lists of protein names
+            var proteinList = new Dictionary<string, List<string>>();
+
+            foreach (DataRow row in proteinDataset.mDTable.Rows)
+            {
+                // Column 0 is Row_ID
+                // Column 1 is ProteinID
+
+                string rowID = row[0].ToString();
+                string proteinID = row[1].ToString();
+
+                if (string.IsNullOrWhiteSpace(rowID) || string.IsNullOrWhiteSpace(proteinID))
+                    continue;
+
+                List<string> proteinsForRow;
+                if (proteinList.TryGetValue(rowID, out proteinsForRow))
+                {
+                    proteinsForRow.Add(proteinID);
+                }
+                else
+                {
+                    proteinsForRow = new List<string>
+                        {
+                            proteinID
+                        };
+                    proteinList.Add(rowID, proteinsForRow);
+                }
+            }
+
+            const bool quoteAll = false;
+            bool tabDelimited = outputFile.Extension.ToLower() == ".txt";
+
+            using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
+            {
+
+                int columnCount = currentDataset.mDTable.Columns.Count;
+                var rowData = new List<string>(columnCount);
+
+                for (int i = 0; i < columnCount; i++)
+                {
+                    rowData.Add(currentDataset.mDTable.Columns[i].Caption);
+
+                    // Add the ProteinID just after the first column
+                    if (i == 0)
+                        rowData.Add("ProteinID");
+                }
+
+                CsvWriter.WriteRow(writer, rowData, quoteAll, tabDelimited);
+
+                foreach (DataRow row in currentDataset.mDTable.Rows)
+                {
+                    string rowID = row[0].ToString();
+                    List<string> proteinsForRow;
+                    if (!proteinList.TryGetValue(rowID, out proteinsForRow))
+                    {
+                        proteinsForRow = new List<string>
+                            {
+                                "Undefined"
+                            };
+                    }
+
+                    foreach (var proteinID in proteinsForRow)
+                    {
+                        rowData.Clear();
+
+                        for (int j = 0; j < columnCount; j++)
+                        {
+                            string itemText = string.Empty;
+
+                            if (row[j] != null)
+                            {
+                                itemText = row[j].ToString();
+                            }
+
+                            rowData.Add(itemText);
+
+                            // Add the ProteinID just after the first column
+                            if (j == 0)
+                                rowData.Add(proteinID);
+                        }
+                        CsvWriter.WriteRow(writer, rowData, quoteAll, tabDelimited);
+                    }
+
+                }
+
+                this.statusBarPanelMsg.Text = "File saved successfully.";
+            }
+
         }
 
         private void menuItemDeleteColumns_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("This feature is not implemented");
         }
 
         #endregion
+
     }
 }
 
