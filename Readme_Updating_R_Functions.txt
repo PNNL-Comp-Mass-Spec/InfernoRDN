@@ -4,7 +4,8 @@ Inferno_ggplots.RData is historical and is no longer used.
 
 1) Start RStudio
 
-2) Choose Session, Load Workspace, and open Inferno_stdplots.RData
+2) Choose Session, Load Workspace, and open Inferno_stdplots.RData or 
+   Inferno.RData, depending on your needs
 
 3) The Environment pane lists the available functions, for example plot_hist
 
@@ -35,4 +36,8 @@ Inferno_ggplots.RData is historical and is no longer used.
    by hovering your mouse over the function definition column in the 
    Environment tab and examining the function parameters listed.
 
+   Changes may also be verified by typing the function name in the console tab
+   again:
+      plot_hist
+   
 8) When done updating functions, choose Session, Save Workspace As ...

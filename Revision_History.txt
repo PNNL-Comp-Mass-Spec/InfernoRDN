@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.5506; January 28, 2015
+	- Updated KNNWimpute to support missing values
+		- Special thanks to Jonathon O'Brien for providing the updated R code
+
 Version 1.1.5456; December 9, 2014
 	- Right clicking a table in the data list and choosing "Save with Protein Info" now supports saving as tab-delimited text
 

@@ -44,7 +44,7 @@ KNNWimpute <- function(Data, k=10)
     for(i in 1:dim(Data)[[1]]) {
         if (any(is.na(Data[i,]))){
             dt1 <- matrix(Data[i,],nrow = dim(Data)[[1]],ncol = dim(Data)[[2]],byrow =TRUE)
-            pept.dist   <- sqrt(t(apply((dt1 - datatmp)^2,1,sum, na.rm =TRUE)))
+            pept.dist   <- sqrt(t(apply((dt1 - datatmp)^2,1,sumifobs, na.rm =TRUE)))
             w <- sort(pept.dist)[2:(1+k)]
             W <- 1/w
             W <- W/sum(W, na.rm = TRUE)
@@ -53,3 +53,16 @@ KNNWimpute <- function(Data, k=10)
     }
     return(Data)
 }
+
+
+#--------------------------------------------------------------------
+# This fixes a bug where peptides with no matching value would be defaulted to zeo
+# Thanks to Jonathon O'Brien for both finding the bug and providing the fix 
+sumifobs<-function(vec)
+{
+  n.obs<-sum(!(is.na(vec)))
+  total<-sum(vec,na.rm=T)
+  if (n.obs==0){total<-NA}
+  return(total)
+}
+
