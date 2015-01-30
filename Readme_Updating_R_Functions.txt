@@ -1,3 +1,5 @@
+== Updating Functions in .RData Files ==
+
 Use the following steps to update the details of one or more functions 
 in the .RData files in the Rscripts folder.  Note that 
 Inferno_ggplots.RData is historical and is no longer used.
@@ -42,3 +44,16 @@ Inferno_ggplots.RData is historical and is no longer used.
    
 8) When done updating functions, choose Session, Save Workspace As ...
    and overwrite the original .RData file that you opened
+
+
+== Loading Inferno Files into RStudio ==
+
+The .dnt files created by Inferno when you use Save Session are simply 
+R session files. These files can be loaded into RStudio using 
+Session, "Load workspace". This allows you to further analyze the 
+data using R.  
+1) Start RStudio
+2) Use Session, "Load Workspace" and load your .dnt file
+3) Again use "Load Workspace" two more times, loading Inferno.RData 
+   and Inferno_stdplots.RData
+
