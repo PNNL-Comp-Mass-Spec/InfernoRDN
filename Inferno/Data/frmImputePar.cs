@@ -36,38 +36,39 @@ namespace DAnTE.Inferno
                 DialogResult = DialogResult.None;
                 return;
             }
-            else
+
+            try
             {
-                try
-                {
-                    k = Convert.ToInt16(mtxtBoxK.Text);
-                    maxIter = Convert.ToInt16(mtxtBoxSVDiter.Text);
-                    npcs = Convert.ToInt16(mtxtBoxnPCs.Text);
-                    cutoff = Convert.ToSingle(mtxtBoxFthres.Text);
-                    svdthres = Convert.ToSingle(mtxtBoxSVDthres.Text);
-                    constant = Convert.ToSingle(mtxtBoxConst.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Data type error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    DialogResult = DialogResult.None;
-                    return;
-                }
-                if ((cutoff < 0 || cutoff > 50) && (!mrBtnMean.Checked || !mrBtnMedian.Checked))
-                {
-                    DialogResult = DialogResult.None;
-                    MessageBox.Show("For best results imputation threshold should be around 20%", "Error", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (svdthres < 0 || svdthres >= 1)
-                {
-                    DialogResult = DialogResult.None;
-                    MessageBox.Show("Iteration threshold chosen is not allowed.", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
+                k = Convert.ToInt16(mtxtBoxK.Text);
+                maxIter = Convert.ToInt16(mtxtBoxSVDiter.Text);
+                npcs = Convert.ToInt16(mtxtBoxnPCs.Text);
+                cutoff = Convert.ToSingle(mtxtBoxFthres.Text);
+                svdthres = Convert.ToSingle(mtxtBoxSVDthres.Text);
+                constant = Convert.ToSingle(mtxtBoxConst.Text);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Data type error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            if ((cutoff < 0 || cutoff > 50) && (!mrBtnMean.Checked || !mrBtnMedian.Checked))
+            {
+                DialogResult = DialogResult.None;
+                MessageBox.Show("For best results imputation threshold should be around 20%", "Error", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (svdthres < 0 || svdthres >= 1)
+            {
+                DialogResult = DialogResult.None;
+                MessageBox.Show("Iteration threshold chosen is not allowed.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
+
             DialogResult = DialogResult.OK;
         }
 
@@ -79,7 +80,7 @@ namespace DAnTE.Inferno
             mtxtBoxSVDthres.Text = "0.01";
             mtxtBoxSVDiter.Text = "100";
             mtxtBoxConst.Text = "1.0";
-            mrBtnKNN.Checked = true;
+            mrBtnWKNN.Checked = true;
             mchkBoxNoImpute.Checked = false;
             mcmbBoxFactors.SelectedIndex = 0;
         }

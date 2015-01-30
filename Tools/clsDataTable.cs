@@ -571,7 +571,6 @@ namespace DAnTE.Tools
 
 	    public static bool RowsIdentical(DataRow row1, DataRow row2)
         {
-            bool success = true;
             for (int i = 0; i < row1.ItemArray.Length; i++)
             {
                 var item1 = row1.ItemArray[i];
@@ -583,7 +582,7 @@ namespace DAnTE.Tools
                 if (item1 != null && item2 == null)
                     return false;
 
-                if (item1 != null && item2 != null)
+                if (item1 != null)
                 {
                     if (!item1.Equals(item2))
                         return false;

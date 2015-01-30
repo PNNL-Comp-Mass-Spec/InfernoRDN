@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.5507; January 28, 2015
+	- Made KNNWimpute the default imputation method
+	- Minor syntax fix in function KNNWimpute
+
 Version 1.1.5506; January 28, 2015
 	- Updated KNNWimpute to support missing values
 		- Special thanks to Jonathon O'Brien for providing the updated R code

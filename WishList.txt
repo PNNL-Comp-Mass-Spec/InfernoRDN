@@ -1,0 +1,9 @@
+
+1. Under Plot, Correlation
+	Select Scatter Style
+	Click OK
+	The correlation numbers that are shown in the white boxes in the upper right portion of the plot are informative
+	Would like to be able to get those out as a text file, particularly when correlating 20 datasets vs. each other, the font gets really small
+
+2. Under Data, Impute Missing Values
+	"k Nearest Neighbours (kNN)" does not actually do an imputation (results are the same as the input

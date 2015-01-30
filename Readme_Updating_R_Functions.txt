@@ -41,3 +41,4 @@ Inferno_ggplots.RData is historical and is no longer used.
       plot_hist
    
 8) When done updating functions, choose Session, Save Workspace As ...
+   and overwrite the original .RData file that you opened
