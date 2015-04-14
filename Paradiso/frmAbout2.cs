@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -19,10 +20,10 @@ namespace DAnTE.Paradiso
 
         private void m_fadeInOutTimer_Tick(object sender, System.EventArgs e)
         {
-          
+
             if (m_fadeInFlag == false)
             {
-				// Fading out
+                // Fading out
 
                 Opacity -= (m_fadeInOutTimer.Interval / 400.0);
 
@@ -40,16 +41,16 @@ namespace DAnTE.Paradiso
             }
             else
             {
-				// Fading in
+                // Fading in
 
                 Opacity += (m_fadeInOutTimer.Interval / 400.0);
-				m_fadeInFlag = (Opacity < 1.0);
-				if (!m_fadeInFlag)
-				{
-					m_fadeInOutTimer.Enabled = false;
+                m_fadeInFlag = (Opacity < 1.0);
+                if (!m_fadeInFlag)
+                {
+                    m_fadeInOutTimer.Enabled = false;
 
-					ShowCredits();
-				}
+                    ShowCredits();
+                }
 
             }
 
@@ -59,25 +60,25 @@ namespace DAnTE.Paradiso
         {
 
             base.OnLoad(e);
-            
+
             if (!DesignMode)
             {
-				// Only show the fading process at runtime
+                // Only show the fading process at runtime
 
                 m_fadeInFlag = true;
                 Opacity = 0;
 
                 m_fadeInOutTimer.Enabled = true;
 
-            } 
+            }
 
-			mlblCredits.Visible = false;
+            mlblCredits.Visible = false;
             mlblDev.Visible = false;
-            
-        } 
 
-		// Uncomment to toggle fading out the about box
-		//
+        }
+
+        // Uncomment to toggle fading out the about box
+        //
         //protected override void OnClosing(CancelEventArgs e)
         //{
 
@@ -100,28 +101,34 @@ namespace DAnTE.Paradiso
         {
             this.Close();
         }
-        
+
         private void ShowCredits()
         {
-			string credits = "Thanks:" + Environment.NewLine + Environment.NewLine + "DAnTE project @PNNL" +
-				Environment.NewLine +
-				Environment.NewLine + "Konstantinos Petritis and the" +
-				Environment.NewLine + "Center for Proteomics staff at TGen." +
-				Environment.NewLine +
-				Environment.NewLine + "Gary Kiebel and Matthew Monroe" +
-				Environment.NewLine + "at Pacific Northwest National Laboratory" +
-			    Environment.NewLine + "(matthew.monroe@pnnl.gov)" +
-				Environment.NewLine +
-				Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
 
-			mlblCredits.Visible = true;			
-			mlblCredits.Text = credits;
+            string credits = string.Empty +
+                             "Maintained by Matthew Monroe and Gary Kiebel at Pacific Northwest National Laboratory" +
+                             Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
+                             Environment.NewLine +
+                             Environment.NewLine + "This is version " + GetProgramVersion() +
+                             Environment.NewLine + DAnTE.Inferno.frmDAnTE.PROGRAM_DATE +
+                             Environment.NewLine +
+                             Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
+                             Environment.NewLine + "Center for Proteomics staff at TGen." +
+                             Environment.NewLine +
+                             Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
 
-			mlblDev.Visible = true;
-			mlblDev.Text = "Developed by:" + Environment.NewLine +
-				"   Ashoka Polpitiya" + Environment.NewLine +
-				"   (ashoka@tgen.org)";
+            mlblCredits.Visible = true;
+            mlblCredits.Text = credits;
+
+            mlblDev.Visible = true;
+            mlblDev.Text = "Originally developed by:" + Environment.NewLine +
+                "   Ashoka Polpitiya" + Environment.NewLine +
+                "   (ashoka@tgen.org)";
         }
 
+        private string GetProgramVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
     }
 }

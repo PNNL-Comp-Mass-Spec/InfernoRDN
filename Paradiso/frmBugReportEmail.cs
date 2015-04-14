@@ -331,11 +331,10 @@ namespace DAnTE.Paradiso
             Settings.Default.email = mstrUserEmail;
             Settings.Default.Save();
 
-			mSBemail.Append("mailto:matthew.monroe@pnnl.gov; ashoka.pol@gmail.com?");
+			mSBemail.Append("mailto:matthew.monroe@pnnl.gov; proteomics@pnnl.gov?");
 
 
-            mSBemail.Append("subject=InfernoRDN - v");
-            mSBemail.Append(version + " : ");
+            mSBemail.Append("subject=InfernoRDN : ");
             mSBemail.Append(this.mcmbBoxRequest.Text + "&body=");
 			
 			if (this.mstrUserEmail.Length > 0)
@@ -345,9 +344,11 @@ namespace DAnTE.Paradiso
                 mSBemail.Append(this.mstrUserEmail);
 			}
 
+            mSBemail.Append(";    Version " + version + " (" + DAnTE.Inferno.frmDAnTE.PROGRAM_DATE + ")");
+
 			if (this.mstrShortSummary.Length > 0)
 			{
-                mSBemail.Append("; Summary : ");
+                mSBemail.Append(";    Summary : ");
 				//Uri escapeString = new Uri(this.mstrShortSummary) ;
                 mSBemail.Append(this.mstrShortSummary + "\r\n");
 				//optionsSB.Append(System.Uri.EscapeString(this.mstrShortSummary)) ;
@@ -355,11 +356,12 @@ namespace DAnTE.Paradiso
 
 			if (this.mstrDescription.Length > 0) 
 			{
-                mSBemail.Append("; Description : ");
+                mSBemail.Append(";    Description : ");
 				//Uri escapeString = new Uri(this.mstrDescription) ;
                 mSBemail.Append(this.mstrDescription);
 				//optionsSB.Append(System.Uri.EscapeString(this.mstrDescription));
 			}
+
 			return mSBemail.ToString();
 		}
 		

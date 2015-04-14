@@ -1,5 +1,11 @@
 InfernoRDN Change Log
 
+Version 1.1.5507; April 13, 2015
+	- Add validation logic throughout the program to inform the user when an operation cannot be performed
+	- Update clsRCmdLog to allow two copies of Inferno to be running simultaneously
+	- Extensive Resharper code cleanup, including reduced nested if statements
+	- Add program date to the About window
+
 Version 1.1.5507; January 28, 2015
 	- Made KNNWimpute the default imputation method
 	- Minor syntax fix in function KNNWimpute

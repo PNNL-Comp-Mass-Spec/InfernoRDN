@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
@@ -15,14 +16,16 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const int MAX = 20;
+        public const string PROGRAM_DATE = "April 13, 2015";
+
+        public const int MAX_DATASETS_TO_SELECT = 20;
         private IContainer components;
         private TabControl mtabControlData;
         // Tab Page controls 
         private TabPage ctltabPage;
         // Tab controls for Expressions
 
-        private frmShowProgress mfrmShowProgress;
+        private readonly frmShowProgress mfrmShowProgress;
 
         private ArrayList marrDataSetNames = new ArrayList();
 
@@ -92,6 +95,36 @@ namespace DAnTE.Inferno
             if (m_frmDAnTE == null || m_frmDAnTE.IsDisposed) //if not created yet, Create an instance
                 m_frmDAnTE = new frmDAnTE();
             return m_frmDAnTE;  //just created or created earlier.Return it
+        }
+
+        private DataGridViewSelectedRowCollection GetSelectedRows(DataGridView currGrid)
+        {
+            DataGridViewSelectedRowCollection selectedRows = currGrid.SelectedRows;
+
+            if (selectedRows.Count < 1)
+            {
+                var rowIndicesAdded = new SortedSet<int>();
+
+                // Make a list of the rows with selected cells
+                foreach (DataGridViewCell selectedCell in currGrid.SelectedCells)
+                {
+                    if (rowIndicesAdded.Contains(selectedCell.RowIndex))
+                        continue;
+
+                    rowIndicesAdded.Add(selectedCell.RowIndex);
+
+                }
+
+                // Auto select the rows
+                foreach (int rowIndex in rowIndicesAdded)
+                {
+                    currGrid.Rows[rowIndex].Selected = true;
+                }
+
+                selectedRows = currGrid.SelectedRows;
+            }
+
+            return selectedRows;
         }
 
         private bool ValidateExpressionsLoaded(string currentTask)

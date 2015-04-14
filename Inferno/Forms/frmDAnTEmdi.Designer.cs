@@ -35,7 +35,6 @@ namespace DAnTE.Inferno
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemTools = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemRlogs = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemClearTmp = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemResource = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemUpgradeRPacks = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,7 +114,6 @@ namespace DAnTE.Inferno
 			// mnuItemTools
 			// 
 			this.mnuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemRlogs,
             this.mnuItemClearTmp,
             this.mnuItemResource,
             this.mnuItemUpgradeRPacks,
@@ -124,14 +122,7 @@ namespace DAnTE.Inferno
 			this.mnuItemTools.MergeIndex = 5;
 			this.mnuItemTools.Name = "mnuItemTools";
 			this.mnuItemTools.Size = new System.Drawing.Size(57, 24);
-			this.mnuItemTools.Text = "&Tools";
-			// 
-			// mnuItemRlogs
-			// 
-			this.mnuItemRlogs.Name = "mnuItemRlogs";
-			this.mnuItemRlogs.Size = new System.Drawing.Size(223, 24);
-			this.mnuItemRlogs.Text = "&View R Logs";
-			this.mnuItemRlogs.Click += new System.EventHandler(this.mnuItemRlogs_Click);
+			this.mnuItemTools.Text = "&Tools";		
 			// 
 			// mnuItemClearTmp
 			// 
@@ -293,19 +284,7 @@ namespace DAnTE.Inferno
 			// 
 			this.toolStripSeparator3.MergeIndex = 2;
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-			// 
-			// mtoolBtnRlog
-			// 
-			this.mtoolBtnRlog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.mtoolBtnRlog.Image = global::DAnTE.Properties.Resources.ktip;
-			this.mtoolBtnRlog.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.mtoolBtnRlog.MergeIndex = 50;
-			this.mtoolBtnRlog.Name = "mtoolBtnRlog";
-			this.mtoolBtnRlog.Size = new System.Drawing.Size(23, 22);
-			this.mtoolBtnRlog.Text = "&Copy";
-			this.mtoolBtnRlog.ToolTipText = "View R logs";
-			this.mtoolBtnRlog.Click += new System.EventHandler(this.mnuItemRlogs_Click);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);			
 			// 
 			// mtoolBtnHelp
 			// 
@@ -365,7 +344,6 @@ namespace DAnTE.Inferno
         private System.Windows.Forms.ToolStripMenuItem mnuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuItemTools;
         private System.Windows.Forms.ToolStripMenuItem mnuItemResource;
-        private System.Windows.Forms.ToolStripMenuItem mnuItemRlogs;
         private System.Windows.Forms.ToolStripMenuItem mnuItemClearTmp;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton mtoolBtnRlog;

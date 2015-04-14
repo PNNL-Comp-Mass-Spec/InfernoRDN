@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmQQPar : Form
     {
-        private int MAX = frmDAnTE.MAX;
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
         private int numCol;
         private ArrayList marrDatasets = new ArrayList();
         string foreC = "#FFC38A", borderC = "#5FAE27", lineC = "#FF0000";

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
@@ -406,9 +407,14 @@ namespace DAnTE.Inferno
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
-            DataGridViewSelectedRowCollection selectedRows = currGrid.SelectedRows;
+            DataGridViewSelectedRowCollection selectedRows = GetSelectedRows(currGrid);
+            if (selectedRows.Count < 1)
+            {
+                MessageBox.Show("No rows have been selected", "Nothing to plot");
+                return;
+            }
 
-            if (currGrid.SelectedRows.Count > 100)
+            if (selectedRows.Count > 100)
             {
                 MessageBox.Show("Cannot plot more than 100 rows; please select fewer rows then try again",
                                 "Too many rows to plot",

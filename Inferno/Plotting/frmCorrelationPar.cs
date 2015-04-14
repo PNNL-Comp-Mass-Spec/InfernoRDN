@@ -15,9 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmCorrelationPar : Form
     {
-        private clsCorrelationPar mclsCorrPar = new clsCorrelationPar();
-        private frmDAnTE mfrmDante;
-        private int MAX = frmDAnTE.MAX;
+        private readonly clsCorrelationPar mclsCorrPar = new clsCorrelationPar();        
         private ArrayList marrDatasets = new ArrayList();
         private string ellipseC = null;
         private string mstrPaletteName = "Black-Body", customCol = null;
@@ -54,7 +52,16 @@ namespace DAnTE.Inferno
         {
             int N = mlstViewDataSets.Items.Count;
             if (mrBtnScatter.Checked)
-                N = mlstViewDataSets.Items.Count > MAX ? N = 20 : N = mlstViewDataSets.Items.Count;
+            {
+                if (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT)
+                {
+                    N = 20;
+                }
+                else
+                {
+                    N = mlstViewDataSets.Items.Count;
+                }
+            }
             for (int i = 0; i < N; i++)
             {
                 if (mlstViewDataSets.Items[i].Checked == true)
@@ -66,18 +73,22 @@ namespace DAnTE.Inferno
                     mlstViewDataSets.Items[i].Checked = true;
                 }
             }
-            if (mrBtnScatter.Checked && (mlstViewDataSets.Items.Count > MAX))
+            if (mrBtnScatter.Checked && (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT))
+            {
                 MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                Environment.NewLine + "Therefore, total selected set to " + frmDAnTE.MAX_DATASETS_TO_SELECT + ".",
+                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void mlstViewDataSets_ItemChecked(object sender, ItemCheckEventArgs e)
         {
-            if (mrBtnScatter.Checked && (mlstViewDataSets.CheckedIndices.Count > MAX))
+            if (mrBtnScatter.Checked && (mlstViewDataSets.CheckedIndices.Count > frmDAnTE.MAX_DATASETS_TO_SELECT))
+            {
                 MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Maximum suggested is " + MAX.ToString() + ".",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                Environment.NewLine + "Maximum suggested is " + frmDAnTE.MAX_DATASETS_TO_SELECT + ".",
+                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void mrbtnHeatmap_CheckedChanged(object sender, EventArgs e)
@@ -371,7 +382,7 @@ namespace DAnTE.Inferno
                             selected = selected + "," + Convert.ToString(Convert.ToInt16(
                                 mlstViewDataSets.Items[i].Tag) + 1);
                         k++;
-                        if (mrBtnScatter.Checked && (k == MAX))
+                        if (mrBtnScatter.Checked && (k == frmDAnTE.MAX_DATASETS_TO_SELECT))
                             break;
                     }
                 }
@@ -499,9 +510,7 @@ namespace DAnTE.Inferno
         public frmDAnTE DAnTEinstance
         {
             set
-            {
-                mfrmDante = value;
-            }
+            { }
         }
         #endregion
                 

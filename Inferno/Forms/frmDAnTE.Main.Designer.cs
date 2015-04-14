@@ -127,7 +127,7 @@ namespace DAnTE.Inferno
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDAnTE));
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Inferno");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Inferno");
             this.mnuStripDAnTE = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -188,9 +188,10 @@ namespace DAnTE.Inferno
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemFilterpq = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemMissFilt = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuItemFilterUsingSelectedRowIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAnalysisSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuItemFilterUsingSelectedRowIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.mtabControlData = new System.Windows.Forms.TabControl();
             this.splitterVert = new System.Windows.Forms.Splitter();
@@ -249,7 +250,6 @@ namespace DAnTE.Inferno
             this.ctxtMnuItemPlotRows = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxtMnuItemFilter = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuStripDAnTE.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mContextMenuTreeV.SuspendLayout();
@@ -591,6 +591,7 @@ namespace DAnTE.Inferno
             // 
             // mnuItemPlotSelectedRows
             // 
+            this.mnuItemPlotSelectedRows.Image = ((System.Drawing.Image)(resources.GetObject("mnuItemPlotSelectedRows.Image")));
             this.mnuItemPlotSelectedRows.Name = "mnuItemPlotSelectedRows";
             this.mnuItemPlotSelectedRows.Size = new System.Drawing.Size(202, 26);
             this.mnuItemPlotSelectedRows.Text = "Plot selected rows";
@@ -817,13 +818,6 @@ namespace DAnTE.Inferno
             this.mnuItemMissFilt.Text = "Missing Value Filter";
             this.mnuItemMissFilt.Click += new System.EventHandler(this.mnuItemMissFilt_Click);
             // 
-            // mnuItemFilterUsingSelectedRowIDs
-            // 
-            this.mnuItemFilterUsingSelectedRowIDs.Name = "mnuItemFilterUsingSelectedRowIDs";
-            this.mnuItemFilterUsingSelectedRowIDs.Size = new System.Drawing.Size(267, 26);
-            this.mnuItemFilterUsingSelectedRowIDs.Text = "Filter using selected RowIDs";
-            this.mnuItemFilterUsingSelectedRowIDs.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
-            // 
             // mnuAnalysisSummary
             // 
             this.mnuAnalysisSummary.MergeAction = System.Windows.Forms.MergeAction.Insert;
@@ -839,6 +833,18 @@ namespace DAnTE.Inferno
             this.toolStripSeparator8.MergeIndex = 5;
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(264, 6);
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(264, 6);
+            // 
+            // mnuItemFilterUsingSelectedRowIDs
+            // 
+            this.mnuItemFilterUsingSelectedRowIDs.Name = "mnuItemFilterUsingSelectedRowIDs";
+            this.mnuItemFilterUsingSelectedRowIDs.Size = new System.Drawing.Size(267, 26);
+            this.mnuItemFilterUsingSelectedRowIDs.Text = "Filter using selected RowIDs";
+            this.mnuItemFilterUsingSelectedRowIDs.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
             // 
             // panel1
             // 
@@ -876,10 +882,10 @@ namespace DAnTE.Inferno
             this.ctltreeView.ImageList = this.mImListTreeView;
             this.ctltreeView.Location = new System.Drawing.Point(0, 0);
             this.ctltreeView.Name = "ctltreeView";
-            treeNode2.Name = "";
-            treeNode2.Text = "Inferno";
+            treeNode1.Name = "";
+            treeNode1.Text = "Inferno";
             this.ctltreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.ctltreeView.SelectedImageIndex = 0;
             this.ctltreeView.Size = new System.Drawing.Size(312, 410);
             this.ctltreeView.TabIndex = 0;
@@ -1457,11 +1463,6 @@ namespace DAnTE.Inferno
             this.ctxtMnuItemFilter.Size = new System.Drawing.Size(291, 24);
             this.ctxtMnuItemFilter.Text = "Filter Based on Selected RowIDs";
             this.ctxtMnuItemFilter.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
-            // 
-            // toolStripSeparator18
-            // 
-            this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(264, 6);
             // 
             // frmDAnTE
             // 

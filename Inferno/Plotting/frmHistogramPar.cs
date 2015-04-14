@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmHistogramPar : Form
     {
-        private int MAX = frmDAnTE.MAX;
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
         private int numCol, bins;
         private ArrayList marrDatasets = new ArrayList();
         string foreC = "#FFC38A", borderC = "#5FAE27";

@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
     public partial class frmMAplotsPar : Form
     {
         private clsMAplotsPar mclsMApar = new clsMAplotsPar();
-        private int MAX = frmDAnTE.MAX;
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
         private ArrayList marrDatasets = new ArrayList();
         string dataColor = "#00FF00", lColor = "#FF0000";
 
