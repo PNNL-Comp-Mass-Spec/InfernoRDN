@@ -13,7 +13,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmZRollupPar : Form
     {
-        DAnTE.Purgatorio.clsZRollupPar mclsZRollup = new DAnTE.Purgatorio.clsZRollupPar();
+        readonly DAnTE.Purgatorio.clsZRollupPar mclsZRollup = new DAnTE.Purgatorio.clsZRollupPar();
         private bool fieldsOK = true;
 
         public frmZRollupPar(DAnTE.Purgatorio.clsZRollupPar mclsZRoll)

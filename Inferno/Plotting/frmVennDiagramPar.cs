@@ -13,11 +13,11 @@ namespace DAnTE.Inferno
     public partial class frmVennDiagramPar : Form
     {
         private const int MAX_LEVELS = 100;
-        private string[] strarrFactors = new string[MAX_LEVELS];
+        private readonly string[] strarrFactors = new string[MAX_LEVELS];
         private ArrayList marrFactors;
         private int numFactors = 0;
         private ArrayList marrListDatasets = new ArrayList();
-        private DAnTE.Purgatorio.clsVennPar mclsVennPar = new DAnTE.Purgatorio.clsVennPar();
+        private readonly DAnTE.Purgatorio.clsVennPar mclsVennPar = new DAnTE.Purgatorio.clsVennPar();
         private bool mblPlotFactors = false;
 
 

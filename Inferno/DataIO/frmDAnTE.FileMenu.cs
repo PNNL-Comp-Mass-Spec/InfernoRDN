@@ -374,7 +374,7 @@ namespace DAnTE.Inferno
 
         private void menuItemSave_Click(object sender, System.EventArgs e)
         {
-            clsDatasetTreeNode mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
             if (mtabControlData.Controls.Count != 0)
             {

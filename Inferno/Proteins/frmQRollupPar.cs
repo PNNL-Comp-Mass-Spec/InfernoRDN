@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmQRollupPar : Form
     {
-        DAnTE.Purgatorio.clsQRollupPar mclsQRollup = new DAnTE.Purgatorio.clsQRollupPar();
+        readonly DAnTE.Purgatorio.clsQRollupPar mclsQRollup = new DAnTE.Purgatorio.clsQRollupPar();
 
         public frmQRollupPar(DAnTE.Purgatorio.clsQRollupPar mclsQRoll)
         {

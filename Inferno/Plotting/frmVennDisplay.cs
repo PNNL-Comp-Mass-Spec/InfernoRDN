@@ -11,7 +11,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmVennDisplay : DAnTE.Inferno.frmPlotDisplay
     {
-        private clsVennPar mclsVennPar = new clsVennPar();
+        private readonly clsVennPar mclsVennPar = new clsVennPar();
         private frmDAnTE mfrmDante;
 
         public frmVennDisplay(clsVennPar clsVennPar)

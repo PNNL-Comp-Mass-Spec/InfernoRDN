@@ -14,8 +14,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmMADPar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-        DAnTE.Purgatorio.clsMADPar mclsMADPar = new DAnTE.Purgatorio.clsMADPar();
+        readonly DAnTE.Purgatorio.clsMADPar mclsMADPar = new DAnTE.Purgatorio.clsMADPar();
 
         public frmMADPar(DAnTE.Purgatorio.clsMADPar mclsMAD)
         {

@@ -14,8 +14,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmLinRegPar : Form
     {
-        DAnTE.Purgatorio.clsLinRegrnPar mclsLinReg = new DAnTE.Purgatorio.clsLinRegrnPar();
-        private ArrayList marrColumns = new ArrayList();
+        readonly DAnTE.Purgatorio.clsLinRegrnPar mclsLinReg = new DAnTE.Purgatorio.clsLinRegrnPar();
 
         public frmLinRegPar(DAnTE.Purgatorio.clsLinRegrnPar o)
         {

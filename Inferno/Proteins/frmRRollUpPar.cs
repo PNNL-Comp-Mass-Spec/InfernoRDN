@@ -14,7 +14,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmRRollUpPar : Form
     {
-        DAnTE.Purgatorio.clsRRollupPar mclsRRollup = new DAnTE.Purgatorio.clsRRollupPar();
+        readonly DAnTE.Purgatorio.clsRRollupPar mclsRRollup = new DAnTE.Purgatorio.clsRRollupPar();
 
         public frmRRollUpPar(DAnTE.Purgatorio.clsRRollupPar mclsRR)
         {

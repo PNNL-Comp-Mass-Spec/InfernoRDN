@@ -538,7 +538,7 @@ namespace DAnTE.Tools
 	                    }
                         
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 						AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
                     }

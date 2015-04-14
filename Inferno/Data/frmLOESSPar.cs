@@ -14,8 +14,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmLOESSPar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-        DAnTE.Purgatorio.clsLoessPar mclsLoess = new DAnTE.Purgatorio.clsLoessPar();
+        readonly DAnTE.Purgatorio.clsLoessPar mclsLoess = new DAnTE.Purgatorio.clsLoessPar();
 
         public frmLOESSPar(DAnTE.Purgatorio.clsLoessPar clsLoess)
         {

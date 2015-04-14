@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmImputePar : Form
     {
-        DAnTE.Purgatorio.clsImputePar mclsImputePar = new DAnTE.Purgatorio.clsImputePar();
+        readonly DAnTE.Purgatorio.clsImputePar mclsImputePar = new DAnTE.Purgatorio.clsImputePar();
 
         public frmImputePar(DAnTE.Purgatorio.clsImputePar mclsImpute)
         {
