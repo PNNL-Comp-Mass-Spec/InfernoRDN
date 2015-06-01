@@ -243,12 +243,11 @@ namespace DAnTE.Inferno
 
         private void MoveListViewItem(bool mblMoveUp)
         {
-            ListViewItem nextItem;
-            int index, newIndex = -1;
+            int newIndex = -1;
 
             if (mlstViewDataSets.SelectedIndices.Count != 0)
             {
-                index = mlstViewDataSets.SelectedIndices[0];
+                var index = mlstViewDataSets.SelectedIndices[0];
                 if (mblMoveUp)
                 {
                     if (index != 0)
@@ -261,7 +260,7 @@ namespace DAnTE.Inferno
                 }
                 if (newIndex != -1)
                 {
-                    nextItem = (ListViewItem)mlstViewDataSets.Items[newIndex].Clone();
+                    var nextItem = (ListViewItem)mlstViewDataSets.Items[newIndex].Clone();
                     mlstViewDataSets.Items.RemoveAt(newIndex);
                     mlstViewDataSets.Items.Insert(index, nextItem);
                     mlstViewDataSets.Items[newIndex].Selected = true;
@@ -373,34 +372,36 @@ namespace DAnTE.Inferno
             li = mlstViewDataSets.GetItemAt(e.X, e.Y);
             X = e.X;
             Y = e.Y;
-            if (li != null)
+            if (li == null)
             {
-                // Check the subitem clicked .
-                int nStart = X;
-                int spos = 0;
-                subItemSelected = 0;
+                return;
+            }
 
-                int sposX = mlstViewDataSets.Location.X;
-                int sposY = mlstViewDataSets.Location.Y;
-                int epos = mlstViewDataSets.Columns[0].Width;
-                for (int i = 0; i < mlstViewDataSets.Columns.Count; i++)
+            // Check the subitem clicked .
+            int nStart = X;
+            int spos = 0;
+            subItemSelected = 0;
+
+            int sposX = mlstViewDataSets.Location.X;
+            int sposY = mlstViewDataSets.Location.Y;
+            int epos = mlstViewDataSets.Columns[0].Width;
+            for (int i = 0; i < mlstViewDataSets.Columns.Count; i++)
+            {
+                if (nStart > spos && nStart < epos)
                 {
-                    if (nStart > spos && nStart < epos)
-                    {
-                        subItemSelected = i;
-                        break;
-                    }
-
-                    spos = epos;
-                    if (i + 1 < mlstViewDataSets.Columns.Count)
-                        epos += mlstViewDataSets.Columns[i + 1].Width;
+                    subItemSelected = i;
+                    break;
                 }
 
-                Point p = new Point(e.X, e.Y);
-                if (((e.Button & MouseButtons.Right) == MouseButtons.Right) && (subItemSelected > (NUM_COLUMNS - 1)))
-                {
-                    cntxtMnuFactors.Show(mlstViewDataSets, p);
-                }
+                spos = epos;
+                if (i + 1 < mlstViewDataSets.Columns.Count)
+                    epos += mlstViewDataSets.Columns[i + 1].Width;
+            }
+
+            Point p = new Point(e.X, e.Y);
+            if (((e.Button & MouseButtons.Right) == MouseButtons.Right) && (subItemSelected > (NUM_COLUMNS - 1)))
+            {
+                cntxtMnuFactors.Show(mlstViewDataSets, p);
             }
         }
 
@@ -414,10 +415,17 @@ namespace DAnTE.Inferno
         #region Context menu items
         private void menuItemFillBelow_Click(object sender, System.EventArgs e)
         {
+            if (subItemSelected < NUM_COLUMNS || li == null)
+            {
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             int idx = 0;
             foreach (ListViewItem item in mlstViewDataSets.Items)
             {
-                if ((int)item.Tag == (int)li.Tag)//(item.Tag.Equals(li.Tag))
+                if ((int)item.Tag == (int)li.Tag) //(item.Tag.Equals(li.Tag))
                     break;
                 else
                     idx++;
@@ -433,6 +441,13 @@ namespace DAnTE.Inferno
 
         private void menuItemFillNBelow_Click(object sender, System.EventArgs e)
         {
+            if (subItemSelected < NUM_COLUMNS || li == null)
+            {
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }          
+
             int idx = 0;
             int nBlock = 1;
             frmInputBlockSize mfrmInputBlockSize = new frmInputBlockSize();
@@ -447,7 +462,7 @@ namespace DAnTE.Inferno
 
             foreach (ListViewItem item in mlstViewDataSets.Items)
             {
-                if ((int)item.Tag == (int)li.Tag)//(item.Tag.Equals(li.Tag))
+                if ((int)item.Tag == (int)li.Tag) //(item.Tag.Equals(li.Tag))
                     break;
                 else
                     idx++;
@@ -466,25 +481,36 @@ namespace DAnTE.Inferno
 
         private void menuItemFillRand_Click(object sender, System.EventArgs e)
         {
-            if (subItemSelected > (NUM_COLUMNS - 1))
+            if (subItemSelected < NUM_COLUMNS || li == null)
             {
-                Random rnum = new Random();
-                int idxFactor = subItemSelected - NUM_COLUMNS;
-                string currFactorVal;
-                clsFactorInfo currentFactor = new clsFactorInfo();
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
 
-                currentFactor = (clsFactorInfo)marrFactorInfo[idxFactor];
-                for (int num = 0; num < mlstViewDataSets.Items.Count; num++)
-                {
-                    currFactorVal = currentFactor.marrValues[rnum.Next(currentFactor.marrValues.Count)].ToString();
-                    mlstViewDataSets.Items[num].SubItems[subItemSelected].Text = currFactorVal;
-                    ((Factor)((clsDatasetInfo)marrDatasetInfo[num]).marrFactorAssnmnts[subItemSelected - NUM_COLUMNS]).Value = currFactorVal;
-                }
+            Random rnum = new Random();
+            int idxFactor = subItemSelected - NUM_COLUMNS;
+            string currFactorVal;
+            clsFactorInfo currentFactor = new clsFactorInfo();
+
+            currentFactor = (clsFactorInfo)marrFactorInfo[idxFactor];
+            for (int num = 0; num < mlstViewDataSets.Items.Count; num++)
+            {
+                currFactorVal = currentFactor.marrValues[rnum.Next(currentFactor.marrValues.Count)].ToString();
+                mlstViewDataSets.Items[num].SubItems[subItemSelected].Text = currFactorVal;
+                ((Factor)((clsDatasetInfo)marrDatasetInfo[num]).marrFactorAssnmnts[subItemSelected - NUM_COLUMNS]).Value = currFactorVal;
             }
         }
 
         private void menuItemFillNCycl_Click(object sender, System.EventArgs e)
         {
+            if (subItemSelected < NUM_COLUMNS || li == null)
+            {
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             int idx = 0;
             int nBlock = 1;
             frmInputBlockSize mfrmInputBlockSize = new frmInputBlockSize();
@@ -499,7 +525,7 @@ namespace DAnTE.Inferno
 
             foreach (ListViewItem item in mlstViewDataSets.Items)
             {
-                if ((int)item.Tag == (int)li.Tag)//(item.Tag.Equals(li.Tag))
+                if ((int)item.Tag == (int)li.Tag) //(item.Tag.Equals(li.Tag))
                     break;
                 else
                     idx++; // which item is clicked ?
@@ -613,7 +639,7 @@ namespace DAnTE.Inferno
         {
             set
             {
-                mlblSubTitle.Text = value;
+                txtDirections.Text = value;
             }
         }
 
@@ -634,5 +660,6 @@ namespace DAnTE.Inferno
         }
 
         #endregion
+        
     }
 }

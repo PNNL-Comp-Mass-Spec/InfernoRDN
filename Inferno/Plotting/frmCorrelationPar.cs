@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmCorrelationPar : Form
     {
-        private readonly clsCorrelationPar mclsCorrPar = new clsCorrelationPar();        
+        private readonly clsCorrelationPar mclsCorrPar;        
         private ArrayList marrDatasets = new ArrayList();
         private string ellipseC = null;
         private string mstrPaletteName = "Black-Body", customCol = null;
@@ -351,14 +351,24 @@ namespace DAnTE.Inferno
         {
             set
             {
+
                 marrDatasets = value;
                 ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var countChecked = 0;
                 
                 for (int i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString());
-                    lstVItem.Tag = i;
+                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    {
+                        Tag = i
+                    };
                     lstVcolln[i] = lstVItem;
+                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    {
+                        continue;
+                    }
+                    lstVcolln[i].Checked = true;
+                    countChecked++;
                 }
                 mlstViewDataSets.Items.AddRange(lstVcolln);
             }

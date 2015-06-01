@@ -1,5 +1,11 @@
 InfernoRDN Change Log
 
+Version 1.1.5630; June 1, 2015
+	- Median Centering now creates table Median Centered, while Mean Centering continues to create table Mean Centered
+	- Pressing the Escape key now auto clicks cancel on the dialogs
+	- Now auto-selecting the first 20 datasets in windows that have a Toggle All button
+	- Added error checking to the Define Factors window to validate that factors are defined and a valid cell is selected
+
 Version 1.1.5507; April 13, 2015
 	- Add validation logic throughout the program to inform the user when an operation cannot be performed
 	- Update clsRCmdLog to allow two copies of Inferno to be running simultaneously

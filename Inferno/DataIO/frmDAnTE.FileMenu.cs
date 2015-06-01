@@ -422,11 +422,10 @@ namespace DAnTE.Inferno
 
         public bool OK2Exit()
         {
-            DialogResult exitOK = DialogResult.Yes;
             if (mhtDatasets.Count > 0)
             {
-                exitOK = MessageBox.Show("Are you sure?", "Confirm Close",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var exitOK = MessageBox.Show("Are you sure you want to exit?", "Confirm Close",
+                                                      MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
                 if (exitOK == DialogResult.Yes)
                 {
                     mstrLoadedfileName = null;
@@ -434,11 +433,10 @@ namespace DAnTE.Inferno
                     mhtAnalysisObjects.Clear();
                     return true;
                 }
-                else
-                    return false;
+                return false;
             }
-            else
-                return true;
+            
+            return true;
         }
 
         private void mCtxtMenuSave_Click(object sender, EventArgs e)

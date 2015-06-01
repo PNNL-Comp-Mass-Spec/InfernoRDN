@@ -32,14 +32,14 @@ namespace DAnTE.Inferno
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFactorInformation));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.mlblSubTitle = new System.Windows.Forms.Label();
+            this.txtDirections = new System.Windows.Forms.TextBox();
             this.mlblTitle = new System.Windows.Forms.Label();
             this.mbtnDefFac = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cmbBox = new System.Windows.Forms.ComboBox();
             this.mlstViewDataSets = new System.Windows.Forms.ListView();
-            this.mColHeadDS = new System.Windows.Forms.ColumnHeader();
+            this.mColHeadDS = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cntxtMnuFactors = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fillRowsBelowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillnBlocksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,39 +62,43 @@ namespace DAnTE.Inferno
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.mlblSubTitle);
+            this.panel1.Controls.Add(this.txtDirections);
             this.panel1.Controls.Add(this.mlblTitle);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(909, 66);
+            this.panel1.Size = new System.Drawing.Size(1212, 81);
             this.panel1.TabIndex = 0;
             // 
-            // mlblSubTitle
+            // txtDirections
             // 
-            this.mlblSubTitle.AutoSize = true;
-            this.mlblSubTitle.Location = new System.Drawing.Point(26, 37);
-            this.mlblSubTitle.Name = "mlblSubTitle";
-            this.mlblSubTitle.Size = new System.Drawing.Size(359, 13);
-            this.mlblSubTitle.TabIndex = 4;
-            this.mlblSubTitle.Text = "Add/Remove Factors, Set Factor Assignments, and Change Dataset Order";
+            this.txtDirections.Location = new System.Drawing.Point(20, 34);
+            this.txtDirections.Multiline = true;
+            this.txtDirections.Name = "txtDirections";
+            this.txtDirections.ReadOnly = true;
+            this.txtDirections.Size = new System.Drawing.Size(952, 40);
+            this.txtDirections.TabIndex = 5;
+            this.txtDirections.Text = resources.GetString("txtDirections.Text");
             // 
             // mlblTitle
             // 
             this.mlblTitle.AutoSize = true;
             this.mlblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mlblTitle.Location = new System.Drawing.Point(12, 9);
+            this.mlblTitle.Location = new System.Drawing.Point(16, 11);
+            this.mlblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.mlblTitle.Name = "mlblTitle";
-            this.mlblTitle.Size = new System.Drawing.Size(195, 16);
+            this.mlblTitle.Size = new System.Drawing.Size(241, 20);
             this.mlblTitle.TabIndex = 3;
             this.mlblTitle.Text = "Factors and Dataset Order:";
             // 
             // mbtnDefFac
             // 
             this.mbtnDefFac.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.mbtnDefFac.Location = new System.Drawing.Point(17, 328);
+            this.mbtnDefFac.Location = new System.Drawing.Point(23, 404);
+            this.mbtnDefFac.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnDefFac.Name = "mbtnDefFac";
-            this.mbtnDefFac.Size = new System.Drawing.Size(90, 40);
+            this.mbtnDefFac.Size = new System.Drawing.Size(120, 49);
             this.mbtnDefFac.TabIndex = 2;
             this.mbtnDefFac.Text = "Add/Remove Factors";
             this.mbtnDefFac.UseVisualStyleBackColor = true;
@@ -105,9 +109,10 @@ namespace DAnTE.Inferno
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 66);
+            this.panel2.Location = new System.Drawing.Point(0, 81);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(909, 458);
+            this.panel2.Size = new System.Drawing.Size(1212, 564);
             this.panel2.TabIndex = 1;
             // 
             // panel3
@@ -116,22 +121,24 @@ namespace DAnTE.Inferno
             this.panel3.Controls.Add(this.mlstViewDataSets);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(790, 458);
+            this.panel3.Size = new System.Drawing.Size(1053, 564);
             this.panel3.TabIndex = 3;
             // 
             // cmbBox
             // 
             this.cmbBox.FormattingEnabled = true;
-            this.cmbBox.Location = new System.Drawing.Point(128, 165);
+            this.cmbBox.Location = new System.Drawing.Point(171, 203);
+            this.cmbBox.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBox.Name = "cmbBox";
-            this.cmbBox.Size = new System.Drawing.Size(121, 21);
+            this.cmbBox.Size = new System.Drawing.Size(160, 24);
             this.cmbBox.TabIndex = 1;
             this.cmbBox.Text = "FactorCmbBx";
             this.cmbBox.Visible = false;
-            this.cmbBox.LostFocus += new System.EventHandler(this.cmbBoxFocusOver);
             this.cmbBox.SelectedIndexChanged += new System.EventHandler(this.cmbBoxSelectedIndexChanged);
             this.cmbBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbBoxKeyPress);
+            this.cmbBox.LostFocus += new System.EventHandler(this.cmbBoxFocusOver);
             // 
             // mlstViewDataSets
             // 
@@ -143,9 +150,10 @@ namespace DAnTE.Inferno
             this.mlstViewDataSets.GridLines = true;
             this.mlstViewDataSets.HideSelection = false;
             this.mlstViewDataSets.Location = new System.Drawing.Point(0, 0);
+            this.mlstViewDataSets.Margin = new System.Windows.Forms.Padding(4);
             this.mlstViewDataSets.MultiSelect = false;
             this.mlstViewDataSets.Name = "mlstViewDataSets";
-            this.mlstViewDataSets.Size = new System.Drawing.Size(790, 458);
+            this.mlstViewDataSets.Size = new System.Drawing.Size(1053, 564);
             this.mlstViewDataSets.TabIndex = 0;
             this.mlstViewDataSets.UseCompatibleStateImageBehavior = false;
             this.mlstViewDataSets.View = System.Windows.Forms.View.Details;
@@ -159,39 +167,40 @@ namespace DAnTE.Inferno
             // 
             // cntxtMnuFactors
             // 
+            this.cntxtMnuFactors.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cntxtMnuFactors.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fillRowsBelowToolStripMenuItem,
             this.fillnBlocksToolStripMenuItem,
             this.fillnBlocksCyclicallyToolStripMenuItem,
             this.fillRandomToolStripMenuItem});
             this.cntxtMnuFactors.Name = "contextMenuStrip1";
-            this.cntxtMnuFactors.Size = new System.Drawing.Size(204, 92);
+            this.cntxtMnuFactors.Size = new System.Drawing.Size(239, 100);
             // 
             // fillRowsBelowToolStripMenuItem
             // 
             this.fillRowsBelowToolStripMenuItem.Name = "fillRowsBelowToolStripMenuItem";
-            this.fillRowsBelowToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.fillRowsBelowToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.fillRowsBelowToolStripMenuItem.Text = "Fill rows below";
             this.fillRowsBelowToolStripMenuItem.Click += new System.EventHandler(this.menuItemFillBelow_Click);
             // 
             // fillnBlocksToolStripMenuItem
             // 
             this.fillnBlocksToolStripMenuItem.Name = "fillnBlocksToolStripMenuItem";
-            this.fillnBlocksToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.fillnBlocksToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.fillnBlocksToolStripMenuItem.Text = "Fill <n> blocks";
             this.fillnBlocksToolStripMenuItem.Click += new System.EventHandler(this.menuItemFillNBelow_Click);
             // 
             // fillnBlocksCyclicallyToolStripMenuItem
             // 
             this.fillnBlocksCyclicallyToolStripMenuItem.Name = "fillnBlocksCyclicallyToolStripMenuItem";
-            this.fillnBlocksCyclicallyToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.fillnBlocksCyclicallyToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.fillnBlocksCyclicallyToolStripMenuItem.Text = "Fill <n> blocks cyclically";
             this.fillnBlocksCyclicallyToolStripMenuItem.Click += new System.EventHandler(this.menuItemFillNCycl_Click);
             // 
             // fillRandomToolStripMenuItem
             // 
             this.fillRandomToolStripMenuItem.Name = "fillRandomToolStripMenuItem";
-            this.fillRandomToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.fillRandomToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.fillRandomToolStripMenuItem.Text = "Fill random";
             this.fillRandomToolStripMenuItem.Click += new System.EventHandler(this.menuItemFillRand_Click);
             // 
@@ -204,18 +213,20 @@ namespace DAnTE.Inferno
             this.panel4.Controls.Add(this.mbtnDown);
             this.panel4.Controls.Add(this.mbtnUp);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(790, 0);
+            this.panel4.Location = new System.Drawing.Point(1053, 0);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(119, 458);
+            this.panel4.Size = new System.Drawing.Size(159, 564);
             this.panel4.TabIndex = 2;
             // 
             // mbtnCancel
             // 
             this.mbtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.mbtnCancel.Location = new System.Drawing.Point(17, 406);
+            this.mbtnCancel.Location = new System.Drawing.Point(23, 500);
+            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnCancel.Name = "mbtnCancel";
-            this.mbtnCancel.Size = new System.Drawing.Size(90, 26);
+            this.mbtnCancel.Size = new System.Drawing.Size(120, 32);
             this.mbtnCancel.TabIndex = 1;
             this.mbtnCancel.Text = "Cancel";
             this.mbtnCancel.UseVisualStyleBackColor = true;
@@ -224,9 +235,10 @@ namespace DAnTE.Inferno
             // mbtnDel
             // 
             this.mbtnDel.Image = global::DAnTE.Properties.Resources.DeleteHS;
-            this.mbtnDel.Location = new System.Drawing.Point(36, 218);
+            this.mbtnDel.Location = new System.Drawing.Point(48, 268);
+            this.mbtnDel.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnDel.Name = "mbtnDel";
-            this.mbtnDel.Size = new System.Drawing.Size(45, 24);
+            this.mbtnDel.Size = new System.Drawing.Size(60, 30);
             this.mbtnDel.TabIndex = 7;
             this.toolTip1.SetToolTip(this.mbtnDel, "Delete Dataset");
             this.mbtnDel.UseVisualStyleBackColor = true;
@@ -236,9 +248,10 @@ namespace DAnTE.Inferno
             // 
             this.mbtnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.mbtnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.mbtnOK.Location = new System.Drawing.Point(17, 374);
+            this.mbtnOK.Location = new System.Drawing.Point(23, 460);
+            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnOK.Name = "mbtnOK";
-            this.mbtnOK.Size = new System.Drawing.Size(90, 26);
+            this.mbtnOK.Size = new System.Drawing.Size(120, 32);
             this.mbtnOK.TabIndex = 0;
             this.mbtnOK.Text = "OK";
             this.mbtnOK.UseVisualStyleBackColor = true;
@@ -247,9 +260,10 @@ namespace DAnTE.Inferno
             // mbtnDown
             // 
             this.mbtnDown.Image = global::DAnTE.Properties.Resources.downArrow2;
-            this.mbtnDown.Location = new System.Drawing.Point(36, 174);
+            this.mbtnDown.Location = new System.Drawing.Point(48, 214);
+            this.mbtnDown.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnDown.Name = "mbtnDown";
-            this.mbtnDown.Size = new System.Drawing.Size(45, 26);
+            this.mbtnDown.Size = new System.Drawing.Size(60, 32);
             this.mbtnDown.TabIndex = 6;
             this.toolTip1.SetToolTip(this.mbtnDown, "Move Dataset Down");
             this.mbtnDown.UseVisualStyleBackColor = true;
@@ -258,9 +272,10 @@ namespace DAnTE.Inferno
             // mbtnUp
             // 
             this.mbtnUp.Image = global::DAnTE.Properties.Resources.upArrow2;
-            this.mbtnUp.Location = new System.Drawing.Point(36, 134);
+            this.mbtnUp.Location = new System.Drawing.Point(48, 165);
+            this.mbtnUp.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnUp.Name = "mbtnUp";
-            this.mbtnUp.Size = new System.Drawing.Size(45, 25);
+            this.mbtnUp.Size = new System.Drawing.Size(60, 31);
             this.mbtnUp.TabIndex = 5;
             this.toolTip1.SetToolTip(this.mbtnUp, "Move Dataset Up");
             this.mbtnUp.UseVisualStyleBackColor = true;
@@ -269,13 +284,14 @@ namespace DAnTE.Inferno
             // frmFactorInformation
             // 
             this.AcceptButton = this.mbtnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.mbtnCancel;
-            this.ClientSize = new System.Drawing.Size(909, 524);
+            this.ClientSize = new System.Drawing.Size(1212, 645);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmFactorInformation";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -322,6 +338,6 @@ namespace DAnTE.Inferno
         private Button mbtnUp;
         private Panel panel3;
         private ToolTip toolTip1;
-        private Label mlblSubTitle;
+        private TextBox txtDirections;
     }
 }

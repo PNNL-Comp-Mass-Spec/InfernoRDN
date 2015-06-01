@@ -13,7 +13,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmPCAplotPar : Form
     {
-        private clsPCAplotPar mclsPCApar = new clsPCAplotPar();
+        private readonly clsPCAplotPar mclsPCApar;
         private ArrayList marrDatasets = new ArrayList();
         private ArrayList marrFactorList = new ArrayList();
 
@@ -96,7 +96,7 @@ namespace DAnTE.Inferno
         {
             for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked == true)
+                if (mlstViewDataSets.Items[i].Checked)
                 {
                     mlstViewDataSets.Items[i].Checked = false;
                 }
@@ -190,14 +190,25 @@ namespace DAnTE.Inferno
         {
             set
             {
+
                 marrDatasets = value;
                 ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var countChecked = 0;
 
                 for (int i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString());
-                    lstVItem.Tag = i;
+                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    {
+                        Tag = i
+                    };
                     lstVcolln[i] = lstVItem;
+
+                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    {
+                        continue;
+                    }
+                    lstVcolln[i].Checked = true;
+                    countChecked++;
                 }
                 mlstViewDataSets.Items.AddRange(lstVcolln);
             }

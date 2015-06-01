@@ -249,10 +249,14 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsMeanCPar, "CentralTendency");
 
-                string rcmd = mclsMeanCPar.Rcmd;
-
+                string rcmd = mclsMeanCPar.Rcmd;                
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
-                mfrmShowProgress.Message = "Mean Centering Data ...";
+
+                if (mclsMeanCPar.mblUseMeanTend)
+                    mfrmShowProgress.Message = "Mean Centering Data ...";
+                else
+                    mfrmShowProgress.Message = "Median Centering Data ...";
+
                 mfrmShowProgress.ShowDialog();
             }
 
@@ -487,18 +491,33 @@ namespace DAnTE.Inferno
 
         private bool DoMeanCenter(string rcmd)
         {
-            DataTable mDTMeanC = new DataTable();
             bool success = true;
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("meanCEset"))
+                string tableToFind;
+                string statusMsg;
+
+                if (mclsMeanCPar.mblUseMeanTend)
                 {
-                    mDTMeanC = rConnector.DataTable.Copy();
-                    mDTMeanC.TableName = "meanCEset";
-                    rConnector.EvaluateNoReturn("cat(\"Data mean centered.\n\")");
-                    AddDataset2HashTable(mDTMeanC);
+                    tableToFind = "meanCEset";
+                    statusMsg = "cat(\"Data mean centered.\n\")";
+                }
+                else
+                {
+                    tableToFind = "medianCEset";
+                    statusMsg = "cat(\"Data median centered.\n\")";
+                }
+
+                rConnector.EvaluateNoReturn(rcmd);
+                if (rConnector.GetTableFromRmatrix(tableToFind))
+                {
+                    // DataTable dtMeanOrMedianCentered = new DataTable();
+
+                    var dtMeanOrMedianCentered = rConnector.DataTable.Copy();
+                    dtMeanOrMedianCentered.TableName = tableToFind;
+                    rConnector.EvaluateNoReturn(statusMsg);
+                    AddDataset2HashTable(dtMeanOrMedianCentered);
                 }
                 else
                     success = false;

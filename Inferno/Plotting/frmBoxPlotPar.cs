@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmBoxPlotPar : Form
     {
-        private clsBoxPlotPar mclsBoxPlotPar = new clsBoxPlotPar();
+        private readonly clsBoxPlotPar mclsBoxPlotPar;
         private ArrayList marrDatasets = new ArrayList();
         string color;
         
@@ -46,7 +46,7 @@ namespace DAnTE.Inferno
         {
             for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked == true)
+                if (mlstViewDataSets.Items[i].Checked)
                 {
                     mlstViewDataSets.Items[i].Checked = false;
                 }
@@ -133,14 +133,25 @@ namespace DAnTE.Inferno
         {
             set
             {
+
                 marrDatasets = value;
                 ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var countChecked = 0;
                 
                 for (int i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString());
-                    lstVItem.Tag = i;
+                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    {
+                        Tag = i
+                    };
                     lstVcolln[i] = lstVItem;
+
+                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    {
+                        continue;
+                    }
+                    lstVcolln[i].Checked = true;
+                    countChecked++;
                 }
                 mlstViewDataSets.Items.AddRange(lstVcolln);
             }

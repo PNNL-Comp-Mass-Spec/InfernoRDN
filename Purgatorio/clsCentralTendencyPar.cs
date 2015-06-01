@@ -31,8 +31,10 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                rcmd = "meanCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," + 
-                    this.ZeroCenter + ")";
+                if (mblUseMeanTend)
+                    rcmd = "meanCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," + this.ZeroCenter + ")";
+                else
+                    rcmd = "medianCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," + this.ZeroCenter + ")";
                 return rcmd;
             }
         }

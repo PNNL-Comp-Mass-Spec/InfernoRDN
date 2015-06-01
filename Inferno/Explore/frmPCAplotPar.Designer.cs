@@ -419,6 +419,7 @@ namespace DAnTE.Inferno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.mbtnCancel;
             this.ClientSize = new System.Drawing.Size(467, 624);
             this.Controls.Add(this.niceLine2);
             this.Controls.Add(this.mbtnToggle);

@@ -124,16 +124,17 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Mean Centring Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Mean/Median Centering Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
           if (mhtDatasets.Contains("Mean Centered"))
             AddDataNode((clsDatasetTreeNode)mhtDatasets["Mean Centered"]);
+          if (mhtDatasets.Contains("Median Centered"))
+              AddDataNode((clsDatasetTreeNode)mhtDatasets["Median Centered"]);
         } else
-          MessageBox.Show("Mean Centring failed." + Environment.NewLine +
+          MessageBox.Show("Mean/Median Centering failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
               MessageBoxButtons.OK, MessageBoxIcon.Error);
       }

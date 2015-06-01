@@ -135,7 +135,7 @@ namespace DAnTE.Inferno
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(452, 327);
+            this.panel1.Size = new System.Drawing.Size(530, 392);
             this.panel1.TabIndex = 10;
             // 
             // panel2
@@ -146,15 +146,15 @@ namespace DAnTE.Inferno
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(452, 50);
+            this.panel2.Size = new System.Drawing.Size(530, 58);
             this.panel2.TabIndex = 17;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(415, 20);
+            this.label5.Location = new System.Drawing.Point(498, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(13, 13);
+            this.label5.Size = new System.Drawing.Size(16, 17);
             this.label5.TabIndex = 16;
             this.label5.Text = "?";
             this.mtltipHelp.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
@@ -163,33 +163,34 @@ namespace DAnTE.Inferno
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 18);
+            this.label4.Location = new System.Drawing.Point(14, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(206, 15);
+            this.label4.Size = new System.Drawing.Size(245, 18);
             this.label4.TabIndex = 16;
             this.label4.Text = "Change or Define New Factors:";
             // 
             // lstBoxValues
             // 
-            this.lstBoxValues.Location = new System.Drawing.Point(252, 112);
+            this.lstBoxValues.ItemHeight = 16;
+            this.lstBoxValues.Location = new System.Drawing.Point(302, 129);
             this.lstBoxValues.Name = "lstBoxValues";
-            this.lstBoxValues.Size = new System.Drawing.Size(176, 121);
+            this.lstBoxValues.Size = new System.Drawing.Size(212, 132);
             this.lstBoxValues.TabIndex = 5;
             this.lstBoxValues.Tag = "Values";
             this.lstBoxValues.SelectedIndexChanged += new System.EventHandler(this.lstBoxValues_SelectedIndexChanged);
             // 
             // niceLine1
             // 
-            this.niceLine1.Location = new System.Drawing.Point(12, 269);
+            this.niceLine1.Location = new System.Drawing.Point(14, 310);
             this.niceLine1.Name = "niceLine1";
-            this.niceLine1.Size = new System.Drawing.Size(428, 15);
+            this.niceLine1.Size = new System.Drawing.Size(514, 17);
             this.niceLine1.TabIndex = 14;
             // 
             // btnValueDelete
             // 
-            this.btnValueDelete.Location = new System.Drawing.Point(313, 239);
+            this.btnValueDelete.Location = new System.Drawing.Point(376, 276);
             this.btnValueDelete.Name = "btnValueDelete";
-            this.btnValueDelete.Size = new System.Drawing.Size(51, 24);
+            this.btnValueDelete.Size = new System.Drawing.Size(61, 27);
             this.btnValueDelete.TabIndex = 7;
             this.btnValueDelete.Text = "Delete";
             this.btnValueDelete.Click += new System.EventHandler(this.btnValueDelete_Click);
@@ -198,9 +199,9 @@ namespace DAnTE.Inferno
             // 
             this.btnFactorDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnFactorDelete.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnFactorDelete.Location = new System.Drawing.Point(82, 239);
+            this.btnFactorDelete.Location = new System.Drawing.Point(98, 276);
             this.btnFactorDelete.Name = "btnFactorDelete";
-            this.btnFactorDelete.Size = new System.Drawing.Size(49, 24);
+            this.btnFactorDelete.Size = new System.Drawing.Size(59, 27);
             this.btnFactorDelete.TabIndex = 6;
             this.btnFactorDelete.Text = "Delete";
             this.btnFactorDelete.Click += new System.EventHandler(this.btnFactorDelete_Click);
@@ -208,9 +209,9 @@ namespace DAnTE.Inferno
             // txtBoxValues
             // 
             this.txtBoxValues.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxValues.Location = new System.Drawing.Point(252, 80);
+            this.txtBoxValues.Location = new System.Drawing.Point(302, 92);
             this.txtBoxValues.Name = "txtBoxValues";
-            this.txtBoxValues.Size = new System.Drawing.Size(112, 21);
+            this.txtBoxValues.Size = new System.Drawing.Size(135, 24);
             this.txtBoxValues.TabIndex = 2;
             this.txtBoxValues.Text = "Value1";
             this.txtBoxValues.TextChanged += new System.EventHandler(this.txtBoxValues_txtCh);
@@ -219,9 +220,9 @@ namespace DAnTE.Inferno
             // txtBoxFactors
             // 
             this.txtBoxFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxFactors.Location = new System.Drawing.Point(19, 80);
+            this.txtBoxFactors.Location = new System.Drawing.Point(23, 92);
             this.txtBoxFactors.Name = "txtBoxFactors";
-            this.txtBoxFactors.Size = new System.Drawing.Size(112, 21);
+            this.txtBoxFactors.Size = new System.Drawing.Size(134, 24);
             this.txtBoxFactors.TabIndex = 0;
             this.txtBoxFactors.Text = "Factor1";
             this.txtBoxFactors.TextChanged += new System.EventHandler(this.txtBoxFactors_textCh);
@@ -229,9 +230,9 @@ namespace DAnTE.Inferno
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(123, 290);
+            this.btnOK.Location = new System.Drawing.Point(148, 335);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(72, 24);
+            this.btnOK.Size = new System.Drawing.Size(86, 27);
             this.btnOK.TabIndex = 8;
             this.btnOK.Text = "OK";
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -239,9 +240,9 @@ namespace DAnTE.Inferno
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(252, 290);
+            this.btnCancel.Location = new System.Drawing.Point(302, 335);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(72, 24);
+            this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -249,53 +250,54 @@ namespace DAnTE.Inferno
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 56);
+            this.label3.Location = new System.Drawing.Point(23, 65);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.Size = new System.Drawing.Size(59, 17);
             this.label3.TabIndex = 17;
             this.label3.Text = "Factors:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(252, 56);
+            this.label2.Location = new System.Drawing.Point(302, 65);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 13);
+            this.label2.Size = new System.Drawing.Size(149, 17);
             this.label2.TabIndex = 18;
             this.label2.Text = "Factor Values (levels):";
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(201, 156);
+            this.label1.Location = new System.Drawing.Point(241, 180);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 32);
+            this.label1.Size = new System.Drawing.Size(60, 37);
             this.label1.TabIndex = 15;
             this.label1.Text = ">>";
             // 
             // btnFactors
             // 
-            this.btnFactors.Location = new System.Drawing.Point(147, 77);
+            this.btnFactors.Location = new System.Drawing.Point(176, 89);
             this.btnFactors.Name = "btnFactors";
-            this.btnFactors.Size = new System.Drawing.Size(48, 24);
+            this.btnFactors.Size = new System.Drawing.Size(58, 28);
             this.btnFactors.TabIndex = 1;
             this.btnFactors.Text = "Add";
             this.btnFactors.Click += new System.EventHandler(this.btnAddFactors_Click);
             // 
             // btnValues
             // 
-            this.btnValues.Location = new System.Drawing.Point(380, 77);
+            this.btnValues.Location = new System.Drawing.Point(456, 89);
             this.btnValues.Name = "btnValues";
-            this.btnValues.Size = new System.Drawing.Size(48, 24);
+            this.btnValues.Size = new System.Drawing.Size(58, 28);
             this.btnValues.TabIndex = 3;
             this.btnValues.Text = "Add";
             this.btnValues.Click += new System.EventHandler(this.btnAddValues_Click);
             // 
             // lstBoxFactors
             // 
-            this.lstBoxFactors.Location = new System.Drawing.Point(19, 112);
+            this.lstBoxFactors.ItemHeight = 16;
+            this.lstBoxFactors.Location = new System.Drawing.Point(23, 129);
             this.lstBoxFactors.Name = "lstBoxFactors";
-            this.lstBoxFactors.Size = new System.Drawing.Size(176, 121);
+            this.lstBoxFactors.Size = new System.Drawing.Size(211, 132);
             this.lstBoxFactors.TabIndex = 4;
             this.lstBoxFactors.Tag = "Factors";
             this.lstBoxFactors.SelectedIndexChanged += new System.EventHandler(this.lstBoxFactors_SelectedIndexChanged);
@@ -313,15 +315,15 @@ namespace DAnTE.Inferno
             // 
             // frmDefFactors
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(452, 327);
+            this.ClientSize = new System.Drawing.Size(530, 392);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(448, 272);
+            this.MinimumSize = new System.Drawing.Size(538, 314);
             this.Name = "frmDefFactors";
             this.ShowInTaskbar = false;
             this.Text = "Define Factors";

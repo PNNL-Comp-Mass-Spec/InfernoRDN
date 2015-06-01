@@ -131,6 +131,20 @@ namespace DAnTE.Inferno
                         mhtDatasets.Add("Mean Centered", mclsDataset);
                     break;
                     #endregion
+                case "medianCEset":
+                    #region MedianCEset
+                    mclsDataset.mTNode = new TreeNode("Median Centered", 1, 2);
+                    mclsDataset.mstrDataText = "Median Centered";
+                    mclsDataset.mstrMessage = "Median centered data selected.";
+                    mclsDataset.mstrRdatasetName = "medianCEset";
+                    mclsDataset.mblAddDGridCtxtMnu = true;
+                    mclsDataset.mblAddTVCtxtMnu = true;
+                    if (mhtDatasets.ContainsKey("Median Centered"))
+                        mhtDatasets["Median Centered"] = mclsDataset;
+                    else
+                        mhtDatasets.Add("Median Centered", mclsDataset);
+                    break;
+                    #endregion
                 case "madEset":
                     #region madEset
                     mclsDataset.mTNode = new TreeNode("MAD Adjusted", 1, 2);

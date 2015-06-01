@@ -49,60 +49,68 @@ namespace DAnTE.Inferno
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 9);
+            this.label4.Location = new System.Drawing.Point(16, 11);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(154, 13);
+            this.label4.Size = new System.Drawing.Size(197, 17);
             this.label4.TabIndex = 32;
             this.label4.Text = "Filter based on p,q values";
             // 
             // mcmbBoxData
             // 
             this.mcmbBoxData.FormattingEnabled = true;
-            this.mcmbBoxData.Location = new System.Drawing.Point(81, 49);
+            this.mcmbBoxData.Location = new System.Drawing.Point(108, 60);
+            this.mcmbBoxData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mcmbBoxData.Name = "mcmbBoxData";
-            this.mcmbBoxData.Size = new System.Drawing.Size(124, 21);
+            this.mcmbBoxData.Size = new System.Drawing.Size(164, 24);
             this.mcmbBoxData.TabIndex = 30;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 52);
+            this.label5.Location = new System.Drawing.Point(16, 64);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 13);
+            this.label5.Size = new System.Drawing.Size(91, 17);
             this.label5.TabIndex = 29;
             this.label5.Text = "Data Source:";
             // 
             // mlstBoxpvals
             // 
             this.mlstBoxpvals.FormattingEnabled = true;
-            this.mlstBoxpvals.Location = new System.Drawing.Point(26, 109);
+            this.mlstBoxpvals.ItemHeight = 16;
+            this.mlstBoxpvals.Location = new System.Drawing.Point(35, 134);
+            this.mlstBoxpvals.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mlstBoxpvals.Name = "mlstBoxpvals";
-            this.mlstBoxpvals.Size = new System.Drawing.Size(179, 95);
+            this.mlstBoxpvals.Size = new System.Drawing.Size(237, 116);
             this.mlstBoxpvals.TabIndex = 33;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 86);
+            this.label1.Location = new System.Drawing.Point(16, 106);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(173, 13);
+            this.label1.Size = new System.Drawing.Size(230, 17);
             this.label1.TabIndex = 34;
             this.label1.Text = "Select a column from p-value table:";
             // 
             // mtxtBoxCutoff
             // 
-            this.mtxtBoxCutoff.Location = new System.Drawing.Point(26, 19);
+            this.mtxtBoxCutoff.Location = new System.Drawing.Point(35, 23);
+            this.mtxtBoxCutoff.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mtxtBoxCutoff.Name = "mtxtBoxCutoff";
-            this.mtxtBoxCutoff.Size = new System.Drawing.Size(71, 20);
+            this.mtxtBoxCutoff.Size = new System.Drawing.Size(93, 22);
             this.mtxtBoxCutoff.TabIndex = 36;
             this.mtxtBoxCutoff.Text = "0.05";
             // 
             // mbtnCancel
             // 
             this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.mbtnCancel.Location = new System.Drawing.Point(130, 335);
+            this.mbtnCancel.Location = new System.Drawing.Point(173, 412);
+            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mbtnCancel.Name = "mbtnCancel";
-            this.mbtnCancel.Size = new System.Drawing.Size(75, 23);
+            this.mbtnCancel.Size = new System.Drawing.Size(100, 28);
             this.mbtnCancel.TabIndex = 39;
             this.mbtnCancel.Text = "Cancel";
             this.mbtnCancel.UseVisualStyleBackColor = true;
@@ -110,9 +118,10 @@ namespace DAnTE.Inferno
             // 
             // mbtnOK
             // 
-            this.mbtnOK.Location = new System.Drawing.Point(26, 335);
+            this.mbtnOK.Location = new System.Drawing.Point(35, 412);
+            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mbtnOK.Name = "mbtnOK";
-            this.mbtnOK.Size = new System.Drawing.Size(75, 23);
+            this.mbtnOK.Size = new System.Drawing.Size(100, 28);
             this.mbtnOK.TabIndex = 38;
             this.mbtnOK.Text = "OK";
             this.mbtnOK.UseVisualStyleBackColor = true;
@@ -123,9 +132,11 @@ namespace DAnTE.Inferno
             this.groupBox1.Controls.Add(this.mrBtnGT);
             this.groupBox1.Controls.Add(this.mrBtnLT);
             this.groupBox1.Controls.Add(this.mtxtBoxCutoff);
-            this.groupBox1.Location = new System.Drawing.Point(26, 210);
+            this.groupBox1.Location = new System.Drawing.Point(35, 258);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(179, 98);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(239, 121);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cutoff";
@@ -133,9 +144,10 @@ namespace DAnTE.Inferno
             // mrBtnGT
             // 
             this.mrBtnGT.AutoSize = true;
-            this.mrBtnGT.Location = new System.Drawing.Point(26, 68);
+            this.mrBtnGT.Location = new System.Drawing.Point(35, 84);
+            this.mrBtnGT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mrBtnGT.Name = "mrBtnGT";
-            this.mrBtnGT.Size = new System.Drawing.Size(84, 17);
+            this.mrBtnGT.Size = new System.Drawing.Size(110, 21);
             this.mrBtnGT.TabIndex = 38;
             this.mrBtnGT.Text = "Greater than";
             this.mrBtnGT.UseVisualStyleBackColor = true;
@@ -144,9 +156,10 @@ namespace DAnTE.Inferno
             // 
             this.mrBtnLT.AutoSize = true;
             this.mrBtnLT.Checked = true;
-            this.mrBtnLT.Location = new System.Drawing.Point(26, 45);
+            this.mrBtnLT.Location = new System.Drawing.Point(35, 55);
+            this.mrBtnLT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mrBtnLT.Name = "mrBtnLT";
-            this.mrBtnLT.Size = new System.Drawing.Size(71, 17);
+            this.mrBtnLT.Size = new System.Drawing.Size(91, 21);
             this.mrBtnLT.TabIndex = 37;
             this.mrBtnLT.TabStop = true;
             this.mrBtnLT.Text = "Less than";
@@ -154,23 +167,26 @@ namespace DAnTE.Inferno
             // 
             // niceLine2
             // 
-            this.niceLine2.Location = new System.Drawing.Point(12, 314);
+            this.niceLine2.Location = new System.Drawing.Point(16, 386);
+            this.niceLine2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.niceLine2.Name = "niceLine2";
-            this.niceLine2.Size = new System.Drawing.Size(207, 15);
+            this.niceLine2.Size = new System.Drawing.Size(276, 17);
             this.niceLine2.TabIndex = 37;
             // 
             // niceLine1
             // 
-            this.niceLine1.Location = new System.Drawing.Point(12, 25);
+            this.niceLine1.Location = new System.Drawing.Point(16, 31);
+            this.niceLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.niceLine1.Name = "niceLine1";
-            this.niceLine1.Size = new System.Drawing.Size(207, 15);
+            this.niceLine1.Size = new System.Drawing.Size(276, 17);
             this.niceLine1.TabIndex = 31;
             // 
             // frmFilterAnova
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(233, 371);
+            this.CancelButton = this.mbtnCancel;
+            this.ClientSize = new System.Drawing.Size(311, 457);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.mbtnCancel);
             this.Controls.Add(this.mbtnOK);
@@ -183,6 +199,7 @@ namespace DAnTE.Inferno
             this.Controls.Add(this.label5);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmFilterAnova";

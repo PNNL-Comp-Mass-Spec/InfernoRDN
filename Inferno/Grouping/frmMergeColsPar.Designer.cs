@@ -172,6 +172,7 @@ namespace DAnTE.Inferno
             // 
             // frmMergeColsPar
             // 
+            this.CancelButton = this.mbtnCancel;
             this.ClientSize = new System.Drawing.Size(246, 297);
             this.Controls.Add(this.mlblDataName);
             this.Controls.Add(this.label2);

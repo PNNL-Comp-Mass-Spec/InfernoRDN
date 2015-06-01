@@ -48,40 +48,45 @@ namespace DAnTE.Inferno
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(9, 20);
+            this.label1.Location = new System.Drawing.Point(12, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(242, 13);
+            this.label1.Size = new System.Drawing.Size(311, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Select Parameters for Kruskal-Wallis Test";
             // 
             // mlstBoxFactors
             // 
             this.mlstBoxFactors.FormattingEnabled = true;
-            this.mlstBoxFactors.Location = new System.Drawing.Point(35, 156);
+            this.mlstBoxFactors.ItemHeight = 16;
+            this.mlstBoxFactors.Location = new System.Drawing.Point(47, 192);
+            this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mlstBoxFactors.Name = "mlstBoxFactors";
-            this.mlstBoxFactors.Size = new System.Drawing.Size(204, 134);
+            this.mlstBoxFactors.Size = new System.Drawing.Size(271, 164);
             this.mlstBoxFactors.TabIndex = 4;
             this.mlstBoxFactors.SelectedIndexChanged += new System.EventHandler(this.mlstBoxFactors_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 130);
+            this.label2.Location = new System.Drawing.Point(16, 160);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.Size = new System.Drawing.Size(107, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "Select a Factor:";
             // 
             // mNumUpDthres
             // 
-            this.mNumUpDthres.Location = new System.Drawing.Point(152, 309);
+            this.mNumUpDthres.Location = new System.Drawing.Point(203, 380);
+            this.mNumUpDthres.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mNumUpDthres.Minimum = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.mNumUpDthres.Name = "mNumUpDthres";
-            this.mNumUpDthres.Size = new System.Drawing.Size(79, 20);
+            this.mNumUpDthres.Size = new System.Drawing.Size(105, 22);
             this.mNumUpDthres.TabIndex = 62;
             this.mNumUpDthres.Value = new decimal(new int[] {
             3,
@@ -91,19 +96,21 @@ namespace DAnTE.Inferno
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(15, 303);
+            this.label4.Location = new System.Drawing.Point(20, 373);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label4.Size = new System.Drawing.Size(131, 35);
+            this.label4.Size = new System.Drawing.Size(175, 43);
             this.label4.TabIndex = 61;
             this.label4.Text = "Minimum Number of Data Points per Factor Level:";
             // 
             // mbtnCancel
             // 
             this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.mbtnCancel.Location = new System.Drawing.Point(152, 362);
+            this.mbtnCancel.Location = new System.Drawing.Point(203, 446);
+            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mbtnCancel.Name = "mbtnCancel";
-            this.mbtnCancel.Size = new System.Drawing.Size(75, 23);
+            this.mbtnCancel.Size = new System.Drawing.Size(100, 28);
             this.mbtnCancel.TabIndex = 68;
             this.mbtnCancel.Text = "Cancel";
             this.mbtnCancel.UseVisualStyleBackColor = true;
@@ -111,9 +118,10 @@ namespace DAnTE.Inferno
             // 
             // mbtnOK
             // 
-            this.mbtnOK.Location = new System.Drawing.Point(52, 362);
+            this.mbtnOK.Location = new System.Drawing.Point(69, 446);
+            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mbtnOK.Name = "mbtnOK";
-            this.mbtnOK.Size = new System.Drawing.Size(75, 23);
+            this.mbtnOK.Size = new System.Drawing.Size(100, 28);
             this.mbtnOK.TabIndex = 67;
             this.mbtnOK.Text = "OK";
             this.mbtnOK.UseVisualStyleBackColor = true;
@@ -123,18 +131,20 @@ namespace DAnTE.Inferno
             // 
             this.mlblDataName.AutoSize = true;
             this.mlblDataName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mlblDataName.Location = new System.Drawing.Point(89, 54);
+            this.mlblDataName.Location = new System.Drawing.Point(119, 66);
+            this.mlblDataName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.mlblDataName.Name = "mlblDataName";
-            this.mlblDataName.Size = new System.Drawing.Size(41, 13);
+            this.mlblDataName.Size = new System.Drawing.Size(52, 17);
             this.mlblDataName.TabIndex = 70;
             this.mlblDataName.Text = "label8";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 54);
+            this.label5.Location = new System.Drawing.Point(20, 66);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.Size = new System.Drawing.Size(89, 17);
             this.label5.TabIndex = 69;
             this.label5.Text = "Data source:";
             // 
@@ -142,32 +152,36 @@ namespace DAnTE.Inferno
             // 
             this.mrtBox.BackColor = System.Drawing.SystemColors.Control;
             this.mrtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.mrtBox.Location = new System.Drawing.Point(12, 79);
+            this.mrtBox.Location = new System.Drawing.Point(16, 97);
+            this.mrtBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mrtBox.Name = "mrtBox";
-            this.mrtBox.Size = new System.Drawing.Size(257, 48);
+            this.mrtBox.Size = new System.Drawing.Size(343, 59);
             this.mrtBox.TabIndex = 71;
             this.mrtBox.Text = "Kruskal-Wallis test is the non parametric equivalent of One-way ANOVA. The normal" +
-                "ity assumption is relaxed.";
+    "ity assumption is relaxed.";
             // 
             // niceLine2
             // 
-            this.niceLine2.Location = new System.Drawing.Point(12, 341);
+            this.niceLine2.Location = new System.Drawing.Point(16, 420);
+            this.niceLine2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.niceLine2.Name = "niceLine2";
-            this.niceLine2.Size = new System.Drawing.Size(257, 15);
+            this.niceLine2.Size = new System.Drawing.Size(343, 17);
             this.niceLine2.TabIndex = 66;
             // 
             // niceLine1
             // 
-            this.niceLine1.Location = new System.Drawing.Point(12, 36);
+            this.niceLine1.Location = new System.Drawing.Point(16, 44);
+            this.niceLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.niceLine1.Name = "niceLine1";
-            this.niceLine1.Size = new System.Drawing.Size(257, 15);
+            this.niceLine1.Size = new System.Drawing.Size(343, 17);
             this.niceLine1.TabIndex = 3;
             // 
             // frmKruskalWpar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 400);
+            this.CancelButton = this.mbtnCancel;
+            this.ClientSize = new System.Drawing.Size(376, 492);
             this.Controls.Add(this.mrtBox);
             this.Controls.Add(this.mlblDataName);
             this.Controls.Add(this.label5);
@@ -182,6 +196,7 @@ namespace DAnTE.Inferno
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmKruskalWpar";

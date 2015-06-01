@@ -125,7 +125,7 @@ namespace DAnTE.Inferno
       // Banner
       // 
       this.Banner.Size = new System.Drawing.Size(784, 64);
-      this.Banner.Subtitle = "Specify patial names for datasets in LabKey server";
+      this.Banner.Subtitle = "Specify partial names for datasets in LabKey server";
       this.Banner.Title = "Step 2. Select Datasets for Analysis";
       // 
       // panelStep

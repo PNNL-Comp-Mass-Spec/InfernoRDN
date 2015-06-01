@@ -38,7 +38,7 @@ namespace DAnTE.Inferno
             this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.mbtnSave = new System.Windows.Forms.Button();
-            this.mbtnCanel = new System.Windows.Forms.Button();
+            this.mbtnCancel = new System.Windows.Forms.Button();
             this.mbtnOK = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.mCtxtMnu.SuspendLayout();
@@ -99,7 +99,7 @@ namespace DAnTE.Inferno
             // panel2
             // 
             this.panel2.Controls.Add(this.mbtnSave);
-            this.panel2.Controls.Add(this.mbtnCanel);
+            this.panel2.Controls.Add(this.mbtnCancel);
             this.panel2.Controls.Add(this.mbtnOK);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 610);
@@ -118,17 +118,17 @@ namespace DAnTE.Inferno
             this.mbtnSave.UseVisualStyleBackColor = true;
             this.mbtnSave.Click += new System.EventHandler(this.mbtnSave_Click);
             // 
-            // mbtnCanel
+            // mbtnCancel
             // 
-            this.mbtnCanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.mbtnCanel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.mbtnCanel.Location = new System.Drawing.Point(420, 16);
-            this.mbtnCanel.Name = "mbtnCanel";
-            this.mbtnCanel.Size = new System.Drawing.Size(75, 23);
-            this.mbtnCanel.TabIndex = 2;
-            this.mbtnCanel.Text = "Cancel";
-            this.mbtnCanel.UseVisualStyleBackColor = true;
-            this.mbtnCanel.Click += new System.EventHandler(this.mbtnCanel_Click);
+            this.mbtnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.mbtnCancel.Location = new System.Drawing.Point(420, 16);
+            this.mbtnCancel.Name = "mbtnCancel";
+            this.mbtnCancel.Size = new System.Drawing.Size(75, 23);
+            this.mbtnCancel.TabIndex = 2;
+            this.mbtnCancel.Text = "Cancel";
+            this.mbtnCancel.UseVisualStyleBackColor = true;
+            this.mbtnCancel.Click += new System.EventHandler(this.mbtnCancel_Click);
             // 
             // mbtnOK
             // 
@@ -145,7 +145,7 @@ namespace DAnTE.Inferno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.mbtnCanel;
+            this.CancelButton = this.mbtnCancel;
             this.ClientSize = new System.Drawing.Size(719, 665);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
@@ -166,7 +166,7 @@ namespace DAnTE.Inferno
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button mbtnOK;
-        private System.Windows.Forms.Button mbtnCanel;
+        private System.Windows.Forms.Button mbtnCancel;
         private System.Windows.Forms.Button mbtnSave;
         private ExtraControls.ucPicViewer mucPicVwrRPlot;
         private System.Windows.Forms.ContextMenuStrip mCtxtMnu;
