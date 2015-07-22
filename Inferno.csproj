@@ -606,6 +606,12 @@
     <Compile Include="Paradiso\frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Paradiso\frmRCommandLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paradiso\frmRCommandLog.Designer.cs">
+      <DependentUpon>frmRCommandLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Paradiso\frmRmsg.cs">
       <SubType>Form</SubType>
       <CustomToolNamespace>AppNormalize</CustomToolNamespace>
@@ -732,6 +738,9 @@
     <EmbeddedResource Include="Paradiso\frmAbout.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paradiso\frmRCommandLog.resx">
+      <DependentUpon>frmRCommandLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Paradiso\frmRmsg.resx">
       <DependentUpon>frmRmsg.cs</DependentUpon>

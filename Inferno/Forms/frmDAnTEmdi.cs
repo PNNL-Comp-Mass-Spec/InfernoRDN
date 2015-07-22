@@ -11,15 +11,22 @@ namespace DAnTE.Inferno
 {
     public partial class frmDAnTEmdi : Form
     {
-        private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "InfernoVersionMostRecentBioconductorCheck";
+        // Note that this key gets deleted when the program is Uninstalled
+        // See Inno Setup file inferno_setup.iss
+        private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
-        private readonly frmRmsg mRmsgForm;
+        // No longer used (only used on Windows XP and 2000)
+        // private readonly frmRmsg mRmsgForm;
 
         public string mSessionFile = null;
-        
+
         private readonly StreamWriter mCustomLogWriter;
         private readonly bool mCustomLoggerEnabled;
         private static bool mCustomLogSeparatorAdded;
+
+        // This is a linux-style path that is used by R to save .png files
+        // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
+        private readonly string mRTempFilePath;
 
         private string mRepository;  // = @"http://lib.stat.cmu.edu/R/CRAN";
         private string mRpackList;
@@ -27,8 +34,8 @@ namespace DAnTE.Inferno
         private bool mInstallRpacks;
         private bool mUpdateRpacks;
 
-        private readonly clsRconnect mRConnector;        
-                
+        private readonly clsRconnect mRConnector;
+
         public frmDAnTEmdi(string dntfile, string customLogFilePath)
         {
             mSessionFile = dntfile;
@@ -79,6 +86,7 @@ namespace DAnTE.Inferno
                 Directory.CreateDirectory(appDataFldrPath);
             }
 
+            mRTempFilePath = appDataFldrPath.Replace(@"\", "/") + "/_temp.png";
             this.mhelpProviderDAnTE.HelpNamespace = Path.Combine(Application.StartupPath, "InfernoHelp.chm");
 
             System.Threading.Thread.Sleep(10);
@@ -111,7 +119,7 @@ namespace DAnTE.Inferno
             Log(mCustomLoggerEnabled, "Done sourcing R functions.", mCustomLogWriter);
 
             SplashScreen.SetStatus("Initializing R Plotting Functions...");
-            
+
             var usePlotgg = Settings.Default.useGG;
             string mstrPlotFuncFileName;
 
@@ -173,25 +181,41 @@ namespace DAnTE.Inferno
             Log(mCustomLoggerEnabled, "Done loading required R packages.", mCustomLogWriter);
             System.Threading.Thread.Sleep(10);
 
-            SplashScreen.SetStatus("Setting Up Child Forms...");
-            if (RunRlogs())
+            SplashScreen.SetStatus("Cleaning up temp files; checking for " + mRTempFilePath.Replace("/", @"\"));
+            if (!DeleteTempFile())
             {
-                mRmsgForm = new frmRmsg();
-                try
-                {
-                    //-// rConnector.SetCharacterOutputDevice((StatConnectorCommonLib.IStatConnectorCharacterDevice)mfrmRmsg.axStatConnectorCharacterDevice1.GetOcx());
-                    mRConnector.EvaluateNoReturn("print(version)");
-                    Log(mCustomLoggerEnabled, "Done starting R log viewer.", mCustomLogWriter);
-                }
-                catch (Exception ex)
-                {
-                    startupErrString.Append("* Error starting R log viewer.").AppendLine();
-                    //MessageBox.Show("Error: " + ex.Message, "Watchout!");
-                    Log(mCustomLoggerEnabled, "Error: Error starting R log viewer." + ex.Message, mCustomLogWriter);
-                }
+                // This is not a fatal error
+                // Log it, but move on
+                startupErrString.Append("* Error cleaning temp files.").AppendLine();
+                Log(mCustomLoggerEnabled, "Error: Cleaning temp files failed.", mCustomLogWriter);
             }
-            else
-                Log(mCustomLoggerEnabled, "R log viewer not used for this OS.", mCustomLogWriter);
+            System.Threading.Thread.Sleep(10);
+
+
+            // No longer used (only used on Windows XP and 2000)
+            //
+            //SplashScreen.SetStatus("Setting Up Child Forms...");
+            //if (RunRlogs())
+            //{
+            //    mRmsgForm = new frmRmsg();
+            //    try
+            //    {
+            //        //-// rConnector.SetCharacterOutputDevice((StatConnectorCommonLib.IStatConnectorCharacterDevice)mfrmRmsg.axStatConnectorCharacterDevice1.GetOcx());
+            //        mRConnector.EvaluateNoReturn("print(version)");
+            //        Log(mCustomLoggerEnabled, "Done starting R log viewer.", mCustomLogWriter);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        startupErrString.Append("* Error starting R log viewer.").AppendLine();
+            //        //MessageBox.Show("Error: " + ex.Message, "Watchout!");
+            //        Log(mCustomLoggerEnabled, "Error: Error starting R log viewer." + ex.Message, mCustomLogWriter);
+            //    }
+            //}
+            //else
+            //{
+            //    Log(mCustomLoggerEnabled, "R log viewer not used for this OS.", mCustomLogWriter);
+            //}
+
             this.Activate();
             SplashScreen.CloseForm();
 
@@ -230,9 +254,9 @@ namespace DAnTE.Inferno
                 }
 
                 w.WriteLine();
-                w.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());                
+                w.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
                 w.WriteLine(logMessage);
-                                
+
                 w.Flush();
             }
             else
@@ -410,24 +434,24 @@ namespace DAnTE.Inferno
         //  return mblresult;
         //}
 
-        private bool DeleteTempFile(string tempfile)
+        private bool DeleteTempFile()
         {
-            var ok = true;
+            var tempFilePath = mRTempFilePath.Replace("/", @"\");
 
-            if (File.Exists(tempfile))
+            if (File.Exists(tempFilePath))
             {
                 try
                 {
-                    mRConnector.EvaluateNoReturn("graphics.off()");
-                    File.Delete(tempfile);
+                    File.Delete(tempFilePath);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    ok = false;
-                    Console.WriteLine(ex.Message);
+                    // Ignore errors here, but return false
+                    return false;
                 }
             }
-            return ok;
+
+            return true;
         }
 
         private void StartMain(string dntfile)
@@ -448,7 +472,7 @@ namespace DAnTE.Inferno
                     }
                 }
                 frmDAnTE mfrmDAnTE = frmDAnTE.GetChildInstance();
-                
+                mfrmDAnTE.RTempFilePath = mRTempFilePath;
                 mfrmDAnTE.RConnector = mRConnector;
                 mfrmDAnTE.SessionFile = dntfile;
                 mfrmDAnTE.MdiParent = this;
@@ -513,6 +537,8 @@ namespace DAnTE.Inferno
             }
         }
 
+        // No longer used (only used on Windows XP and 2000)
+        /*
         private bool RunRlogs()
         {
             bool mblRunOK = false;
@@ -547,7 +573,7 @@ namespace DAnTE.Inferno
             return mblRunOK;
             //return true;
         }
-
+        */
 
         #endregion
 
@@ -596,7 +622,7 @@ namespace DAnTE.Inferno
             else
                 Settings.Default.useGG = false;
         }
-     
+
         private void mnuItemHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, this.mhelpProviderDAnTE.HelpNamespace);
@@ -613,11 +639,11 @@ namespace DAnTE.Inferno
 
         private void mnuItemAbout_Click(object sender, EventArgs e)
         {
-            
+
             frmAbout2 mfrmAbout = new frmAbout2();
             mfrmAbout.ShowDialog();
         }
-    
+
         private void frmDAnTEmdi_Load(object sender, EventArgs e)
         {
             StartMain(mSessionFile);

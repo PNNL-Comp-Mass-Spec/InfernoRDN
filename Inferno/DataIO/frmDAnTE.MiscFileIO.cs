@@ -26,14 +26,14 @@ namespace DAnTE.Inferno
 
 	    private bool DeleteTempFile(string tempfile)
 		{
-			bool ok = true;
-			tempfile = tempfile.Replace("/", "\\");
+			var ok = true;
+			tempfile = tempfile.Replace("/", @"\");
 
 			if (File.Exists(tempfile))
 			{
 				try
 				{
-					rConnector.EvaluateNoReturn("graphics.off()");
+					mRConnector.EvaluateNoReturn("graphics.off()");
 					File.Delete(tempfile);
 				}
 				catch (Exception ex)
@@ -298,21 +298,21 @@ namespace DAnTE.Inferno
 				mstrArrMassTags = clsDataTable.DataColumn2strArray(mDT, rowID);
 				try
 				{
-					rConnector.SetSymbolCharVector("protIPI", mstrArrProteins);
-					rConnector.SetSymbolCharVector("MassTags", mstrArrMassTags);
+					mRConnector.SetSymbolCharVector("protIPI", mstrArrProteins);
+					mRConnector.SetSymbolCharVector("MassTags", mstrArrMassTags);
 					rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=protIPI)";
-					rConnector.EvaluateNoReturn(rcmd);
+					mRConnector.EvaluateNoReturn(rcmd);
 					if (mhtDatasets.ContainsKey("Expressions"))
 						rcmd = "ProtInfo<-remove.emptyProtInfo(ProtInfo, checkEset=TRUE)";
 					else
 						rcmd = "ProtInfo<-remove.emptyProtInfo(ProtInfo)";
-					rConnector.EvaluateNoReturn(rcmd);
+					mRConnector.EvaluateNoReturn(rcmd);
 
 					clsRarray.rowNamesID = "RowID"; // Otherwise this will conflict with 'Row_ID'
-					if (rConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
+					if (mRConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
 					{
 						clsRarray.rowNamesID = "Row_ID";
-						mDTProts = rConnector.DataTable.Copy();
+						mDTProts = mRConnector.DataTable.Copy();
 						mDTProts.TableName = "ProtInfo";
 						if (mDTProts.Columns.CanRemove(mDTProts.Columns[0]))
 						{//remove the line number column which comes from R row names.
@@ -342,10 +342,10 @@ namespace DAnTE.Inferno
 			DataTable mDTProtInfo = new DataTable();
 
 			clsRarray.rowNamesID = "RowID"; // Otherwise this will conflict with 'Row_ID'
-			if (rConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
+			if (mRConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
 			{
 				clsRarray.rowNamesID = "Row_ID";
-				mDTProtInfo = rConnector.DataTable.Copy();
+				mDTProtInfo = mRConnector.DataTable.Copy();
 				mDTProtInfo.TableName = "ProtInfo";
 				if (mDTProtInfo.Columns.CanRemove(mDTProtInfo.Columns[0]))
 				{//remove the line number column which comes from R row names.
@@ -475,12 +475,12 @@ namespace DAnTE.Inferno
 								mDTselectedEset1 = clsDataTable.RemoveDuplicateRows2(mDTselectedEset1,
 									mDTselectedEset1.Columns[0].ColumnName); // handle duplicate rows
 								mDTselectedEset1.TableName = "Eset";
-								success = rConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1);
+								success = mRConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1);
 								if (mhtDatasets.ContainsKey("Factors"))
 								{
 									rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-									rConnector.EvaluateNoReturn(rcmd);
-									FactorsValid = rConnector.GetSymbolAsBool("FactorsValid");
+									mRConnector.EvaluateNoReturn(rcmd);
+									FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
 								}
 								if (!FactorsValid)
 								{
@@ -489,8 +489,8 @@ namespace DAnTE.Inferno
 								if (success)
 								{
 									AddDataset2HashTable(mDTselectedEset1);
-									rConnector.EvaluateNoReturn("print(dim(Eset))");
-									rConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
+									mRConnector.EvaluateNoReturn("print(dim(Eset))");
+									mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
 								}
 							}
 							catch (Exception ex)
@@ -550,15 +550,15 @@ namespace DAnTE.Inferno
 						{
 							return false;
 						}
-						if (rConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
+						if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
 						{
 							try
 							{
 								if (mhtDatasets.ContainsKey("Expressions"))
 								{
 									rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-									rConnector.EvaluateNoReturn(rcmd);
-									FactorsValid = rConnector.GetSymbolAsBool("FactorsValid");
+									mRConnector.EvaluateNoReturn(rcmd);
+									FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
 								}
 								if (!FactorsValid)
 								{
@@ -569,8 +569,8 @@ namespace DAnTE.Inferno
 									UpdateFactorInfoArray();
 									mDTFactors.Columns[0].ColumnName = "Factors";
 									mDTFactors.TableName = "factors";
-									rConnector.EvaluateNoReturn("print(factors)");
-									rConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
+									mRConnector.EvaluateNoReturn("print(factors)");
+									mRConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
 								}
 							}
 							catch (Exception ex)
@@ -654,7 +654,7 @@ namespace DAnTE.Inferno
 
 							//clsRarray.rowNamesID = mDTselectedEset.Columns[0].ToString();
 							clsRarray.rowNamesID = "Row_ID";
-							if (rConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1) && success)
+							if (mRConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1) && success)
 							// Duplicates are handled during the call 'SendTable2RmatrixNumeric'
 							{
 								try
@@ -662,8 +662,8 @@ namespace DAnTE.Inferno
 									if (mhtDatasets.ContainsKey("Factors"))
 									{
 										rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-										rConnector.EvaluateNoReturn(rcmd);
-										FactorsValid = rConnector.GetSymbolAsBool("FactorsValid");
+										mRConnector.EvaluateNoReturn(rcmd);
+										FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
 									}
 									if (!FactorsValid)
 									{
@@ -671,11 +671,11 @@ namespace DAnTE.Inferno
 									}
 									else
 									{
-										rConnector.GetTableFromRmatrix("Eset"); // Get the cleaned data matrix
-										mDTselectedEset1 = rConnector.DataTable.Copy();
+										mRConnector.GetTableFromRmatrix("Eset"); // Get the cleaned data matrix
+										mDTselectedEset1 = mRConnector.DataTable.Copy();
 										mDTselectedEset1.TableName = "Eset";
-										rConnector.EvaluateNoReturn("print(dim(Eset))");
-										rConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
+										mRConnector.EvaluateNoReturn("print(dim(Eset))");
+										mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
 										AddDataset2HashTable(mDTselectedEset1);
 									}
 								}
@@ -738,15 +738,15 @@ namespace DAnTE.Inferno
 						{
 							return false;
 						}
-						if (rConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
+						if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
 						{
 							try
 							{
 								if (mhtDatasets.ContainsKey("Expressions"))
 								{
 									rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-									rConnector.EvaluateNoReturn(rcmd);
-									FactorsValid = rConnector.GetSymbolAsBool("FactorsValid");
+									mRConnector.EvaluateNoReturn(rcmd);
+									FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
 								}
 								if (!FactorsValid)
 								{
@@ -757,8 +757,8 @@ namespace DAnTE.Inferno
 									UpdateFactorInfoArray();
 									mDTFactors.Columns[0].ColumnName = "Factors";
 									mDTFactors.TableName = "factors";
-									rConnector.EvaluateNoReturn("print(factors)");
-									rConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
+									mRConnector.EvaluateNoReturn("print(factors)");
+									mRConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
 								}
 							}
 							catch (Exception ex)
@@ -789,17 +789,17 @@ namespace DAnTE.Inferno
 			marrFactorInfo.Clear();
 			try
 			{
-				rConnector.EvaluateNoReturn("factorNames <- rownames(factors)");
-				var factorNames = rConnector.GetSymbolAsStrings("factorNames");
+				mRConnector.EvaluateNoReturn("factorNames <- rownames(factors)");
+				var factorNames = mRConnector.GetSymbolAsStrings("factorNames");
 				string[] factors = factorNames;
 				for (int numF = 0; numF < factors.Length; numF++)
 				{
 					marrFV.Clear();
-					rConnector.EvaluateNoReturn("fVals <- unique(factors[" +
+					mRConnector.EvaluateNoReturn("fVals <- unique(factors[" +
 						Convert.ToString(numF + 1) + ",])");
-					rConnector.EvaluateNoReturn("nfVals <- length(fVals)");
-					var fVals = rConnector.GetSymbolAsStrings("fVals");
-					var nfVals = rConnector.GetSymbolAsNumbers("nfVals");
+					mRConnector.EvaluateNoReturn("nfVals <- length(fVals)");
+					var fVals = mRConnector.GetSymbolAsStrings("fVals");
+					var nfVals = mRConnector.GetSymbolAsNumbers("nfVals");
 					if ((int)nfVals[0] > 1)
 					{ //more than one factor value
 						for (int i = 0; i < fVals.Length; i++)

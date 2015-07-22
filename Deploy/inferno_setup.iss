@@ -69,7 +69,7 @@ AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=InfernoRDNSetup
-VersionInfoVersion=1.1.8
+VersionInfoVersion=1.1.9
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
 VersionInfoCopyright=PNNL
@@ -91,10 +91,12 @@ OutputDir=.\Output
 ;Root: HKCR; Subkey: DAnTEFile; ValueType: string; ValueName: ; ValueData: DAnTE File; Flags: uninsdeletekey
 ;Root: HKCR; Subkey: DAnTEFile\DefaultIcon; ValueType: string; ValueName: ; ValueData: {app}\DAnTE.EXE,0
 ;Root: HKCR; Subkey: DAnTEFile\shell\open\command; ValueType: string; ValueName: ; ValueData: """{app}\DAnTE.EXE"" ""%1"""
-Root: HKCR; SubKey: .dnt; ValueType: string; ValueData: InfernoSessionfile; Flags: uninsdeletekey
-Root: HKCR; SubKey: InfernoSessionfile; ValueType: string; ValueData: Inferno Session File; Flags: uninsdeletekey
-Root: HKCR; SubKey: InfernoSessionfile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Inferno.exe"" ""%1"""; Flags: uninsdeletevalue
-Root: HKCR; Subkey: InfernoSessionfile\DefaultIcon; ValueType: string; ValueData: {app}\inferno.ico,0; Flags: uninsdeletevalue
+Root: HKCR; SubKey: ".dnt"; ValueType: string; ValueData: "InfernoSessionfile"; Flags: uninsdeletekey
+Root: HKCR; SubKey: "InfernoSessionfile"; ValueType: string; ValueData: "Inferno Session File"; Flags: uninsdeletekey
+Root: HKCR; SubKey: "InfernoSessionfile\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Inferno.exe"" ""%1"""; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "InfernoSessionfile\DefaultIcon"; ValueType: string; ValueData: "{app}\inferno.ico,0"; Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Software\PNNL\Inferno"; ValueType: string; ValueName: "BioconductorCheckLatestInfernoVersion"; ValueData: ""; Flags: uninsdeletevalue
+
 [UninstallDelete]
 Name: {app}; Type: filesandordirs
 Name: {app}\Tools; Type: filesandordirs

@@ -39,11 +39,11 @@ namespace DAnTE.Inferno
 
       string rcmd = (string)e.Argument;
       try {
-        rConnector.EvaluateNoReturn(rcmd);
-        if (rConnector.GetTableFromRmatrix("logEset")) {
-          mDTLogEset1 = rConnector.DataTable.Copy();
+        mRConnector.EvaluateNoReturn(rcmd);
+        if (mRConnector.GetTableFromRmatrix("logEset")) {
+          mDTLogEset1 = mRConnector.DataTable.Copy();
           mDTLogEset1.TableName = "logEset";
-          rConnector.EvaluateNoReturn("cat(\"Log Expressions calculated.\n\")");
+          mRConnector.EvaluateNoReturn("cat(\"Log Expressions calculated.\n\")");
           //--------------------------------------
           AddDataset2HashTable(mDTLogEset1);
           e.Result = true;

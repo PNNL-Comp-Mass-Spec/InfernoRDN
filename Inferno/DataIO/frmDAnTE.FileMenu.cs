@@ -182,7 +182,7 @@ namespace DAnTE.Inferno
                 MessageBox.Show("Expressions are already loaded.");
             else
             {
-                frmMSMSWizard msmsWizard = new frmMSMSWizard(rConnector);
+                frmMSMSWizard msmsWizard = new frmMSMSWizard(mRConnector);
                 if (msmsWizard.ShowDialog(this) == DialogResult.OK)
                 {
                     mDTspectral = msmsWizard.SpectralDT;
@@ -221,8 +221,8 @@ namespace DAnTE.Inferno
 
                 try
                 {
-                    rConnector.EvaluateNoReturn("dummy<-0"); // create some dummy variable
-                    rConnector.EvaluateNoReturn(rcmd1);
+                    mRConnector.EvaluateNoReturn("dummy<-0"); // create some dummy variable
+                    mRConnector.EvaluateNoReturn(rcmd1);
                 }
                 catch (Exception ex)
                 {
@@ -287,8 +287,8 @@ namespace DAnTE.Inferno
 
                 try
                 {
-                    rConnector.EvaluateNoReturn("dummy<-0"); // create some dummy variable
-                    rConnector.EvaluateNoReturn(rcmd1);
+                    mRConnector.EvaluateNoReturn("dummy<-0"); // create some dummy variable
+                    mRConnector.EvaluateNoReturn(rcmd1);
                 }
                 catch (Exception ex)
                 {
@@ -469,7 +469,7 @@ namespace DAnTE.Inferno
                    mstrLoadedfileName.Replace("\\", "/") + "\")";
                 try
                 {
-                    rConnector.EvaluateNoReturn(rcmd);
+                    mRConnector.EvaluateNoReturn(rcmd);
                 }
                 catch (Exception ex)
                 {

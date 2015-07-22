@@ -188,6 +188,7 @@ namespace DAnTE.Inferno
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemFilterpq = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemMissFilt = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuShowRCommandLog = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAnalysisSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
@@ -369,7 +370,7 @@ namespace DAnTE.Inferno
             this.menuItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.menuItemSave.Size = new System.Drawing.Size(244, 26);
-            this.menuItemSave.Text = "Save Table";
+            this.menuItemSave.Text = "Save &Table";
             this.menuItemSave.Click += new System.EventHandler(this.menuItemSave_Click);
             // 
             // toolStripSeparator9
@@ -418,7 +419,7 @@ namespace DAnTE.Inferno
             this.menuItemExit.MergeIndex = 7;
             this.menuItemExit.Name = "menuItemExit";
             this.menuItemExit.Size = new System.Drawing.Size(244, 26);
-            this.menuItemExit.Text = "Close Session";
+            this.menuItemExit.Text = "&Close Session";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
             // menuItemAnalysis
@@ -447,7 +448,7 @@ namespace DAnTE.Inferno
             this.menuItemLog.Name = "menuItemLog";
             this.menuItemLog.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.menuItemLog.Size = new System.Drawing.Size(297, 26);
-            this.menuItemLog.Text = "Log Transform";
+            this.menuItemLog.Text = "&Log Transform";
             this.menuItemLog.Click += new System.EventHandler(this.menuItemLogEset_Click);
             // 
             // toolStripSeparator3
@@ -459,7 +460,7 @@ namespace DAnTE.Inferno
             // 
             this.menuItemLinReg.Name = "menuItemLinReg";
             this.menuItemLinReg.Size = new System.Drawing.Size(297, 26);
-            this.menuItemLinReg.Text = "Linear Regression Normalization";
+            this.menuItemLinReg.Text = "Li&near Regression Normalization";
             this.menuItemLinReg.Click += new System.EventHandler(this.menuItemLinReg_Click);
             // 
             // menuItemNormRepl
@@ -468,14 +469,14 @@ namespace DAnTE.Inferno
             this.menuItemNormRepl.MergeIndex = 2;
             this.menuItemNormRepl.Name = "menuItemNormRepl";
             this.menuItemNormRepl.Size = new System.Drawing.Size(297, 26);
-            this.menuItemNormRepl.Text = "Loess Normalization";
+            this.menuItemNormRepl.Text = "L&oess Normalization";
             this.menuItemNormRepl.Click += new System.EventHandler(this.menuItemLOESSNorm_Click);
             // 
             // mnuItemQnorm
             // 
             this.mnuItemQnorm.Name = "mnuItemQnorm";
             this.mnuItemQnorm.Size = new System.Drawing.Size(297, 26);
-            this.mnuItemQnorm.Text = "Quantile Normalization";
+            this.mnuItemQnorm.Text = "&Quantile Normalization";
             this.mnuItemQnorm.Click += new System.EventHandler(this.mnuItemQnorm_Click);
             // 
             // toolStripSeparator4
@@ -488,14 +489,14 @@ namespace DAnTE.Inferno
             this.menuItemAcrossD.MergeIndex = 4;
             this.menuItemAcrossD.Name = "menuItemAcrossD";
             this.menuItemAcrossD.Size = new System.Drawing.Size(297, 26);
-            this.menuItemAcrossD.Text = "Median Absolute Deviation";
+            this.menuItemAcrossD.Text = "&Median Absolute Deviation";
             this.menuItemAcrossD.Click += new System.EventHandler(this.menuItemMAD_Click);
             // 
             // menuItemMeanC
             // 
             this.menuItemMeanC.Name = "menuItemMeanC";
             this.menuItemMeanC.Size = new System.Drawing.Size(297, 26);
-            this.menuItemMeanC.Text = "Central Tendancy";
+            this.menuItemMeanC.Text = "&Central Tendancy";
             this.menuItemMeanC.Click += new System.EventHandler(this.menuItemMeanC_Click);
             // 
             // toolStripSeparator7
@@ -507,7 +508,7 @@ namespace DAnTE.Inferno
             // 
             this.menuItemImputeMissing.Name = "menuItemImputeMissing";
             this.menuItemImputeMissing.Size = new System.Drawing.Size(297, 26);
-            this.menuItemImputeMissing.Text = "Impute Missing Values";
+            this.menuItemImputeMissing.Text = "&Impute Missing Values";
             this.menuItemImputeMissing.Click += new System.EventHandler(this.menuItemImpute_Click);
             // 
             // menuItemPlot
@@ -533,7 +534,7 @@ namespace DAnTE.Inferno
             this.mnuHistogrms.MergeIndex = 0;
             this.mnuHistogrms.Name = "mnuHistogrms";
             this.mnuHistogrms.Size = new System.Drawing.Size(202, 26);
-            this.mnuHistogrms.Text = "Histograms";
+            this.mnuHistogrms.Text = "&Histograms";
             this.mnuHistogrms.Click += new System.EventHandler(this.mnuHistogrms_Click);
             // 
             // mnuItemQQplot
@@ -542,7 +543,7 @@ namespace DAnTE.Inferno
             this.mnuItemQQplot.MergeIndex = 1;
             this.mnuItemQQplot.Name = "mnuItemQQplot";
             this.mnuItemQQplot.Size = new System.Drawing.Size(202, 26);
-            this.mnuItemQQplot.Text = "Q-Q Plot";
+            this.mnuItemQQplot.Text = "&Q-Q Plot";
             this.mnuItemQQplot.Click += new System.EventHandler(this.mnuItemQQplot_Click);
             // 
             // menuItemCorr
@@ -551,7 +552,7 @@ namespace DAnTE.Inferno
             this.menuItemCorr.MergeIndex = 2;
             this.menuItemCorr.Name = "menuItemCorr";
             this.menuItemCorr.Size = new System.Drawing.Size(202, 26);
-            this.menuItemCorr.Text = "Correlation";
+            this.menuItemCorr.Text = "&Correlation";
             this.menuItemCorr.Click += new System.EventHandler(this.menuItemCorr_Click);
             // 
             // menuItemBoxPlot
@@ -560,7 +561,7 @@ namespace DAnTE.Inferno
             this.menuItemBoxPlot.MergeIndex = 3;
             this.menuItemBoxPlot.Name = "menuItemBoxPlot";
             this.menuItemBoxPlot.Size = new System.Drawing.Size(202, 26);
-            this.menuItemBoxPlot.Text = "Boxplots";
+            this.menuItemBoxPlot.Text = "&Boxplots";
             this.menuItemBoxPlot.Click += new System.EventHandler(this.menuItemBoxPlot_Click);
             // 
             // menuItemMAPlot
@@ -569,7 +570,7 @@ namespace DAnTE.Inferno
             this.menuItemMAPlot.MergeIndex = 4;
             this.menuItemMAPlot.Name = "menuItemMAPlot";
             this.menuItemMAPlot.Size = new System.Drawing.Size(202, 26);
-            this.menuItemMAPlot.Text = "M-A plot";
+            this.menuItemMAPlot.Text = "&M-A plot";
             this.menuItemMAPlot.Click += new System.EventHandler(this.menuItemMAPlot_Click);
             // 
             // mnuProteinRollupPlot
@@ -578,7 +579,7 @@ namespace DAnTE.Inferno
             this.mnuProteinRollupPlot.MergeIndex = 5;
             this.mnuProteinRollupPlot.Name = "mnuProteinRollupPlot";
             this.mnuProteinRollupPlot.Size = new System.Drawing.Size(202, 26);
-            this.mnuProteinRollupPlot.Text = "Protein Rollup";
+            this.mnuProteinRollupPlot.Text = "&Protein Rollup";
             this.mnuProteinRollupPlot.Click += new System.EventHandler(this.mnuProteinRollupPlot_Click);
             // 
             // mnuItemVenn
@@ -586,7 +587,7 @@ namespace DAnTE.Inferno
             this.mnuItemVenn.Image = global::DAnTE.Properties.Resources.venn2;
             this.mnuItemVenn.Name = "mnuItemVenn";
             this.mnuItemVenn.Size = new System.Drawing.Size(202, 26);
-            this.mnuItemVenn.Text = "Venn Diagrams";
+            this.mnuItemVenn.Text = "&Venn Diagrams";
             this.mnuItemVenn.Click += new System.EventHandler(this.mnuItemVenn_Click);
             // 
             // mnuItemPlotSelectedRows
@@ -594,7 +595,7 @@ namespace DAnTE.Inferno
             this.mnuItemPlotSelectedRows.Image = ((System.Drawing.Image)(resources.GetObject("mnuItemPlotSelectedRows.Image")));
             this.mnuItemPlotSelectedRows.Name = "mnuItemPlotSelectedRows";
             this.mnuItemPlotSelectedRows.Size = new System.Drawing.Size(202, 26);
-            this.mnuItemPlotSelectedRows.Text = "Plot selected rows";
+            this.mnuItemPlotSelectedRows.Text = "Plot &selected rows";
             this.mnuItemPlotSelectedRows.Click += new System.EventHandler(this.ctxtMnuItemPlotRows_Click);
             // 
             // menuItemRollUp
@@ -614,7 +615,7 @@ namespace DAnTE.Inferno
             this.menuItemRollupRef.Image = ((System.Drawing.Image)(resources.GetObject("menuItemRollupRef.Image")));
             this.menuItemRollupRef.Name = "menuItemRollupRef";
             this.menuItemRollupRef.Size = new System.Drawing.Size(380, 26);
-            this.menuItemRollupRef.Text = "1. RRollup: Normalize to a Reference Peptide";
+            this.menuItemRollupRef.Text = "1. &RRollup: Normalize to a Reference Peptide";
             this.menuItemRollupRef.Click += new System.EventHandler(this.menuItemRRollup_Click);
             // 
             // menuItemRollupMedStDev
@@ -622,7 +623,7 @@ namespace DAnTE.Inferno
             this.menuItemRollupMedStDev.Image = ((System.Drawing.Image)(resources.GetObject("menuItemRollupMedStDev.Image")));
             this.menuItemRollupMedStDev.Name = "menuItemRollupMedStDev";
             this.menuItemRollupMedStDev.Size = new System.Drawing.Size(380, 26);
-            this.menuItemRollupMedStDev.Text = "2. ZRollup: Median/StDev Scaling";
+            this.menuItemRollupMedStDev.Text = "2. &ZRollup: Median/StDev Scaling";
             this.menuItemRollupMedStDev.Click += new System.EventHandler(this.menuItemZRollup_Click);
             // 
             // menuItemQRup
@@ -630,7 +631,7 @@ namespace DAnTE.Inferno
             this.menuItemQRup.Image = ((System.Drawing.Image)(resources.GetObject("menuItemQRup.Image")));
             this.menuItemQRup.Name = "menuItemQRup";
             this.menuItemQRup.Size = new System.Drawing.Size(380, 26);
-            this.menuItemQRup.Text = "3. QRollup: Use Most Intense Peptides";
+            this.menuItemQRup.Text = "3. &QRollup: Use Most Intense Peptides";
             this.menuItemQRup.Click += new System.EventHandler(this.menuItemQRup_Click);
             // 
             // groupingToolStripMenuItem
@@ -650,7 +651,7 @@ namespace DAnTE.Inferno
             this.mnuItemDefFactors.Image = global::DAnTE.Properties.Resources.OrgChartHS;
             this.mnuItemDefFactors.Name = "mnuItemDefFactors";
             this.mnuItemDefFactors.Size = new System.Drawing.Size(196, 26);
-            this.mnuItemDefFactors.Text = "Define Factors";
+            this.mnuItemDefFactors.Text = "Define &Factors";
             this.mnuItemDefFactors.Click += new System.EventHandler(this.mnuItemDefFactors_Click);
             // 
             // mnuItemMergeCols
@@ -658,14 +659,14 @@ namespace DAnTE.Inferno
             this.mnuItemMergeCols.Image = ((System.Drawing.Image)(resources.GetObject("mnuItemMergeCols.Image")));
             this.mnuItemMergeCols.Name = "mnuItemMergeCols";
             this.mnuItemMergeCols.Size = new System.Drawing.Size(196, 26);
-            this.mnuItemMergeCols.Text = "Merge Columns";
+            this.mnuItemMergeCols.Text = "&Merge Columns";
             this.mnuItemMergeCols.Click += new System.EventHandler(this.mnuItemMergeCols_Click);
             // 
             // mnuArrangeColumns
             // 
             this.mnuArrangeColumns.Name = "mnuArrangeColumns";
             this.mnuArrangeColumns.Size = new System.Drawing.Size(196, 26);
-            this.mnuArrangeColumns.Text = "Arrange Columns";
+            this.mnuArrangeColumns.Text = "&Arrange Columns";
             this.mnuArrangeColumns.Click += new System.EventHandler(this.mnuItemDefFactors_Click);
             // 
             // menuItemStat
@@ -690,7 +691,7 @@ namespace DAnTE.Inferno
             // 
             this.mnuItemNormal.Name = "mnuItemNormal";
             this.mnuItemNormal.Size = new System.Drawing.Size(292, 26);
-            this.mnuItemNormal.Text = "Shapiro-Wilk Test for Normality";
+            this.mnuItemNormal.Text = "&Shapiro-Wilk Test for Normality";
             this.mnuItemNormal.Click += new System.EventHandler(this.menuItemShapiroWilks_Click);
             // 
             // toolStripSeparator15
@@ -703,7 +704,7 @@ namespace DAnTE.Inferno
             this.menuItemANOVA.Image = ((System.Drawing.Image)(resources.GetObject("menuItemANOVA.Image")));
             this.menuItemANOVA.Name = "menuItemANOVA";
             this.menuItemANOVA.Size = new System.Drawing.Size(292, 26);
-            this.menuItemANOVA.Text = "ANOVA";
+            this.menuItemANOVA.Text = "&ANOVA";
             this.menuItemANOVA.Click += new System.EventHandler(this.menuItemANOVA_Click);
             // 
             // mnuItemOneSTtest
@@ -711,7 +712,7 @@ namespace DAnTE.Inferno
             this.mnuItemOneSTtest.Image = ((System.Drawing.Image)(resources.GetObject("mnuItemOneSTtest.Image")));
             this.mnuItemOneSTtest.Name = "mnuItemOneSTtest";
             this.mnuItemOneSTtest.Size = new System.Drawing.Size(292, 26);
-            this.mnuItemOneSTtest.Text = "One Sample T-test";
+            this.mnuItemOneSTtest.Text = "One Sample &T-test";
             this.mnuItemOneSTtest.Click += new System.EventHandler(this.menuItemOneSampleTtest_Click);
             // 
             // toolStripSeparator16
@@ -723,14 +724,14 @@ namespace DAnTE.Inferno
             // 
             this.mnuItemWilcox.Name = "mnuItemWilcox";
             this.mnuItemWilcox.Size = new System.Drawing.Size(292, 26);
-            this.mnuItemWilcox.Text = "Wilcoxon (Mann-Whitney) Test";
+            this.mnuItemWilcox.Text = "&Wilcoxon (Mann-Whitney) Test";
             this.mnuItemWilcox.Click += new System.EventHandler(this.menuItemWilcox_Click);
             // 
             // mnuItemKruskal
             // 
             this.mnuItemKruskal.Name = "mnuItemKruskal";
             this.mnuItemKruskal.Size = new System.Drawing.Size(292, 26);
-            this.mnuItemKruskal.Text = "Kruskal-Walis Test";
+            this.mnuItemKruskal.Text = "&Kruskal-Walis Test";
             this.mnuItemKruskal.Click += new System.EventHandler(this.menuItemKW_Click);
             // 
             // toolStripSeparator17
@@ -742,7 +743,7 @@ namespace DAnTE.Inferno
             // 
             this.mnuItemFC.Name = "mnuItemFC";
             this.mnuItemFC.Size = new System.Drawing.Size(292, 26);
-            this.mnuItemFC.Text = "Calculate Fold Changes";
+            this.mnuItemFC.Text = "Calculate &Fold Changes";
             this.mnuItemFC.Click += new System.EventHandler(this.mnuItemFC_Click);
             // 
             // mnuItemExplore
@@ -763,7 +764,7 @@ namespace DAnTE.Inferno
             this.mnuItemPCAPLS.MergeIndex = 0;
             this.mnuItemPCAPLS.Name = "mnuItemPCAPLS";
             this.mnuItemPCAPLS.Size = new System.Drawing.Size(193, 26);
-            this.mnuItemPCAPLS.Text = "PCA/PLS";
+            this.mnuItemPCAPLS.Text = "&PCA/PLS";
             this.mnuItemPCAPLS.Click += new System.EventHandler(this.menuItemPCAPlot_Click);
             // 
             // mnuItemHeatmap
@@ -772,7 +773,7 @@ namespace DAnTE.Inferno
             this.mnuItemHeatmap.MergeIndex = 1;
             this.mnuItemHeatmap.Name = "mnuItemHeatmap";
             this.mnuItemHeatmap.Size = new System.Drawing.Size(193, 26);
-            this.mnuItemHeatmap.Text = "Cluster Heatmap";
+            this.mnuItemHeatmap.Text = "Cluster &Heatmap";
             this.mnuItemHeatmap.Click += new System.EventHandler(this.mnuItemHeatmap_Click);
             // 
             // mnuItemPatterns
@@ -781,7 +782,7 @@ namespace DAnTE.Inferno
             this.mnuItemPatterns.MergeIndex = 2;
             this.mnuItemPatterns.Name = "mnuItemPatterns";
             this.mnuItemPatterns.Size = new System.Drawing.Size(193, 26);
-            this.mnuItemPatterns.Text = "Pattern Search";
+            this.mnuItemPatterns.Text = "Pattern &Search";
             this.mnuItemPatterns.Click += new System.EventHandler(this.mnuItemPatterns_Click);
             // 
             // toolsToolStripMenuItem
@@ -789,6 +790,7 @@ namespace DAnTE.Inferno
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuItemFilterpq,
             this.mnuItemMissFilt,
+            this.mnuShowRCommandLog,
             this.mnuAnalysisSummary,
             this.toolStripSeparator8,
             this.toolStripSeparator18,
@@ -806,7 +808,7 @@ namespace DAnTE.Inferno
             this.mnuItemFilterpq.MergeIndex = 1;
             this.mnuItemFilterpq.Name = "mnuItemFilterpq";
             this.mnuItemFilterpq.Size = new System.Drawing.Size(267, 26);
-            this.mnuItemFilterpq.Text = "p/q-value Filter";
+            this.mnuItemFilterpq.Text = "&p/q-value Filter";
             this.mnuItemFilterpq.Click += new System.EventHandler(this.mnuItemFilterpq_Click);
             // 
             // mnuItemMissFilt
@@ -815,22 +817,30 @@ namespace DAnTE.Inferno
             this.mnuItemMissFilt.MergeIndex = 2;
             this.mnuItemMissFilt.Name = "mnuItemMissFilt";
             this.mnuItemMissFilt.Size = new System.Drawing.Size(267, 26);
-            this.mnuItemMissFilt.Text = "Missing Value Filter";
+            this.mnuItemMissFilt.Text = "&Missing Value Filter";
             this.mnuItemMissFilt.Click += new System.EventHandler(this.mnuItemMissFilt_Click);
+            // 
+            // mnuShowRCommandLog
+            // 
+            this.mnuShowRCommandLog.MergeIndex = 4;
+            this.mnuShowRCommandLog.Name = "mnuShowRCommandLog";
+            this.mnuShowRCommandLog.Size = new System.Drawing.Size(267, 26);
+            this.mnuShowRCommandLog.Text = "View &R Command Log";
+            this.mnuShowRCommandLog.Click += new System.EventHandler(this.mnuShowRCommandLog_Click);
             // 
             // mnuAnalysisSummary
             // 
             this.mnuAnalysisSummary.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.mnuAnalysisSummary.MergeIndex = 4;
+            this.mnuAnalysisSummary.MergeIndex = 5;
             this.mnuAnalysisSummary.Name = "mnuAnalysisSummary";
             this.mnuAnalysisSummary.Size = new System.Drawing.Size(267, 26);
-            this.mnuAnalysisSummary.Text = "Analysis Summary";
+            this.mnuAnalysisSummary.Text = "&Analysis Summary";
             this.mnuAnalysisSummary.Click += new System.EventHandler(this.mnuAnalysisSummary_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.toolStripSeparator8.MergeIndex = 5;
+            this.toolStripSeparator8.MergeIndex = 6;
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(264, 6);
             // 
@@ -843,7 +853,7 @@ namespace DAnTE.Inferno
             // 
             this.mnuItemFilterUsingSelectedRowIDs.Name = "mnuItemFilterUsingSelectedRowIDs";
             this.mnuItemFilterUsingSelectedRowIDs.Size = new System.Drawing.Size(267, 26);
-            this.mnuItemFilterUsingSelectedRowIDs.Text = "Filter using selected RowIDs";
+            this.mnuItemFilterUsingSelectedRowIDs.Text = "&Filter using selected RowIDs";
             this.mnuItemFilterUsingSelectedRowIDs.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
             // 
             // panel1
@@ -1524,5 +1534,6 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem mnuItemPlotSelectedRows;
         private ToolStripMenuItem mnuItemFilterUsingSelectedRowIDs;
         private ToolStripSeparator toolStripSeparator18;
+        private ToolStripMenuItem mnuShowRCommandLog;
     }
 }

@@ -472,9 +472,9 @@ namespace DAnTE.Inferno
             rcmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                vars = rConnector.GetSymbolAsStrings("vars");
-                rConnector.EvaluateNoReturn("print(vars)");
+                mRConnector.EvaluateNoReturn(rcmd);
+                vars = mRConnector.GetSymbolAsStrings("vars");
+                mRConnector.EvaluateNoReturn("print(vars)");
             }
             catch (Exception ex)
             {
@@ -502,9 +502,9 @@ namespace DAnTE.Inferno
                             #endregion
                         case ("factors"):
                             #region Factors
-                            if (rConnector.GetTableFromRmatrixNonNumeric("factors"))
+                            if (mRConnector.GetTableFromRmatrixNonNumeric("factors"))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.Columns[0].ColumnName = "Factors";
                                 mDTvar.TableName = "factors";
                                 DatasetFactorInfo(mDTvar, true);
@@ -516,12 +516,12 @@ namespace DAnTE.Inferno
                             #endregion
                         case ("pData1"):
                             #region RRollup
-                            rConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
-                            if (rConnector.GetTableFromRproteinMatrix("pData1"))
+                            mRConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
+                            if (mRConnector.GetTableFromRproteinMatrix("pData1"))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.Columns[0].ColumnName = "Protein";
-                                rConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]");
+                                mRConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]");
                                 mDTvar.TableName = "pData11";
                             }
                             else
@@ -530,23 +530,23 @@ namespace DAnTE.Inferno
                             break;
                         case ("pData2"):
                             #region ZRollup
-                            rConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
-                            if (rConnector.GetTableFromRproteinMatrix("pData2"))
+                            mRConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
+                            if (mRConnector.GetTableFromRproteinMatrix("pData2"))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.Columns[0].ColumnName = "Protein";
-                                rConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
+                                mRConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
                                 mDTvar.TableName = "pData22";
                             }
                             #endregion
                             break;
                         case ("qrollupP"):
                             #region Qrollup
-                            if (rConnector.GetTableFromRproteinMatrix("qrollupP"))
+                            if (mRConnector.GetTableFromRproteinMatrix("qrollupP"))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.Columns[0].ColumnName = "Protein";
-                                rConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]");
+                                mRConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]");
                                 mDTvar.TableName = "qrollupP1";
                             }
                             else
@@ -555,9 +555,9 @@ namespace DAnTE.Inferno
                             break;
                         case ("clusterResults"):
                             #region Cluster results
-                            if (rConnector.GetTableFromRvector("clusterResults"))
+                            if (mRConnector.GetTableFromRvector("clusterResults"))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.TableName = "clusterResults";
                             }
                             else
@@ -572,9 +572,9 @@ namespace DAnTE.Inferno
                             break;
                         default:
                             #region Everything else
-                            if (rConnector.GetTableFromRmatrix(variables[i]))
+                            if (mRConnector.GetTableFromRmatrix(variables[i]))
                             {
-                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar = mRConnector.DataTable.Copy();
                                 mDTvar.TableName = variables[i];
                             }
                             else

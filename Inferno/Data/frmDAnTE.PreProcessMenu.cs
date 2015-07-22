@@ -163,8 +163,8 @@ namespace DAnTE.Inferno
             rcmd = "qnOK <- IsCompleteData(" + mclsSelected.mstrRdatasetName + ")";
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                qnOK = rConnector.GetSymbolAsBool("qnOK"); ;
+                mRConnector.EvaluateNoReturn(rcmd);
+                qnOK = mRConnector.GetSymbolAsBool("qnOK"); ;
             }
             catch (Exception ex)
             {
@@ -470,12 +470,12 @@ namespace DAnTE.Inferno
             bool success = true;
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("madEset"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("madEset"))
                 {
-                    mDTMAD = rConnector.DataTable.Copy();
+                    mDTMAD = mRConnector.DataTable.Copy();
                     mDTMAD.TableName = "madEset";
-                    rConnector.EvaluateNoReturn("cat(\"Data MAD Adjusted.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Data MAD Adjusted.\n\")");
                     AddDataset2HashTable(mDTMAD);
                 }
                 else
@@ -509,14 +509,14 @@ namespace DAnTE.Inferno
                     statusMsg = "cat(\"Data median centered.\n\")";
                 }
 
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix(tableToFind))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix(tableToFind))
                 {
                     // DataTable dtMeanOrMedianCentered = new DataTable();
 
-                    var dtMeanOrMedianCentered = rConnector.DataTable.Copy();
+                    var dtMeanOrMedianCentered = mRConnector.DataTable.Copy();
                     dtMeanOrMedianCentered.TableName = tableToFind;
-                    rConnector.EvaluateNoReturn(statusMsg);
+                    mRConnector.EvaluateNoReturn(statusMsg);
                     AddDataset2HashTable(dtMeanOrMedianCentered);
                 }
                 else
@@ -538,12 +538,12 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("quaNormEset"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("quaNormEset"))
                 {
-                    mDTQuantile = rConnector.DataTable.Copy();
+                    mDTQuantile = mRConnector.DataTable.Copy();
                     mDTQuantile.TableName = "quaNormEset";
-                    rConnector.EvaluateNoReturn("cat(\"Data Quantile Normalized (Only complete data).\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Data Quantile Normalized (Only complete data).\n\")");
                     AddDataset2HashTable(mDTQuantile);
                 }
                 else
@@ -564,12 +564,12 @@ namespace DAnTE.Inferno
             bool success = true;
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("loessData"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("loessData"))
                 {
-                    mDTLoess = rConnector.DataTable.Copy();
+                    mDTLoess = mRConnector.DataTable.Copy();
                     mDTLoess.TableName = "loessData";
-                    rConnector.EvaluateNoReturn("cat(\"LOESS normalization done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"LOESS normalization done.\n\")");
                     AddDataset2HashTable(mDTLoess);
                 }
                 else
@@ -590,12 +590,12 @@ namespace DAnTE.Inferno
             bool success = true;
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("linregData"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("linregData"))
                 {
-                    mDTLinReg = rConnector.DataTable.Copy();
+                    mDTLinReg = mRConnector.DataTable.Copy();
                     mDTLinReg.TableName = "linregData";
-                    rConnector.EvaluateNoReturn("cat(\"Linear Regression done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Linear Regression done.\n\")");
                     AddDataset2HashTable(mDTLinReg);
                 }
                 else
@@ -616,12 +616,12 @@ namespace DAnTE.Inferno
             bool success = true;
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("imputedData"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("imputedData"))
                 {
-                    mDTImpute = rConnector.DataTable.Copy();
+                    mDTImpute = mRConnector.DataTable.Copy();
                     mDTImpute.TableName = "imputedData";
-                    rConnector.EvaluateNoReturn("cat(\"Imputing done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Imputing done.\n\")");
                     AddDataset2HashTable(mDTImpute);
                 }
                 else
@@ -642,12 +642,12 @@ namespace DAnTE.Inferno
             bool success = true;
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix("mergedData"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix("mergedData"))
                 {
-                    mDTmerged = rConnector.DataTable.Copy();
+                    mDTmerged = mRConnector.DataTable.Copy();
                     mDTmerged.TableName = "mergedData";
-                    rConnector.EvaluateNoReturn("cat(\"Merging done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Merging done.\n\")");
                     AddDataset2HashTable(mDTmerged);
                 }
                 else

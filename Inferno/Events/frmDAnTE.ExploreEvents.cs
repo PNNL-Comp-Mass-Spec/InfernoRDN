@@ -32,29 +32,29 @@ namespace DAnTE.Inferno
         mfrmPCAPlotDisplay.Title = "PCA/PLS Plot";
         mfrmPCAPlotDisplay.Show();
         try {
-          rConnector.EvaluateNoReturn("Mode <- weights$Mode");
-          var pcmode = rConnector.GetSymbolAsStrings("Mode");
+          mRConnector.EvaluateNoReturn("Mode <- weights$Mode");
+          var pcmode = mRConnector.GetSymbolAsStrings("Mode");
           mstrType = pcmode[0];
 
           if (mstrType.Equals("PCA")) {
-            rConnector.EvaluateNoReturn("PCAweights <- weights$X");
-            if (rConnector.GetTableFromRmatrix("PCAweights")) {
-              mDTpcaLoads = rConnector.DataTable.Copy();
+            mRConnector.EvaluateNoReturn("PCAweights <- weights$X");
+            if (mRConnector.GetTableFromRmatrix("PCAweights")) {
+              mDTpcaLoads = mRConnector.DataTable.Copy();
               mDTpcaLoads.TableName = "PCAweights";
               mDTpcaLoads.Columns[0].ColumnName = "ID";
-              rConnector.EvaluateNoReturn("cat(\"PCA calculated.\n\")");
+              mRConnector.EvaluateNoReturn("cat(\"PCA calculated.\n\")");
               AddDataset2HashTable(mDTpcaLoads);
               if (mhtDatasets.Contains("PCA Weights"))
                 AddDataNode((clsDatasetTreeNode)mhtDatasets["PCA Weights"]);
             }
           }
           if (mstrType.Equals("PLS")) {
-            rConnector.EvaluateNoReturn("PLSweights <- weights$X");
-            if (rConnector.GetTableFromRmatrix("PLSweights")) {
-              mDTplsLoads = rConnector.DataTable.Copy();
+            mRConnector.EvaluateNoReturn("PLSweights <- weights$X");
+            if (mRConnector.GetTableFromRmatrix("PLSweights")) {
+              mDTplsLoads = mRConnector.DataTable.Copy();
               mDTplsLoads.TableName = "PLSweights";
               mDTplsLoads.Columns[0].ColumnName = "ID";
-              rConnector.EvaluateNoReturn("cat(\"PLS calculated.\n\")");
+              mRConnector.EvaluateNoReturn("cat(\"PLS calculated.\n\")");
               AddDataset2HashTable(mDTplsLoads);
               if (mhtDatasets.Contains("PLS Weights"))
                 AddDataNode((clsDatasetTreeNode)mhtDatasets["PLS Weights"]);
@@ -103,22 +103,22 @@ namespace DAnTE.Inferno
 
       try {
 
-        rConnector.EvaluateNoReturn(rcmd);
+        mRConnector.EvaluateNoReturn(rcmd);
         if (doClust)
-          if (rConnector.GetTableFromRvector("clusterResults")) {
-            mDTclusters = rConnector.DataTable.Copy();
+          if (mRConnector.GetTableFromRvector("clusterResults")) {
+            mDTclusters = mRConnector.DataTable.Copy();
             mDTclusters.TableName = "clusterResults";
             AddDataset2HashTable(mDTclusters);
           }
-        rConnector.EvaluateNoReturn("cat(\"Heatmap done.\n\")");
-        mclsPlotResult = new clsPlotResult(LoadImage(tempFile), plotname);
+        mRConnector.EvaluateNoReturn("cat(\"Heatmap done.\n\")");
+        mclsPlotResult = new clsPlotResult(LoadImage(mRTempFilePath), plotname);
         e.Result = mclsPlotResult;
       }
       catch (Exception ex) {
         MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
         e.Result = null;
         e.Cancel = true;
-        DeleteTempFile(tempFile);
+        DeleteTempFile(mRTempFilePath);
       }
     }
 

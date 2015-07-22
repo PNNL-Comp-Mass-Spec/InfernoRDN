@@ -17,7 +17,15 @@ namespace DAnTE.Paradiso
 	{
 		public const string VALIDATING_R_PACKAGES = "Validating R Packages ...";
 
-		// Threading
+	    private enum PackageValidationState
+	    {
+            Initializing = 0,
+            Started = 1,
+            OverThreeSeconds = 2,
+            OverSixSeconds = 3
+	    }
+
+	    // Threading
 		static SplashScreen ms_frmSplash = null;
 		static Thread ms_oThread = null;
 
@@ -42,15 +50,15 @@ namespace DAnTE.Paradiso
 		private int m_iIndex = 1;
 		private int m_iActualTicks = 0;
 		private ArrayList m_alPreviousCompletionFraction;
-		private ArrayList m_alActualTimes = new ArrayList();
-		private const string REG_KEY_INITIALIZATION = "Initialization";
-		private const string REGVALUE_PB_MILISECOND_INCREMENT = "Increment";
+		private readonly ArrayList m_alActualTimes = new ArrayList();
+
+		private const string REGVALUE_PB_MILLISECOND_INCREMENT = "Increment";
 		private const string REGVALUE_PB_PERCENTS = "Percents";
 
 		//
-		private byte m_iValidatingPackagesState = 0;
-		private DateTime m_dValidatingPackagesStartTime;
-	    private DateTime m_dLastSecondsRemainingUpdate;
+        private PackageValidationState m_ValidatingPackagesState = PackageValidationState.Initializing;
+		private DateTime m_ValidatingPackagesStartTime;
+	    private DateTime m_LastSecondsRemainingUpdate;
 
 		private System.Windows.Forms.Label lblStatus;
 		private System.Windows.Forms.Label lblTimeRemaining;
@@ -131,7 +139,7 @@ namespace DAnTE.Paradiso
             // lblTimeRemaining
             // 
             this.lblTimeRemaining.BackColor = System.Drawing.Color.Transparent;
-            this.lblTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTimeRemaining.ForeColor = System.Drawing.SystemColors.Control;
             this.lblTimeRemaining.Location = new System.Drawing.Point(16, 411);
             this.lblTimeRemaining.Name = "lblTimeRemaining";
@@ -269,7 +277,7 @@ namespace DAnTE.Paradiso
 		// splashscreen from the registry.
 		private void ReadIncrements()
 		{
-			string sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_MILISECOND_INCREMENT, "0.0015");
+			string sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_MILLISECOND_INCREMENT, "0.0015");
 			double dblResult;
 
 			if( Double.TryParse(sPBIncrementPerTimerInterval, System.Globalization.NumberStyles.Float, System.Globalization.NumberFormatInfo.InvariantInfo, out dblResult) == true )
@@ -315,7 +323,7 @@ namespace DAnTE.Paradiso
 				m_iActualTicks = 1;
 
 			m_dblPBIncrementPerTimerInterval = 1.0/(double)m_iActualTicks;
-			RegistryAccess.SetStringRegistryValue( REGVALUE_PB_MILISECOND_INCREMENT, m_dblPBIncrementPerTimerInterval.ToString("#.000000", System.Globalization.NumberFormatInfo.InvariantInfo));
+			RegistryAccess.SetStringRegistryValue( REGVALUE_PB_MILLISECOND_INCREMENT, m_dblPBIncrementPerTimerInterval.ToString("#.000000", System.Globalization.NumberFormatInfo.InvariantInfo));
 		}
 
 		//********* Event Handlers ************
@@ -378,35 +386,45 @@ namespace DAnTE.Paradiso
 
 		    if (showPeriods)
 		    {
-                if (m_dValidatingPackagesStartTime > DateTime.UtcNow.AddDays(-1) && DateTime.UtcNow.AddSeconds(-2) > m_dLastSecondsRemainingUpdate)
+                if (m_ValidatingPackagesStartTime > DateTime.UtcNow.AddDays(-1) && DateTime.UtcNow.AddSeconds(-2) > m_LastSecondsRemainingUpdate)
 		        {                    
-		            var periodCount = (int)(Math.Round(DateTime.UtcNow.Subtract(m_dValidatingPackagesStartTime).TotalSeconds)) % 8 + 1;
+		            var periodCount = (int)(Math.Round(DateTime.UtcNow.Subtract(m_ValidatingPackagesStartTime).TotalSeconds)) % 8 + 1;
 		            lblTimeRemaining.Text = new string('.', periodCount);
 		        }
 		    }
 		    else
 		    {
-                m_dLastSecondsRemainingUpdate = DateTime.UtcNow;
+                m_LastSecondsRemainingUpdate = DateTime.UtcNow;
 		    }
 
 		    // Check for status "Validating R Packages" being visible for more than 3 seconds
 
-			if (ms_sStatus == VALIDATING_R_PACKAGES)
-			{
-				if (m_iValidatingPackagesState == 0)
-				{
-					m_iValidatingPackagesState = 1;
-					m_dValidatingPackagesStartTime = DateTime.UtcNow;
-				}
-				else if (m_iValidatingPackagesState == 1)
-				{
-					if (DateTime.UtcNow.Subtract(m_dValidatingPackagesStartTime).TotalSeconds >= 3)
-					{
-						m_iValidatingPackagesState = 2;
-						ms_sStatus = "Validating R Packages ... If prompted 'Would you like to use a personal library?' Answer 'Yes' to each of the questions.";
-					}
-				}
-			}
+		    if (ms_sStatus == VALIDATING_R_PACKAGES)
+		    {
+		        if (m_ValidatingPackagesState == PackageValidationState.Initializing)
+		        {
+		            m_ValidatingPackagesState = PackageValidationState.Started;
+		            m_ValidatingPackagesStartTime = DateTime.UtcNow;
+		        }
+		        else if (m_ValidatingPackagesState == PackageValidationState.Started)
+		        {
+		            if (DateTime.UtcNow.Subtract(m_ValidatingPackagesStartTime).TotalSeconds >= 3)
+		            {
+		                m_ValidatingPackagesState = PackageValidationState.OverThreeSeconds;
+		                ms_sStatus =
+		                    "Validating R Packages ... If prompted 'Would you like to use a personal library?' Answer 'Yes' to each of the questions.";
+		            }
+		        }
+		    }
+		    else
+		    {
+		        if (m_ValidatingPackagesState == PackageValidationState.OverThreeSeconds &&
+		            DateTime.UtcNow.Subtract(m_ValidatingPackagesStartTime).TotalSeconds >= 6)
+		        {
+                    this.lblStatus.BackColor = System.Drawing.Color.Chocolate;
+                    m_ValidatingPackagesState = PackageValidationState.OverSixSeconds;
+		        }		        
+		    }
 
 		}
 
@@ -440,20 +458,17 @@ namespace DAnTE.Paradiso
 	public class RegistryAccess
 	{
         private const string SOFTWARE_KEY = "Software";
-		private const string COMPANY_NAME = "TGen";
+		private const string COMPANY_NAME = "PNNL";
 		private const string APPLICATION_NAME = "Inferno";
 
 		// Method for retrieving a Registry Value.
 		static public string GetStringRegistryValue(string key, string defaultValue)
 		{
-			RegistryKey rkCompany;
-			RegistryKey rkApplication;
-
-			rkCompany = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, false).OpenSubKey(COMPANY_NAME, false);
+		    var rkCompany = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, false).OpenSubKey(COMPANY_NAME, false);
 			if( rkCompany != null )
 			{
-				rkApplication = rkCompany.OpenSubKey(APPLICATION_NAME, true);
-				if( rkApplication != null )
+			    var rkApplication = rkCompany.OpenSubKey(APPLICATION_NAME, true);
+			    if( rkApplication != null )
 				{
 					foreach(string sKey in rkApplication.GetValueNames())
 					{
@@ -464,7 +479,7 @@ namespace DAnTE.Paradiso
 					}
 				}
 			}
-			return defaultValue;
+		    return defaultValue;
 		}
 
 		// Method for storing a Registry Value.

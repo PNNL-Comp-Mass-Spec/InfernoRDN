@@ -181,8 +181,8 @@ namespace DAnTE.Inferno
             Console.WriteLine(rcmd);
             try
             {
-                rConnector.EvaluateNoReturn("ls()");
-                rConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("ls()");
+                mRConnector.EvaluateNoReturn(rcmd);
             }
             catch (Exception ex)
             {
@@ -243,12 +243,12 @@ namespace DAnTE.Inferno
                         AddDataNode((clsDatasetTreeNode)mhtDatasets["Factors"]);
                     }
 
-                    if (rConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
+                    if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
                     {
                         try
                         {
-                            rConnector.EvaluateNoReturn("print(factors)");
-                            rConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
+                            mRConnector.EvaluateNoReturn("print(factors)");
+                            mRConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
                         }
                         catch (Exception ex)
                         {
@@ -287,7 +287,7 @@ namespace DAnTE.Inferno
             mclsAnovaPar = new clsAnovaPar();
             Rdataset = mclsSelected.mstrRdatasetName;
 
-            mclsAnovaPar.tempFile = tempFile;
+            mclsAnovaPar.tempFile = mRTempFilePath;
             mclsAnovaPar.Rdataset = Rdataset;
             mclsAnovaPar.mstrDatasetName = mclsSelected.mstrDataText;
             clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
@@ -346,7 +346,7 @@ namespace DAnTE.Inferno
             mclsTamuQPar = new clsTamuQPar();
             Rdataset = mclsSelected.mstrRdatasetName;
 
-            mclsTamuQPar.tempFile = tempFile;
+            mclsTamuQPar.tempFile = mRTempFilePath;
             mclsTamuQPar.Rdataset = Rdataset;
             mclsTamuQPar.mstrDatasetName = mclsSelected.mstrDataText;
             clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
@@ -404,7 +404,7 @@ namespace DAnTE.Inferno
             mclsKWpar = new clsKruskalWPar();
             Rdataset = mclsSelected.mstrRdatasetName;
 
-            mclsKWpar.tempFile = tempFile;
+            mclsKWpar.tempFile = mRTempFilePath;
             mclsKWpar.Rdataset = Rdataset;
             mclsKWpar.mstrDatasetName = mclsSelected.mstrDataText;
             clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
@@ -467,7 +467,7 @@ namespace DAnTE.Inferno
             mclsWilcoxPar = new clsWilcoxonPar();
             Rdataset = mclsSelected.mstrRdatasetName;
 
-            mclsWilcoxPar.tempFile = tempFile;
+            mclsWilcoxPar.tempFile = mRTempFilePath;
             mclsWilcoxPar.Rdataset = Rdataset;
             mclsWilcoxPar.mstrDatasetName = mclsSelected.mstrDataText;
             clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
@@ -589,10 +589,10 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(mclsFoldChangePar.Rcmd);
-                if (rConnector.GetTableFromRmatrix("foldChanges"))
+                mRConnector.EvaluateNoReturn(mclsFoldChangePar.Rcmd);
+                if (mRConnector.GetTableFromRmatrix("foldChanges"))
                 {
-                    DataTable mDTFoldChange = rConnector.DataTable.Copy();
+                    DataTable mDTFoldChange = mRConnector.DataTable.Copy();
                     if (mDTFoldChange != null)
                     {
                         mDTFoldChange.TableName = "foldChanges";
@@ -704,10 +704,10 @@ namespace DAnTE.Inferno
             rcmd = filtTableName + "<- filterOnRowIds(" + datasetNameInR + "," + selectedRowData + ")";
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                if (rConnector.GetTableFromRmatrix(filtTableName))
+                mRConnector.EvaluateNoReturn(rcmd);
+                if (mRConnector.GetTableFromRmatrix(filtTableName))
                 {
-                    DataTable mDTfiltered = rConnector.DataTable.Copy();
+                    DataTable mDTfiltered = mRConnector.DataTable.Copy();
                     if (mDTfiltered != null)
                     {
                         mDTfiltered.TableName = filtTableName;
@@ -733,20 +733,20 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("pvalues<-anovaR$pvals");
-                rConnector.EvaluateNoReturn("notused<-anovaR$miss");
-                rConnector.EvaluateNoReturn("allused<-anovaR$allused");
-                mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("pvalues<-anovaR$pvals");
+                mRConnector.EvaluateNoReturn("notused<-anovaR$miss");
+                mRConnector.EvaluateNoReturn("allused<-anovaR$allused");
+                mblAnovaAllUsed = mRConnector.GetSymbolAsBool("allused");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = rConnector.DataTable.Copy();
+                mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -757,8 +757,8 @@ namespace DAnTE.Inferno
             {
                 if (!mblAnovaAllUsed)
                 {
-                    rConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = rConnector.DataTable.Copy();
+                    mRConnector.GetTableFromRmatrix("notused");
+                    mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -785,9 +785,9 @@ namespace DAnTE.Inferno
             {
                 //  rConnector.EvaluateNoReturn("pvalues<-DoAnova");
 
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("yimputed<-tamuQ$y");
-                rConnector.EvaluateNoReturn("pvalues<-tamuQ$pvals");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("yimputed<-tamuQ$y");
+                mRConnector.EvaluateNoReturn("pvalues<-tamuQ$pvals");
                 //rConnector.EvaluateNoReturn("notused<-TamuQ$miss");
                 //rConnector.EvaluateNoReturn("allused<-TamuQ$allused");
                 /*mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");*/
@@ -797,16 +797,16 @@ namespace DAnTE.Inferno
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("yimputed"))
+            if (success && mRConnector.GetTableFromRmatrix("yimputed"))
             {
-                mDTamuQYImputed = rConnector.DataTable.Copy();
+                mDTamuQYImputed = mRConnector.DataTable.Copy();
                 mDTamuQYImputed.TableName = "yimputed";
                 mDTamuQYImputed.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTamuQYImputed);
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTamuQP = rConnector.DataTable.Copy();
+                mDTamuQP = mRConnector.DataTable.Copy();
                 mDTamuQP.TableName = "pvalues";
                 mDTamuQP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTamuQP);
@@ -837,20 +837,20 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("pvalues<-kwtest$pvals");
-                rConnector.EvaluateNoReturn("notused<-kwtest$miss");
-                rConnector.EvaluateNoReturn("allused<-kwtest$allused");
-                mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("pvalues<-kwtest$pvals");
+                mRConnector.EvaluateNoReturn("notused<-kwtest$miss");
+                mRConnector.EvaluateNoReturn("allused<-kwtest$allused");
+                mblAnovaAllUsed = mRConnector.GetSymbolAsBool("allused");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = rConnector.DataTable.Copy();
+                mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -861,8 +861,8 @@ namespace DAnTE.Inferno
             {
                 if (!mblAnovaAllUsed)
                 {
-                    rConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = rConnector.DataTable.Copy();
+                    mRConnector.GetTableFromRmatrix("notused");
+                    mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -881,20 +881,20 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("pvalues<-wilcoxtest$pvals");
-                rConnector.EvaluateNoReturn("notused<-wilcoxtest$miss");
-                rConnector.EvaluateNoReturn("allused<-wilcoxtest$allused");
-                mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("pvalues<-wilcoxtest$pvals");
+                mRConnector.EvaluateNoReturn("notused<-wilcoxtest$miss");
+                mRConnector.EvaluateNoReturn("allused<-wilcoxtest$allused");
+                mblAnovaAllUsed = mRConnector.GetSymbolAsBool("allused");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = rConnector.DataTable.Copy();
+                mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -905,8 +905,8 @@ namespace DAnTE.Inferno
             {
                 if (!mblAnovaAllUsed)
                 {
-                    rConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = rConnector.DataTable.Copy();
+                    mRConnector.GetTableFromRmatrix("notused");
+                    mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -925,20 +925,20 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("pvalues<-swtest$pvals");
-                rConnector.EvaluateNoReturn("notused<-swtest$miss");
-                rConnector.EvaluateNoReturn("allused<-swtest$allused");
-                mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("pvalues<-swtest$pvals");
+                mRConnector.EvaluateNoReturn("notused<-swtest$miss");
+                mRConnector.EvaluateNoReturn("allused<-swtest$allused");
+                mblAnovaAllUsed = mRConnector.GetSymbolAsBool("allused");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = rConnector.DataTable.Copy();
+                mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -949,8 +949,8 @@ namespace DAnTE.Inferno
             {
                 if (!mblAnovaAllUsed)
                 {
-                    rConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = rConnector.DataTable.Copy();
+                    mRConnector.GetTableFromRmatrix("notused");
+                    mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -969,20 +969,20 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("pvalues<-ttest$pvals");
-                rConnector.EvaluateNoReturn("notused<-ttest$miss");
-                rConnector.EvaluateNoReturn("allused<-ttest$allused");
-                mblAnovaAllUsed = rConnector.GetSymbolAsBool("allused");
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("pvalues<-ttest$pvals");
+                mRConnector.EvaluateNoReturn("notused<-ttest$miss");
+                mRConnector.EvaluateNoReturn("allused<-ttest$allused");
+                mblAnovaAllUsed = mRConnector.GetSymbolAsBool("allused");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 success = false;
             }
-            if (success && rConnector.GetTableFromRmatrix("pvalues"))
+            if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = rConnector.DataTable.Copy();
+                mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -993,8 +993,8 @@ namespace DAnTE.Inferno
             {
                 if (!mblAnovaAllUsed)
                 {
-                    rConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = rConnector.DataTable.Copy();
+                    mRConnector.GetTableFromRmatrix("notused");
+                    mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }

@@ -16,15 +16,17 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "July 21, 2015";
+        public const string PROGRAM_DATE = "July 22, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 20;
         private IContainer components;
-        private TabControl mtabControlData;
-        // Tab Page controls 
-        private TabPage ctltabPage;
-        // Tab controls for Expressions
 
+        // Tab Page controls 
+        private TabControl mtabControlData;
+
+        // Tab controls for Expressions
+        private TabPage ctltabPage;
+        
         private readonly frmShowProgress mfrmShowProgress;
 
         private ArrayList marrDataSetNames = new ArrayList();
@@ -36,14 +38,16 @@ namespace DAnTE.Inferno
 
         private string sessionFile = null;
 
-        private string tempFile = "";
-        private clsRconnect rConnector;
+        // This is a linux-style path that is used by R to save .png files
+        // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
+        private string mRTempFilePath = "";
+        private clsRconnect mRConnector;
 
         private string mstrFldgTitle;
 
         private enmDataType dataSetType = enmDataType.ESET;
         private static frmDAnTE m_frmDAnTE;
-        private BackgroundWorker m_BackgroundWorker;
+        private readonly BackgroundWorker m_BackgroundWorker;
 
         private frmDAnTEmdi m_frmDAnTEmdi;
         private ToolStripMenuItem mnuItemMissFilt;
@@ -51,9 +55,9 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem ctxtMnuItemFilter;
         private ToolStripSeparator toolStripSeparator13;
 
-        private Hashtable mhtDatasets = new Hashtable();
-        private Hashtable mhtAnalysisObjects = new Hashtable();
-        private ArrayList marrAnalysisObjects = new ArrayList();
+        private readonly Hashtable mhtDatasets = new Hashtable();
+        private readonly Hashtable mhtAnalysisObjects = new Hashtable();
+        private readonly ArrayList marrAnalysisObjects = new ArrayList();
         private ToolStripMenuItem mnuItemVenn;
 
         private int mintFilterTblNum = 0;
@@ -295,8 +299,13 @@ namespace DAnTE.Inferno
         {
             set
             {
-                rConnector = value;
+                mRConnector = value;
             }
+        }
+
+        public string RTempFilePath
+        {
+            set { mRTempFilePath = value; }
         }
 
         public frmDAnTEmdi ParentInstance

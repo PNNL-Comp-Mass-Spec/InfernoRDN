@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.5681; July 22, 2015
+	- Fix file path initialization bug that prevented R from creating plots
+	- Add "View R Command" menu item to the Tools menu
+
 Version 1.1.5680; July 21, 2015
 	- Fixed computation of qvalues when running ANOVA
 		- Requires obtaining the qvalue package from Bioconductor (fix courtesy of Eric Merkley)

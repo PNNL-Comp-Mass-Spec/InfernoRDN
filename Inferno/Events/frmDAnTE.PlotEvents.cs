@@ -190,15 +190,15 @@ namespace DAnTE.Inferno
 
       try {
 
-        rConnector.EvaluateNoReturn(rcmd);
-        mclsPlotResult = new clsPlotResult(LoadImage(tempFile), plotname);
+        mRConnector.EvaluateNoReturn(rcmd);
+        mclsPlotResult = new clsPlotResult(LoadImage(mRTempFilePath), plotname);
         e.Result = mclsPlotResult;
       }
       catch (Exception ex) {
         MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
         e.Result = null;
         e.Cancel = true;
-        DeleteTempFile(tempFile);
+        DeleteTempFile(mRTempFilePath);
       }
     }
 

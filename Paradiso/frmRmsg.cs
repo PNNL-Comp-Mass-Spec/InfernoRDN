@@ -52,47 +52,43 @@ namespace DAnTE.Paradiso
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRmsg));
-      this.panel1 = new System.Windows.Forms.Panel();
-      this.mbtnOK = new System.Windows.Forms.Button();
-      //-//this.axStatConnectorCharacterDevice1 = new AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice();
-      this.panel1.SuspendLayout();
-      //-//((System.ComponentModel.ISupportInitialize)(this.axStatConnectorCharacterDevice1)).BeginInit();
-      this.SuspendLayout();
-      // 
-      // panel1
-      // 
-      this.panel1.Controls.Add(this.mbtnOK);
-      this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panel1.Location = new System.Drawing.Point(0, 528);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(693, 51);
-      this.panel1.TabIndex = 4;
-      // 
-      // mbtnOK
-      // 
-      this.mbtnOK.Location = new System.Drawing.Point(314, 15);
-      this.mbtnOK.Name = "mbtnOK";
-      this.mbtnOK.Size = new System.Drawing.Size(75, 23);
-      this.mbtnOK.TabIndex = 0;
-      this.mbtnOK.Text = "OK";
-      this.mbtnOK.UseVisualStyleBackColor = true;
-      this.mbtnOK.Click += new System.EventHandler(this.btnOKClick_event);
-      // 
-      // 
-      // frmRmsg
-      // 
-      this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-      this.ClientSize = new System.Drawing.Size(693, 579);
-      this.Controls.Add(this.panel1);
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.Name = "frmRmsg";
-      this.Text = "R Messages";
-      this.Load += new System.EventHandler(this.frmRmsg_Load);
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmClosing_event);
-      this.panel1.ResumeLayout(false);
-      //-//((System.ComponentModel.ISupportInitialize)(this.axStatConnectorCharacterDevice1)).EndInit();
-      this.ResumeLayout(false);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRmsg));
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.mbtnOK = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.mbtnOK);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 520);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(693, 59);
+            this.panel1.TabIndex = 4;
+            // 
+            // mbtnOK
+            // 
+            this.mbtnOK.Location = new System.Drawing.Point(377, 17);
+            this.mbtnOK.Name = "mbtnOK";
+            this.mbtnOK.Size = new System.Drawing.Size(90, 27);
+            this.mbtnOK.TabIndex = 0;
+            this.mbtnOK.Text = "OK";
+            this.mbtnOK.UseVisualStyleBackColor = true;
+            this.mbtnOK.Click += new System.EventHandler(this.btnOKClick_event);
+            // 
+            // frmRmsg
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.ClientSize = new System.Drawing.Size(693, 579);
+            this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "frmRmsg";
+            this.Text = "R Messages";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmClosing_event);
+            this.Load += new System.EventHandler(this.frmRmsg_Load);
+            this.panel1.ResumeLayout(false);
+            this.ResumeLayout(false);
 
     }
     #endregion

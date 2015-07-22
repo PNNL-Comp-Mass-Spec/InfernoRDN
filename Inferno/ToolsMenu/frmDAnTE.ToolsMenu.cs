@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
+using DAnTE.Paradiso;
 using DAnTE.Tools;
 
 namespace DAnTE.Inferno
@@ -45,12 +46,12 @@ namespace DAnTE.Inferno
                 {
                     mintFilterTblNum++;
                     filtTableName = "filteredData" + mintFilterTblNum.ToString();
-                    rConnector.EvaluateNoReturn(rcmd);
-                    rConnector.EvaluateNoReturn("err<-filterResult$error");
-                    rConnector.EvaluateNoReturn("nodata<-filterResult$NoData");
-                    rConnector.EvaluateNoReturn(filtTableName + "<-filterResult$Filtered");
-                    mblErr = rConnector.GetSymbolAsBool("err");
-                    mblNoData = rConnector.GetSymbolAsBool("nodata");
+                    mRConnector.EvaluateNoReturn(rcmd);
+                    mRConnector.EvaluateNoReturn("err<-filterResult$error");
+                    mRConnector.EvaluateNoReturn("nodata<-filterResult$NoData");
+                    mRConnector.EvaluateNoReturn(filtTableName + "<-filterResult$Filtered");
+                    mblErr = mRConnector.GetSymbolAsBool("err");
+                    mblNoData = mRConnector.GetSymbolAsBool("nodata");
                 }
                 catch (Exception ex)
                 {
@@ -62,9 +63,9 @@ namespace DAnTE.Inferno
                     MessageBox.Show("No matches found. Check if you selected the correct dataset or" +
                                     Environment.NewLine + "if your cutoff is too conservative.",
                                     "Problem...", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                else if (rConnector.GetTableFromRmatrix(filtTableName))
+                else if (mRConnector.GetTableFromRmatrix(filtTableName))
                 {
-                    DataTable mDTfiltered = rConnector.DataTable.Copy();
+                    DataTable mDTfiltered = mRConnector.DataTable.Copy();
                     mDTfiltered.TableName = filtTableName;
                     mDTfiltered.Columns[0].ColumnName = "ID";
                     AddDataset2HashTable(mDTfiltered);
@@ -105,10 +106,10 @@ namespace DAnTE.Inferno
                 rcmd = filtTableName + "<- filterMissing(" + dataset + "," + filterCutoff + ")";
                 try
                 {
-                    rConnector.EvaluateNoReturn(rcmd);
-                    if (rConnector.GetTableFromRmatrix(filtTableName))
+                    mRConnector.EvaluateNoReturn(rcmd);
+                    if (mRConnector.GetTableFromRmatrix(filtTableName))
                     {
-                        DataTable mDTmissFilt = rConnector.DataTable.Copy();
+                        DataTable mDTmissFilt = mRConnector.DataTable.Copy();
                         if (mDTmissFilt != null)
                         {
                             mDTmissFilt.TableName = filtTableName;
@@ -214,6 +215,16 @@ namespace DAnTE.Inferno
                 DataFileName = this.mstrLoadedfileName
             };
             frmSummary.ShowDialog();
+        }
+
+        private void mnuShowRCommandLog_Click(object sender, EventArgs e)
+        {
+            var logViewerForm = new frmRCommandLog()
+            {
+                LogFilePath = clsRCmdLog.CurrentLogFilePath
+            };
+
+            logViewerForm.ShowDialog();
         }
     }
 }

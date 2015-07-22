@@ -94,7 +94,7 @@ namespace DAnTE.Inferno
 
       try {
 
-        rConnector.EvaluateNoReturn(arg);
+        mRConnector.EvaluateNoReturn(arg);
         e.Result = true;
       }
       catch (Exception ex) {

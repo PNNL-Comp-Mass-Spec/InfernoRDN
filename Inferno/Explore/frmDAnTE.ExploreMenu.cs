@@ -36,7 +36,7 @@ namespace DAnTE.Inferno
             mclsPCApar = new clsPCAplotPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsPCApar.tempFile = tempFile;
+            mclsPCApar.tempFile = mRTempFilePath;
             mclsPCApar.Rdataset = datasetNameInR;
             mclsPCApar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsPCApar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -126,7 +126,7 @@ namespace DAnTE.Inferno
                 marrSelRows.Add(row.Cells[0].Value);
             }
 
-            mclsHeatmapPar.tempFile = tempFile;
+            mclsHeatmapPar.tempFile = mRTempFilePath;
             mclsHeatmapPar.Rdataset = datasetNameInR;
             mclsHeatmapPar.mstrDatasetName = mclsSelected.mstrDataText;
             mclsHeatmapPar.SelectedRows = marrSelRows;
@@ -251,12 +251,12 @@ namespace DAnTE.Inferno
             DataTable mDTPatterns;
             try
             {
-                rConnector.EvaluateNoReturn(mclsPatternPar.Rcmd);
-                if (rConnector.GetTableFromRmatrix("patternData"))
+                mRConnector.EvaluateNoReturn(mclsPatternPar.Rcmd);
+                if (mRConnector.GetTableFromRmatrix("patternData"))
                 {
-                    mDTPatterns = rConnector.DataTable.Copy();
+                    mDTPatterns = mRConnector.DataTable.Copy();
                     mDTPatterns.TableName = "patternData";
-                    rConnector.EvaluateNoReturn("cat(\"Pattern searching done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Pattern searching done.\n\")");
                     AddDataset2HashTable(mDTPatterns);
                 }
                 else

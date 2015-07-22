@@ -1,14 +1,5 @@
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
-using System.IO;
-using System.Text.RegularExpressions;
-using DAnTE.Tools;
-using DAnTE.ExtraControls;
-using DAnTE.Properties;
 
 namespace DAnTE.Tools
 {

@@ -38,7 +38,7 @@ namespace DAnTE.Inferno
             mclsQQPar = new clsQQPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsQQPar.tempFile = tempFile;
+            mclsQQPar.tempFile = mRTempFilePath;
             mclsQQPar.Rdataset = datasetNameInR;
             mclsQQPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsQQPar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -105,7 +105,7 @@ namespace DAnTE.Inferno
             mclsHistPar = new clsHistogramPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsHistPar.tempFile = tempFile;
+            mclsHistPar.tempFile = mRTempFilePath;
             mclsHistPar.Rdataset = datasetNameInR;
             mclsHistPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsHistPar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -167,7 +167,7 @@ namespace DAnTE.Inferno
             mclsCorrPar = new clsCorrelationPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsCorrPar.tempFile = tempFile;
+            mclsCorrPar.tempFile = mRTempFilePath;
             mclsCorrPar.Rdataset = datasetNameInR;
             mclsCorrPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsCorrPar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -228,7 +228,7 @@ namespace DAnTE.Inferno
             mclsBoxPlotPar = new clsBoxPlotPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsBoxPlotPar.tempFile = tempFile;
+            mclsBoxPlotPar.tempFile = mRTempFilePath;
             mclsBoxPlotPar.Rdataset = datasetNameInR;
             mclsBoxPlotPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsBoxPlotPar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -316,8 +316,8 @@ namespace DAnTE.Inferno
             {
                 PopulateDataComboBox = AvailableDataSources(),
                 PopulatePDataComboBox = dataSourceList,
-                TempFile = tempFile,
-                RConnect = rConnector,
+                TempFile = mRTempFilePath,
+                RConnect = mRConnector,
                 ParentRef = (frmDAnTEmdi)this.MdiParent,
                 m_frmDAnTE = this
             };
@@ -341,7 +341,7 @@ namespace DAnTE.Inferno
             mclsMApar = new clsMAplotsPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsMApar.tempFile = tempFile;
+            mclsMApar.tempFile = mRTempFilePath;
             mclsMApar.Rdataset = datasetNameInR;
             mclsMApar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
             mclsMApar.mstrDatasetName = mclsSelected.mstrDataText;
@@ -433,11 +433,11 @@ namespace DAnTE.Inferno
             }
             selectedRowData.Append(")");
 
-            rcmd = "PlotRows(" + datasetNameInR + "," + selectedRowData + @",file=""" + tempFile + @""")";
+            rcmd = "PlotRows(" + datasetNameInR + "," + selectedRowData + @",file=""" + mRTempFilePath + @""")";
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                mfrmPlotDisplay.Image = LoadImage(tempFile);
+                mRConnector.EvaluateNoReturn(rcmd);
+                mfrmPlotDisplay.Image = LoadImage(mRTempFilePath);
                 mfrmPlotDisplay.EnableParameterMenu = false;
                 mfrmPlotDisplay.MdiParent = m_frmDAnTEmdi;
                 mfrmPlotDisplay.Title = "Table Rows";
@@ -467,7 +467,7 @@ namespace DAnTE.Inferno
             mclsVennPar = new clsVennPar();
             string datasetNameInR = mclsSelected.mstrRdatasetName;
 
-            mclsVennPar.tempFile = tempFile;
+            mclsVennPar.tempFile = mRTempFilePath;
             mclsVennPar.Rdataset = datasetNameInR;
             mclsVennPar.mhtDatasets = mhtDatasets;
             mclsVennPar.marrDatasets = AvailableDataSources();

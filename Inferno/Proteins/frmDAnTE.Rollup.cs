@@ -193,14 +193,14 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]"); // dataset with no peptide counts
-                if (rConnector.GetTableFromRproteinMatrix("qrollupP"))
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]"); // dataset with no peptide counts
+                if (mRConnector.GetTableFromRproteinMatrix("qrollupP"))
                 {
-                    mDTQProteins = rConnector.DataTable.Copy();
+                    mDTQProteins = mRConnector.DataTable.Copy();
                     mDTQProteins.TableName = "qrollupP1";
                     mDTQProteins.Columns[0].ColumnName = "Protein";
-                    rConnector.EvaluateNoReturn("cat(\"Proteins Q rolled up.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Proteins Q rolled up.\n\")");
                     AddDataset2HashTable(mDTQProteins);
                 }
                 else
@@ -223,18 +223,18 @@ namespace DAnTE.Inferno
             //rcmd = "pScaled2 <- scale.proteins(Eset,ProtInfo)";
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("sData2 <- pScaled2$sData"); // scaled data
-                rConnector.EvaluateNoReturn("orData2 <- pScaled2$orData"); // scaled and outlier removed
-                rConnector.EvaluateNoReturn("pData2 <- pScaled2$pData"); // protein abundances
-                rConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]"); // dataset with no peptide counts
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("sData2 <- pScaled2$sData"); // scaled data
+                mRConnector.EvaluateNoReturn("orData2 <- pScaled2$orData"); // scaled and outlier removed
+                mRConnector.EvaluateNoReturn("pData2 <- pScaled2$pData"); // protein abundances
+                mRConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]"); // dataset with no peptide counts
 
-                if (rConnector.GetTableFromRproteinMatrix("pData2"))
+                if (mRConnector.GetTableFromRproteinMatrix("pData2"))
                 {
-                    mDTZProteins = rConnector.DataTable.Copy();
+                    mDTZProteins = mRConnector.DataTable.Copy();
                     mDTZProteins.TableName = "pData22";
                     mDTZProteins.Columns[0].ColumnName = "Protein";
-                    rConnector.EvaluateNoReturn("cat(\"Data scaling done.\n\")");
+                    mRConnector.EvaluateNoReturn("cat(\"Data scaling done.\n\")");
                     AddDataset2HashTable(mDTZProteins);
                 }
                 else
@@ -257,30 +257,30 @@ namespace DAnTE.Inferno
 
             try
             {
-                rConnector.EvaluateNoReturn(rcmd);
-                rConnector.EvaluateNoReturn("sData1 <- pScaled1$sData"); //scaled data
-                rConnector.EvaluateNoReturn("orData1 <- pScaled1$orData"); // scaled and outlier removed
-                rConnector.EvaluateNoReturn("pData1 <- pScaled1$pData"); // protein abundances
-                rConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]"); // dataset with no peptide counts
+                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn("sData1 <- pScaled1$sData"); //scaled data
+                mRConnector.EvaluateNoReturn("orData1 <- pScaled1$orData"); // scaled and outlier removed
+                mRConnector.EvaluateNoReturn("pData1 <- pScaled1$pData"); // protein abundances
+                mRConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]"); // dataset with no peptide counts
 
-                if (rConnector.GetTableFromRproteinMatrix("pData1"))
+                if (mRConnector.GetTableFromRproteinMatrix("pData1"))
                 {
-                    mDTRProteins = rConnector.DataTable.Copy();
+                    mDTRProteins = mRConnector.DataTable.Copy();
                     mDTRProteins.TableName = "pData11";
                     mDTRProteins.Columns[0].ColumnName = "Protein";
 
-                    if (rConnector.GetTableFromRmatrix("sData1"))
+                    if (mRConnector.GetTableFromRmatrix("sData1"))
                     {
-                        mDTRScaled = rConnector.DataTable.Copy();
+                        mDTRScaled = mRConnector.DataTable.Copy();
                         mDTRScaled.TableName = "sData1";
                     }
                     else
                         success = false;
-                    if (rConnector.GetTableFromRmatrix("orData1"))
+                    if (mRConnector.GetTableFromRmatrix("orData1"))
                     {
-                        mDTRORscaled = rConnector.DataTable.Copy();
+                        mDTRORscaled = mRConnector.DataTable.Copy();
                         mDTRORscaled.TableName = "orData1";
-                        rConnector.EvaluateNoReturn("cat(\"Data Ref scaling/outliers test done.\n\")");
+                        mRConnector.EvaluateNoReturn("cat(\"Data Ref scaling/outliers test done.\n\")");
                     }
                     else
                         success = false;
