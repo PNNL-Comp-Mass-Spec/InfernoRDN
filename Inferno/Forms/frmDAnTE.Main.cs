@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "June 1, 2015";
+        public const string PROGRAM_DATE = "July 21, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 20;
         private IContainer components;
@@ -35,9 +35,7 @@ namespace DAnTE.Inferno
         private string mstrLoadedfileName; //filename of the loaded data
 
         private string sessionFile = null;
-        private ArrayList marrSessionVarType = new ArrayList();
 
-        private string tempPath = @"c:";
         private string tempFile = "";
         private clsRconnect rConnector;
 
@@ -299,16 +297,6 @@ namespace DAnTE.Inferno
             {
                 rConnector = value;
             }
-        }
-
-        public string TempLocation
-        {
-            set { tempPath = value; }
-        }
-
-        public string TempFile
-        {
-            set { tempFile = value; }
         }
 
         public frmDAnTEmdi ParentInstance

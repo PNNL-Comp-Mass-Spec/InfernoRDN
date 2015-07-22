@@ -11,88 +11,92 @@ namespace DAnTE.Inferno
 {
     public partial class frmDAnTEmdi : Form
     {
-        private frmRmsg mfrmRmsg;
+        private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "InfernoVersionMostRecentBioconductorCheck";
 
-        public string SessionFile = null;
-        public string logFilename = null;
-        private System.IO.StreamWriter logwriter;
-        private bool mblLog = false;
-        private string tempPath = @"c:";
-        private string tempFile = "";
-        private string Repository;// = @"http://lib.stat.cmu.edu/R/CRAN";
-        private string RpackList;
-        private bool mblInstallRpacks = false;
-        private bool mblUpdateRpacks = false;
-        private clsRconnect rConnector;
-        private bool mblPlotgg = Settings.Default.useGG;
-        private string mstrPlotFuncFileName = null;
-        private StringBuilder startupErrString = new StringBuilder();
+        private readonly frmRmsg mRmsgForm;
 
+        public string mSessionFile = null;
+        
+        private readonly StreamWriter mCustomLogWriter;
+        private readonly bool mCustomLoggerEnabled;
+        private static bool mCustomLogSeparatorAdded;
 
-        public frmDAnTEmdi(string dntfile, string logfile)
+        private string mRepository;  // = @"http://lib.stat.cmu.edu/R/CRAN";
+        private string mRpackList;
+
+        private bool mInstallRpacks;
+        private bool mUpdateRpacks;
+
+        private readonly clsRconnect mRConnector;        
+                
+        public frmDAnTEmdi(string dntfile, string customLogFilePath)
         {
-            logFilename = logfile;
-            SessionFile = dntfile;
+            mSessionFile = dntfile;
 
             InitializeComponent();
 
-            if (logFilename != null)
+            if (!string.IsNullOrEmpty(customLogFilePath))
             {
-                mblLog = true;
+                mCustomLoggerEnabled = true;
 
-                if (!File.Exists(logFilename))
-                    logwriter = new StreamWriter(logFilename);
+                if (!File.Exists(customLogFilePath))
+                    mCustomLogWriter = new StreamWriter(customLogFilePath);
                 else
-                    logwriter = File.AppendText(logFilename);
+                    mCustomLogWriter = File.AppendText(customLogFilePath);
             }
 
             this.Text = "InfernoRDN"; //Application.ProductVersion.ToString();
 
+            var startupErrString = new StringBuilder();
+
             SplashScreen.ShowSplashScreen();
             Application.DoEvents();
 
-            Log(mblLog, string.Format("Starting Inferno [{0}]...", DateTime.Now), logwriter);
+            Log(mCustomLoggerEnabled, string.Format("Starting Inferno [{0}]...", DateTime.Now), mCustomLogWriter);
             SplashScreen.SetStatus(string.Format("Starting Inferno [{0}]...", DateTime.Now));
             System.Threading.Thread.Sleep(100);
             SplashScreen.SetStatus("Reading Configuration Parameters...");
+
             if (!ConfigParameters())
             {
-                Log(mblLog, "Error: Error in reading inferno.conf file.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: Error in reading inferno.conf file.", mCustomLogWriter);
                 startupErrString.Append("* Error in reading inferno.conf file.").AppendLine();
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in reading inferno.conf file.",
                 //    "inferno.conf error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 //this.Close();
             }
-            Log(mblLog, "Done reading configuration parameters.", logwriter);
+            Log(mCustomLoggerEnabled, "Done reading configuration parameters.", mCustomLogWriter);
 
             SplashScreen.SetStatus("Initializing Folders...");
-            // Initialize folders
-            //tempPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            tempPath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appDataFldrPath = tempPath.Replace("\\", "/") + "/Inferno";
+
+            // Initialize folders            
+            var tempFolderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            var appDataFldrPath = Path.Combine(tempFolderPath, "Inferno");
             if (!Directory.Exists(appDataFldrPath))
             {
                 Directory.CreateDirectory(appDataFldrPath);
             }
-            tempFile = appDataFldrPath + "/_temp.png";
-            this.mhelpProviderDAnTE.HelpNamespace = Application.StartupPath + "\\InfernoHelp.chm";
+
+            this.mhelpProviderDAnTE.HelpNamespace = Path.Combine(Application.StartupPath, "InfernoHelp.chm");
+
             System.Threading.Thread.Sleep(10);
-            Log(mblLog, "Done setting folders.", logwriter);
+            Log(mCustomLoggerEnabled, "Done setting folders.", mCustomLogWriter);
 
             SplashScreen.SetStatus("Establishing Connection to R...");
-            rConnector = new clsRconnect();
-            if (!rConnector.initR())
+            mRConnector = new clsRconnect();
+            if (!mRConnector.initR())
             {
-                startupErrString.Append(string.Format("* R failed to initialize: {0}", rConnector.Message)).AppendLine();
+                startupErrString.Append(string.Format("* R failed to initialize: {0}", mRConnector.Message)).AppendLine();
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Try again. R failed to initialize for some unknown reason.",
                 //    "R connection failed.", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                Log(mblLog, "Error: Connection to R failed.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: Connection to R failed.", mCustomLogWriter);
                 //this.Close();
             }
             System.Threading.Thread.Sleep(10);
-            Log(mblLog, "Done Connecting to R.", logwriter);
+            Log(mCustomLoggerEnabled, "Done Connecting to R.", mCustomLogWriter);
 
             SplashScreen.SetStatus("Initializing R Functions...");
             if (!LoadRfunctions("Inferno.RData"))
@@ -101,13 +105,17 @@ namespace DAnTE.Inferno
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in sourcing R functions", "Initializing R error",
                 //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log(mblLog, "Error: Sourcing R functions failed.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: Sourcing R functions failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mblLog, "Done sourcing R functions.", logwriter);
+            Log(mCustomLoggerEnabled, "Done sourcing R functions.", mCustomLogWriter);
 
             SplashScreen.SetStatus("Initializing R Plotting Functions...");
-            if (mblPlotgg)
+            
+            var usePlotgg = Settings.Default.useGG;
+            string mstrPlotFuncFileName;
+
+            if (usePlotgg)
                 mstrPlotFuncFileName = "Inferno_ggplots.RData";
             else
                 mstrPlotFuncFileName = "Inferno_stdplots.RData";
@@ -118,10 +126,10 @@ namespace DAnTE.Inferno
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in sourcing R plotting functions", "Initializing R error",
                 //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log(mblLog, "Error: Sourcing R plotting functions failed.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: Sourcing R plotting functions failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mblLog, "Done sourcing R plotting functions.", logwriter);
+            Log(mCustomLoggerEnabled, "Done sourcing R plotting functions.", mCustomLogWriter);
 
             //if (!InitLoadRpackages()) {
             //  startupErrString.Append("* Error loading key R packages.").AppendLine();
@@ -144,7 +152,7 @@ namespace DAnTE.Inferno
                 //    "Please install R version 2.9.x." + Environment.NewLine +
                 //    "R can be downloaded from http://cran.r-project.org/",
                 //    "R version incompatible", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log(mblLog, "Error: R version incompatible.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: R version incompatible.", mCustomLogWriter);
                 //this.Close();
             }
             System.Threading.Thread.Sleep(10);
@@ -159,76 +167,86 @@ namespace DAnTE.Inferno
                 //    "If this is the first time you run Inferno after installing, check permissions to modify R install folder, else " +
                 //    "try changing the repository in the inferno.conf file.",
                 //    "R problem...", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                Log(mblLog, "Error: Loading required R packages failed.", logwriter);
+                Log(mCustomLoggerEnabled, "Error: Loading required R packages failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mblLog, "Done loading required R packages.", logwriter);
-            System.Threading.Thread.Sleep(10);
-
-            SplashScreen.SetStatus("Cleaning up temp files...");
-            if (!DeleteTempFile(tempFile))
-            {
-                startupErrString.Append("* Error cleaning temp files.").AppendLine();
-                //SplashScreen.CloseForm();
-                //MessageBox.Show("Error cleaning temp files", "Error cleaning files",
-                //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log(mblLog, "Error: Cleaning temp files failed.", logwriter);
-                //this.Close();
-            }
-            Log(mblLog, "Done cleaning temp files.", logwriter);
-            //DeleteTempFile(tempFile);
+            Log(mCustomLoggerEnabled, "Done loading required R packages.", mCustomLogWriter);
             System.Threading.Thread.Sleep(10);
 
             SplashScreen.SetStatus("Setting Up Child Forms...");
             if (RunRlogs())
             {
-                mfrmRmsg = new frmRmsg();
+                mRmsgForm = new frmRmsg();
                 try
                 {
                     //-// rConnector.SetCharacterOutputDevice((StatConnectorCommonLib.IStatConnectorCharacterDevice)mfrmRmsg.axStatConnectorCharacterDevice1.GetOcx());
-                    rConnector.EvaluateNoReturn("print(version)");
-                    Log(mblLog, "Done starting R log viewer.", logwriter);
+                    mRConnector.EvaluateNoReturn("print(version)");
+                    Log(mCustomLoggerEnabled, "Done starting R log viewer.", mCustomLogWriter);
                 }
                 catch (Exception ex)
                 {
                     startupErrString.Append("* Error starting R log viewer.").AppendLine();
                     //MessageBox.Show("Error: " + ex.Message, "Watchout!");
-                    Log(mblLog, "Error: Error starting R log viewer." + ex.Message, logwriter);
+                    Log(mCustomLoggerEnabled, "Error: Error starting R log viewer." + ex.Message, mCustomLogWriter);
                 }
             }
             else
-                Log(mblLog, "R log viewer not used for this OS.", logwriter);
+                Log(mCustomLoggerEnabled, "R log viewer not used for this OS.", mCustomLogWriter);
             this.Activate();
             SplashScreen.CloseForm();
 
-            Log(mblLog, "Inferno started.", logwriter);
+            Log(mCustomLoggerEnabled, "Inferno started.", mCustomLogWriter);
             if (startupErrString.Length > 1)
-                MessageBox.Show(startupErrString.ToString(), "Errors Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                var errorMessage = startupErrString.ToString();
+                if (!string.IsNullOrEmpty(clsRCmdLog.CurrentLogFilePath))
+                {
+                    errorMessage += "\nFor more information, see file " + clsRCmdLog.CurrentLogFilePath;
+                }
+
+                MessageBox.Show(errorMessage, "Errors Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
         #region Private methods
 
-        private static void Log(bool mblog, String logMessage, TextWriter w)
+        private static void Log(bool useCustomLog, string logMessage, TextWriter w)
         {
             clsRCmdLog.LogOperation(logMessage);
-            if (mblog)
+
+            if (useCustomLog && w != null)
             {
-                //w.Write("\r\nLog Entry : ");
-                w.Write("\r\n{0} {1}", DateTime.Now.ToLongTimeString(),
-                    DateTime.Now.ToLongDateString());
-                w.WriteLine("  :");
-                w.WriteLine("{0}", logMessage);
-                //w.WriteLine("-------------------------------");
-                // Update the underlying file.
+                if (!mCustomLogSeparatorAdded)
+                {
+                    w.WriteLine();
+                    w.WriteLine("---------------------------------------------------------------------");
+                    mCustomLogSeparatorAdded = true;
+                }
+
+                w.WriteLine();
+                w.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());                
+                w.WriteLine(logMessage);
+                                
                 w.Flush();
+            }
+            else
+            {
+                Console.WriteLine(logMessage);
             }
         }
 
 
         private bool ConfigParameters()
         {
-            string confPath = Application.StartupPath + "\\inferno.conf";
+            var confPath = Path.Combine(Application.StartupPath, "inferno.conf");
             Engine engine = new Engine(confPath);
+
             engine.AddParameter(new Parameter("Repository", ParameterType.REQUIRED));
             engine.AddParameter(new Parameter("Rpackages", ParameterType.REQUIRED));
             //engine.AddParameter(new Parameter("Rfolder", ParameterType.OPTIONAL, "NONE"));
@@ -242,18 +260,19 @@ namespace DAnTE.Inferno
                 return false;
             }
             //Else the configuration parameters have been read.
-            Repository = engine["Repository"].Val;
-            RpackList = engine["Rpackages"].Val;
+            mRepository = engine["Repository"].Val;
+            mRpackList = engine["Rpackages"].Val;
             //RfilesPath = engine["Rfolder"].Val;
+
             if (engine["InstallRpacks"].Val.Equals("true"))
-                mblInstallRpacks = true;
+                mInstallRpacks = true;
             else
-                mblInstallRpacks = false;
+                mInstallRpacks = false;
 
             if (engine["UpdateRpacks"].Val.Equals("true"))
-                mblUpdateRpacks = true;
+                mUpdateRpacks = true;
             else
-                mblUpdateRpacks = false;
+                mUpdateRpacks = false;
 
             return true;
         }
@@ -269,7 +288,7 @@ namespace DAnTE.Inferno
             string mstrRDataFile = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
             try
             {
-                success = rConnector.loadRData(mstrRDataFile);
+                success = mRConnector.loadRData(mstrRDataFile);
             }
             catch (Exception ex)
             {
@@ -287,10 +306,10 @@ namespace DAnTE.Inferno
             try
             {
                 rcmd = @"verOK <- RVersionOK(major=" + mstrMajor + ",minor=" + mstrMinor + ")";
-                rConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn(rcmd);
                 ////object rout = rConnector.GetSymbol("verOK");
                 ////mblresult = (bool)rout;
-                mblresult = rConnector.GetSymbolAsBool("verOK");
+                mblresult = mRConnector.GetSymbolAsBool("verOK");
             }
             catch (Exception ex)
             {
@@ -302,31 +321,52 @@ namespace DAnTE.Inferno
 
         private bool InstallRequiredRPackages()
         {
-            string rcommand;
-            bool mblresult = true;
+            var currentTask = "initializing";
 
             try
             {
-                if (mblInstallRpacks)
+                if (mInstallRpacks)
                 {
-                    rcommand = @"installPackages(c(" + RpackList + @"), repository=""" + Repository + @""")";
-                    rConnector.EvaluateNoReturn(rcommand);
+                    currentTask = "installing default packages from " + mRepository;
+
+                    var rcommand = @"installPackages(c(" + mRpackList + @"), repository=""" + mRepository + @""")";
+                    mRConnector.EvaluateNoReturn(rcommand);
+
+                    // Also confirm that we have the Bioconductor qvalue package
+                    // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
+                    var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
+                    var appVersionCurrent = Tools.clsRCmdLog.GetProgramVersion();
+
+                    if (!string.Equals(appVersionBioconductorCheck, appVersionCurrent))
+                    {
+
+                        currentTask = "installing Bioconductor from http://bioconductor.org/biocLite.R";
+                        rcommand = @"source(""http://bioconductor.org/biocLite.R"")";
+                        mRConnector.EvaluateNoReturn(rcommand);
+
+                        currentTask = "installing qvalue from Bioconductor";
+                        rcommand = @"biocLite(""qvalue"", suppressUpdates=TRUE)";
+                        mRConnector.EvaluateNoReturn(rcommand);
+
+                        RegistryAccess.SetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, appVersionCurrent);
+                    }
                 }
 
-                if (mblUpdateRpacks)
+                if (mUpdateRpacks)
                 {
-                    rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + Repository + @""")";
-                    rConnector.EvaluateNoReturn(rcommand);
+                    currentTask = "updating packages using " + mRepository;
+                    var rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                    mRConnector.EvaluateNoReturn(rcommand);
                 }
 
-                mblresult = true;
+                return true;
             }
             catch (Exception ex)
             {
-                mblresult = false;
-                Console.WriteLine("Exception thrown: " + ex.Message, "Error!");
+                Log(mCustomLoggerEnabled, "Exception in InstallRequiredRPackages while " + currentTask + ": " + ex.Message, mCustomLogWriter);
+                return false;
             }
-            return mblresult;
+
         }
 
         private bool UpdateRPackages()
@@ -336,8 +376,8 @@ namespace DAnTE.Inferno
 
             try
             {
-                rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + Repository + @""")";
-                rConnector.EvaluateNoReturn(rcommand);
+                rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                mRConnector.EvaluateNoReturn(rcommand);
 
                 mblresult = true;
             }
@@ -372,14 +412,13 @@ namespace DAnTE.Inferno
 
         private bool DeleteTempFile(string tempfile)
         {
-            bool ok = true;
-            tempfile = tempfile.Replace("/", "\\");
+            var ok = true;
 
             if (File.Exists(tempfile))
             {
                 try
                 {
-                    rConnector.EvaluateNoReturn("graphics.off()");
+                    mRConnector.EvaluateNoReturn("graphics.off()");
                     File.Delete(tempfile);
                 }
                 catch (Exception ex)
@@ -409,9 +448,8 @@ namespace DAnTE.Inferno
                     }
                 }
                 frmDAnTE mfrmDAnTE = frmDAnTE.GetChildInstance();
-                mfrmDAnTE.TempFile = tempFile;
-                mfrmDAnTE.TempLocation = tempPath;
-                mfrmDAnTE.RConnector = rConnector;
+                
+                mfrmDAnTE.RConnector = mRConnector;
                 mfrmDAnTE.SessionFile = dntfile;
                 mfrmDAnTE.MdiParent = this;
                 mfrmDAnTE.ParentInstance = this;
@@ -517,7 +555,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemNew_Click(object sender, EventArgs e)
         {
-            StartMain(SessionFile);
+            StartMain(mSessionFile);
         }
 
         private void mnuItemExit_Click(object sender, EventArgs e)
@@ -527,7 +565,7 @@ namespace DAnTE.Inferno
             if (mfrmDAnTE.OK2Exit())
             {
                 this.DialogResult = DialogResult.OK;
-                rConnector.closeR();
+                mRConnector.closeR();
                 this.Close();
             }
         }
@@ -558,34 +596,7 @@ namespace DAnTE.Inferno
             else
                 Settings.Default.useGG = false;
         }
-
-        [Obsolete("Old feature that no longer works")]
-        private void mnuItemRlogs_Click(object sender, EventArgs e)
-        {
-            if (RunRlogs())
-            {
-                try
-                {
-                    mfrmRmsg.Show();
-                    mfrmRmsg.Focus();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message, "Watchout!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("This feature available only on 32bit Windows XP.", "Not available",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void mnuItemClearTmp_Click(object sender, EventArgs e)
-        {
-            DeleteTempFile(tempFile);
-        }
-
+     
         private void mnuItemHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, this.mhelpProviderDAnTE.HelpNamespace);
@@ -602,30 +613,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemAbout_Click(object sender, EventArgs e)
         {
-            //frmAbout mfrmAbout = new frmAbout();
-            //mfrmAbout.version = "Version " + Application.ProductVersion.ToString();
-            ////mfrmAbout.version = "Version 0.13";
-            //mfrmAbout.ShowDialog();
-
+            
             frmAbout2 mfrmAbout = new frmAbout2();
             mfrmAbout.ShowDialog();
         }
-
-        //protected override void OnMdiChildActivate(EventArgs e)
-        //{
-        //    ToolStripManager.RevertMerge(this.mtoolStripMDI);
-
-        //    frmDAnTE f1 = ActiveMdiChild as frmDAnTE;
-        //    if (f1 != null)
-        //    {
-        //        ToolStripManager.Merge(f1.ToolStripDAnTE, mtoolStripMDI.Name);
-        //    }
-        //    base.OnMdiChildActivate(e);
-        //}
-
+    
         private void frmDAnTEmdi_Load(object sender, EventArgs e)
         {
-            StartMain(SessionFile);
+            StartMain(mSessionFile);
         }
 
         private void mnuWindowItem_Click(object sender, EventArgs e)

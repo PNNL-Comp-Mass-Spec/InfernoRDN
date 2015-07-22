@@ -313,7 +313,7 @@ namespace DAnTE.Tools
 			try
 			{
 				StreamReader sr = File.OpenText(fName);
-				String xStr = sr.ReadToEnd();
+				string xStr = sr.ReadToEnd();
 				doc.LoadXml (xStr);
 				sr.Close();
 

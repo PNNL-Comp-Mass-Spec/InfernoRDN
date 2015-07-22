@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace DAnTE.Tools
@@ -22,6 +23,13 @@ namespace DAnTE.Tools
         private static int _traceFramesToShow = 4;
         private const int TraceStartingFrame = 3; // we don't care about internal details
 
+        public static string CurrentLogFilePath
+        {
+            get 
+            { 
+                return LogFilePath; 
+            }
+        }
 
         public static int TraceFramesToShow
         {
@@ -112,8 +120,14 @@ namespace DAnTE.Tools
                 _logwriter = File.AppendText(LogFilePath);
             }
         }
-     
-        public static void LogOperation(String message)
+
+
+        public static string GetProgramVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+        public static void LogOperation(string message)
         {
             if (_cmdLogEnabled)
             {

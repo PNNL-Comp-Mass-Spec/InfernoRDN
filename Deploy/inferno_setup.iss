@@ -31,11 +31,15 @@ Source: ..\Resources\delete_16x.ico; DestDir: {app}
 Source: ..\Resources\inferno.ico; DestDir: {app}
 Source: ..\Resources\inferno_help.ico; DestDir: {app}
 Source: ..\Readme.txt; DestDir: {app}
+Source: ..\Revision_History.txt; DestDir: {app}
+
 Source: License.rtf; DestDir: {app}
 Source: readme.rtf; DestDir: {app}
 
 Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv; DestDir: {app}
 Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv; DestDir: {app}
+Source: ..\Sample_Input_Files\Sample_Session_File_with_Factors.dnt; DestDir: {app}
+Source: ..\Sample_Input_Files\Sample_Expressions_Session_File.dnt; DestDir: {app}
 
 [Dirs]
 Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
@@ -65,7 +69,7 @@ AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=InfernoRDNSetup
-VersionInfoVersion=1.1.6
+VersionInfoVersion=1.1.8
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
 VersionInfoCopyright=PNNL

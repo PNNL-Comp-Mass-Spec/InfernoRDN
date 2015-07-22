@@ -11,7 +11,8 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        const bool USE_THREADED_LOAD = true;
+        // When this is True, we get intermittent file load errors in OpenSession(), with rConnector reporting error "Value cannot be null"
+        const bool USE_THREADED_LOAD = false;
 
         #region File Menu items
 

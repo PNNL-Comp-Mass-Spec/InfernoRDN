@@ -140,7 +140,7 @@ namespace DAnTE.ExtraControls
         DefaultValue("ucTransparentLabel"),
         Description("Text in the ucTransparentLabel")
         ]
-        public String Caption
+        public string Caption
         {
             get { return _text; }
             set { _text = value; this.Invalidate(); }

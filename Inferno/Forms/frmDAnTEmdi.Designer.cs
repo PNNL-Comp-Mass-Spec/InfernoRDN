@@ -35,7 +35,6 @@ namespace DAnTE.Inferno
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemTools = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemClearTmp = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemResource = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemUpgradeRPacks = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuItemStdPlots = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,7 +113,6 @@ namespace DAnTE.Inferno
 			// mnuItemTools
 			// 
 			this.mnuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemClearTmp,
             this.mnuItemResource,
             this.mnuItemUpgradeRPacks,
             this.mnuItemStdPlots,
@@ -123,13 +121,6 @@ namespace DAnTE.Inferno
 			this.mnuItemTools.Name = "mnuItemTools";
 			this.mnuItemTools.Size = new System.Drawing.Size(57, 24);
 			this.mnuItemTools.Text = "&Tools";		
-			// 
-			// mnuItemClearTmp
-			// 
-			this.mnuItemClearTmp.Name = "mnuItemClearTmp";
-			this.mnuItemClearTmp.Size = new System.Drawing.Size(223, 24);
-			this.mnuItemClearTmp.Text = "Clear Temporary Files";
-			this.mnuItemClearTmp.Click += new System.EventHandler(this.mnuItemClearTmp_Click);
 			// 
 			// mnuItemResource
 			// 
@@ -344,7 +335,6 @@ namespace DAnTE.Inferno
         private System.Windows.Forms.ToolStripMenuItem mnuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuItemTools;
         private System.Windows.Forms.ToolStripMenuItem mnuItemResource;
-        private System.Windows.Forms.ToolStripMenuItem mnuItemClearTmp;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton mtoolBtnRlog;
         private System.Windows.Forms.ToolStripButton mtoolBtnHelp;

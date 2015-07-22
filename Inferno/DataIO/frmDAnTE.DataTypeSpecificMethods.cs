@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 using DAnTE.ExtraControls;
 using DAnTE.Properties;
@@ -12,6 +13,8 @@ namespace DAnTE.Inferno
 
     partial class frmDAnTE
     {
+        public string LastSessionLoadError { get; private set; }
+
         private void AddDataset2HashTable(DataTable mDT)
         {
             string mstrRdataset = mDT.TableName;
@@ -446,18 +449,27 @@ namespace DAnTE.Inferno
         /// There are few special cases (reading a vector, non numeric etc).
         /// But most of the tables are in R matrices (default section in the switch statement).
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="dataFilePath"></param>
         /// <returns></returns>
-        private bool OpenSession(string filename)
+        private bool OpenSession(string dataFilePath)
         {
             string rcmd = null;
             object vars = null;
-            string[] variables = null;
             bool success = true;
             DataTable mDTvar = new DataTable();
             mhtDatasets.Clear();
 
-            rcmd = "load(file=\"" + filename.Replace("\\", "/") + "\")";
+            LastSessionLoadError = string.Empty;
+
+            var fiDatafile = new FileInfo(dataFilePath);
+            if (!fiDatafile.Exists)
+            {
+                LastSessionLoadError = "File not found";
+                MessageBox.Show("File not found: " + dataFilePath, "Missing File");
+                return false;
+            }
+
+            rcmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
             try
             {
                 rConnector.EvaluateNoReturn(rcmd);
@@ -466,120 +478,119 @@ namespace DAnTE.Inferno
             }
             catch (Exception ex)
             {
-                MessageBox.Show("R access failed: " + ex.Message, "Error!");
-                success = false;
+                LastSessionLoadError = ex.Message;
+                MessageBox.Show("R access failed loading file " + fiDatafile.FullName + ": " + ex.Message, "Error!");
+                return false;
             }
-            if (success)
-            {
-                variables = (string[])vars;
 
-                for (int i = 1; i < variables.Length; i++)
+            var variables = (string[])vars;
+
+            for (var i = 1; i < variables.Length; i++)
+            {
+                try
                 {
-                    try
+                    Console.WriteLine(string.Format("frmDAnTE.OpenSession:{0} -> {1}", "", variables[i]));
+                    switch (variables[i])
                     {
-                        Console.WriteLine(string.Format("frmDAnTE.OpenSession:{0} -> {1}", "", variables[i]));
-                        switch (variables[i])
-                        {
-                            case ("ProtInfo"):
-                                #region ProtInfo
-                                if ((mDTvar = GetProtInfoMatrix()) != null)
-                                    mDTvar.TableName = "ProtInfo";
-                                else
-                                    success = false;
-                                break;
-                                #endregion
-                            case ("factors"):
-                                #region Factors
-                                if (rConnector.GetTableFromRmatrixNonNumeric("factors"))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.Columns[0].ColumnName = "Factors";
-                                    mDTvar.TableName = "factors";
-                                    DatasetFactorInfo(mDTvar, true);
-                                    UpdateFactorInfoArray();
-                                }
-                                else
-                                    success = false;
-                                break;
-                                #endregion
-                            case ("pData1"):
-                                #region RRollup
-                                rConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
-                                if (rConnector.GetTableFromRproteinMatrix("pData1"))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.Columns[0].ColumnName = "Protein";
-                                    rConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]");
-                                    mDTvar.TableName = "pData11";
-                                }
-                                else
-                                    success = false;
-                                #endregion
-                                break;
-                            case ("pData2"):
-                                #region ZRollup
-                                rConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
-                                if (rConnector.GetTableFromRproteinMatrix("pData2"))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.Columns[0].ColumnName = "Protein";
-                                    rConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
-                                    mDTvar.TableName = "pData22";
-                                }
-                                #endregion
-                                break;
-                            case ("qrollupP"):
-                                #region Qrollup
-                                if (rConnector.GetTableFromRproteinMatrix("qrollupP"))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.Columns[0].ColumnName = "Protein";
-                                    rConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]");
-                                    mDTvar.TableName = "qrollupP1";
-                                }
-                                else
-                                    success = false;
-                                #endregion
-                                break;
-                            case ("clusterResults"):
-                                #region Cluster results
-                                if (rConnector.GetTableFromRvector("clusterResults"))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.TableName = "clusterResults";
-                                }
-                                else
-                                    success = false;
-                                #endregion
-                                break;
-                            case "pScaled1": // R list variable that holds RRollup information
-                                mDTvar = null;
-                                break;
-                            case "pScaled2": // R list variable that holds ZRollup information
-                                mDTvar = null;
-                                break;
-                            default:
-                                #region Everything else
-                                if (rConnector.GetTableFromRmatrix(variables[i]))
-                                {
-                                    mDTvar = rConnector.DataTable.Copy();
-                                    mDTvar.TableName = variables[i];
-                                }
-                                else
-                                    success = false;
-                                #endregion
-                                break;
-                        }
-                        if (mDTvar != null)
-                        {
-                            AddDataset2HashTable(mDTvar);
-                        }
+                        case ("ProtInfo"):
+                            #region ProtInfo
+                            if ((mDTvar = GetProtInfoMatrix()) != null)
+                                mDTvar.TableName = "ProtInfo";
+                            else
+                                success = false;
+                            break;
+                            #endregion
+                        case ("factors"):
+                            #region Factors
+                            if (rConnector.GetTableFromRmatrixNonNumeric("factors"))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.Columns[0].ColumnName = "Factors";
+                                mDTvar.TableName = "factors";
+                                DatasetFactorInfo(mDTvar, true);
+                                UpdateFactorInfoArray();
+                            }
+                            else
+                                success = false;
+                            break;
+                            #endregion
+                        case ("pData1"):
+                            #region RRollup
+                            rConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
+                            if (rConnector.GetTableFromRproteinMatrix("pData1"))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.Columns[0].ColumnName = "Protein";
+                                rConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]");
+                                mDTvar.TableName = "pData11";
+                            }
+                            else
+                                success = false;
+                            #endregion
+                            break;
+                        case ("pData2"):
+                            #region ZRollup
+                            rConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
+                            if (rConnector.GetTableFromRproteinMatrix("pData2"))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.Columns[0].ColumnName = "Protein";
+                                rConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
+                                mDTvar.TableName = "pData22";
+                            }
+                            #endregion
+                            break;
+                        case ("qrollupP"):
+                            #region Qrollup
+                            if (rConnector.GetTableFromRproteinMatrix("qrollupP"))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.Columns[0].ColumnName = "Protein";
+                                rConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]");
+                                mDTvar.TableName = "qrollupP1";
+                            }
+                            else
+                                success = false;
+                            #endregion
+                            break;
+                        case ("clusterResults"):
+                            #region Cluster results
+                            if (rConnector.GetTableFromRvector("clusterResults"))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.TableName = "clusterResults";
+                            }
+                            else
+                                success = false;
+                            #endregion
+                            break;
+                        case "pScaled1": // R list variable that holds RRollup information
+                            mDTvar = null;
+                            break;
+                        case "pScaled2": // R list variable that holds ZRollup information
+                            mDTvar = null;
+                            break;
+                        default:
+                            #region Everything else
+                            if (rConnector.GetTableFromRmatrix(variables[i]))
+                            {
+                                mDTvar = rConnector.DataTable.Copy();
+                                mDTvar.TableName = variables[i];
+                            }
+                            else
+                                success = false;
+                            #endregion
+                            break;
                     }
-                    catch (Exception ex)
+                    if (mDTvar != null)
                     {
-                        MessageBox.Show("R access failed: " + ex.Message, "Error!");
-                        success = false;
+                        AddDataset2HashTable(mDTvar);
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("R access failed: " + ex.Message, "Error!");
+                    success = false;
                 }
             }
             return success;

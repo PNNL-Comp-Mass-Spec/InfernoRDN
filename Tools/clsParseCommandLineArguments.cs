@@ -6,41 +6,44 @@ namespace DAnTE.Tools
 {
     public class ProgramArguments
     {
-        private string dntFilename;
-        private string logFilename;
+        public string DNTfilename { get; private set; }
 
-        public string DNTfilename
-        {
-            get { return dntFilename; }
-        }
+        public string LOGfilename { get; private set; }
 
-        public string LOGfilename
-        {
-            get { return logFilename; }
-        }
+        public bool ShowHelp { get; private set; }
 
         public ProgramArguments()
         {
-            dntFilename = null;
-            logFilename = null;
+            DNTfilename = null;
+            LOGfilename = null;
+            ShowHelp = false;
         }
 
-        public ProgramArguments(string[] args) : this()
+        /// <summary>
+        /// Parse the command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        public ProgramArguments(string[] args)
+            : this()
         {
             for (int i = 0; i < args.Length; i++)
             {
                 string arg = args[i];
 
                 if (arg[0] != '-' && arg[0] != '/')
-                    throw new ArgumentException(String.Concat("Invalid argument '", arg, "'"));
+                    throw new ArgumentException(string.Concat("Invalid argument '", arg, "'"));
 
-                switch (arg.TrimStart('-', '/'))
+                switch (arg.TrimStart('-', '/').ToLower())
                 {
                     case "f":
-                        dntFilename = TextArgument(args, ref i);
+                        DNTfilename = TextArgument(args, ref i);
                         break;
                     case "l":
-                        logFilename = TextArgument(args, ref i);
+                        LOGfilename = TextArgument(args, ref i);
+                        break;
+                    case "?":
+                    case "help":
+                        ShowHelp = true;
                         break;
                 }
             }
@@ -48,10 +51,14 @@ namespace DAnTE.Tools
 
         private string TextArgument(string[] args, ref int i)
         {
-            if (args.Length < i + 2) throw new ArgumentException();
+            if (args.Length < i + 2) 
+                throw new ArgumentException();
+
             string value = args[++i];
 
-            if (value[0] == '-' || value[0] == '/') throw new ArgumentException();
+            if (value[0] == '-' || value[0] == '/') 
+                throw new ArgumentException();
+
             return value;
         }
     }

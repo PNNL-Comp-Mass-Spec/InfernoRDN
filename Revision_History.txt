@@ -1,5 +1,12 @@
 InfernoRDN Change Log
 
+Version 1.1.5680; July 21, 2015
+	- Fixed computation of qvalues when running ANOVA
+		- Requires obtaining the qvalue package from Bioconductor (fix courtesy of Eric Merkley)
+	- Updated inferno.conf to have UpdateRpacks set to True
+	- Removed unused variables and functions
+	- Now supports command line switch /?
+
 Version 1.1.5630; June 1, 2015
 	- Median Centering now creates table Median Centered, while Mean Centering continues to create table Mean Centered
 	- Pressing the Escape key now auto clicks cancel on the dialogs

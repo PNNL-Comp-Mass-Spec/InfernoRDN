@@ -50,6 +50,7 @@ namespace DAnTE.Paradiso
 		//
 		private byte m_iValidatingPackagesState = 0;
 		private DateTime m_dValidatingPackagesStartTime;
+	    private DateTime m_dLastSecondsRemainingUpdate;
 
 		private System.Windows.Forms.Label lblStatus;
 		private System.Windows.Forms.Label lblTimeRemaining;
@@ -97,69 +98,69 @@ namespace DAnTE.Paradiso
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
-			this.lblStatus = new System.Windows.Forms.Label();
-			this.pnlStatus = new System.Windows.Forms.Panel();
-			this.lblTimeRemaining = new System.Windows.Forms.Label();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.SuspendLayout();
-			// 
-			// lblStatus
-			// 
-			this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-			this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblStatus.ForeColor = System.Drawing.SystemColors.Control;
-			this.lblStatus.Location = new System.Drawing.Point(5, 334);
-			this.lblStatus.Name = "lblStatus";
-			this.lblStatus.Size = new System.Drawing.Size(514, 47);
-			this.lblStatus.TabIndex = 0;
-			this.lblStatus.Text = "xx";
-			this.lblStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-			// 
-			// pnlStatus
-			// 
-			this.pnlStatus.BackColor = System.Drawing.Color.Transparent;
-			this.pnlStatus.Location = new System.Drawing.Point(18, 387);
-			this.pnlStatus.Name = "pnlStatus";
-			this.pnlStatus.Size = new System.Drawing.Size(500, 4);
-			this.pnlStatus.TabIndex = 1;
-			this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
-			this.pnlStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-			// 
-			// lblTimeRemaining
-			// 
-			this.lblTimeRemaining.BackColor = System.Drawing.Color.Transparent;
-			this.lblTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTimeRemaining.ForeColor = System.Drawing.SystemColors.Control;
-			this.lblTimeRemaining.Location = new System.Drawing.Point(16, 411);
-			this.lblTimeRemaining.Name = "lblTimeRemaining";
-			this.lblTimeRemaining.Size = new System.Drawing.Size(208, 30);
-			this.lblTimeRemaining.TabIndex = 2;
-			this.lblTimeRemaining.Text = "Time remaining";
-			this.lblTimeRemaining.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-			// 
-			// timer1
-			// 
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-			// 
-			// SplashScreen
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-			this.BackColor = System.Drawing.Color.LightGray;
-			this.BackgroundImage = global::DAnTE.Properties.Resources.InfernoSplash21;
-			this.ClientSize = new System.Drawing.Size(525, 450);
-			this.Controls.Add(this.lblStatus);
-			this.Controls.Add(this.lblTimeRemaining);
-			this.Controls.Add(this.pnlStatus);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "SplashScreen";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "SplashScreen";
-			this.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-			this.ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.pnlStatus = new System.Windows.Forms.Panel();
+            this.lblTimeRemaining = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.SuspendLayout();
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblStatus.Location = new System.Drawing.Point(5, 327);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(514, 54);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.Text = "xx";
+            this.lblStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
+            // 
+            // pnlStatus
+            // 
+            this.pnlStatus.BackColor = System.Drawing.Color.Transparent;
+            this.pnlStatus.Location = new System.Drawing.Point(18, 387);
+            this.pnlStatus.Name = "pnlStatus";
+            this.pnlStatus.Size = new System.Drawing.Size(500, 4);
+            this.pnlStatus.TabIndex = 1;
+            this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
+            this.pnlStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
+            // 
+            // lblTimeRemaining
+            // 
+            this.lblTimeRemaining.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeRemaining.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTimeRemaining.Location = new System.Drawing.Point(16, 411);
+            this.lblTimeRemaining.Name = "lblTimeRemaining";
+            this.lblTimeRemaining.Size = new System.Drawing.Size(208, 30);
+            this.lblTimeRemaining.TabIndex = 2;
+            this.lblTimeRemaining.Text = "Time remaining";
+            this.lblTimeRemaining.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // SplashScreen
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.BackgroundImage = global::DAnTE.Properties.Resources.InfernoSplash21;
+            this.ClientSize = new System.Drawing.Size(525, 450);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.lblTimeRemaining);
+            this.Controls.Add(this.pnlStatus);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "SplashScreen";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "SplashScreen";
+            this.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
+            this.ResumeLayout(false);
 
 		}
 		#endregion
@@ -344,27 +345,51 @@ namespace DAnTE.Paradiso
 				}
 			}
 
-			if( m_bFirstLaunch == false && m_dblLastCompletionFraction < m_dblCompletionFraction )
+		    var showPeriods = true;
+			if( m_bFirstLaunch == false && m_dblLastCompletionFraction <= m_dblCompletionFraction )
 			{
 				m_dblLastCompletionFraction += m_dblPBIncrementPerTimerInterval;
 				int width = (int)Math.Floor(pnlStatus.ClientRectangle.Width * m_dblLastCompletionFraction);
 				int height = pnlStatus.ClientRectangle.Height;
 				int x = pnlStatus.ClientRectangle.X;
 				int y = pnlStatus.ClientRectangle.Y;
-				if( width > 0 && height > 0 )
-				{
-					m_rProgress = new Rectangle( x, y, width, height);
-					pnlStatus.Invalidate(m_rProgress);
-					int iSecondsLeft = 1 + (int)(TIMER_INTERVAL * ((1.0 - m_dblLastCompletionFraction)/m_dblPBIncrementPerTimerInterval)) / 1000;
-					if( iSecondsLeft == 1 )
-						lblTimeRemaining.Text = string.Format( "1 second remaining");
-					else
-						lblTimeRemaining.Text = string.Format( "{0} seconds remaining", iSecondsLeft);
+			    if (width > 0 && height > 0)
+			    {
+			        m_rProgress = new Rectangle(x, y, width, height);
+			        pnlStatus.Invalidate(m_rProgress);
+			        int iSecondsLeft = 1 + (int)(TIMER_INTERVAL * ((1.0 - m_dblLastCompletionFraction) / m_dblPBIncrementPerTimerInterval)) / 1000;
 
-				}
+			        if (iSecondsLeft > 1)
+			        {
+			            lblTimeRemaining.Text = string.Format("{0} seconds remaining", iSecondsLeft);
+			            showPeriods = false;
+			        }
+			        else
+			        {
+			            if (iSecondsLeft == 1)
+			            {
+			                lblTimeRemaining.Text = "1 second remaining";
+			                showPeriods = false;
+			            }			            
+			        }
+
+			    }
 			}
 
-			// Check for status "Validating R Packages" being visible for more than 3 seconds
+		    if (showPeriods)
+		    {
+                if (m_dValidatingPackagesStartTime > DateTime.UtcNow.AddDays(-1) && DateTime.UtcNow.AddSeconds(-2) > m_dLastSecondsRemainingUpdate)
+		        {                    
+		            var periodCount = (int)(Math.Round(DateTime.UtcNow.Subtract(m_dValidatingPackagesStartTime).TotalSeconds)) % 8 + 1;
+		            lblTimeRemaining.Text = new string('.', periodCount);
+		        }
+		    }
+		    else
+		    {
+                m_dLastSecondsRemainingUpdate = DateTime.UtcNow;
+		    }
+
+		    // Check for status "Validating R Packages" being visible for more than 3 seconds
 
 			if (ms_sStatus == VALIDATING_R_PACKAGES)
 			{

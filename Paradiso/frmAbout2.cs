@@ -109,7 +109,7 @@ namespace DAnTE.Paradiso
                              "Maintained by Matthew Monroe and Gary Kiebel at Pacific Northwest National Laboratory" +
                              Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
                              Environment.NewLine +
-                             Environment.NewLine + "This is version " + GetProgramVersion() +
+                             Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
                              Environment.NewLine + DAnTE.Inferno.frmDAnTE.PROGRAM_DATE +
                              Environment.NewLine +
                              Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
@@ -125,10 +125,6 @@ namespace DAnTE.Paradiso
                 "   Ashoka Polpitiya" + Environment.NewLine +
                 "   (ashoka@tgen.org)";
         }
-
-        private string GetProgramVersion()
-        {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        }
+      
     }
 }

@@ -32,12 +32,12 @@ namespace DAnTE.Tools
         #region File loading methods
         public static DataTable LoadFile2DataTable(string FileName)
         {
-            String sConnectionString = "";
+            var sConnectionString = "";
             var mdtOut = new DataTable();
             DataTable mdtIn;
 
-            string fileName = Path.GetFileName(FileName);
-            string fExt = Path.GetExtension(fileName);
+            var fileName = Path.GetFileName(FileName);
+            var fExt = Path.GetExtension(fileName);
 
             switch (fExt)
             {
@@ -80,7 +80,7 @@ namespace DAnTE.Tools
                     DataTable dt = null;
                     try
                     {
-                        //String sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
+                        //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                         //    FileName + ";" + "Extended Properties=Excel 8.0;";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
@@ -89,7 +89,7 @@ namespace DAnTE.Tools
                         {
                             return null;
                         }
-                        String[] excelSheets = new String[dt.Rows.Count];
+                        string[] excelSheets = new string[dt.Rows.Count];
                         int i = 0;
 
                         // Add the sheet name to the string array.
@@ -154,7 +154,7 @@ namespace DAnTE.Tools
                     dt = null;
                     try
                     {
-                        String sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                        string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
                                 "Data Source=" + filePath + ";" + 
                                 @"Extended Properties=""text;HDR=Yes;FMT=Delimited""";
                         objConn = new OleDbConnection(sConnectionString);
@@ -190,7 +190,7 @@ namespace DAnTE.Tools
                     dt = null;
                     try
                     {
-                        String sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
+                        string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                             FileName + ";" + "Extended Properties=Excel 8.0;";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
@@ -199,7 +199,7 @@ namespace DAnTE.Tools
                         {
                             return null;
                         }
-                        String[] excelSheets = new String[dt.Rows.Count];
+                        string[] excelSheets = new string[dt.Rows.Count];
                         int i = 0;
 
                         // Add the sheet name to the string array.
@@ -247,7 +247,7 @@ namespace DAnTE.Tools
             string fileName = FileName;
             string filePath = FileName;
             string fExt;
-            String sConnectionString = "";
+            string sConnectionString = "";
             DataTable mdtOut = new DataTable();
             DataTable mdtIn = new DataTable();
 
@@ -285,7 +285,7 @@ namespace DAnTE.Tools
                     string mstrSheet = null;
                     try
                     {
-                        //String sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
+                        //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                         //    FileName + ";" + @"Extended Properties=""Excel 8.0;HDR=Yes;IMEX=1;""";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
@@ -359,9 +359,11 @@ namespace DAnTE.Tools
         {
             var mDataTable = new DataTable();
 
-            DataColumn mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = "Row_ID";
+            DataColumn mDataColumn = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = "Row_ID"
+            };
             //mDataColumn.ReadOnly = true ;
             mDataTable.Columns.Add(mDataColumn);
 

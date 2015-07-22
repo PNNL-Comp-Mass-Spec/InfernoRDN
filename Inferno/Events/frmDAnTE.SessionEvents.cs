@@ -24,21 +24,30 @@ namespace DAnTE.Inferno
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
-        if ((bool)e.Result) {
-          ctltreeView.Nodes[0].Nodes.Clear();
+          if ((bool)e.Result)
+          {
+              ctltreeView.Nodes[0].Nodes.Clear();
 
-          IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
-          while (_enumerator.MoveNext()) {
-            AddDataNode((clsDatasetTreeNode)_enumerator.Value);
+              IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
+              while (_enumerator.MoveNext())
+              {
+                  AddDataNode((clsDatasetTreeNode)_enumerator.Value);
 
+              }
+
+              statusBarPanelMsg.Text = "Session opened successfully.";
+              if (string.IsNullOrEmpty(mstrLoadedfileName))
+                  this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
           }
+          else
+          {
+              var errorMessage = "Error loading session file";
 
-          statusBarPanelMsg.Text = "Session opened successfully.";
-          if (mstrLoadedfileName != null)
-            this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
-        } else
-          MessageBox.Show("Error in loading session.", "Error", MessageBoxButtons.OK,
-          MessageBoxIcon.Error);
+              if (string.Equals(LastSessionLoadError, "Value cannot be null."))
+                  errorMessage += ". Try loading the file again -- in many cases the first load attempt fails, but the second load attempt succeeds.";
+
+              MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
       }
     }
 

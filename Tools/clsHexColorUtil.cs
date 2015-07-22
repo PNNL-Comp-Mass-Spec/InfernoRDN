@@ -22,13 +22,12 @@ namespace DAnTE.Tools
 		//  that.
 		{
 		}
-		
-		public static String ReverseString(String inStr)
-		//  Helper Method that reverses a String.
+
+        public static string ReverseString(string inStr)
+		//  Helper Method that reverses a string.
 		{
-			String outStr;
-			int counter;
-			outStr="";
+            int counter;
+			var outStr = "";
 			for (counter=inStr.Length-1;counter>=0;counter--)
 			{
 				outStr=outStr+inStr[counter];
@@ -36,7 +35,7 @@ namespace DAnTE.Tools
 			return outStr;
 		}
 
-		public static int HexToInt(String hexstr)
+        public static int HexToInt(string hexstr)
 		//  This method converts a hexvalues string as 80FF into a integer.
 		//	Note that you may not put a '#' at the beginning of string! There
 		//  is not much error checking in this method. If the string does not
@@ -69,13 +68,13 @@ namespace DAnTE.Tools
 			return hexint;
 		}
 
-		public static String IntToHex(int hexint)
+        public static string IntToHex(int hexint)
 		//  This method converts a integer into a hexadecimal string representing the
 		//  int value. The returned string will look like this: 55FF. Note that there is
 		//  no leading '#' in the returned string! 
 		{
 			int counter,reminder;
-			String hexstr;
+            string hexstr;
 
 			counter=1;
 			hexstr="";
@@ -97,13 +96,13 @@ namespace DAnTE.Tools
 			return ReverseString(hexstr);
 		}
 
-		public static String IntToHex(int hexint,int length)
+        public static string IntToHex(int hexint, int length)
 		//  This version of the IntToHex method returns a hexadecimal string representing the
 		//  int value in the given minimum length. If the hexadecimal string is shorter then the
 		//  length parameter the missing characters will be filled up with leading zeroes.
 		//  Note that the returend string though is not truncated if the value exeeds the length!
 		{
-			String hexstr,ret;
+            string hexstr, ret;
 			int counter;
 			hexstr=IntToHex(hexint);
 			ret="";
@@ -117,7 +116,7 @@ namespace DAnTE.Tools
 			return ret+hexstr;
 		}
 
-		public static Color HexToColor(String hexString)
+        public static Color HexToColor(string hexString)
 		//  Translates a html hexadecimal definition of a color into a .NET Framework Color.
 		//  The input string must start with a '#' character and be followed by 6 hexadecimal
 		//  digits. The digits A-F are not case sensitive. If the conversion was not successfull
@@ -142,7 +141,7 @@ namespace DAnTE.Tools
 			return actColor;
 		}
 
-		public static String ColorToHex(Color actColor)
+        public static string ColorToHex(Color actColor)
 		//  Translates a .NET Framework Color into a string containing the html hexadecimal 
 		//  representation of a color. The string has a leading '#' character that is followed 
 		//  by 6 hexadecimal digits. 
