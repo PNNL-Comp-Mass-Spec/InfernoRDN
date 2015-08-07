@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private System.ComponentModel.Container components;
 
         public frmMain()
         {
@@ -43,17 +43,17 @@ namespace DAnTE.Inferno
 
         private static bool AppUpdatesAvailableInternal()
         {
-            string filelocation = @"\\floyd\Software\Inferno\";
-            string fname = null, currver = Application.ProductVersion;
+            var filelocation = @"\\floyd\Software\Inferno\";
+            var currver = Application.ProductVersion;
 
             if (Directory.Exists(filelocation))
             {
-                string[] folders = Directory.GetDirectories(filelocation);
-                foreach (string f in folders)
+                var folders = Directory.GetDirectories(filelocation);
+                foreach (var f in folders)
                 {
                     if (f.Contains("Ver_"))
                     {
-                        fname = f.Substring(f.IndexOf("_") + 1).Trim();
+                        var fname = f.Substring(f.IndexOf("_", StringComparison.Ordinal) + 1).Trim();
                         if (fname.Equals(currver))
                             return false;
                         else
@@ -96,7 +96,7 @@ namespace DAnTE.Inferno
 
             try
             {
-                DAnTE.Tools.ProgramArguments pa = new DAnTE.Tools.ProgramArguments(args);
+                var pa = new Tools.ProgramArguments(args);
 
                 if (args.Length > 0)
                 {
@@ -120,9 +120,9 @@ namespace DAnTE.Inferno
                 MessageBox.Show("Exception parsing the command line arguments: " + ex.Message);
             }
 
-            frmDAnTEmdi mfrmDAnTEmdi = new frmDAnTEmdi(SelectedDNTFile, logFilename);
+            var mfrmDAnTEmdi = new frmDAnTEmdi(SelectedDNTFile, logFilename);
             
-            if (mfrmDAnTEmdi != null && !mfrmDAnTEmdi.IsDisposed)
+            if (!mfrmDAnTEmdi.IsDisposed)
                 Application.Run(mfrmDAnTEmdi);
         }
     }

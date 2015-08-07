@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Text;
 
 namespace DAnTE.Tools
@@ -45,8 +46,22 @@ namespace DAnTE.Tools
                     case "help":
                         ShowHelp = true;
                         break;
+                    default:
+                        if (arg.ToUpper().StartsWith("/L:"))
+                            LOGfilename = TextArgument(arg);
+                        else if (arg.ToUpper().StartsWith("/F:"))
+                            DNTfilename = TextArgument(arg);
+
+                        break;
+
                 }
             }
+        }
+
+        private string TextArgument(string argument)
+        {
+            var value = argument.Substring(3);
+            return string.IsNullOrWhiteSpace(value) ? string.Empty : value;
         }
 
         private string TextArgument(string[] args, ref int i)

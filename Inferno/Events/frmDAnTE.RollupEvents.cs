@@ -19,7 +19,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_RRollupCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Close();
+            mfrmShowProgress.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -59,7 +59,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_ZRollupCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Close();
+            mfrmShowProgress.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -94,7 +94,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_QRollupCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Close();
+            mfrmShowProgress.Hide();
             this.Focus();
             if (e.Error != null)
             {

@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -20,7 +21,9 @@ namespace DAnTE.Inferno
         private ArrayList marrDatasets = new ArrayList();
         string foreC = "#FFC38A", borderC = "#5FAE27", lineC = "#FF0000";
         private readonly clsQQPar mclsQQPar;
-        
+        private bool mWarnedTooManyDatasets = false;
+        private bool mPopulating = false;
+
         public frmQQPar(clsQQPar clsQQPar)
         {
             mclsQQPar = clsQQPar;
@@ -63,24 +66,33 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
-            int N = mlstViewDataSets.Items.Count > MAX ? N = 20 : N = mlstViewDataSets.Items.Count;
-            for (int i = 0; i < N; i++)
+            int N = mlstViewDataSets.Items.Count > MAX ? N = MAX : N = mlstViewDataSets.Items.Count;
+
+            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+
+            for (var i = 0; i < N; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked)
+                mlstViewDataSets.Items[i].Checked = checkStateNew;
+            }
+
+            if (!checkStateNew)
+            {
+                for (var i = N; i < mlstViewDataSets.Items.Count; i++)
                 {
                     mlstViewDataSets.Items[i].Checked = false;
                 }
-                else
-                {
-                    mlstViewDataSets.Items[i].Checked = true;
-                }
             }
-            if (mlstViewDataSets.Items.Count > MAX)
+
+            if (mlstViewDataSets.Items.Count > MAX && checkStateNew && !mPopulating)
             {
                 mtxtPlotCols.Text = "5";
-                MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!mWarnedTooManyDatasets)
+                {
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("This will select too many datasets to be plotted on one page." +
+                                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -127,10 +139,14 @@ namespace DAnTE.Inferno
         {
             try
             {
-                if (mlstViewDataSets.CheckedIndices.Count > MAX)
+                if (mlstViewDataSets.CheckedIndices.Count > MAX && !mWarnedTooManyDatasets && !mPopulating)
+                {
+                    mWarnedTooManyDatasets = true;
                     MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                        Environment.NewLine + "Maximum suggested is " + MAX.ToString() + ".",
-                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    Environment.NewLine + "Maximum suggested is " + MAX.ToString() + ".",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 double colN = Math.Ceiling(Math.Sqrt(mlstViewDataSets.CheckedIndices.Count));
                 if (colN < 1)
                     colN = 1;
@@ -177,7 +193,7 @@ namespace DAnTE.Inferno
             mtxtBoxDf.Text = "4";
             mtxtBoxExp.Text = "1.0";
         }
-                       
+
         private void FormLoad_event(object sender, EventArgs e)
         {
             foreC = mclsQQPar.Fcol;
@@ -283,7 +299,9 @@ namespace DAnTE.Inferno
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
+                mPopulating = true;
                 mlstViewDataSets.Items.AddRange(lstVcolln);
+                mPopulating = false;
             }
         }
 
@@ -351,7 +369,7 @@ namespace DAnTE.Inferno
                     return "bkground=\"white\"";
             }
         }
-                
+
         public string DataSetName
         {
             set
@@ -398,7 +416,7 @@ namespace DAnTE.Inferno
         }
         #endregion
 
-        
-        
+
+
     }
 }

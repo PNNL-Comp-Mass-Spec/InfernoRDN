@@ -17,7 +17,7 @@ namespace DAnTE.Inferno
       string mstrType = "PCA";
       clsPlotResult mclsPlotResult;
       frmPCAPlotDisplay mfrmPCAPlotDisplay = new frmPCAPlotDisplay(mclsPCApar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
         MessageBox.Show(e.Error.Message);
@@ -71,7 +71,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmHeatmapDisplay mfrmHmapDisplay = new frmHeatmapDisplay(mclsHeatmapPar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
       if (e.Error != null) {
@@ -124,7 +124,7 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_PatternSearchCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       this.Focus();
       if (e.Error != null) {
         MessageBox.Show(e.Error.Message);

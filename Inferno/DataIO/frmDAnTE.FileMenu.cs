@@ -42,7 +42,9 @@ namespace DAnTE.Inferno
                         {
                             mfrmShowProgress.Message = "Loading Expressions ...";
                             mfrmShowProgress.Show();
-                            OpenFile(mstrLoadedfileName);
+                            var success = OpenFile(mstrLoadedfileName);
+
+                            this.HandleFileOpenCompleted(!success, success, string.Empty);
                         }
 
                     }
@@ -100,80 +102,6 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker_FileOpenCompleted);
             #endregion
         }
-
-        #region Old code
-        private void DataFileOpenThreaded_ORG(string mstrComingFrom)
-        {
-            #region Threading
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_OpenFiles);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_FileOpenCompleted);
-            #endregion
-
-            if (mstrComingFrom.Contains("Expression"))
-            {
-                if (mhtDatasets.ContainsKey("Expressions"))
-                    MessageBox.Show("Expressions are already loaded.");
-                else
-                {
-                    dataSetType = enmDataType.ESET;
-                    mstrFldgTitle = "Open Expressions";
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
-                        //DataTable tmp1 = OpenFile_test(fileName);
-                        //DataTable tmp2 = clsDataTable.RemoveDuplicateRows2(tmp1, "mass.tag.id");
-                        m_BackgroundWorker.RunWorkerAsync(mstrLoadedfileName);
-                        mfrmShowProgress.Message = "Loading Expressions ...";
-                        mfrmShowProgress.ShowDialog();
-                    }
-                }
-            }
-            else if (mstrComingFrom.Contains("Protein"))
-            {
-                if (mhtDatasets.ContainsKey("Protein Info"))
-                    MessageBox.Show("Protein information is already loaded.");
-                else
-                {
-                    dataSetType = enmDataType.PROTINFO;
-                    mstrFldgTitle = "Open Protein information";
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
-                        m_BackgroundWorker.RunWorkerAsync(mstrLoadedfileName);
-                        mfrmShowProgress.Message = "Loading Protein Information ...";
-                        mfrmShowProgress.ShowDialog();
-                    }
-                }
-            }
-            else if (mstrComingFrom.Contains("Factor"))
-            {
-                if (mhtDatasets.ContainsKey("Factors"))
-                    MessageBox.Show("Factor information is already loaded.");
-                else
-                {
-                    dataSetType = enmDataType.FACTORS;
-                    mstrFldgTitle = "Open Factor information";
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
-                        m_BackgroundWorker.RunWorkerAsync(mstrLoadedfileName);
-                        mfrmShowProgress.Message = "Loading Factor Information ...";
-                        mfrmShowProgress.ShowDialog();
-                    }
-                }
-            }
-
-            #region Threading
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_OpenFiles);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_FileOpenCompleted);
-            #endregion
-        }
-        #endregion
 
         private void menuItemMSMS_Click(object sender, EventArgs e)
         {
@@ -436,7 +364,7 @@ namespace DAnTE.Inferno
                 }
                 return false;
             }
-            
+
             return true;
         }
 

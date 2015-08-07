@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -44,17 +45,14 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
-            for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
+
+            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+
+            for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked)
-                {
-                    mlstViewDataSets.Items[i].Checked = false;
-                }
-                else
-                {
-                    mlstViewDataSets.Items[i].Checked = true;
-                }
+                mlstViewDataSets.Items[i].Checked = checkStateNew;
             }
+
         }
 
         private void mbtnColor_Click(object sender, EventArgs e)
@@ -146,7 +144,7 @@ namespace DAnTE.Inferno
                     };
                     lstVcolln[i] = lstVItem;
 
-                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT * 3)
                     {
                         continue;
                     }

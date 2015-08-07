@@ -13,7 +13,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmQQplotDisplay mfrmQQplotDisplay = new frmQQplotDisplay(mclsQQPar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
         MessageBox.Show(e.Error.Message);
@@ -45,7 +45,7 @@ namespace DAnTE.Inferno
       clsPlotResult mclsPlotResult;
       frmHistDisplay mfrmHistDisplay = new frmHistDisplay(mclsHistPar);
       //mfrmShowProgress.Hide();
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       //this.Focus();
       if (e.Error != null) {
@@ -77,7 +77,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmCorrDisplay mfrmCorrDisplay = new frmCorrDisplay(mclsCorrPar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       //this.Focus();
       if (e.Error != null) {
@@ -109,7 +109,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmBoxPlotDisplay mfrmBoxPlotDisplay = new frmBoxPlotDisplay(mclsBoxPlotPar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
       if (e.Error != null) {
@@ -131,7 +131,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmMAplotDisplay mfrmMAplotDisplay = new frmMAplotDisplay(mclsMApar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
       if (e.Error != null) {
@@ -153,7 +153,7 @@ namespace DAnTE.Inferno
     {
       clsPlotResult mclsPlotResult;
       frmVennDisplay mfrmVennDisplay = new frmVennDisplay(mclsVennPar);
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
         MessageBox.Show(e.Error.Message);

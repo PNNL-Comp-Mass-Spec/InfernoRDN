@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -15,12 +16,15 @@ namespace DAnTE.Inferno
 {
     public partial class frmCorrelationPar : Form
     {
-        private readonly clsCorrelationPar mclsCorrPar;        
+        private readonly clsCorrelationPar mclsCorrPar;
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
         private ArrayList marrDatasets = new ArrayList();
         private string ellipseC = null;
         private string mstrPaletteName = "Black-Body", customCol = null;
         private int mintPalette;
-        
+        private bool mWarnedTooManyDatasets = false;
+        private bool mPopulating = false;
+
         public frmCorrelationPar(clsCorrelationPar clsCorrPar)
         {
             mclsCorrPar = clsCorrPar;
@@ -50,44 +54,53 @@ namespace DAnTE.Inferno
                 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
-            int N = mlstViewDataSets.Items.Count;
+            var N = mlstViewDataSets.Items.Count;
+
             if (mrBtnScatter.Checked)
             {
-                if (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT)
-                {
-                    N = 20;
-                }
-                else
-                {
-                    N = mlstViewDataSets.Items.Count;
-                }
+                N = mlstViewDataSets.Items.Count > MAX ? N = MAX : N = mlstViewDataSets.Items.Count;
             }
-            for (int i = 0; i < N; i++)
+
+            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+
+            for (var i = 0; i < N; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked == true)
+                mlstViewDataSets.Items[i].Checked = checkStateNew;
+            }
+
+            if (!checkStateNew)
+            {
+                for (var i = N; i < mlstViewDataSets.Items.Count; i++)
                 {
                     mlstViewDataSets.Items[i].Checked = false;
                 }
-                else
-                {
-                    mlstViewDataSets.Items[i].Checked = true;
-                }
             }
-            if (mrBtnScatter.Checked && (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT))
+
+            if (mrBtnScatter.Checked && (mlstViewDataSets.Items.Count > MAX) && checkStateNew)
             {
-                MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                                Environment.NewLine + "Therefore, total selected set to " + frmDAnTE.MAX_DATASETS_TO_SELECT + ".",
-                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!mWarnedTooManyDatasets)
+                {
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("This will select too many datasets to be plotted on one page." +
+                                    Environment.NewLine + "Therefore, total selected set to " +
+                                    MAX + ".",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
         private void mlstViewDataSets_ItemChecked(object sender, ItemCheckEventArgs e)
         {
-            if (mrBtnScatter.Checked && (mlstViewDataSets.CheckedIndices.Count > frmDAnTE.MAX_DATASETS_TO_SELECT))
+            if (mrBtnScatter.Checked && (mlstViewDataSets.CheckedIndices.Count > MAX) && !mPopulating)
             {
-                MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                                Environment.NewLine + "Maximum suggested is " + frmDAnTE.MAX_DATASETS_TO_SELECT + ".",
-                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!mWarnedTooManyDatasets)
+                {
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
+                                    Environment.NewLine + "Maximum suggested is " + MAX +
+                                    ".",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -363,14 +376,16 @@ namespace DAnTE.Inferno
                         Tag = i
                     };
                     lstVcolln[i] = lstVItem;
-                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    if (countChecked >= MAX)
                     {
                         continue;
                     }
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
+                mPopulating = true;
                 mlstViewDataSets.Items.AddRange(lstVcolln);
+                mPopulating = false;
             }
         }
         
@@ -392,7 +407,7 @@ namespace DAnTE.Inferno
                             selected = selected + "," + Convert.ToString(Convert.ToInt16(
                                 mlstViewDataSets.Items[i].Tag) + 1);
                         k++;
-                        if (mrBtnScatter.Checked && (k == frmDAnTE.MAX_DATASETS_TO_SELECT))
+                        if (mrBtnScatter.Checked && (k == MAX))
                             break;
                     }
                 }

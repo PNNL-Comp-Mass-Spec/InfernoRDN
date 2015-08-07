@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -16,9 +17,11 @@ namespace DAnTE.Inferno
     public partial class frmMAplotsPar : Form
     {
         private clsMAplotsPar mclsMApar = new clsMAplotsPar();
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
         private ArrayList marrDatasets = new ArrayList();
         string dataColor = "#00FF00", lColor = "#FF0000";
+        private bool mWarnedTooManyDatasets = false;
+        private bool mPopulating = false;
 
         public frmMAplotsPar(clsMAplotsPar clsMApar)
         {
@@ -26,7 +29,7 @@ namespace DAnTE.Inferno
             InitializeComponent();
         }
 
-        
+
         private void mbtnOK_Click(object sender, EventArgs e)
         {
             if (mlstViewDataSets.CheckedIndices.Count < 2)
@@ -46,22 +49,32 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
-            int N = mlstViewDataSets.Items.Count > MAX ? N = 20 : N = mlstViewDataSets.Items.Count;
-            for (int i = 0; i < N; i++)
+            int N = mlstViewDataSets.Items.Count > MAX ? N = MAX : N = mlstViewDataSets.Items.Count; 
+            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+
+            for (var i = 0; i < N; i++)
             {
-                if (mlstViewDataSets.Items[i].Checked)
+                mlstViewDataSets.Items[i].Checked = checkStateNew;
+            }
+
+            if (!checkStateNew)
+            {
+                for (var i = N; i < mlstViewDataSets.Items.Count; i++)
                 {
                     mlstViewDataSets.Items[i].Checked = false;
                 }
-                else
+            }
+
+            if (mlstViewDataSets.Items.Count > MAX && checkStateNew)
+            {
+                if (!mWarnedTooManyDatasets)
                 {
-                    mlstViewDataSets.Items[i].Checked = true;
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("This will select too many datasets to be plotted on one page." +
+                                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            if (mlstViewDataSets.Items.Count > MAX)
-                MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void mbtnDataC_Click(object sender, EventArgs e)
@@ -90,12 +103,15 @@ namespace DAnTE.Inferno
 
         private void mlstViewDataSets_ItemChecked(object sender, ItemCheckEventArgs e)
         {
-            if (mlstViewDataSets.CheckedIndices.Count > MAX)
+            if (mlstViewDataSets.CheckedIndices.Count > MAX && !mWarnedTooManyDatasets && !mPopulating)
+            {
+                mWarnedTooManyDatasets = true;
                 MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
                     Environment.NewLine + "Maximum suggested is " + MAX.ToString() + ".",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
-        
+
         private void mbtnDefaults_Click(object sender, EventArgs e)
         {
             dataColor = "#00FF00";
@@ -156,7 +172,7 @@ namespace DAnTE.Inferno
             get { return lColor; }
         }
 
-        
+
         public ArrayList PopulateListView
         {
             set
@@ -180,7 +196,9 @@ namespace DAnTE.Inferno
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
+                mPopulating = true;
                 mlstViewDataSets.Items.AddRange(lstVcolln);
+                mPopulating = false;
             }
         }
 

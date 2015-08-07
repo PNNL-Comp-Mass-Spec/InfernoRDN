@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -343,6 +345,30 @@ namespace DAnTE.Inferno
             return mblresult;
         }
 
+        private static double GetVersionDifferenceHours(IList<string> oldVersion, IList<string> newVersion)
+        {
+
+            int daysOld;
+            int daysNew;
+
+            if (int.TryParse(oldVersion[2], out daysOld) &&
+                int.TryParse(newVersion[2], out daysNew))
+            {
+                int secondsOld;
+                int secondsNew;
+                if (int.TryParse(oldVersion[3], out secondsOld) &&
+                    int.TryParse(newVersion[3], out secondsNew))
+                {
+                    var versionDifferenceHours = (daysNew + secondsNew / 86400.0) * 24 - (daysOld + secondsOld / 86400.0) * 24;
+                    return versionDifferenceHours;
+
+                }
+            }
+
+            // Error converting; say 24 hours part (to assure an update occurs)
+            return 24;
+        }
+
         private bool InstallRequiredRPackages()
         {
             var currentTask = "initializing";
@@ -361,7 +387,27 @@ namespace DAnTE.Inferno
                     var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
                     var appVersionCurrent = Tools.clsRCmdLog.GetProgramVersion();
 
-                    if (!string.Equals(appVersionBioconductorCheck, appVersionCurrent))
+                    var updateRequired = !string.Equals(appVersionBioconductorCheck, appVersionCurrent);
+                    if (updateRequired && !string.IsNullOrWhiteSpace(appVersionBioconductorCheck))
+                    {
+                        // Only update if the versions differ by at least 8 hours
+                        var currentVersionParts = appVersionCurrent.Split('.').ToList();
+                        var lastUpdateParts = appVersionBioconductorCheck.Split('.').ToList();
+
+                        if (currentVersionParts.Count >= 4 && lastUpdateParts.Count >= 4)
+                        {
+                            var versionDifferenceHours = GetVersionDifferenceHours(lastUpdateParts, currentVersionParts);
+
+                            if (versionDifferenceHours < 8)
+                            {
+                                updateRequired = false;
+                                mUpdateRpacks = false;
+                            }
+                        }
+
+                    }
+
+                    if (updateRequired)
                     {
 
                         currentTask = "installing Bioconductor from http://bioconductor.org/biocLite.R";
@@ -392,7 +438,7 @@ namespace DAnTE.Inferno
             }
 
         }
-
+      
         private bool UpdateRPackages()
         {
             string rcommand;

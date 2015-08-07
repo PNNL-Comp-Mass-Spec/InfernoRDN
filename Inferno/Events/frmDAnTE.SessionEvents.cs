@@ -13,7 +13,7 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_SessionOpenCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       //this.Focus();
       if (e.Error != null) {
         MessageBox.Show(e.Error.Message);
@@ -66,7 +66,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_SaveSessionCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       mfrmShowProgress.Hide();
-      mfrmShowProgress.Close();
+      mfrmShowProgress.Hide();
       //mfrmShowProgress.DialogResult = DialogResult.Cancel;
       this.Focus();
       if (e.Error != null) {

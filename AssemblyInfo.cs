@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyTitle("InfernoRDN")]
 [assembly: AssemblyDescription("Data Analysis Tool Extension")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Battelle Memorial Institute")]
+[assembly: AssemblyCompany("Pacific Northwest National Lab")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
