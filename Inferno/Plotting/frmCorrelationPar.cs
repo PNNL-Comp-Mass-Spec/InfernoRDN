@@ -189,9 +189,11 @@ namespace DAnTE.Inferno
 
         private void mbtnHeatmapPalette_Click(object sender, EventArgs e)
         {
-            frmColorPalette mfrmColPalette = new frmColorPalette();
+            var mfrmColPalette = new frmColorPalette
+            {
+                SetDefaultPalette = mintPalette
+            };
 
-            mfrmColPalette.SetDefaultPalette = mintPalette;
             if (mfrmColPalette.ShowDialog() == DialogResult.OK)
             {
                 mintPalette = mfrmColPalette.ColorPalette;
@@ -206,9 +208,11 @@ namespace DAnTE.Inferno
 
         private void mbtn2Dpalette_Click(object sender, EventArgs e)
         {
-            frmColorPalette mfrmColPalette = new frmColorPalette();
+            var mfrmColPalette = new frmColorPalette
+            {
+                SetDefaultPalette = mintPalette
+            };
 
-            mfrmColPalette.SetDefaultPalette = mintPalette;
             if (mfrmColPalette.ShowDialog() == DialogResult.OK)
             {
                 mintPalette = mfrmColPalette.ColorPalette;

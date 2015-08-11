@@ -114,19 +114,23 @@ namespace DAnTE.Inferno
 
         private void mbtnHeatmapPalette_Click(object sender, EventArgs e)
         {
-            frmColorPalette mfrmColPalette = new frmColorPalette();
-
-            mfrmColPalette.SetDefaultPalette = mintPalette;
-            if (mfrmColPalette.ShowDialog() == DialogResult.OK)
+            frmColorPalette mfrmColPalette = new frmColorPalette
             {
-                mintPalette = mfrmColPalette.ColorPalette;
-                customCol = mfrmColPalette.CustomColors;
-                mstrPaletteName = mfrmColPalette.ColorPaletteName;
-                mlblHeatPalette.Text = mstrPaletteName;
-                Settings.Default.colorMapType = mintPalette;
-                Settings.Default.colorMap = mstrPaletteName;
-                Settings.Default.Save();
+                SetDefaultPalette = mintPalette
+            };
+
+            if (mfrmColPalette.ShowDialog() != DialogResult.OK)
+            {
+                return;
             }
+
+            mintPalette = mfrmColPalette.ColorPalette;
+            customCol = mfrmColPalette.CustomColors;
+            mstrPaletteName = mfrmColPalette.ColorPaletteName;
+            mlblHeatPalette.Text = mstrPaletteName;
+            Settings.Default.colorMapType = mintPalette;
+            Settings.Default.colorMap = mstrPaletteName;
+            Settings.Default.Save();
         }
 
         private void mrBtnKmeans_CheckedChanged(object sender, EventArgs e)

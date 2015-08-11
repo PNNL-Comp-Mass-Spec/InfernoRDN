@@ -161,7 +161,7 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int cMap = 4;
+                int cMap = 5;
                 if (mrbtnRedGreen.Checked)
                     cMap =1;
                 if (mrbtnHeat.Checked)

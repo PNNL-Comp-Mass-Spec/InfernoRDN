@@ -60,7 +60,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="colorMapType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="corrCustLow" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

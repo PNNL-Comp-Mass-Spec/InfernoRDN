@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.5701; August 11, 2015
+	- Updated default color scheme for heatmaps to be blue-white-red
+
 Version 1.1.5696; August 6, 2015
 	- Fix bug that prevented new data files from being loaded
 	- Fixed Toggle All behavior for dataset selection on several windows on the Plot menu

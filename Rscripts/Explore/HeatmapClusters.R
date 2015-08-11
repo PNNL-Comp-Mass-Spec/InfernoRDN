@@ -289,9 +289,12 @@ heatmap.dante <- function (x, Rowv = NULL, Colv = if (symm) "Rowv" else NULL,
     else labCol[colInd]
     
     if (scale == "row") {
-        x <- sweep(x, 1, rowMeans(x, na.rm = na.rm), check.margin = FALSE)
+        # For each row, compute the mean of that row and subtract the mean from each value
+		x <- sweep(x, 1, rowMeans(x, na.rm = na.rm), check.margin = FALSE)
+		# Compute the standard deviation of each row
         sx <- apply(x, 1, sd, na.rm = na.rm)
-        x <- sweep(x, 1, sx, "/", check.margin = FALSE)
+        # For each row, divide each value by the standard deviation
+		x <- sweep(x, 1, sx, "/", check.margin = FALSE)
     }
     else if (scale == "column") {
         x <- sweep(x, 2, colMeans(x, na.rm = na.rm), check.margin = FALSE)

@@ -65,12 +65,14 @@ namespace DAnTE.Purgatorio
             rowsSelected = false;
             rStart = 1;
             rEnd = 50;
+
+            // Default palette for Heat maps is Blue-White-Red (5)
             paletteType = Settings.Default.colorMapType;
             if (paletteType == 0)
-                paletteType = 4;
+                paletteType = 5;
             palettename = Settings.Default.colorMap;
             if (palettename == "")
-                palettename = "Black-Body";
+                palettename = "Blue-White-Red";
             mstrFactor = "1";
             rowClust = true;
             colClust = false;

@@ -43,9 +43,17 @@ namespace DAnTE.Purgatorio
             mstrDatasetName = "";
             plotHist = true;
             RplotType = 2;
-            
-            paletteType = Settings.Default.colorMapType;
-           
+
+            if (string.IsNullOrEmpty(Settings.Default.colorMap))
+            {
+                // Default palette for Correlation is Black-Body (4)
+                paletteType = 4;
+            }
+            else
+            {
+                paletteType = Settings.Default.colorMapType;
+            }
+
             palettename = Settings.Default.colorMap;
             if (palettename == "")
                 palettename = "Black-Body";

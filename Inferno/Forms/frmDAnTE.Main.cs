@@ -12,11 +12,11 @@ namespace DAnTE.Inferno
     /// <summary>
     /// Summary description for Form1.
     /// </summary>
-    public partial class frmDAnTE : System.Windows.Forms.Form
+    public partial class frmDAnTE : Form
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "August 6, 2015";
+        public const string PROGRAM_DATE = "August 11, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT_CPU_INTENSIVE = 20;
