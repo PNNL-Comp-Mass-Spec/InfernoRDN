@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -31,7 +32,7 @@ namespace DAnTE.Inferno
             }
             try
             {
-                cutoff = Convert.ToDouble(mtxtBoxCutoff.Text);
+                cutoff = Convert.ToDouble(mtxtBoxCutoff.Text, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception ex)
             {

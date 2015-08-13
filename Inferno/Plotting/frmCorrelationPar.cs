@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Linq;
@@ -183,8 +184,8 @@ namespace DAnTE.Inferno
             double min = (double)mRangeBar.RangeMinimum / 20;
             double max = (double)mRangeBar.RangeMaximum / 20;
 
-            mlblMin.Text = min.ToString();
-            mlblMax.Text = max.ToString();
+            mlblMin.Text = min.ToString(CultureInfo.InvariantCulture);
+            mlblMax.Text = max.ToString(CultureInfo.InvariantCulture);
         }
 
         private void mbtnHeatmapPalette_Click(object sender, EventArgs e)
@@ -250,8 +251,8 @@ namespace DAnTE.Inferno
 
             mRangeBar.RangeMaximum = (int)(20 * (mclsCorrPar.maxCorr));
             mRangeBar.RangeMinimum = (int)(20 * (mclsCorrPar.minCorr));
-            mlblMax.Text = mclsCorrPar.maxCorr.ToString();
-            mlblMin.Text = mclsCorrPar.minCorr.ToString();
+            mlblMax.Text = mclsCorrPar.maxCorr.ToString(CultureInfo.InvariantCulture);
+            mlblMin.Text = mclsCorrPar.minCorr.ToString(CultureInfo.InvariantCulture);
 
             this.PopulateListView = mclsCorrPar.Datasets;
             this.DataSetName = mclsCorrPar.mstrDatasetName;
@@ -370,12 +371,12 @@ namespace DAnTE.Inferno
             {
 
                 marrDatasets = value;
-                ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
                 
                 for (int i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i].ToString())
                     {
                         Tag = i
                     };
@@ -398,7 +399,7 @@ namespace DAnTE.Inferno
             get
             {
                 string selected = null;
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
                     int k = 0;
@@ -423,8 +424,8 @@ namespace DAnTE.Inferno
         {
             get
             {
-                ArrayList selectedDS = new ArrayList();
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var selectedDS = new ArrayList();
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
                     foreach (int i in indexes)
@@ -521,7 +522,7 @@ namespace DAnTE.Inferno
                 {
                     double min = (double)mRangeBar.RangeMinimum / 20;
                     double max = (double)mRangeBar.RangeMaximum / 20;
-                    return "corRange=c(" + min.ToString() + "," + max.ToString() + ")";
+                    return "corRange=c(" + min.ToString(CultureInfo.InvariantCulture) + "," + max.ToString(CultureInfo.InvariantCulture) + ")";
                 }
                 else
                     return "corRange=c(0,1)";

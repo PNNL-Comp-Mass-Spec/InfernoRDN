@@ -171,7 +171,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return ("labelscale=" + fontScale.ToString());
+                return ("labelscale=" + fontScale);
             }
         }
 

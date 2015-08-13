@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -42,9 +43,9 @@ namespace DAnTE.Inferno
                 k = Convert.ToInt16(mtxtBoxK.Text);
                 maxIter = Convert.ToInt16(mtxtBoxSVDiter.Text);
                 npcs = Convert.ToInt16(mtxtBoxnPCs.Text);
-                cutoff = Convert.ToSingle(mtxtBoxFthres.Text);
-                svdthres = Convert.ToSingle(mtxtBoxSVDthres.Text);
-                constant = Convert.ToSingle(mtxtBoxConst.Text);
+                cutoff = Convert.ToSingle(mtxtBoxFthres.Text, NumberFormatInfo.InvariantInfo);
+                svdthres = Convert.ToSingle(mtxtBoxSVDthres.Text, NumberFormatInfo.InvariantInfo);
+                constant = Convert.ToSingle(mtxtBoxConst.Text, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception ex)
             {

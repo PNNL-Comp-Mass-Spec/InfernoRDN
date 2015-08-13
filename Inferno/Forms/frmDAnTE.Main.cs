@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "August 11, 2015";
+        public const string PROGRAM_DATE = "August 13, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT_CPU_INTENSIVE = 20;
@@ -33,12 +33,12 @@ namespace DAnTE.Inferno
 
         private ArrayList marrDataSetNames = new ArrayList();
 
-        private string[] mstrArrProteins = null;
-        private string[] mstrArrMassTags = null;
+        private string[] mstrArrProteins;
+        private string[] mstrArrMassTags;
 
         private string mstrLoadedfileName; //filename of the loaded data
 
-        private string sessionFile = null;
+        private string sessionFile;
 
         // This is a linux-style path that is used by R to save .png files
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
@@ -62,7 +62,7 @@ namespace DAnTE.Inferno
         private readonly ArrayList marrAnalysisObjects = new ArrayList();
         private ToolStripMenuItem mnuItemVenn;
 
-        private int mintFilterTblNum = 0;
+        private int mintFilterTblNum;
 
         #endregion
 
@@ -81,13 +81,13 @@ namespace DAnTE.Inferno
             if (IsMdiChild)
             {
                 //ToolStripManager.Merge(this.mtoolStripDAnTE, "mtoolStripMDI");
-                this.mtoolStripDAnTE.Visible = false;
+                mtoolStripDAnTE.Visible = false;
             }
 
             mfrmShowProgress = new frmShowProgress();
 
             //Threading -----------------------------------
-            this.m_BackgroundWorker = new BackgroundWorker();
+            m_BackgroundWorker = new BackgroundWorker();
         }
 
         #endregion
@@ -103,7 +103,7 @@ namespace DAnTE.Inferno
 
         private DataGridViewSelectedRowCollection GetSelectedRows(DataGridView currGrid)
         {
-            DataGridViewSelectedRowCollection selectedRows = currGrid.SelectedRows;
+            var selectedRows = currGrid.SelectedRows;
 
             if (selectedRows.Count < 1)
             {
@@ -120,7 +120,7 @@ namespace DAnTE.Inferno
                 }
 
                 // Auto select the rows
-                foreach (int rowIndex in rowIndicesAdded)
+                foreach (var rowIndex in rowIndicesAdded)
                 {
                     currGrid.Rows[rowIndex].Selected = true;
                 }
@@ -202,7 +202,7 @@ namespace DAnTE.Inferno
 
             if (checkColumnCount)
             {
-                int numCols = mclsSelected.mDTable.Columns.Count - 1;
+                var numCols = mclsSelected.mDTable.Columns.Count - 1;
                 if (numCols <= 0)
                 {
                     MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' must have at least 2 columns of data", "Invalid table");
@@ -216,7 +216,7 @@ namespace DAnTE.Inferno
 
         #region Event handlers --------------
 
-        private void OnLoad_event(object sender, System.EventArgs e)
+        private void OnLoad_event(object sender, EventArgs e)
         {
             //if (IsMdiChild)
             //{
@@ -232,7 +232,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void OnClosed_event(object sender, System.EventArgs e)
+        private void OnClosed_event(object sender, EventArgs e)
         {
             ToolStripManager.RevertMerge("mtoolStripMDI");
         }
@@ -262,27 +262,36 @@ namespace DAnTE.Inferno
 
         private void Form_DragDrop(object sender, DragEventArgs e)
         {
-            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
             if (s.Length > 1)
                 MessageBox.Show("Only one file at a time!", "One file please...",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
-                string fExt = Path.GetExtension(s[0]);
-                if (fExt.Equals(".dnt"))
-                    OpenSessionThreaded(s[0]);
-                else if (fExt.Equals(".csv"))
+                var fExt = Path.GetExtension(s[0]);
+                var fileTypeError = string.IsNullOrEmpty(fExt);
+
+                if (!fileTypeError)
                 {
-                    dataSetType = enmDataType.ESET;
-                    mstrLoadedfileName = s[0];
-                    DataFileOpenThreaded(s[0], "Opening data in a flat file...");
+                    if (fExt.Equals(".dnt"))
+                        OpenSessionThreaded(s[0]);
+                    else if (fExt.Equals(".csv"))
+                    {
+                        dataSetType = enmDataType.ESET;
+                        mstrLoadedfileName = s[0];
+                        DataFileOpenThreaded(s[0], "Opening data in a flat file...");
+                    }
+                    else
+                    {
+                        fileTypeError = true;
+                    }
                 }
-                else
+
+                if (fileTypeError)
                 {
-                    MessageBox.Show("Wrong file type!", "Use only .dnt files...",
+                    MessageBox.Show("Wrong file type!", "Use only .dnt or .csv files...",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
                 }
             }
 
@@ -354,9 +363,12 @@ namespace DAnTE.Inferno
             {
                 mnuStripDAnTE.Visible = false;
                 mtoolStripDAnTE.Visible = false;
-                frmDAnTEmdi mp = (frmDAnTEmdi)Application.OpenForms["frmDAnTEmdi"];
-                ToolStripManager.RevertMerge(mp.mtoolStripMDI); //toolstrip refere to parent toolstrip
-                ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mtoolStripMDI);
+                var mp = (frmDAnTEmdi)Application.OpenForms["frmDAnTEmdi"];
+                if (mp != null)
+                {
+                    ToolStripManager.RevertMerge(mp.mtoolStripMDI); //toolstrip refere to parent toolstrip
+                    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mtoolStripMDI);
+                }
             }
         }
      

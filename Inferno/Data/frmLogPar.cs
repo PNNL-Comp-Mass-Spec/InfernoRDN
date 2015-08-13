@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -33,7 +34,7 @@ namespace DAnTE.Inferno
             {
                 try
                 {
-                    bias = Convert.ToSingle(mtxtBoxBias.Text);
+                    bias = Convert.ToSingle(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
@@ -106,11 +107,11 @@ namespace DAnTE.Inferno
         {
             get
             {
-                return Convert.ToDouble(mtxtBoxBias.Text);
+                return Convert.ToDouble(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo);
             }
             set
             {
-                mtxtBoxBias.Text = value.ToString();
+                mtxtBoxBias.Text = value.ToString(CultureInfo.InvariantCulture);
             }
         }
 

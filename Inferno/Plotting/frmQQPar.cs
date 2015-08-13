@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Linq;
@@ -39,10 +40,10 @@ namespace DAnTE.Inferno
             try
             {
                 numCol = Convert.ToInt32(mtxtPlotCols.Text);
-                shape = Double.Parse(mtxtBoxShape.Text);
-                scale = Double.Parse(mtxtBoxScale.Text);
+                shape = Double.Parse(mtxtBoxShape.Text, CultureInfo.InvariantCulture);
+                scale = Double.Parse(mtxtBoxScale.Text, CultureInfo.InvariantCulture);
                 df = Int16.Parse(mtxtBoxDf.Text);
-                exprate = Double.Parse(mtxtBoxExp.Text);
+                exprate = Double.Parse(mtxtBoxExp.Text, CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Globalization;
 using System.Text;
 using DAnTE.Properties;
 
@@ -66,7 +67,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return ("labelscale=" + fontScale.ToString());
+                return ("labelscale=" + fontScale.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -74,7 +75,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return ("boxwidth=" + boxWidth);
+                return ("boxwidth=" + boxWidth.ToString(CultureInfo.InvariantCulture));
             }
         }
 

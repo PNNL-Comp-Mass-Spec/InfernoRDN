@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -28,9 +29,9 @@ namespace DAnTE.Inferno
             int topN;
             try
             {
-                minP = Convert.ToDouble(mtxtBoxMinPresent.Text);
-                top = Convert.ToDouble(mtxtBoxThres.Text);
-                topN = Convert.ToInt32(mtxtBoxNum.Text);
+                minP = Convert.ToDouble(mtxtBoxMinPresent.Text, NumberFormatInfo.InvariantInfo);
+                top = Convert.ToDouble(mtxtBoxThres.Text, NumberFormatInfo.InvariantInfo);
+                topN = Convert.ToInt32(mtxtBoxNum.Text, NumberFormatInfo.InvariantInfo);
                 if ((minP > 100) || (minP < 0) || (top > 100) || (top < 0) || (topN < 0))
                     success = false;
             }

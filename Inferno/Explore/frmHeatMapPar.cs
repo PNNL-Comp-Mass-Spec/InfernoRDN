@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Drawing;
 using System.Text;
 using System.IO;
@@ -80,8 +81,8 @@ namespace DAnTE.Inferno
                 start = Convert.ToInt32(mtxtBoxStart.Text);
                 end = Convert.ToInt32(mtxtBoxEnd.Text);
                 k = Convert.ToInt32(mtxtBoxK.Text);
-                minCol = Convert.ToDouble(mtxtBoxMinCol.Text);
-                maxCol = Convert.ToDouble(mtxtBoxMaxCol.Text);
+                minCol = Convert.ToDouble(mtxtBoxMinCol.Text, NumberFormatInfo.InvariantInfo);
+                maxCol = Convert.ToDouble(mtxtBoxMaxCol.Text, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception ex)
             {
@@ -161,8 +162,8 @@ namespace DAnTE.Inferno
             customCol = mclsHmapPar.customCol;
             mchkBoxScale.Checked = mclsHmapPar.rowScale;
             mchkBoxXlab.Checked = mclsHmapPar.noxlab;
-            mtxtBoxMaxCol.Text = mclsHmapPar.mdblMaxCol.ToString();
-            mtxtBoxMinCol.Text = mclsHmapPar.mdblMinCol.ToString();
+            mtxtBoxMaxCol.Text = mclsHmapPar.mdblMaxCol.ToString(CultureInfo.InvariantCulture);
+            mtxtBoxMinCol.Text = mclsHmapPar.mdblMinCol.ToString(CultureInfo.InvariantCulture);
             mchkBoxColRng.Checked = mclsHmapPar.mblsetColRng;
             mtxtBoxMaxCol.Enabled = mchkBoxColRng.Checked;
             mtxtBoxMinCol.Enabled = mchkBoxColRng.Checked;
@@ -201,8 +202,8 @@ namespace DAnTE.Inferno
                 mclsHmapPar.customCol = customCol;
                 mclsHmapPar.rowScale = mchkBoxScale.Checked;
                 mclsHmapPar.mblsetColRng = mchkBoxColRng.Checked;
-                mclsHmapPar.mdblMaxCol = Convert.ToDouble(mtxtBoxMaxCol.Text);
-                mclsHmapPar.mdblMinCol = Convert.ToDouble(mtxtBoxMinCol.Text);
+                mclsHmapPar.mdblMaxCol = Convert.ToDouble(mtxtBoxMaxCol.Text, NumberFormatInfo.InvariantInfo);
+                mclsHmapPar.mdblMinCol = Convert.ToDouble(mtxtBoxMinCol.Text, NumberFormatInfo.InvariantInfo);
 
                 mclsHmapPar.mintFactorIndex = this.FactorIndex;
                 mclsHmapPar.mstrFactor = this.Factor;

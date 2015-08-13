@@ -3,6 +3,7 @@ using System.Xml;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections;
+using System.Globalization;
 
 namespace DAnTE.Tools
 {
@@ -159,12 +160,12 @@ namespace DAnTE.Tools
 				if ( type == "Byte" )		return Byte.Parse( xmlValue.Trim() );
 				if ( type == "Char" )		return Char.Parse( xmlValue.Trim() );
 				if ( type == "Decimal" )		return Decimal.Parse( xmlValue.Trim() );
-				if ( type == "Double" )		return Double.Parse( xmlValue.Trim() );
+				if ( type == "Double" )		return Double.Parse( xmlValue.Trim() , CultureInfo.InvariantCulture);
 				if ( type == "Int16" )		return Int16.Parse( xmlValue.Trim() );
 				if ( type == "Int32" )		return Int32.Parse( xmlValue.Trim() );
 				if ( type == "Int64" )		return Int64.Parse( xmlValue.Trim() );
 				if ( type == "SByte" )		return SByte.Parse( xmlValue.Trim() );
-				if ( type == "Single" )		return Single.Parse( xmlValue.Trim() );
+				if ( type == "Single" )		return Single.Parse( xmlValue.Trim() , CultureInfo.InvariantCulture);
 				if ( type == "UInt16" )		return UInt16.Parse( xmlValue.Trim() );
 				if ( type == "UInt32" )		return UInt32.Parse( xmlValue.Trim() );
 				if ( type == "UInt64" )		return UInt64.Parse( xmlValue.Trim() );

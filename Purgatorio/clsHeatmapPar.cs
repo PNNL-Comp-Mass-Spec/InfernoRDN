@@ -4,6 +4,7 @@ using System.Collections;
 using System.Text;
 using System.Drawing;
 using System.Data;
+using System.Globalization;
 using DAnTE.Properties;
 using DAnTE.Tools;
 
@@ -109,7 +110,7 @@ namespace DAnTE.Purgatorio
             {
                 string colRange = "colRange=c(";
                 if (mblsetColRng)
-                    colRange = colRange + mdblMinCol.ToString() + "," + mdblMaxCol.ToString() + ")";
+                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + ")";
                 else
                     colRange = "colRange=NULL";
                 return colRange;
@@ -123,7 +124,7 @@ namespace DAnTE.Purgatorio
             {
                 string colRange = "[";
                 if (mblsetColRng)
-                    colRange = colRange + mdblMinCol.ToString() + "," + mdblMaxCol.ToString() + "]";
+                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + "]";
                 else
                     colRange = "NA";
                 return colRange;
@@ -137,14 +138,14 @@ namespace DAnTE.Purgatorio
                 string subset = "c(";
                 if (marrSelRows.Count == 0 || customSelect)
                 {
-                    subset = subset + rStart.ToString() + ":" + rEnd.ToString() + ")";
+                    subset = subset + rStart + ":" + rEnd + ")";
                     gridSelect = false;
                 }
                 else
                 {
                     for (int i = 0; i < marrSelRows.Count; i++)
                     {
-                        subset = subset + @"""" + marrSelRows[i].ToString() + @"""" + ",";
+                        subset = subset + @"""" + marrSelRows[i] + @"""" + ",";
                     }
                     subset = subset.Substring(0, subset.Length - 1) + ")";
                     gridSelect = true;
@@ -158,7 +159,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (mintFactorIndex > -1 && !mstrFactor.Contains("<NA>"))
-                    return "Factor=factors[" + mintFactorIndex.ToString() + ",]";
+                    return "Factor=factors[" + mintFactorIndex + ",]";
                 else
                     return "Factor=1";
             }
@@ -179,13 +180,13 @@ namespace DAnTE.Purgatorio
                 string subset = "";
                 if (marrSelRows.Count == 0 || customSelect)
                 {
-                    subset = rStart.ToString() + ":" + rEnd.ToString();
+                    subset = rStart + ":" + rEnd;
                 }
                 else
                 {
                     for (int i = 0; i < marrSelRows.Count; i++)
                     {
-                        subset = marrSelRows[i].ToString() + ",";
+                        subset = marrSelRows[i] + ",";
                     }
                     subset = subset.Substring(0, subset.Length - 1);
                 }
@@ -219,7 +220,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "agglomeration=" + agglomeration.ToString();
+                return "agglomeration=" + agglomeration;
             }
         }
 
@@ -254,7 +255,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "distance=" + distance.ToString();
+                return "distance=" + distance;
             }
         }
 
@@ -305,7 +306,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (rowClust && !hclust)
-                    return "Kmeans=" + k.ToString();
+                    return "Kmeans=" + k;
                 else
                     return "Kmeans=FALSE";
             }

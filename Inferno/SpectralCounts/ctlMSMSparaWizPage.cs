@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
@@ -112,14 +113,14 @@ namespace DAnTE.Inferno
                 
                 try
                 {
-                    delcn2 = Convert.ToDouble(mtxtBoxDCn2Th.Text);
+                    delcn2 = Convert.ToDouble(mtxtBoxDCn2Th.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     delcn2 = 0.1;
                 }
-                return "DelCn2Th=" + delcn2.ToString();
+                return "DelCn2Th=" + delcn2.ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -127,13 +128,13 @@ namespace DAnTE.Inferno
         {
             get
             {
-                double xc1th = 1.5;
-                double xc2th = 1.5;
-                double xc3th = 1.5;
-                double xcOth = 1.5;
+                double xc1th;
+                double xc2th;
+                double xc3th;
+                double xcOth;
                 try
                 {
-                    xc1th = Convert.ToDouble(mtxtBxXC1Th.Text);
+                    xc1th = Convert.ToDouble(mtxtBxXC1Th.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
@@ -142,7 +143,7 @@ namespace DAnTE.Inferno
                 }
                 try
                 {
-                    xc2th = Convert.ToDouble(mtxtBxXC2Th.Text);
+                    xc2th = Convert.ToDouble(mtxtBxXC2Th.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
@@ -151,7 +152,7 @@ namespace DAnTE.Inferno
                 }
                 try
                 {
-                    xc3th = Convert.ToDouble(mtxtBxXC3Th.Text);
+                    xc3th = Convert.ToDouble(mtxtBxXC3Th.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
@@ -160,15 +161,15 @@ namespace DAnTE.Inferno
                 }
                 try
                 {
-                    xcOth = Convert.ToDouble(mtxtBxXCOTh.Text);
+                    xcOth = Convert.ToDouble(mtxtBxXCOTh.Text, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     xcOth = 1.5;
                 }
-                return "XCorr1Th=" + xc1th.ToString() + ",XCorr2Th=" + xc2th.ToString() +
-                    ",XCorr3Th=" + xc3th.ToString() + ",XCorrOTh=" + xcOth.ToString();
+                return "XCorr1Th=" + xc1th.ToString(CultureInfo.InvariantCulture) + ",XCorr2Th=" + xc2th.ToString(CultureInfo.InvariantCulture) +
+                    ",XCorr3Th=" + xc3th.ToString(CultureInfo.InvariantCulture) + ",XCorrOTh=" + xcOth.ToString(CultureInfo.InvariantCulture);
             }
         }
 

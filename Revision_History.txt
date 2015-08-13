@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.5703; August 13, 2015
+	- Now using InvariantCulture when converting strings to numbers and vice versa
+		- Allows for the program to work when Windows is set to use a different region (culture)
+
 Version 1.1.5701; August 11, 2015
 	- Updated default color scheme for heatmaps to be blue-white-red
 

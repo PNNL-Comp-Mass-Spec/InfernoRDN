@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -35,8 +36,8 @@ namespace DAnTE.Inferno
                 try
                 {
                     gminpCount = Convert.ToInt16(gminPCount);
-                    minPresence = Convert.ToSingle(MinPresence);
-                    gpvalue = Convert.ToSingle(Gp_value);
+                    minPresence = Convert.ToSingle(MinPresence, NumberFormatInfo.InvariantInfo);
+                    gpvalue = Convert.ToSingle(Gp_value, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {

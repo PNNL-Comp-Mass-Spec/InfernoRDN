@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -14,7 +15,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmLOESSPar : Form
     {
-        readonly DAnTE.Purgatorio.clsLoessPar mclsLoess = new DAnTE.Purgatorio.clsLoessPar();
+        readonly DAnTE.Purgatorio.clsLoessPar mclsLoess;
 
         public frmLOESSPar(DAnTE.Purgatorio.clsLoessPar clsLoess)
         {
@@ -28,7 +29,7 @@ namespace DAnTE.Inferno
             if (mchkBoxPlot.Checked && !outfolderOK)
                 MessageBox.Show("Invalid Folder name", "Error!", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            else if (Convert.ToDouble(mlblSpan.Text) < 0.1)
+            else if (Convert.ToDouble(mlblSpan.Text, NumberFormatInfo.InvariantInfo) < 0.1)
                 MessageBox.Show("Span value too small.", "Warning!", MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             else
@@ -72,7 +73,7 @@ namespace DAnTE.Inferno
         private void mtrackBarSpan_Scroll(object sender, EventArgs e)
         {
             Double span = (Double)mtrackBarSpan.Value / 10.0;
-            mlblSpan.Text = span.ToString();
+            mlblSpan.Text = span.ToString(CultureInfo.InvariantCulture);
         }
 
         private void frmPickFactor_Load(object sender, EventArgs e)

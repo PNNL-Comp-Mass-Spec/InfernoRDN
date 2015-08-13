@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
@@ -38,7 +39,7 @@ namespace DAnTE.Inferno
                 try
                 {
                     minOverlap = Convert.ToInt16(MinOverlap);
-                    minPresence = Convert.ToSingle(MinPresence);
+                    minPresence = Convert.ToSingle(MinPresence, NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception ex)
                 {
