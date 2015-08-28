@@ -244,29 +244,26 @@ namespace DAnTE.Tools
 
         public static DataTable LoadFile2DataTableFastCSVReader(string FileName)
         {
-            string fileName = FileName;
-            string filePath = FileName;
-            string fExt;
-            string sConnectionString = "";
-            DataTable mdtOut = new DataTable();
-            DataTable mdtIn = new DataTable();
+            var sConnectionString = "";
+            var mdtOut = new DataTable();
 
-            fileName = Path.GetFileName(FileName);
-            filePath = Path.GetDirectoryName(FileName);
-            fExt = Path.GetExtension(fileName);
+            var fileName = Path.GetFileName(FileName);
+            var fExt = Path.GetExtension(fileName);
 
             switch (fExt)
             {
                 case ".csv":// CSV files
-                    using (CsvReader csv = new CsvReader(new System.IO.StreamReader(FileName), true))
+                    using (var csv = new CsvReader(new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)), true))
                     {
+                        csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
                         mdtOut.Load(csv);
                     } 
                     break;
                 case ".txt":
-                    using (CsvReader csv = new CsvReader(new System.IO.StreamReader(FileName), true, '\t'))
+                    using (var csv = new CsvReader(new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)), true, '\t'))
                     {
+                        csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
                         mdtOut.Load(csv);
                     } 
@@ -282,7 +279,6 @@ namespace DAnTE.Tools
                 case "Excel":
                     OleDbConnection objConn = null;
                     DataTable dt = null;
-                    string mstrSheet = null;
                     try
                     {
                         //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
@@ -294,12 +290,13 @@ namespace DAnTE.Tools
                         {
                             return null;
                         }
+                        string mstrSheet;
                         if (dt.Rows.Count == 1)
                             mstrSheet = (dt.Rows[0])["TABLE_NAME"].ToString();
                         else
                         {
-                            ArrayList marrExcelSheets = new ArrayList();
-                            int i = 0;
+                            var marrExcelSheets = new ArrayList();
+                            var i = 0;
 
                             // Add the sheet name to the string array.
                             foreach (DataRow row in dt.Rows)
@@ -308,8 +305,10 @@ namespace DAnTE.Tools
                                 marrExcelSheets.Add(mstrSheet);
                                 i++;
                             }
-                            frmSelectExcelSheet mfrmSheets = new frmSelectExcelSheet();
-                            mfrmSheets.PopulateListBox = marrExcelSheets;
+                            var mfrmSheets = new frmSelectExcelSheet
+                            {
+                                PopulateListBox = marrExcelSheets
+                            };
                             if (mfrmSheets.ShowDialog() == DialogResult.OK)
                             {
                                 i = mfrmSheets.SelectedSheet;
@@ -321,15 +320,17 @@ namespace DAnTE.Tools
                                 break;
                             }
                         }
-                        string sheetCmd = "SELECT * FROM [" + mstrSheet + "]";
-                        OleDbCommand objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
-                        objAdapter1.SelectCommand = objCmdSelect;
+                        var sheetCmd = "SELECT * FROM [" + mstrSheet + "]";
+                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
+                        var objAdapter1 = new OleDbDataAdapter
+                        {
+                            SelectCommand = objCmdSelect
+                        };
                         objAdapter1.Fill(mdtOut);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message.ToString());
+                        Console.WriteLine(ex.Message);
                     }
                     finally
                     {
@@ -353,6 +354,13 @@ namespace DAnTE.Tools
             }
             return mdtOut;
         }
+
+        
+        static void csv_ParseError(object sender, ParseErrorEventArgs e)
+        {
+            MessageBox.Show(e.Error.Message, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
         #endregion
 
         public static DataTable Array2DataTable(double[,] matrix, string[] rowNames, string[] colHeaders)

@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "August 13, 2015";
+        public const string PROGRAM_DATE = "August 27, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT_CPU_INTENSIVE = 20;

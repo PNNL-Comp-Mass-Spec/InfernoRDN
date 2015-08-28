@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.5717; August 27, 2015
+	- Updated the LumenWorks CsvReader to report a warning when the input file has duplicate column names in the header row
+
 Version 1.1.5703; August 13, 2015
 	- Now using InvariantCulture when converting strings to numbers and vice versa
 		- Allows for the program to work when Windows is set to use a different region (culture)
