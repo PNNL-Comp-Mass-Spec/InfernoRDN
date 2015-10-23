@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -354,8 +353,15 @@ namespace DAnTE.Inferno
 		        factorNames.Add(item.mstrFactor);
 		    }
 
-		    lstBoxFactors.DataSource = factorNames;
-			txtBoxFactors.Text = "" ;
+            // Note: cannot use .DataSource = Value because we .Remove items from the listbox
+
+            lstBoxFactors.Items.Clear();
+            foreach (var item in factorNames)
+            {
+                lstBoxFactors.Items.Add(item);
+            }                
+
+            txtBoxFactors.Text = "" ;
 			txtBoxValues.Text = "" ;
 		}
 
@@ -496,7 +502,7 @@ namespace DAnTE.Inferno
 
 		private void btnFactorDelete_Click(object sender, System.EventArgs e)
 		{
-			int nSelected = lstBoxFactors.SelectedIndex ;
+			var nSelected = lstBoxFactors.SelectedIndex ;
 
 			if (nSelected < 0)
 				MessageBox.Show("Select a factor to delete.") ;

@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.IO;
@@ -29,6 +29,7 @@ namespace DAnTE.Tools
 			var row = csv.GetNextRow();
 			if (row == null)
 				return null;
+
 			if (headers)
 			{
 				foreach (var header in row)
@@ -40,10 +41,12 @@ namespace DAnTE.Tools
 				}
 				row = csv.GetNextRow();
 			}
+
 			while (row != null)
 			{
-				while (row.Length > table.Columns.Count)
+				while (row.Count > table.Columns.Count)
 					table.Columns.Add(GetNextColumnHeader(table), typeof(string));
+
 				table.Rows.Add(row);
 				row = csv.GetNextRow();
 			}
@@ -70,14 +73,15 @@ namespace DAnTE.Tools
 				stream = s;
 			}
 
-			public string[] GetNextRow()
+            public List<string> GetNextRow()
 			{
-				var row = new ArrayList();
+				var row = new List<string>();
 				while (true)
 				{
 					var item = GetNextItem();
 					if (item == null)
-						return row.Count == 0 ? null : (string[])row.ToArray(typeof(string));
+						return row.Count == 0 ? null : row;
+
 					row.Add(item);
 				}
 			}

@@ -1,8 +1,9 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -21,9 +22,9 @@ namespace DAnTE.Inferno
         private ctlMSMSLabKeyParaWizPage mctlLabKeyParaPage;
         private ctlMSMSPerformWizPage mctlPerformPage;
         private ctlMSMSCompleteWizPage mctlCompletedPage;
-        private ArrayList marrFileNames;
-        private ArrayList marrLabKeyPathNames;
-        private ArrayList successfulDataSets = new ArrayList();
+        private List<string> marrFilePaths;
+        private List<string> marrLabKeyPathNames;
+        private readonly List<string> successfulDataSets = new List<string>();
         private string mstrProjFolder;
         private string mstrAnalysisFolder;
         private string mstrSeqOutFolder;
@@ -31,13 +32,12 @@ namespace DAnTE.Inferno
         private string XCorrTh = "";
         private string DelCn2Th = "";
         private string TrypState = "";
-        private bool mblAnalysisStarted = false;
-        private int progressPrcnt = 0;
-        private clsRconnect rConnector;
+        private bool mblAnalysisStarted;
+        private int progressPrcnt;
+        private readonly clsRconnect rConnector;
         private DataTable mDTEset = new DataTable();
         private enmMSMSreadType datasource;
-        private bool runPFE = false;
-        private bool mblUseLabKeyOutFiles = false;
+        private bool mRunPeptideFileExtractor;
         private string mstrPepProph = "0.95";
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
@@ -50,9 +50,9 @@ namespace DAnTE.Inferno
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_WorkProgressChanged);
+            this.backgroundWorker1.DoWork += this.backgroundWorker1_DoWork;
+            this.backgroundWorker1.RunWorkerCompleted += this.backgroundWorker1_RunWorkerCompleted;
+            this.backgroundWorker1.ProgressChanged += this.backgroundWorker1_WorkProgressChanged;
         }
 
         public frmMSMSWizard(clsRconnect rconn)
@@ -64,14 +64,14 @@ namespace DAnTE.Inferno
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_WorkProgressChanged);
+            this.backgroundWorker1.DoWork += this.backgroundWorker1_DoWork;
+            this.backgroundWorker1.RunWorkerCompleted += this.backgroundWorker1_RunWorkerCompleted;
+            this.backgroundWorker1.ProgressChanged += this.backgroundWorker1_WorkProgressChanged;
         }
 
         private void Init()
         {
-            marrFileNames = new ArrayList();
+            marrFilePaths = new List<string>();
 
             mctlWelcomePage = new ctlMSMSWelcomeWizPage();
             mctlSelectFromLabKeyPage = new ctlMSMSSelectFilesFromDBFilterWizPage(rConnector);
@@ -90,19 +90,19 @@ namespace DAnTE.Inferno
             mctlCompletedPage.Dock = DockStyle.Fill;
 
 
-            mctlWelcomePage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlWelcomePage_WizardNext);
-            mctlSelectFromLabKeyPage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlSelectFromLabKeyPage_WizardNext);
-            mctlSelectFromLabKeyPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlSelectFromLabKeyPage_WizardBack);
-            mctlSelectHDDPage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlSelectHDDPage_WizardNext);
-            mctlSelectHDDPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlSelectHDDPage_WizardBack);
-            mctlParaPage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlparaPage_WizardNext);
-            mctlParaPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlparaPage_WizardBack);
-            mctlLabKeyParaPage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlLabKeyParaPage_WizardNext);
-            mctlLabKeyParaPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlLabKeyParaPage_WizardBack);
-            mctlPerformPage.WizardNext += new Wizard.UI.WizardPageEventHandler(mctlPerformPage_WizardNext);
-            mctlPerformPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlPerformPage_WizardBack);
-            mctlCompletedPage.WizardFinish += new CancelEventHandler(mctlCompletedPage_WizardFinish);
-            mctlCompletedPage.WizardBack += new Wizard.UI.WizardPageEventHandler(mctlCompletedPage_WizardBack);
+            mctlWelcomePage.WizardNext += mctlWelcomePage_WizardNext;
+            mctlSelectFromLabKeyPage.WizardNext += mctlSelectFromLabKeyPage_WizardNext;
+            mctlSelectFromLabKeyPage.WizardBack += mctlSelectFromLabKeyPage_WizardBack;
+            mctlSelectHDDPage.WizardNext += mctlSelectHDDPage_WizardNext;
+            mctlSelectHDDPage.WizardBack += mctlSelectHDDPage_WizardBack;
+            mctlParaPage.WizardNext += mctlparaPage_WizardNext;
+            mctlParaPage.WizardBack += mctlparaPage_WizardBack;
+            mctlLabKeyParaPage.WizardNext += mctlLabKeyParaPage_WizardNext;
+            mctlLabKeyParaPage.WizardBack += mctlLabKeyParaPage_WizardBack;
+            mctlPerformPage.WizardNext += mctlPerformPage_WizardNext;
+            mctlPerformPage.WizardBack += mctlPerformPage_WizardBack;
+            mctlCompletedPage.WizardFinish += mctlCompletedPage_WizardFinish;
+            mctlCompletedPage.WizardBack += mctlCompletedPage_WizardBack;
 
             this.Pages.Add(mctlWelcomePage);
             this.Pages.Add(mctlSelectFromLabKeyPage);
@@ -113,45 +113,50 @@ namespace DAnTE.Inferno
             this.Pages.Add(mctlCompletedPage);
         }
 
-        private ArrayList ConvertSYNOUT2DatasetNames(ArrayList filenames)
+        private List<string> ConvertSYNOUT2DatasetNames(IEnumerable<string> filePaths)
         {
-            ArrayList datasets = new ArrayList();
-            string dataname = null;
-            int extidx;
+            var datasetNames = new List<string>();
 
-            for (int i = 0; i < filenames.Count; i++)
+            foreach (var filePath in filePaths)
             {
-                dataname = Path.GetFileName(filenames[i].ToString());
-                if ((extidx = dataname.ToLower().IndexOf("_out.txt")) == -1)
-                    if ((extidx = dataname.ToLower().IndexOf("_out.zip")) == -1)
-                        extidx = dataname.ToLower().IndexOf("_syn.txt");
+                var datasetName = Path.GetFileName(filePath);
+                if (string.IsNullOrWhiteSpace(datasetName))
+                    continue;
+
+                int extidx;
+                if ((extidx = datasetName.IndexOf("_out.txt", StringComparison.CurrentCultureIgnoreCase)) == -1)
+                    if ((extidx = datasetName.IndexOf("_out.zip", StringComparison.CurrentCultureIgnoreCase)) == -1)
+                        extidx = datasetName.IndexOf("_syn.txt", StringComparison.CurrentCultureIgnoreCase);
+
                 if (extidx != -1)
-                    dataname = dataname.Substring(0, extidx);
-                datasets.Add(dataname);
+                    datasetName = datasetName.Substring(0, extidx);
+
+                datasetNames.Add(datasetName);
             }
-            return datasets;
+
+            return datasetNames;
         }
 
-        private ArrayList GetSEQOUT2DatasetNames(string mstrSeqFolder)
+        private List<string> GetSEQOUT2DatasetNames(string mstrSeqFolder)
         {
-            ArrayList marrDatasets = new ArrayList();
-            Hashtable mhtDatasets = new Hashtable();
-            string mstrDataset = "";
+            var marrDatasets = new SortedSet<string>();
 
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(mstrSeqFolder);
-            foreach (System.IO.FileInfo f in dir.GetFiles())
+            var dir = new DirectoryInfo(mstrSeqFolder);
+
+            foreach (var f in dir.GetFiles())
             {
-                if (Path.GetExtension(f.Name).ToLower().Equals(".out"))
+                if (!Path.GetExtension(f.Name).Equals(".out", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    mstrDataset = f.Name.Substring(0, f.Name.IndexOf("."));
-                    if (!mhtDatasets.Contains(mstrDataset))
-                    {
-                        mhtDatasets.Add(mstrDataset, string.Empty);
-                        marrDatasets.Add(mstrDataset);
-                    }
+                    continue;
+                }
+
+                var mstrDataset = f.Name.Substring(0, f.Name.IndexOf('.'));
+                if (!marrDatasets.Contains(mstrDataset))
+                {
+                    marrDatasets.Add(mstrDataset);
                 }
             }
-            return marrDatasets;
+            return marrDatasets.ToList();
         }
 
         /// <summary>
@@ -162,7 +167,7 @@ namespace DAnTE.Inferno
         /// <param name="e"></param>
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            ArrayList datasetnames = new ArrayList();
+            List<string> datasetNames;
             progressPrcnt = 0;
 
             switch (datasource)
@@ -171,11 +176,11 @@ namespace DAnTE.Inferno
                     // *_syn.txt or *_out.txt files from the local drive
                     backgroundWorker1.ReportProgress(progressPrcnt, "Copying files ...");
                     // file copy
-                    runPFE = CopyMSMSFiles(); // *_syn.txt or *_out.txt files from local folder
-                    datasetnames = ConvertSYNOUT2DatasetNames(marrFileNames);
-                    if (runPFE) // if *_out.txt files are found (but not the corresponding *_syn.txt)
-                        RunPeptideFileExtractor(datasetnames);
-                    CreatSpectralCountTablesSEQSYN(datasetnames, e);
+                    mRunPeptideFileExtractor = CopyMSMSFiles(); // *_syn.txt or *_out.txt files from local folder
+                    datasetNames = ConvertSYNOUT2DatasetNames(marrFilePaths);
+                    if (mRunPeptideFileExtractor) // if *_out.txt files are found (but not the corresponding *_syn.txt)
+                        RunPeptideFileExtractor(datasetNames);
+                    CreatSpectralCountTablesSEQSYN(datasetNames, e);
                     break;
                 case enmMSMSreadType.LABKEY:
                     // Select from the LabKey server
@@ -184,11 +189,11 @@ namespace DAnTE.Inferno
                     break;
                 case enmMSMSreadType.SEQOUT:
                     //Process Sequest *.Out files from a local folder
-                    datasetnames = GetSEQOUT2DatasetNames(mstrAnalysisFolder);
+                    datasetNames = GetSEQOUT2DatasetNames(mstrAnalysisFolder);
                     progressPrcnt = 10;
                     backgroundWorker1.ReportProgress(progressPrcnt, "Selecting datasets ...");
-                    RunPeptideFileExtractor(datasetnames);
-                    CreatSpectralCountTablesSEQSYN(datasetnames, e);
+                    RunPeptideFileExtractor(datasetNames);
+                    CreatSpectralCountTablesSEQSYN(datasetNames, e);
                     break;
                 default:
                     break;
@@ -196,31 +201,33 @@ namespace DAnTE.Inferno
             //backgroundWorker1.ReportProgress(60, "");
         }
 
-        private void CreatSpectralCountTablesSEQSYN(ArrayList datasetnames, DoWorkEventArgs e)
+        private void CreatSpectralCountTablesSEQSYN(ICollection<string> datasetNames, DoWorkEventArgs e)
         {
-            string dName = "";
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(mstrAnalysisFolder);
-            foreach (System.IO.FileInfo f in dir.GetFiles())
+            var dir = new DirectoryInfo(mstrAnalysisFolder);
+            foreach (var f in dir.GetFiles())
             {
-                if (f.Name.EndsWith("_syn.txt"))
+                if (!f.Name.EndsWith("_syn.txt", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    dName = f.Name.Substring(0, f.Name.IndexOf("_syn.txt"));
-                    if (datasetnames.Contains(dName))
-                        successfulDataSets.Add(dName);
+                    continue;
                 }
+
+                var dName = f.Name.Substring(0, f.Name.IndexOf("_syn.txt", StringComparison.CurrentCultureIgnoreCase));
+                if (datasetNames.Contains(dName))
+                    successfulDataSets.Add(dName);
             }
+
             if (successfulDataSets.Count > 1)
             {
-                string fileList = @"c(""" + successfulDataSets[0].ToString();
-                string rcmd = "X <- createMSMSdt.SpectralCount(";
-                string dataFolder = mstrAnalysisFolder.Replace("\\", "/");
-                for (int i = 1; i < successfulDataSets.Count; i++)
+                var fileList = @"c(""" + successfulDataSets[0];
+                var rcmd = "X <- createMSMSdt.SpectralCount(";
+                var dataFolder = mstrAnalysisFolder.Replace("\\", "/");
+                for (var i = 1; i < successfulDataSets.Count; i++)
                 {
-                    fileList = fileList + @""",""" + successfulDataSets[i].ToString();
+                    fileList = fileList + @""",""" + successfulDataSets[i];
                 }
                 fileList += @""")";
 
-                rcmd += fileList + @",""" + dataFolder + @""",XcRank=" + XcRank.ToString() +
+                rcmd += fileList + @",""" + dataFolder + @""",XcRank=" + XcRank +
                     "," + XCorrTh + "," + DelCn2Th + "," + TrypState + ")";
 
                 try
@@ -258,57 +265,60 @@ namespace DAnTE.Inferno
                 backgroundWorker1.ReportProgress(100, "You need at leaset two unique datasets... Giving up.");
         }
 
-        private void CreatSpectralCountTablesLabKey(ArrayList successfulDataSets, DoWorkEventArgs e)
+        private void CreatSpectralCountTablesLabKey(IList<string> labkeyPathNames, DoWorkEventArgs e)
         {
-            if (successfulDataSets.Count > 1)
+            if (labkeyPathNames.Count <= 1)
             {
-                string fileList = @"c(""" + successfulDataSets[0].ToString();
-                string rcmd = "X <- LabKeySpectralCounts(";
+                backgroundWorker1.ReportProgress(100, "You need at leaset two unique datasets... Giving up.");
+                return;
+            }
 
-                for (int i = 1; i < successfulDataSets.Count; i++)
+            var fileList = @"c(""" + labkeyPathNames[0];
+            var rcmd = "X <- LabKeySpectralCounts(";
+
+            for (var i = 1; i < labkeyPathNames.Count; i++)
+            {
+                fileList = fileList + @""",""" + labkeyPathNames[i];
+            }
+            fileList += @""")";
+
+            rcmd += fileList + @",""/" + mstrProjFolder + @"/"",PepProph=" + mstrPepProph + ")";
+
+            try
+            {
+                backgroundWorker1.ReportProgress(70,
+                                                 "Creating peptide count table ... may take a while for large datasets ...");
+                rConnector.EvaluateNoReturn(rcmd);
+                rConnector.EvaluateNoReturn("Eset <- X$eset");
+                rConnector.EvaluateNoReturn("EsetRows <- X$rows");
+                var rows = rConnector.GetSymbolAsNumbers("EsetRows");
+                if ((int)rows[0] > 0)
                 {
-                    fileList = fileList + @""",""" + successfulDataSets[i].ToString();
-                }
-                fileList += @""")";
-
-                rcmd += fileList + @",""/" + mstrProjFolder + @"/"",PepProph=" + mstrPepProph + ")";
-
-                try
-                {
-                    backgroundWorker1.ReportProgress(70,
-                        "Creating peptide count table ... may take a while for large datasets ...");
-                    rConnector.EvaluateNoReturn(rcmd);
-                    rConnector.EvaluateNoReturn("Eset <- X$eset");
-                    rConnector.EvaluateNoReturn("EsetRows <- X$rows");
-                    var rows = rConnector.GetSymbolAsNumbers("EsetRows");
-                    if ((int)rows[0] > 0)
+                    if (rConnector.GetTableFromRmatrix("Eset"))
                     {
-                        if (rConnector.GetTableFromRmatrix("Eset"))
-                        {
-                            mDTEset = rConnector.DataTable.Copy();
-                            mDTEset.TableName = "Eset";
-                            rConnector.EvaluateNoReturn("cat(\"Spectral count data obtained.\n\")");
-                            e.Result = enmDataType.ESET;
-                        }
-                        else
-                            e.Result = null;
+                        mDTEset = rConnector.DataTable.Copy();
+                        mDTEset.TableName = "Eset";
+                        rConnector.EvaluateNoReturn("cat(\"Spectral count data obtained.\n\")");
+                        e.Result = enmDataType.ESET;
                     }
                     else
                     {
                         e.Result = null;
-                        backgroundWorker1.ReportProgress(100, "Empty table returned.");
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                     e.Result = null;
-                    e.Cancel = true;
+                    backgroundWorker1.ReportProgress(100, "Empty table returned.");
                 }
-                backgroundWorker1.ReportProgress(100, "Done.");
             }
-            else
-                backgroundWorker1.ReportProgress(100, "You need at leaset two unique datasets... Giving up.");
+            catch (Exception ex)
+            {
+                MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
+                e.Result = null;
+                e.Cancel = true;
+            }
+            backgroundWorker1.ReportProgress(100, "Done.");
         }
 
         /// <summary>
@@ -319,28 +329,26 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private bool CopyMSMSFiles()
         {
-            string sourceFName = null, destPath = null, sourcePath;
-            FileInfo destFinfo, sourceFinfo;
-            bool runPFE = false;
-            int step = (int)(marrFileNames.Count != 0 ? 30 / marrFileNames.Count : 30); // Progressbar upto 30%
+            var runPeptideFileExtractor = false;
+            var step = marrFilePaths.Count != 0 ? 30 / marrFilePaths.Count : 30; // Progressbar upto 30%
 
-            for (int i = 0; i < marrFileNames.Count; i++)
+            foreach (var sourcePath in marrFilePaths)
             {
-                sourcePath = marrFileNames[i].ToString();
-                if (!(sourcePath.EndsWith("_syn.txt")))
-                    runPFE = true;
-                sourceFName = Path.GetFileName(sourcePath);
-                destPath = Path.Combine(mstrAnalysisFolder, sourceFName);
-                sourceFinfo = new FileInfo(sourcePath);
-                destFinfo = new FileInfo(destPath);
+                if (!(sourcePath.EndsWith("_syn.txt", StringComparison.CurrentCultureIgnoreCase)))
+                    runPeptideFileExtractor = true;
 
-                if (((System.IO.File.Exists(destPath)) &&
-                    DateTime.Compare(sourceFinfo.LastWriteTime, destFinfo.LastWriteTime) > 0) ||
-                    (!System.IO.File.Exists(destPath)))
+                var sourceFName = Path.GetFileName(sourcePath);
+                var destPath = Path.Combine(mstrAnalysisFolder, sourceFName);
+                var sourceFinfo = new FileInfo(sourcePath);
+                var destFinfo = new FileInfo(destPath);
+
+                if (((File.Exists(destPath)) &&
+                     DateTime.Compare(sourceFinfo.LastWriteTime, destFinfo.LastWriteTime) > 0) ||
+                    (!File.Exists(destPath)))
                 {
                     try
                     {
-                        System.IO.File.Copy(sourcePath, destPath, true);
+                        File.Copy(sourcePath, destPath, true);
                     }
                     catch (Exception ex)
                     {
@@ -348,9 +356,10 @@ namespace DAnTE.Inferno
                     }
                 }
                 progressPrcnt += step;
-                backgroundWorker1.ReportProgress(progressPrcnt, Path.GetFileName(marrFileNames[i].ToString()));
+                backgroundWorker1.ReportProgress(progressPrcnt, Path.GetFileName(sourcePath));
             }
-            return runPFE;
+
+            return runPeptideFileExtractor;
         }
 
         /// <summary>
@@ -359,45 +368,46 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private bool CopyUnzipMSMSOutFiles()
         {
-            string destFName = null, destPath = null, sourcePath;
-            int step = (int)(marrFileNames.Count != 0 ? 30 / marrFileNames.Count : 30); // Progressbar upto 30%
+            var step = marrFilePaths.Count != 0 ? 30 / marrFilePaths.Count : 30; // Progressbar upto 30%
 
-            for (int i = 0; i < marrFileNames.Count; i++)
+            foreach (var sourcePath in marrFilePaths)
             {
-                sourcePath = marrFileNames[i].ToString();
-
-                using (ZipInputStream s = new ZipInputStream(File.OpenRead(sourcePath)))
+                using (var s = new ZipInputStream(File.OpenRead(sourcePath)))
                 {
                     ZipEntry theEntry;
                     while ((theEntry = s.GetNextEntry()) != null)
                     {
-                        destFName = Path.GetFileName(theEntry.Name);
-                        destPath = Path.Combine(mstrAnalysisFolder, destFName);
-                        if (destFName != string.Empty)
+                        var destFName = Path.GetFileName(theEntry.Name);
+                        if (string.IsNullOrWhiteSpace(destFName))
+                            continue;
+
+                        var destPath = Path.Combine(mstrAnalysisFolder, destFName);
+
+                        if (File.Exists(destPath))
                         {
-                            if (!System.IO.File.Exists(destPath))
-                                using (FileStream streamWriter = File.Create(destPath))
+                            continue;
+                        }
+
+                        using (var streamWriter = File.Create(destPath))
+                        {
+                            var data = new byte[2048];
+                            while (true)
+                            {
+                                var size = s.Read(data, 0, data.Length);
+                                if (size > 0)
                                 {
-                                    int size = 2048;
-                                    byte[] data = new byte[2048];
-                                    while (true)
-                                    {
-                                        size = s.Read(data, 0, data.Length);
-                                        if (size > 0)
-                                        {
-                                            streamWriter.Write(data, 0, size);
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
+                                    streamWriter.Write(data, 0, size);
                                 }
+                                else
+                                {
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
                 progressPrcnt += step;
-                backgroundWorker1.ReportProgress(progressPrcnt, Path.GetFileName(marrFileNames[i].ToString()));
+                backgroundWorker1.ReportProgress(progressPrcnt, Path.GetFileName(sourcePath));
             }
             return true;
         }
@@ -406,11 +416,11 @@ namespace DAnTE.Inferno
         /// Run 'Peptide File Extractor' application on *_out.txt files
         /// </summary>
         /// <param name="marrDatasetnames"></param>
-        private void RunPeptideFileExtractor(ArrayList marrDatasetnames)
+        private void RunPeptideFileExtractor(ICollection<string> marrDatasetnames)
         {
-            int step = (int)(marrDatasetnames.Count != 0 ? 30 / marrDatasetnames.Count : 30); // Progressbar upto 30%
+            var step = marrDatasetnames.Count != 0 ? 30 / marrDatasetnames.Count : 30; // Progressbar up to 30%
 
-            System.Diagnostics.ProcessStartInfo pfec = new System.Diagnostics.ProcessStartInfo(
+            var pfec = new System.Diagnostics.ProcessStartInfo(
                 Path.Combine(Application.StartupPath, "Tools", "PeptideFileExtractorConsole.exe"))
             {
                 RedirectStandardOutput = false,
@@ -419,24 +429,27 @@ namespace DAnTE.Inferno
             };
 
             backgroundWorker1.ReportProgress(progressPrcnt, "Running Peptide Extractor ...");
-            for (int i = 0; i < marrDatasetnames.Count; i++)
+            foreach (var datasetName in marrDatasetnames)
             {
-                pfec.Arguments = marrDatasetnames[i].ToString() + @" /I:""" + mstrAnalysisFolder + @""" /K";
+                pfec.Arguments = datasetName + @" /I:""" + mstrAnalysisFolder + @""" /K";
                 var proc = System.Diagnostics.Process.Start(pfec);
-                proc.WaitForExit();
+                if (proc != null)
+                {
+                    proc.WaitForExit();
+                }
 
                 progressPrcnt += step;
-                if (File.Exists(Path.Combine(mstrAnalysisFolder, marrDatasetnames[i] + "_syn.txt")))
-                    backgroundWorker1.ReportProgress(progressPrcnt, marrDatasetnames[i] + " ... done.");
+                if (File.Exists(Path.Combine(mstrAnalysisFolder, datasetName + "_syn.txt")))
+                    backgroundWorker1.ReportProgress(progressPrcnt, datasetName + " ... done.");
                 else
-                    backgroundWorker1.ReportProgress(progressPrcnt, marrDatasetnames[i] + " ... failed.");
+                    backgroundWorker1.ReportProgress(progressPrcnt, datasetName + " ... failed.");
             }
         }
 
         private void backgroundWorker1_WorkProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressPrcnt = e.ProgressPercentage;
-            string mstrMssg = (string)e.UserState;
+            var mstrMssg = (string)e.UserState;
 
             mctlPerformPage.EnableNextButton(false);
             mctlPerformPage.ProgressVal = progressPrcnt;
@@ -527,13 +540,13 @@ namespace DAnTE.Inferno
 
         void mctlSelectHDDPage_WizardNext(object sender, Wizard.UI.WizardPageEventArgs e)
         {
-            marrFileNames = mctlSelectHDDPage.DatasetNames;
+            marrFilePaths = mctlSelectHDDPage.DatasetNames;
             if (Settings.Default.msmsAnalysisFolder != "")
                 mctlParaPage.AnalysisFolder = Settings.Default.msmsAnalysisFolder;
             else
                 mctlParaPage.AnalysisFolder = Settings.Default.msmsFolder;
 
-            if (marrFileNames.Count < 2)
+            if (marrFilePaths.Count < 2)
             {
                 MessageBox.Show("Select at leaset two files.", "File selection", MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -590,36 +603,6 @@ namespace DAnTE.Inferno
                 default:
                     break;
             }
-        }
-
-        private void GetSelectedFilePaths(ArrayList marrPaths)
-        {
-            string mstrfilePath = "";
-            for (int i = 0; i < marrPaths.Count; i++)
-            {
-                mstrfilePath = marrPaths[i].ToString();
-                if (mblUseLabKeyOutFiles)
-                    mstrfilePath += GetFileNameFromPath(mstrfilePath, "_out.zip");
-                else
-                    mstrfilePath += GetFileNameFromPath(mstrfilePath, "_syn.txt");
-                marrFileNames.Add(mstrfilePath);
-            }
-        }
-
-        private string GetFileNameFromPath(string sourcePath, string extn)
-        {
-            string FileName = "";
-
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(sourcePath);
-            foreach (System.IO.FileInfo f in dir.GetFiles())
-            {
-                if (f.Name.EndsWith(extn))
-                {
-                    FileName = f.Name;
-                    break;
-                }
-            }
-            return FileName;
         }
 
         public DataTable SpectralDT

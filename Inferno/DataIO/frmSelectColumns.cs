@@ -59,7 +59,7 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxAllCols.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxAllCols.SelectedItems)
+                foreach (var r in mlstBoxAllCols.SelectedItems)
                 {
                     mlstBoxData.Items.Add(r);
                 }
@@ -76,7 +76,7 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxData.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxData.SelectedItems)
+                foreach (var r in mlstBoxData.SelectedItems)
                 {
                     mlstBoxAllCols.Items.Add(r);
                 }
@@ -156,7 +156,14 @@ namespace DAnTE.Inferno
         {
             set
             {
-                mlstBoxAllCols.DataSource = value;
+                // Note: cannot use .DataSource = Value because we .Remove items from the listbox
+
+                mlstBoxAllCols.Items.Clear();
+                foreach (var item in value)
+                {
+                    mlstBoxAllCols.Items.Add(item);
+                }                
+
             }
         }
 

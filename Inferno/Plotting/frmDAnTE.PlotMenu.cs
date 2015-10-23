@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 using DAnTE.ExtraControls;
@@ -360,6 +358,53 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MAplotCompleted;
                 #endregion
             }
+        }
+
+        private void CopyDataGridRowsToClipboard(bool copyAll)
+        {
+            try
+            {
+                var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+
+                if (!ValidateNodeIsSelected(mclsSelected))
+                {
+                    return;
+                }
+
+                var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
+
+                var startTime = DateTime.UtcNow;
+
+                if (copyAll)
+                    currGrid.SelectAll();
+
+                var selectedRowCount = currGrid.SelectedRows.Count;
+
+                var dataToCopy = currGrid.GetClipboardContent();
+                if (dataToCopy != null)
+                    Clipboard.SetDataObject(dataToCopy);
+               
+                if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > 300)
+                {
+                    MessageBox.Show("Copy complete: " + selectedRowCount + " rows");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error copying data to the clipboard: " + ex.Message);
+            }
+        }
+
+        private void ctxtMnuItemCopyAll_Click(object sender, EventArgs e)
+        {
+            const bool copyAll = true;
+            CopyDataGridRowsToClipboard(copyAll);
+        }
+     
+        private void ctxtMnuItemCopySelected_Click(object sender, EventArgs e)
+        {
+            const bool copyAll = false;
+            CopyDataGridRowsToClipboard(copyAll);
         }
 
         private void ctxtMnuItemPlotRows_Click(object sender, EventArgs e)

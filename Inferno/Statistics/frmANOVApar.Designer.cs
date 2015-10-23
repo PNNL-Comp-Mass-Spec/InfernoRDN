@@ -70,9 +70,9 @@ namespace DAnTE.Inferno
             this.mlstBoxFactors.FormattingEnabled = true;
             this.mlstBoxFactors.ItemHeight = 16;
             this.mlstBoxFactors.Location = new System.Drawing.Point(36, 132);
-            this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4);
             this.mlstBoxFactors.Name = "mlstBoxFactors";
-            this.mlstBoxFactors.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.mlstBoxFactors.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.mlstBoxFactors.Size = new System.Drawing.Size(237, 244);
             this.mlstBoxFactors.TabIndex = 4;
             // 
@@ -90,7 +90,7 @@ namespace DAnTE.Inferno
             // 
             this.mbtnFixedUnselect.Enabled = false;
             this.mbtnFixedUnselect.Location = new System.Drawing.Point(309, 182);
-            this.mbtnFixedUnselect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnFixedUnselect.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnFixedUnselect.Name = "mbtnFixedUnselect";
             this.mbtnFixedUnselect.Size = new System.Drawing.Size(56, 28);
             this.mbtnFixedUnselect.TabIndex = 16;
@@ -101,7 +101,7 @@ namespace DAnTE.Inferno
             // mbtnFixedSelect
             // 
             this.mbtnFixedSelect.Location = new System.Drawing.Point(309, 146);
-            this.mbtnFixedSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnFixedSelect.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnFixedSelect.Name = "mbtnFixedSelect";
             this.mbtnFixedSelect.Size = new System.Drawing.Size(56, 28);
             this.mbtnFixedSelect.TabIndex = 15;
@@ -115,7 +115,7 @@ namespace DAnTE.Inferno
             this.mlstBoxFixed.HorizontalScrollbar = true;
             this.mlstBoxFixed.ItemHeight = 16;
             this.mlstBoxFixed.Location = new System.Drawing.Point(401, 128);
-            this.mlstBoxFixed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mlstBoxFixed.Margin = new System.Windows.Forms.Padding(4);
             this.mlstBoxFixed.Name = "mlstBoxFixed";
             this.mlstBoxFixed.Size = new System.Drawing.Size(247, 100);
             this.mlstBoxFixed.TabIndex = 14;
@@ -124,7 +124,7 @@ namespace DAnTE.Inferno
             // 
             this.mBtnRandomUnselect.Enabled = false;
             this.mBtnRandomUnselect.Location = new System.Drawing.Point(309, 330);
-            this.mBtnRandomUnselect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mBtnRandomUnselect.Margin = new System.Windows.Forms.Padding(4);
             this.mBtnRandomUnselect.Name = "mBtnRandomUnselect";
             this.mBtnRandomUnselect.Size = new System.Drawing.Size(56, 28);
             this.mBtnRandomUnselect.TabIndex = 19;
@@ -135,7 +135,7 @@ namespace DAnTE.Inferno
             // mBtnRandomSelect
             // 
             this.mBtnRandomSelect.Location = new System.Drawing.Point(309, 294);
-            this.mBtnRandomSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mBtnRandomSelect.Margin = new System.Windows.Forms.Padding(4);
             this.mBtnRandomSelect.Name = "mBtnRandomSelect";
             this.mBtnRandomSelect.Size = new System.Drawing.Size(56, 28);
             this.mBtnRandomSelect.TabIndex = 18;
@@ -149,7 +149,7 @@ namespace DAnTE.Inferno
             this.mlstBoxRandom.HorizontalScrollbar = true;
             this.mlstBoxRandom.ItemHeight = 16;
             this.mlstBoxRandom.Location = new System.Drawing.Point(401, 276);
-            this.mlstBoxRandom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mlstBoxRandom.Margin = new System.Windows.Forms.Padding(4);
             this.mlstBoxRandom.Name = "mlstBoxRandom";
             this.mlstBoxRandom.Size = new System.Drawing.Size(247, 100);
             this.mlstBoxRandom.TabIndex = 17;
@@ -168,7 +168,7 @@ namespace DAnTE.Inferno
             // 
             this.mchkBoxRandom.AutoSize = true;
             this.mchkBoxRandom.Location = new System.Drawing.Point(384, 247);
-            this.mchkBoxRandom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mchkBoxRandom.Margin = new System.Windows.Forms.Padding(4);
             this.mchkBoxRandom.Name = "mchkBoxRandom";
             this.mchkBoxRandom.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.mchkBoxRandom.Size = new System.Drawing.Size(134, 21);
@@ -180,7 +180,7 @@ namespace DAnTE.Inferno
             // mNumUpDthres
             // 
             this.mNumUpDthres.Location = new System.Drawing.Point(208, 409);
-            this.mNumUpDthres.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mNumUpDthres.Margin = new System.Windows.Forms.Padding(4);
             this.mNumUpDthres.Minimum = new decimal(new int[] {
             2,
             0,
@@ -211,7 +211,7 @@ namespace DAnTE.Inferno
             this.mchkBoxREML.Checked = true;
             this.mchkBoxREML.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mchkBoxREML.Location = new System.Drawing.Point(401, 384);
-            this.mchkBoxREML.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mchkBoxREML.Margin = new System.Windows.Forms.Padding(4);
             this.mchkBoxREML.Name = "mchkBoxREML";
             this.mchkBoxREML.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.mchkBoxREML.Size = new System.Drawing.Size(194, 21);
@@ -223,7 +223,7 @@ namespace DAnTE.Inferno
             // 
             this.mchkBoxUnbalanced.AutoSize = true;
             this.mchkBoxUnbalanced.Location = new System.Drawing.Point(36, 490);
-            this.mchkBoxUnbalanced.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mchkBoxUnbalanced.Margin = new System.Windows.Forms.Padding(4);
             this.mchkBoxUnbalanced.Name = "mchkBoxUnbalanced";
             this.mchkBoxUnbalanced.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.mchkBoxUnbalanced.Size = new System.Drawing.Size(504, 21);
@@ -235,7 +235,7 @@ namespace DAnTE.Inferno
             // 
             this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.mbtnCancel.Location = new System.Drawing.Point(375, 544);
-            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnCancel.Name = "mbtnCancel";
             this.mbtnCancel.Size = new System.Drawing.Size(100, 28);
             this.mbtnCancel.TabIndex = 68;
@@ -246,7 +246,7 @@ namespace DAnTE.Inferno
             // mbtnOK
             // 
             this.mbtnOK.Location = new System.Drawing.Point(208, 544);
-            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnOK.Name = "mbtnOK";
             this.mbtnOK.Size = new System.Drawing.Size(100, 28);
             this.mbtnOK.TabIndex = 67;
@@ -279,7 +279,7 @@ namespace DAnTE.Inferno
             // 
             this.mchkBoxInteractions.AutoSize = true;
             this.mchkBoxInteractions.Location = new System.Drawing.Point(36, 462);
-            this.mchkBoxInteractions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mchkBoxInteractions.Margin = new System.Windows.Forms.Padding(4);
             this.mchkBoxInteractions.Name = "mchkBoxInteractions";
             this.mchkBoxInteractions.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.mchkBoxInteractions.Size = new System.Drawing.Size(152, 21);
@@ -290,7 +290,7 @@ namespace DAnTE.Inferno
             // niceLine2
             // 
             this.niceLine2.Location = new System.Drawing.Point(20, 518);
-            this.niceLine2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.niceLine2.Margin = new System.Windows.Forms.Padding(4);
             this.niceLine2.Name = "niceLine2";
             this.niceLine2.Size = new System.Drawing.Size(629, 17);
             this.niceLine2.TabIndex = 66;
@@ -298,7 +298,7 @@ namespace DAnTE.Inferno
             // niceLine1
             // 
             this.niceLine1.Location = new System.Drawing.Point(16, 44);
-            this.niceLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.niceLine1.Margin = new System.Windows.Forms.Padding(4);
             this.niceLine1.Name = "niceLine1";
             this.niceLine1.Size = new System.Drawing.Size(629, 17);
             this.niceLine1.TabIndex = 3;
@@ -333,7 +333,7 @@ namespace DAnTE.Inferno
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmANOVApar";

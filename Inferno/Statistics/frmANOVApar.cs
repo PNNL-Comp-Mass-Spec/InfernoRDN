@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
@@ -77,13 +77,15 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFactors.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxFactors.SelectedItems)
+                foreach (var r in mlstBoxFactors.SelectedItems)
                 {
                     mlstBoxFixed.Items.Add(r);
                 }
+
                 while (mlstBoxFactors.SelectedItems.Count > 0)
                     mlstBoxFactors.Items.Remove(mlstBoxFactors.SelectedItem);
                 mbtnFixedUnselect.Enabled = true;
+
                 ToggleUnbalanced();
             }
             else
@@ -95,12 +97,14 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFixed.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxFixed.SelectedItems)
+                foreach (var r in mlstBoxFixed.SelectedItems)
                 {
                     mlstBoxFactors.Items.Add(r);
                 }
+
                 while (mlstBoxFixed.SelectedItems.Count > 0)
                     mlstBoxFixed.Items.Remove(mlstBoxFixed.SelectedItem);
+
                 ToggleUnbalanced();
             }
             else
@@ -180,32 +184,30 @@ namespace DAnTE.Inferno
         {
             set
             {
-                mlstBoxFactors.DataSource = value;
+                // Note: cannot use .DataSource = Value because we .Remove items from the listbox
+
+                mlstBoxFactors.Items.Clear();
+                foreach (var item in value)
+                {
+                    mlstBoxFactors.Items.Add(item);
+                }                
             }
         }
-                
-        public ArrayList FixedFactors
+
+        public List<string> FixedFactors
         {
             get
             {
-                ArrayList strarrFECols = new ArrayList();
-                for (int i = 0; i < mlstBoxFixed.Items.Count; i++)
-                {
-                    strarrFECols.Add(mlstBoxFixed.Items[i].ToString());
-                }
+                var strarrFECols = (from object item in mlstBoxFixed.Items select item.ToString()).ToList();
                 return strarrFECols;
             }
         }
 
-        public ArrayList RandomFactors
+        public List<string> RandomFactors
         {
             get
             {
-                ArrayList strarrRECols = new ArrayList();
-                for (int i = 0; i < mlstBoxRandom.Items.Count; i++)
-                {
-                    strarrRECols.Add(mlstBoxRandom.Items[i].ToString());
-                }
+                var strarrRECols = (from object item in mlstBoxRandom.Items select item.ToString()).ToList();
                 return strarrRECols;
             }
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using DAnTE.Purgatorio;
 
@@ -8,7 +7,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmTamuQpar : Form
     {
-        private readonly clsTamuQPar mclsTamuQPar = new clsTamuQPar();
+        private readonly clsTamuQPar mclsTamuQPar;
 
         public frmTamuQpar(clsTamuQPar clsTamuQ)
         {
@@ -36,7 +35,7 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFactors.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxFactors.SelectedItems)
+                foreach (var r in mlstBoxFactors.SelectedItems)
                 {
                     mlstBoxFixed.Items.Add(r);
                 }
@@ -53,7 +52,7 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFixed.SelectedItems.Count > 0)
             {
-                foreach (object r in mlstBoxFixed.SelectedItems)
+                foreach (var r in mlstBoxFixed.SelectedItems)
                 {
                     mlstBoxFactors.Items.Add(r);
                 }
@@ -87,7 +86,13 @@ namespace DAnTE.Inferno
         {
             set
             {
-                mlstBoxFactors.DataSource = value;
+                // Note: cannot use .DataSource = Value because we .Remove items from the listbox
+
+                mlstBoxFactors.Items.Clear();
+                foreach (var item in value)
+                {
+                    mlstBoxFactors.Items.Add(item);
+                }
             }
         }
 

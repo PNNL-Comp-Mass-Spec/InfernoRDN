@@ -31,15 +31,21 @@ Source: ..\Resources\delete_16x.ico; DestDir: {app}
 Source: ..\Resources\inferno.ico; DestDir: {app}
 Source: ..\Resources\inferno_help.ico; DestDir: {app}
 Source: ..\Readme.txt; DestDir: {app}
-Source: ..\Revision_History.txt; DestDir: {app}
+Source: ..\RevisionHistory.txt; DestDir: {app}
 
 Source: License.rtf; DestDir: {app}
 Source: readme.rtf; DestDir: {app}
 
+Source: ..\Sample_Input_Files\FactorDefinitionExample.txt; DestDir: {app}
 Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv; DestDir: {app}
 Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv; DestDir: {app}
 Source: ..\Sample_Input_Files\Sample_Session_File_with_Factors.dnt; DestDir: {app}
 Source: ..\Sample_Input_Files\Sample_Expressions_Session_File.dnt; DestDir: {app}
+Source: ..\Sample_Input_Files\VolcanoPlot_InputData.csv; DestDir: {app}
+Source: ..\Sample_Input_Files\VolcanoPlot_Example.dnt; DestDir: {app}
+Source: ..\Sample_Input_Files\VolcanoPlot_Example.xlsx; DestDir: {app}
+Source: ..\Sample_Input_Files\Volcano_Plot_Steps.pdf; DestDir: {app}
+
 
 [Dirs]
 Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
@@ -69,7 +75,7 @@ AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=InfernoRDNSetup
-VersionInfoVersion=1.1.13
+VersionInfoVersion=1.1.14
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
 VersionInfoCopyright=PNNL

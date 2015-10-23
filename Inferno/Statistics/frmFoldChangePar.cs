@@ -107,14 +107,6 @@ namespace DAnTE.Inferno
             }
         }
 
-        private List<string> PopulateFactorComboBox
-        {
-            set
-            {
-                mcmbBoxFactors.DataSource = value;
-            }
-        }
-        
         public string FactorName
         {
             get
@@ -123,8 +115,8 @@ namespace DAnTE.Inferno
                 {
                     return mcmbBoxFactors.SelectedItem.ToString();
                 }
-                else
-                    return mcmbBoxFactors.Items[0].ToString();
+
+                return mcmbBoxFactors.Items[0].ToString();
             }
         }
 

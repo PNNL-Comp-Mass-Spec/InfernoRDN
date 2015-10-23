@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
@@ -15,13 +15,13 @@ namespace DAnTE.Inferno
 		private System.Windows.Forms.Panel panelFileNames;
 		private System.ComponentModel.IContainer components = null;
 
-		private string [] strarrFileNames = null ; 
-		private ArrayList marrDatasetNames = new ArrayList() ;
+		private string [] strarrFilePaths;
+        private List<string> marrDatasetFilePaths = new List<string>();
 
         private System.Windows.Forms.ListView joblistView;
         private Button mbtnClear;
-        private System.Windows.Forms.ColumnHeader fileName;
-        private OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ColumnHeader mFileNameColumnHeader;
+        private readonly OpenFileDialog openFileDialog1;
 
         public ctlMSMSSelectFromHDDWizPage()
 		{
@@ -60,7 +60,7 @@ namespace DAnTE.Inferno
             this.labelSelect = new System.Windows.Forms.Label();
             this.panelFileNames = new System.Windows.Forms.Panel();
             this.joblistView = new System.Windows.Forms.ListView();
-            this.fileName = new System.Windows.Forms.ColumnHeader();
+            this.mFileNameColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.panelStep.SuspendLayout();
             this.panelFileNames.SuspendLayout();
             this.SuspendLayout();
@@ -123,7 +123,7 @@ namespace DAnTE.Inferno
             // 
             this.joblistView.AllowDrop = true;
             this.joblistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.fileName});
+            this.mFileNameColumnHeader});
             this.joblistView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.joblistView.FullRowSelect = true;
             this.joblistView.GridLines = true;
@@ -137,8 +137,8 @@ namespace DAnTE.Inferno
             // 
             // fileName
             // 
-            this.fileName.Text = "File name";
-            this.fileName.Width = 420;
+            this.mFileNameColumnHeader.Text = "File name";
+            this.mFileNameColumnHeader.Width = 420;
             // 
             // ctlMSMSSelectFromHDDWizPage
             // 
@@ -157,28 +157,18 @@ namespace DAnTE.Inferno
 		}
 		#endregion
 
-        private void AddToList(string datasetname)
+        private void AddToList(string fileName)
         {
-            ListViewItem dataItem = new ListViewItem(datasetname);
+            var dataItem = new ListViewItem(fileName);
             //dataItem.SubItems.Add(datasetInfo.mstrAnalysisJobId);
             //dataItem.SubItems.Add(datasetInfo.mstrDatasetName);
 
             joblistView.Items.Add(dataItem);
         }
 
-        private bool DoesExist(string filename)
-        {
-            for (int i = 0; i < marrDatasetNames.Count; i++)
-            {
-                if (marrDatasetNames[i].ToString().Equals(filename))
-                    return true;
-            }
-            return false;
-        }
-
-        private void mbtnSelectFiles_Click(object sender, System.EventArgs e)
+	    private void mbtnSelectFiles_Click(object sender, System.EventArgs e)
 		{
-            string msmsFolder = Settings.Default.msmsFolder;
+            var msmsFolder = Settings.Default.msmsFolder;
 			openFileDialog1.Multiselect = true ; 
 			openFileDialog1.Filter = "*_out.txt files (*_out.txt)|*_out.txt|*_syn.txt files (*_syn.txt)|*_syn.txt|All files (*.*)|*.*" ;
 			openFileDialog1.FilterIndex = 1 ;
@@ -187,31 +177,33 @@ namespace DAnTE.Inferno
             else
                 openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             openFileDialog1.RestoreDirectory = false;
-            string fileName = null;
 
-			if(openFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-                strarrFileNames = openFileDialog1.FileNames;
+	        if (openFileDialog1.ShowDialog() != DialogResult.OK)
+	        {
+	            return;
+	        }
 
-                msmsFolder = Path.GetDirectoryName(strarrFileNames[0]);
-                Settings.Default.msmsFolder = msmsFolder;
-                Settings.Default.Save();
+	        strarrFilePaths = openFileDialog1.FileNames;
 
-                for (int fileNum = 0; fileNum < strarrFileNames.Length; fileNum++)
-				{
-                    fileName = Path.GetFileName(strarrFileNames[fileNum]);
-                    if (!DoesExist(fileName))
-                    {
-                        marrDatasetNames.Add(strarrFileNames[fileNum]);
-                        AddToList(fileName);
-                    }
-				}
-			}		
+	        msmsFolder = Path.GetDirectoryName(strarrFilePaths[0]);
+	        Settings.Default.msmsFolder = msmsFolder;
+	        Settings.Default.Save();
+
+	        foreach (var filePath in strarrFilePaths)
+	        {
+	            var newFileName = Path.GetFileName(filePath);
+                if (marrDatasetFilePaths.Contains(filePath))
+	            {
+	                continue;
+	            }
+	            marrDatasetFilePaths.Add(filePath);
+	            AddToList(newFileName);
+	        }
 		}
 
         private void mbtnClear_Click(object sender, EventArgs e)
         {
-            marrDatasetNames.Clear();
+            marrDatasetFilePaths.Clear();
             joblistView.Items.Clear();
         }
 
@@ -220,15 +212,15 @@ namespace DAnTE.Inferno
             SetWizardButtons(Wizard.UI.WizardButtons.Back | Wizard.UI.WizardButtons.Next);
         }
 
-		public ArrayList DatasetNames
+		public List<string> DatasetNames
 		{
 			get
 			{
-				return marrDatasetNames ;
+				return marrDatasetFilePaths ;
 			}
 			set
 			{
-				marrDatasetNames = value ;
+				marrDatasetFilePaths = value ;
 			}
 		}
         

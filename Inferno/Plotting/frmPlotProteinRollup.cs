@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -93,7 +92,7 @@ namespace DAnTE.Inferno
 
         private void LoadProteinList()
         {
-            bool pListOK = false;
+            var pListOK = false;
             switch (datasetname)
             {
                 case ("QRollup"):
@@ -147,10 +146,10 @@ namespace DAnTE.Inferno
             }
             if (pListOK)
             {
-                int mintMaxColumns = proteinList.Length;
-                object[] lstBoxEntries = new object[mintMaxColumns];
+                var mintMaxColumns = proteinList.Length;
+                var lstBoxEntries = new object[mintMaxColumns];
                 proteinList.CopyTo(lstBoxEntries, 0);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxProteins, lstBoxEntries);
+                var lboxObjColData = new ListBox.ObjectCollection(mlstBoxProteins, lstBoxEntries);
                 mlstBoxProteins.Items.Clear();
                 mlstBoxProteins.Items.AddRange(lboxObjColData);
                 mNiceLineProts.Caption = "Select a Protein to Plot (Total:" + mlstBoxProteins.Items.Count.ToString() + ")";
@@ -167,8 +166,8 @@ namespace DAnTE.Inferno
             {
                 if (mlstBoxProteins.SelectedIndex >= 0)
                     return mlstBoxProteins.SelectedItem.ToString();
-                else
-                    return null;
+                
+                return null;
             }
         }
 
@@ -219,7 +218,13 @@ namespace DAnTE.Inferno
         {
             get
             {
-                var selected = mcmbBoxData.SelectedItem.ToString();
+                var selected = string.Empty;
+
+                if (mcmbBoxData.SelectedItem != null)
+                {
+                    selected = mcmbBoxData.SelectedItem.ToString();
+                }
+            
                 var dataset = m_frmDAnTE.CorrespondingRdataset(selected);
                 return dataset;
             }
@@ -229,8 +234,14 @@ namespace DAnTE.Inferno
         {
             get
             {
-                string selected = mcmbBoxPData.SelectedItem.ToString();
-                string dataset = "pData2";
+                var selected = string.Empty;
+
+                if (mcmbBoxPData.SelectedItem != null)
+                {
+                    selected = mcmbBoxPData.SelectedItem.ToString();
+                }
+
+                var dataset = "pData2";
                 switch (selected)
                 {
                     case ("RRollup"):

@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Windows.Forms;
 using System.Threading;
 using Microsoft.Win32;
@@ -24,31 +24,31 @@ namespace DAnTE.Paradiso
 	    }
 
 	    // Threading
-		static SplashScreen ms_frmSplash = null;
-		static Thread ms_oThread = null;
+		static SplashScreen ms_frmSplash;
+		static Thread ms_oThread;
 
 		// Fade in and out.
 		private double m_dblOpacityIncrement = .05;
-		private double m_dblOpacityDecrement = .08;
+		private readonly double m_dblOpacityDecrement = .08;
 		private const int TIMER_INTERVAL = 50;
 
 		// Status and progress bar
 		static string ms_sStatus;
-		private double m_dblCompletionFraction = 0;
+		private double m_dblCompletionFraction;
 		private Rectangle m_rProgress;
 
 		// Progress smoothing
-		private double m_dblLastCompletionFraction = 0.0;
+		private double m_dblLastCompletionFraction;
 		private double m_dblPBIncrementPerTimerInterval = .015;
 
 		// Self-calibration support
-		private bool m_bFirstLaunch = false;
+		private bool m_bFirstLaunch;
 		private DateTime m_dtStart;
-		private bool m_bDTSet = false;
+		private bool m_bDTSet;
 		private int m_iIndex = 1;
-		private int m_iActualTicks = 0;
-		private ArrayList m_alPreviousCompletionFraction;
-		private readonly ArrayList m_alActualTimes = new ArrayList();
+		private int m_iActualTicks;
+        private List<double> m_alPreviousCompletionFraction;
+        private readonly List<double> m_alActualTimes = new List<double>();
 
 		private const string REGVALUE_PB_MILLISECOND_INCREMENT = "Increment";
 		private const string REGVALUE_PB_PERCENTS = "Percents";
@@ -180,9 +180,11 @@ namespace DAnTE.Paradiso
 			// Make sure it's only launched once.
 			if( ms_frmSplash != null )
 				return;
-			ms_oThread = new Thread( new ThreadStart(SplashScreen.ShowForm));
-			ms_oThread.IsBackground = true;
-			//ms_oThread.ApartmentState = ApartmentState.STA;
+		    ms_oThread = new Thread(ShowForm)
+		    {
+		        IsBackground = true
+		    };
+		    //ms_oThread.ApartmentState = ApartmentState.STA;
 			ms_oThread.Start();
 		}
 
@@ -254,11 +256,11 @@ namespace DAnTE.Paradiso
 				m_dtStart = DateTime.Now;
 				ReadIncrements();
 			}
-			double dblMilliseconds = ElapsedMilliSeconds();
+			var dblMilliseconds = ElapsedMilliSeconds();
 			m_alActualTimes.Add(dblMilliseconds);
 			m_dblLastCompletionFraction = m_dblCompletionFraction;
 			if( m_alPreviousCompletionFraction != null && m_iIndex < m_alPreviousCompletionFraction.Count )
-				m_dblCompletionFraction = (double)m_alPreviousCompletionFraction[m_iIndex++];
+				m_dblCompletionFraction = m_alPreviousCompletionFraction[m_iIndex++];
 			else
 				m_dblCompletionFraction = ( m_iIndex > 0 )? 1: 0;
 		}
@@ -267,7 +269,7 @@ namespace DAnTE.Paradiso
 		// SplashScreen was launched.
 		private double ElapsedMilliSeconds()
 		{
-			TimeSpan ts = DateTime.Now - m_dtStart;
+			var ts = DateTime.Now - m_dtStart;
 			return ts.TotalMilliseconds;
 		}
 
@@ -275,28 +277,28 @@ namespace DAnTE.Paradiso
 		// splashscreen from the registry.
 		private void ReadIncrements()
 		{
-			string sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_MILLISECOND_INCREMENT, "0.0015");
+			var sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_MILLISECOND_INCREMENT, "0.0015");
 			double dblResult;
 
-			if( Double.TryParse(sPBIncrementPerTimerInterval, System.Globalization.NumberStyles.Float, System.Globalization.NumberFormatInfo.InvariantInfo, out dblResult) == true )
+			if( double.TryParse(sPBIncrementPerTimerInterval, System.Globalization.NumberStyles.Float, System.Globalization.NumberFormatInfo.InvariantInfo, out dblResult) )
 				m_dblPBIncrementPerTimerInterval = dblResult;
 			else
 				m_dblPBIncrementPerTimerInterval = .0015;
 
-			string sPBPreviousPctComplete = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_PERCENTS, "" );
+			var sPBPreviousPctComplete = RegistryAccess.GetStringRegistryValue( REGVALUE_PB_PERCENTS, "" );
 
 			if( sPBPreviousPctComplete != "" )
 			{
-				string [] aTimes = sPBPreviousPctComplete.Split(null);
-				m_alPreviousCompletionFraction = new ArrayList();
+				var aTimes = sPBPreviousPctComplete.Split(null);
+                m_alPreviousCompletionFraction = new List<double>();
 
-				for(int i = 0; i < aTimes.Length; i++ )
+				foreach (var timeVal in aTimes)
 				{
-					double dblVal;
-					if( Double.TryParse(aTimes[i], System.Globalization.NumberStyles.Float, System.Globalization.NumberFormatInfo.InvariantInfo, out dblVal) )
-						m_alPreviousCompletionFraction.Add(dblVal);
-					else
-						m_alPreviousCompletionFraction.Add(1.0);
+				    double dblVal;
+				    if( double.TryParse(timeVal, System.Globalization.NumberStyles.Float, System.Globalization.NumberFormatInfo.InvariantInfo, out dblVal) )
+				        m_alPreviousCompletionFraction.Add(dblVal);
+				    else
+				        m_alPreviousCompletionFraction.Add(1.0);
 				}
 			}
 			else
@@ -310,17 +312,17 @@ namespace DAnTE.Paradiso
 		// the splash screen to the registry.
 		private void StoreIncrements()
 		{
-			string sPercent = "";
-			double dblElapsedMilliseconds = ElapsedMilliSeconds();
-			for( int i = 0; i < m_alActualTimes.Count; i++ )
-				sPercent += ((double)m_alActualTimes[i]/dblElapsedMilliseconds).ToString("0.####", System.Globalization.NumberFormatInfo.InvariantInfo) + " ";
+			var sPercent = "";
+			var dblElapsedMilliseconds = ElapsedMilliSeconds();
+			for( var i = 0; i < m_alActualTimes.Count; i++ )
+				sPercent += (m_alActualTimes[i]/dblElapsedMilliseconds).ToString("0.####", System.Globalization.NumberFormatInfo.InvariantInfo) + " ";
 
 			RegistryAccess.SetStringRegistryValue( REGVALUE_PB_PERCENTS, sPercent );
 
 			if (m_iActualTicks < 1)
 				m_iActualTicks = 1;
 
-			m_dblPBIncrementPerTimerInterval = 1.0/(double)m_iActualTicks;
+			m_dblPBIncrementPerTimerInterval = 1.0/m_iActualTicks;
 			RegistryAccess.SetStringRegistryValue( REGVALUE_PB_MILLISECOND_INCREMENT, m_dblPBIncrementPerTimerInterval.ToString("#.000000", System.Globalization.NumberFormatInfo.InvariantInfo));
 		}
 
@@ -328,7 +330,7 @@ namespace DAnTE.Paradiso
 
 		// Tick Event handler for the Timer control.  Handle fade in and fade out.  Also
 		// handle the smoothed progress bar.
-		private void timer1_Tick(object sender, System.EventArgs e)
+		private void timer1_Tick(object sender, EventArgs e)
 		{
 			lblStatus.Text = ms_sStatus;
 
@@ -355,15 +357,16 @@ namespace DAnTE.Paradiso
 			if( m_bFirstLaunch == false && m_dblLastCompletionFraction <= m_dblCompletionFraction )
 			{
 				m_dblLastCompletionFraction += m_dblPBIncrementPerTimerInterval;
-				int width = (int)Math.Floor(pnlStatus.ClientRectangle.Width * m_dblLastCompletionFraction);
-				int height = pnlStatus.ClientRectangle.Height;
-				int x = pnlStatus.ClientRectangle.X;
-				int y = pnlStatus.ClientRectangle.Y;
+				var width = (int)Math.Floor(pnlStatus.ClientRectangle.Width * m_dblLastCompletionFraction);
+				var height = pnlStatus.ClientRectangle.Height;
+				var x = pnlStatus.ClientRectangle.X;
+				var y = pnlStatus.ClientRectangle.Y;
+
 			    if (width > 0 && height > 0)
 			    {
 			        m_rProgress = new Rectangle(x, y, width, height);
 			        pnlStatus.Invalidate(m_rProgress);
-			        int iSecondsLeft = 1 + (int)(TIMER_INTERVAL * ((1.0 - m_dblLastCompletionFraction) / m_dblPBIncrementPerTimerInterval)) / 1000;
+			        var iSecondsLeft = 1 + (int)(TIMER_INTERVAL * ((1.0 - m_dblLastCompletionFraction) / m_dblPBIncrementPerTimerInterval)) / 1000;
 
 			        if (iSecondsLeft > 1)
 			        {
@@ -419,7 +422,7 @@ namespace DAnTE.Paradiso
 		        if (m_ValidatingPackagesState == PackageValidationState.OverThreeSeconds &&
 		            DateTime.UtcNow.Subtract(m_ValidatingPackagesStartTime).TotalSeconds >= 6)
 		        {
-                    this.lblStatus.BackColor = System.Drawing.Color.Chocolate;
+                    lblStatus.BackColor = Color.Chocolate;
                     m_ValidatingPackagesState = PackageValidationState.OverSixSeconds;
 		        }		        
 		    }
@@ -433,7 +436,7 @@ namespace DAnTE.Paradiso
 			{
                 try
                 {
-                    LinearGradientBrush brBackground = new LinearGradientBrush(m_rProgress, Color.FromArgb(213, 39, 27), Color.FromArgb(245, 155, 27), LinearGradientMode.Horizontal);
+                    var brBackground = new LinearGradientBrush(m_rProgress, Color.FromArgb(213, 39, 27), Color.FromArgb(245, 155, 27), LinearGradientMode.Horizontal);
                     e.Graphics.FillRectangle(brBackground, m_rProgress);
                 }
                 catch
@@ -462,41 +465,55 @@ namespace DAnTE.Paradiso
 		// Method for retrieving a Registry Value.
 		static public string GetStringRegistryValue(string key, string defaultValue)
 		{
-		    var rkCompany = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, false).OpenSubKey(COMPANY_NAME, false);
-			if( rkCompany != null )
-			{
-			    var rkApplication = rkCompany.OpenSubKey(APPLICATION_NAME, true);
-			    if( rkApplication != null )
-				{
-					foreach(string sKey in rkApplication.GetValueNames())
-					{
-						if( sKey == key )
-						{
-							return (string)rkApplication.GetValue(sKey);
-						}
-					}
-				}
-			}
+		    var softwareKey = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, false);
+
+		    if (softwareKey == null)
+		    {
+		        return defaultValue;
+		    }
+
+		    var rkCompany = softwareKey.OpenSubKey(COMPANY_NAME, false);
+		    if (rkCompany == null)
+		    {
+		        return defaultValue;
+		    }
+
+		    var rkApplication = rkCompany.OpenSubKey(APPLICATION_NAME, true);
+		    if (rkApplication == null)
+		    {
+		        return defaultValue;
+		    }
+
+		    foreach(var sKey in rkApplication.GetValueNames())
+		    {
+		        if( sKey == key )
+		        {
+		            return (string)rkApplication.GetValue(sKey);
+		        }
+		    }
 		    return defaultValue;
 		}
 
 		// Method for storing a Registry Value.
 		static public void SetStringRegistryValue(string key, string stringValue)
 		{
-			RegistryKey rkSoftware;
-			RegistryKey rkCompany;
-			RegistryKey rkApplication;
+		    var rkSoftware = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, true);
+		    if (rkSoftware == null)
+		    {
+		        return;
+		    }
 
-			rkSoftware = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, true);
-			rkCompany = rkSoftware.CreateSubKey(COMPANY_NAME);
-			if( rkCompany != null )
-			{
-				rkApplication = rkCompany.CreateSubKey(APPLICATION_NAME);
-				if( rkApplication != null )
-				{
-					rkApplication.SetValue(key, stringValue);
-				}
-			}
+		    var rkCompany = rkSoftware.CreateSubKey(COMPANY_NAME);
+		    if (rkCompany == null)
+		    {
+		        return;
+		    }
+
+		    var rkApplication = rkCompany.CreateSubKey(APPLICATION_NAME);
+		    if( rkApplication != null )
+		    {
+		        rkApplication.SetValue(key, stringValue);
+		    }
 		}
 	}
 }

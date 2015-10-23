@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -154,7 +154,7 @@ namespace Wizard.UI
 		private Wizard.Controls.EtchedLine etchedLine1;
 		private System.Windows.Forms.Panel pagePanel;
 
-		private IList _pages = new ArrayList();
+        private readonly List<WizardPage> _pages = new List<WizardPage>();
 		private WizardPage _activePage;
 
 		private void WizardSheet_Load(object sender, System.EventArgs e)
@@ -170,9 +170,9 @@ namespace Wizard.UI
 
 		private void ResizeToFit()
 		{
-			Size maxPageSize = new Size(buttonPanel.Width, 0);
+			var maxPageSize = new Size(buttonPanel.Width, 0);
 
-			foreach (WizardPage page in _pages)
+			foreach (var page in _pages)
 			{
 				if (page.Width > maxPageSize.Width)
 					maxPageSize.Width = page.Width;
@@ -180,28 +180,28 @@ namespace Wizard.UI
 					maxPageSize.Height = page.Height;
 			}
 
-			foreach (WizardPage page in _pages)
+			foreach (var page in _pages)
 			{
 				page.Size = maxPageSize;
 			}
 
-			Size extraSize = this.Size;
+			var extraSize = this.Size;
 			extraSize -= pagePanel.Size;
 
-			Size newSize = maxPageSize + extraSize;
+			var newSize = maxPageSize + extraSize;
 			this.Size = newSize;
 		}
 
-		public IList Pages
+        public List<WizardPage> Pages
 		{
 			get { return _pages; }
 		}
 
 		private int GetActiveIndex()
 		{
-			WizardPage activePage = GetActivePage();
+			var activePage = GetActivePage();
 
-			for (int i = 0; i < _pages.Count; ++i)
+			for (var i = 0; i < _pages.Count; ++i)
 			{
 				if (activePage == _pages[i])
 					return i;
@@ -220,13 +220,13 @@ namespace Wizard.UI
 			if (pageIndex < 0 || pageIndex >= _pages.Count)
 				throw new ArgumentOutOfRangeException("pageIndex");
 
-			WizardPage page = (WizardPage)_pages[pageIndex];
+			var page = _pages[pageIndex];
 			SetActivePage(page);
 		}
 
 		private WizardPage FindPage(string pageName)
 		{
-			foreach (WizardPage page in _pages)
+			foreach (var page in _pages)
 			{
 				if (page.Name == pageName)
 					return page;
@@ -237,7 +237,7 @@ namespace Wizard.UI
 
 		private void SetActivePage(string newPageName)
 		{
-			WizardPage newPage = FindPage(newPageName);
+			var newPage = FindPage(newPageName);
 
 			if (newPage == null)
 				throw new Exception(string.Format("Can't find page named {0}", newPageName));
@@ -247,7 +247,7 @@ namespace Wizard.UI
 
 		private void SetActivePage(WizardPage newPage)
 		{
-			WizardPage oldActivePage = _activePage;
+			var oldActivePage = _activePage;
 
 			// If this page isn't in the Controls collection, add it.
 			// This is what causes the Load event, so we defer
@@ -259,7 +259,8 @@ namespace Wizard.UI
 			newPage.Visible = true;
 
 			_activePage = newPage;
-			CancelEventArgs e = new CancelEventArgs();
+			
+            var e = new CancelEventArgs();
 			newPage.OnSetActive(e);
 
 			if (e.Cancel)
@@ -269,7 +270,7 @@ namespace Wizard.UI
 			}
 
 			// Hide all of the other pages.
-			foreach (WizardPage page in _pages)
+			foreach (var page in _pages)
 			{
 				if (page != _activePage)
 					page.Visible = false;
@@ -307,20 +308,22 @@ namespace Wizard.UI
 		private WizardPageEventArgs PreChangePage(int delta)
 		{
 			// Figure out which page is next.
-			int activeIndex = GetActiveIndex();
-			int nextIndex = activeIndex + delta;
+			var activeIndex = GetActiveIndex();
+			var nextIndex = activeIndex + delta;
 
 			if (nextIndex < 0 || nextIndex >= _pages.Count)
 				nextIndex = activeIndex;
 
 			// Fill in the event args.
-			WizardPage newPage = (WizardPage)_pages[nextIndex];
+			var newPage = _pages[nextIndex];
 
-			WizardPageEventArgs e = new WizardPageEventArgs();
-			e.NewPage = newPage.Name;
-			e.Cancel = false;
+		    var e = new WizardPageEventArgs
+		    {
+		        NewPage = newPage.Name,
+		        Cancel = false
+		    };
 
-			return e;
+		    return e;
 		}
 
 		private void PostChangePage(WizardPageEventArgs e)
@@ -331,21 +334,21 @@ namespace Wizard.UI
 
 		private void nextButton_Click(object sender, System.EventArgs e)
 		{
-			WizardPageEventArgs wpea = PreChangePage(+1);
+			var wpea = PreChangePage(+1);
 			_activePage.OnWizardNext(wpea);
 			PostChangePage(wpea);
 		}
 
 		private void backButton_Click(object sender, System.EventArgs e)
 		{
-			WizardPageEventArgs wpea = PreChangePage(-1);
+			var wpea = PreChangePage(-1);
 			_activePage.OnWizardBack(wpea);
 			PostChangePage(wpea);
 		}
 
 		private void finishButton_Click(object sender, System.EventArgs e)
 		{
-			CancelEventArgs cea = new CancelEventArgs();
+			var cea = new CancelEventArgs();
 			_activePage.OnWizardFinish(cea);
 			if (cea.Cancel)
 				return;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -719,8 +718,8 @@ namespace DAnTE.Inferno
         {
             if (mhtDatasets.ContainsKey(selected))
                 return (mhtDatasets[selected]).mstrRdatasetName;
-            else
-                return "Eset";
+            
+            return "Eset";
         }
 
         /// <summary>
@@ -733,10 +732,9 @@ namespace DAnTE.Inferno
         private string Vars2Save()
         {
             string rcmd = null;
-            IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
-            while (_enumerator.MoveNext())
+            foreach (var item in mhtDatasets)
             {
-                clsDatasetTreeNode mclsData = (clsDatasetTreeNode)_enumerator.Value;
+                var mclsData = item.Value;
                 if (!mclsData.mstrRProtDatasetName.Equals(""))
                     rcmd += @"""" + mclsData.mstrRProtDatasetName + @""",";
                 else
@@ -753,10 +751,9 @@ namespace DAnTE.Inferno
         private string NumericVars()
         {
             string rcmd = null;
-            IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
-            while (_enumerator.MoveNext())
+            foreach (var item in mhtDatasets)
             {
-                clsDatasetTreeNode mclsData = (clsDatasetTreeNode)_enumerator.Value;
+                var mclsData = item.Value;
                 if (mclsData.mblIsNumeric)
                     rcmd += @"""" + mclsData.mstrRdatasetName + @""",";
             }
@@ -780,7 +777,7 @@ namespace DAnTE.Inferno
 
         private TreeNode GetNode(string nodeText)
         {
-            TreeNodeCollection allNodes = ctltreeView.Nodes[0].Nodes;
+            var allNodes = ctltreeView.Nodes[0].Nodes;
 
             foreach (TreeNode node in allNodes)
             {
@@ -801,11 +798,11 @@ namespace DAnTE.Inferno
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuItemClose_Click(object sender, System.EventArgs e)
+        private void menuItemClose_Click(object sender, EventArgs e)
         {
             if (mhtDatasets.Count > 0)
             {
-                DialogResult res = MessageBox.Show("This will delete the current table." +
+                var res = MessageBox.Show("This will delete the current table." +
                     Environment.NewLine + "Are you sure?", "Delete table?",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
@@ -817,15 +814,15 @@ namespace DAnTE.Inferno
         {
             if (mtabControlData.Controls.Count != 0)
             {
-                TreeNode currNode = ctltreeView.SelectedNode;
-                string strSelectedNode = currNode.Text;
+                var currNode = ctltreeView.SelectedNode;
+                var strSelectedNode = currNode.Text;
 
                 this.ctltreeView.Nodes.Remove(currNode);
                 RemoveNodeTree(currNode);
 
                 if (this.ctltreeView.Nodes[0].Nodes.Count > 0)
                 {
-                    int idx = ctltreeView.Nodes[0].Nodes.Count;
+                    var idx = ctltreeView.Nodes[0].Nodes.Count;
                     ctltreeView.SelectedNode = ctltreeView.Nodes[0].Nodes[idx - 1];
                 }
                 if (this.ctltreeView.Nodes[0].Nodes.Count == 0)
@@ -842,12 +839,12 @@ namespace DAnTE.Inferno
 
         private void Add2AnalysisHTable(object o, string operation)
         {
-            int i = 1;
-            string strKey = operation + "_" + i.ToString();
+            var i = 1;
+            var strKey = operation + "_" + i;
             while (mhtAnalysisObjects.ContainsKey(strKey))
             {
                 i++;
-                strKey = operation + "_" + i.ToString();
+                strKey = operation + "_" + i;
             }
             mhtAnalysisObjects.Add(strKey, "");
             var mclsAnalysis = new clsAnalysisObject(strKey, o);

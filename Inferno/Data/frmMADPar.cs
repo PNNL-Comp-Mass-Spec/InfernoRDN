@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,7 +6,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmMADPar : Form
     {
-        readonly DAnTE.Purgatorio.clsMADPar mclsMADPar = new DAnTE.Purgatorio.clsMADPar();
+        readonly DAnTE.Purgatorio.clsMADPar mclsMADPar;
 
         public frmMADPar(DAnTE.Purgatorio.clsMADPar mclsMAD)
         {

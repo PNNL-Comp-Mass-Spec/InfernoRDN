@@ -20,7 +20,7 @@ namespace DAnTE.Inferno
         // No longer used (only used on Windows XP and 2000)
         // private readonly frmRmsg mRmsgForm;
 
-        public string mSessionFile = null;
+        public string mSessionFile;
 
         private readonly StreamWriter mCustomLogWriter;
         private readonly bool mCustomLoggerEnabled;
@@ -80,7 +80,7 @@ namespace DAnTE.Inferno
             SplashScreen.SetStatus("Initializing Folders...");
 
             // Initialize folders            
-            var tempFolderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var tempFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             var appDataFldrPath = Path.Combine(tempFolderPath, "Inferno");
             if (!Directory.Exists(appDataFldrPath))
@@ -89,7 +89,7 @@ namespace DAnTE.Inferno
             }
 
             mRTempFilePath = appDataFldrPath.Replace(@"\", "/") + "/_temp.png";
-            this.mhelpProviderDAnTE.HelpNamespace = Path.Combine(Application.StartupPath, "InfernoHelp.chm");
+            mhelpProviderDAnTE.HelpNamespace = Path.Combine(Application.StartupPath, "InfernoHelp.chm");
 
             System.Threading.Thread.Sleep(10);
             Log(mCustomLoggerEnabled, "Done setting folders.", mCustomLogWriter);
@@ -271,14 +271,14 @@ namespace DAnTE.Inferno
         private bool ConfigParameters()
         {
             var confPath = Path.Combine(Application.StartupPath, "inferno.conf");
-            Engine engine = new Engine(confPath);
+            var engine = new Engine(confPath);
 
             engine.AddParameter(new Parameter("Repository", ParameterType.REQUIRED));
             engine.AddParameter(new Parameter("Rpackages", ParameterType.REQUIRED));
             //engine.AddParameter(new Parameter("Rfolder", ParameterType.OPTIONAL, "NONE"));
             engine.AddParameter(new Parameter("InstallRpacks", ParameterType.REQUIRED));
             engine.AddParameter(new Parameter("UpdateRpacks", ParameterType.REQUIRED));
-            EngineStatus es = engine.ReadFile();
+            var es = engine.ReadFile();
             if (es == EngineStatus.FAIL)
             {
                 Console.WriteLine("Configuration Error: " + engine.Details);
@@ -309,9 +309,9 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private bool LoadRfunctions(string rdatafile)
         {
-            bool success = false;
+            bool success;
 
-            string mstrRDataFile = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
+            var mstrRDataFile = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
             try
             {
                 success = mRConnector.loadRData(mstrRDataFile);
@@ -326,12 +326,11 @@ namespace DAnTE.Inferno
 
         private bool CheckRVersion(string mstrMajor, string mstrMinor)
         {
-            string rcmd;
-            bool mblresult = true;
+            bool mblresult;
 
             try
             {
-                rcmd = @"verOK <- RVersionOK(major=" + mstrMajor + ",minor=" + mstrMinor + ")";
+                var rcmd = @"verOK <- RVersionOK(major=" + mstrMajor + ",minor=" + mstrMinor + ")";
                 mRConnector.EvaluateNoReturn(rcmd);
                 ////object rout = rConnector.GetSymbol("verOK");
                 ////mblresult = (bool)rout;
@@ -385,7 +384,7 @@ namespace DAnTE.Inferno
                     // Also confirm that we have the Bioconductor qvalue package
                     // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
                     var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
-                    var appVersionCurrent = Tools.clsRCmdLog.GetProgramVersion();
+                    var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
                     var updateRequired = !string.Equals(appVersionBioconductorCheck, appVersionCurrent);
                     if (updateRequired && !string.IsNullOrWhiteSpace(appVersionBioconductorCheck))
@@ -441,12 +440,11 @@ namespace DAnTE.Inferno
       
         private bool UpdateRPackages()
         {
-            string rcommand;
-            bool mblresult = true;
+            bool mblresult;
 
             try
             {
-                rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                var rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
                 mRConnector.EvaluateNoReturn(rcommand);
 
                 mblresult = true;
@@ -504,9 +502,9 @@ namespace DAnTE.Inferno
         {
             try
             {
-                foreach (Form f in MdiChildren)
+                foreach (var f in MdiChildren)
                 {
-                    frmDAnTE mf = f as frmDAnTE;
+                    var mf = f as frmDAnTE;
                     if (mf != null)
                     {
                         if (mf.WindowState == FormWindowState.Minimized)
@@ -517,7 +515,8 @@ namespace DAnTE.Inferno
                         return;
                     }
                 }
-                frmDAnTE mfrmDAnTE = frmDAnTE.GetChildInstance();
+
+                var mfrmDAnTE = frmDAnTE.GetChildInstance();
                 mfrmDAnTE.RTempFilePath = mRTempFilePath;
                 mfrmDAnTE.RConnector = mRConnector;
                 mfrmDAnTE.SessionFile = dntfile;
@@ -567,7 +566,7 @@ namespace DAnTE.Inferno
 
         private Platform GetPlatform()
         {
-            SYSTEM_INFO sysInfo = new SYSTEM_INFO();
+            var sysInfo = new SYSTEM_INFO();
             GetNativeSystemInfo(ref sysInfo);
 
             switch (sysInfo.wProcessorArchitecture)
@@ -632,7 +631,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemExit_Click(object sender, EventArgs e)
         {
-            frmDAnTE mfrmDAnTE = frmDAnTE.GetChildInstance();
+            var mfrmDAnTE = frmDAnTE.GetChildInstance();
 
             if (mfrmDAnTE.OK2Exit())
             {
@@ -671,7 +670,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemHelp_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, this.mhelpProviderDAnTE.HelpNamespace);
+            Help.ShowHelp(this, mhelpProviderDAnTE.HelpNamespace);
         }
 
         private void mnuItemBugs_Click(object sender, EventArgs e)
@@ -679,14 +678,14 @@ namespace DAnTE.Inferno
             // frmTracWebBugReport mfrmTracWeb = new frmTracWebBugReport();
             //mfrmTracWeb.Show();
 
-            frmBugReportEmail mfrmBugEmail = new frmBugReportEmail();
+            var mfrmBugEmail = new frmBugReportEmail();
             mfrmBugEmail.Show();
         }
 
         private void mnuItemAbout_Click(object sender, EventArgs e)
         {
 
-            frmAbout2 mfrmAbout = new frmAbout2();
+            var mfrmAbout = new frmAbout2();
             mfrmAbout.ShowDialog();
         }
 
@@ -697,14 +696,16 @@ namespace DAnTE.Inferno
 
         private void mnuWindowItem_Click(object sender, EventArgs e)
         {
-            ToolStripItem item = sender as ToolStripItem;
-            if (item != null)
+            var item = sender as ToolStripItem;
+            if (item == null)
             {
-                string enumVal = item.Tag as string;
-                if (enumVal != null)
-                {
-                    LayoutMdi((MdiLayout)Enum.Parse(typeof(MdiLayout), enumVal));
-                }
+                return;
+            }
+
+            var enumVal = item.Tag as string;
+            if (enumVal != null)
+            {
+                LayoutMdi((MdiLayout)Enum.Parse(typeof(MdiLayout), enumVal));
             }
         }
 
@@ -718,24 +719,22 @@ namespace DAnTE.Inferno
 
         private void Form_DragDrop(object sender, DragEventArgs e)
         {
-            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
             if (s.Length > 1)
                 MessageBox.Show("Only one file at a time!", "One file please...",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
-                string fExt = Path.GetExtension(s[0]);
-                if (!fExt.Equals(".dnt"))
+                var fExt = Path.GetExtension(s[0]);
+                if (fExt == null || !fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
                 {
                     MessageBox.Show("Wrong file type!", "Use only .dnt files...",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                else
-                {
-                    StartMain(s[0]);
-                }
+
+                StartMain(s[0]);
             }
         }
 

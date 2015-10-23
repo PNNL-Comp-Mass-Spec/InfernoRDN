@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
@@ -10,9 +9,10 @@ namespace DAnTE.Inferno
 {
     public partial class frmHeatMapPar : Form
     {
-        private clsHeatmapPar mclsHmapPar = new clsHeatmapPar();
+        private readonly clsHeatmapPar mclsHmapPar;
+
         //private frmDAnTE mfrmDante;
-        private string mstrPaletteName = "Black-Body", customCol = null;
+        private string mstrPaletteName = "Black-Body", customCol;
         private int mintPalette;
         public int maxRowCount = 50;
 
@@ -22,61 +22,48 @@ namespace DAnTE.Inferno
             mclsHmapPar = clsHmapPar;
         }
 
-        private ArrayList hclust_agglomerations()
+        private List<string> hclust_agglomerations()
         {
-            ArrayList tmp = new ArrayList();
-      
-            //tmp.Add("Single linkage");
-            //tmp.Add("Complete linkage");
-            //tmp.Add("Average method");
-            //tmp.Add("McQuitty method");
-            //tmp.Add("Ward method");
-            ////tmp.Add("Median linkage");
-            ////tmp.Add("Centroid linkage");
-            tmp.Add("Single linkage");
-            tmp.Add("Complete linkage");
-            tmp.Add("Average method");
-            tmp.Add("McQuitty method");
-            tmp.Add("Ward method");
-            tmp.Add("Median linkage");
-            tmp.Add("Centroid linkage");
+            var tmp = new List<string>
+            {
+                "Single linkage",
+                "Complete linkage",
+                "Average method",
+                "McQuitty method",
+                "Ward method",
+                "Median linkage",
+                "Centroid linkage"
+            };
+
             return tmp;
         }
 
-        private ArrayList hclust_distances()
+        private List<string> hclust_distances()
         {
-            ArrayList tmp = new ArrayList();
-
-            //tmp.Add("Euclidean");
-            //tmp.Add("Maximum");
-            //tmp.Add("Manhattan");
-            //tmp.Add("Canberra");
-            //tmp.Add("Binary");
-            //tmp.Add("Minkowski");
-            tmp.Add("Euclidean");
-            tmp.Add("Maximum");
-            tmp.Add("Manhattan");
-            tmp.Add("Canberra");
-            tmp.Add("Binary");
-            tmp.Add("Pearson");
-            tmp.Add("Correlation");
-            tmp.Add("Spearman");
-            tmp.Add("Kendall");
+            var tmp = new List<string>
+            {
+                "Euclidean",
+                "Maximum",
+                "Manhattan",
+                "Canberra",
+                "Binary",
+                "Pearson",
+                "Correlation",
+                "Spearman",
+                "Kendall"
+            };
             return tmp;
         }
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool success = true;
+            var success = true;
             int start = 0, end = 50, k = 5;
-            double maxCol = 0.0, minCol = 0.0;
             try
             {
                 start = Convert.ToInt32(mtxtBoxStart.Text);
                 end = Convert.ToInt32(mtxtBoxEnd.Text);
                 k = Convert.ToInt32(mtxtBoxK.Text);
-                minCol = Convert.ToDouble(mtxtBoxMinCol.Text, NumberFormatInfo.InvariantInfo);
-                maxCol = Convert.ToDouble(mtxtBoxMaxCol.Text, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception ex)
             {
@@ -109,7 +96,7 @@ namespace DAnTE.Inferno
 
         private void mbtnHeatmapPalette_Click(object sender, EventArgs e)
         {
-            frmColorPalette mfrmColPalette = new frmColorPalette
+            var mfrmColPalette = new frmColorPalette
             {
                 SetDefaultPalette = mintPalette
             };
@@ -262,14 +249,13 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem != null)
                 {
-                    idx = mcmbBoxFactors.SelectedIndex;
+                    var idx = mcmbBoxFactors.SelectedIndex;
                     return idx+1;
                 }
-                else
-                    return -1;
+
+                return -1;
             }
         }
                 
@@ -289,11 +275,11 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int endidx = Convert.ToInt32(mtxtBoxEnd.Text);
+                var endidx = Convert.ToInt32(mtxtBoxEnd.Text);
                 if (endidx > maxRowCount)
                     return maxRowCount;
-                else
-                    return endidx;
+                
+                return endidx;
             }
             set
             {

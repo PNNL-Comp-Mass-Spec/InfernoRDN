@@ -131,7 +131,7 @@ namespace DAnTE.Inferno
             return ttest;
         }
 
-        private void ChangeDatasetOrder(List<string> newNameOrder)
+        private void ChangeDatasetOrder(IList<string> newNameOrder)
         {
             var marrOldOrder = new List<string>();
             var marr2Remove = new List<string>();
@@ -176,7 +176,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void ChangeDatasetOrderR(List<int> newIndexOrder)
+        private void ChangeDatasetOrderR(IEnumerable<int> newIndexOrder)
         {
             var mstrOrder = @"newOrder=""c(";
             var vars = "numvars=" + NumericVars2R();
@@ -485,8 +485,9 @@ namespace DAnTE.Inferno
             var mfrmWilcoxPar = new frmWilcoxonPar(mclsWilcoxPar);
             if (mclsFactors.mDTable != null)
             {
-                mfrmWilcoxPar.PopulateListBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mfrmWilcoxPar.FactorList = marrFactorInfo;
+                mfrmWilcoxPar.PopulateListBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                
                 if (mfrmWilcoxPar.ShowDialog() == DialogResult.OK)
                 {
                     mclsWilcoxPar = mfrmWilcoxPar.clsWilcoxonPar;

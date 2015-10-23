@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -21,7 +20,7 @@ namespace DAnTE.Inferno
             InitializeComponent();
         }
 
-        private List<clsFactorInfo> MakeDeepCopy(List<clsFactorInfo> sourceList)
+        private List<clsFactorInfo> MakeDeepCopy(IEnumerable<clsFactorInfo> sourceList)
         {
             var newList = new List<clsFactorInfo>();
 
@@ -34,7 +33,7 @@ namespace DAnTE.Inferno
            
         }
 
-        private List<clsDatasetInfo> MakeDeepCopy(List<clsDatasetInfo> sourceList)
+        private List<clsDatasetInfo> MakeDeepCopy(IEnumerable<clsDatasetInfo> sourceList)
         {
             var newList = new List<clsDatasetInfo>();
 
@@ -389,7 +388,11 @@ namespace DAnTE.Inferno
                 }
             }
 
-            cmbBox.DataSource = marrFactorInfo[factorIdx].marrValues;
+            // Note: cannot use .DataSource = Value because we .Clear items from the listbox
+            foreach (var item in marrFactorInfo[factorIdx].marrValues)
+            {
+                cmbBox.Items.Add(item);
+            }                
 
             cmbBox.Size = new System.Drawing.Size(epos - spos, li.Bounds.Bottom - li.Bounds.Top);
             cmbBox.Location = new System.Drawing.Point(sposX + spos + 2, sposY + li.Bounds.Y);

@@ -35,7 +35,7 @@ namespace DAnTE.Inferno
                         AddDataNode(mhtDatasets["Unused Data"]);
                 }
                 else
-                    MessageBox.Show("ANOVA failed." + Environment.NewLine +
+                    MessageBox.Show("ANOVA or Kruskal-Wallis failed." + Environment.NewLine +
                         "Check if you have all data requirements and in correct format.  Also consider using a smaller value for 'Minimum Number of Data Points per Factor Level'", "Error!",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

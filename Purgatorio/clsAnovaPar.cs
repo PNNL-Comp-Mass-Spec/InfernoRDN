@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
@@ -20,8 +19,8 @@ namespace DAnTE.Purgatorio
         public string tempFile;
         [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")]
         public int numDatapts;
-        public ArrayList fixedEff;
-        public ArrayList randomEff;
+        public List<string> fixedEff;
+        public List<string> randomEff;
         public List<string> marrFactors;
 
         public clsAnovaPar()
@@ -33,8 +32,8 @@ namespace DAnTE.Purgatorio
             Rdataset = "Eset";
             tempFile = "C:/";
             numDatapts = 3;
-            fixedEff = new ArrayList();
-            randomEff = new ArrayList();
+            fixedEff = new List<string>();
+            randomEff = new List<string>();
         }
 
         public string Rcmd
@@ -58,7 +57,7 @@ namespace DAnTE.Purgatorio
                 if (fixedEff.Count == 0)
                     return "None";
                 else
-                    fEff = fixedEff[0].ToString();
+                    fEff = fixedEff[0];
 
                 for (var i = 1; i < fixedEff.Count; i++)
                 {
@@ -100,7 +99,7 @@ namespace DAnTE.Purgatorio
                 if (randomEff.Count == 0)
                     return "None";
                 else
-                    rEff = randomEff[0].ToString();
+                    rEff = randomEff[0];
 
                 for (var i = 1; i < randomEff.Count; i++)
                 {

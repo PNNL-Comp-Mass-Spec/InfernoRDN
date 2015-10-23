@@ -1,5 +1,10 @@
 InfernoRDN Change Log
 
+Version 1.7.5774; October 23, 2015
+	- Added right click context menus "Copy selected" and "Copy all" to data grids
+	- Now always including column headers when copy from a data grid
+	- Switched from ArrayList to List<string> or similar
+
 Version 1.1.5717; August 27, 2015
 	- Updated the LumenWorks CsvReader to report a warning when the input file has duplicate column names in the header row
 

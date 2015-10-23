@@ -62,7 +62,7 @@ namespace DAnTE.Inferno
             this.mlstBoxFactors.Location = new System.Drawing.Point(36, 132);
             this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mlstBoxFactors.Name = "mlstBoxFactors";
-            this.mlstBoxFactors.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.mlstBoxFactors.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.mlstBoxFactors.Size = new System.Drawing.Size(237, 244);
             this.mlstBoxFactors.TabIndex = 4;
             // 

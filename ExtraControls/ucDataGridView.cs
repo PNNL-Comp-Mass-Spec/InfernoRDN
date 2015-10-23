@@ -8,6 +8,8 @@ namespace DAnTE.ExtraControls
         public ucDataGridView()
         {
             InitializeComponent();
+
+            InitializeDataGrid();
         }
 
         public ucDataGridView(DataTable mDT)
@@ -15,6 +17,14 @@ namespace DAnTE.ExtraControls
             InitializeComponent();
             dAnTEdatagridview1.DataSource = null;
             dAnTEdatagridview1.DataSource = mDT;
+
+            InitializeDataGrid();
+        }
+
+        private void InitializeDataGrid()
+        {
+            // Always include the headers when copying
+            dAnTEdatagridview1.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
         }
 
         private void dAnTEdatagridview1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)

@@ -51,7 +51,6 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 	- Choose Plot, Correlation
 	- Enable checkbox Toggle All, then click OK
 
-
 == Dependencies ==
 
 InfernoRDN depends on the following:
@@ -77,6 +76,26 @@ InfernoRDN uses the following R packages (from http://cran.r-project.org/):
 * scatterplot3d: 3D Scatter Plot
 * colorspace: Colorspace Manipulation
 
+
+== Factor Definitions File ==
+
+Factors can be defined using the GUI, or by loading a text file listing the factors 
+to associate with each dataset (column name) in the expressions table.
+
+A factor definitions file can be a CSV file (comma-separated)  or a .txt file (tab-separated)
+
+The first row of the factor definitions file must have a column named Factor, then column names 
+that match the names in the originally loaded Expressions table. Each subsequent row of the 
+factor file is a new factor name, then the factor value for each dataset.
+
+The following shows example rows of a factor definitions file (tab-separated).  
+There are 6 datasets and two factors (Time and Temperature) defined for each dataset.
+
+
+Factor	P10A	P10B	P11A	P11B	P12A	P12B
+Time	0	0	5	5	10	10
+Temperature	Hot	Cold	Hot	Cold	Hot	Cold
+
 _______________________________________________________________________________
 Developed by Ashoka Polpitiya for the US Department of Energy and TGen
 Includes contributions from Gary Kiebel and Matthew Monroe at PNNL
@@ -86,7 +105,7 @@ TGen, Phoenix, AZ, USA.
 Copyright 2007, 2014, Battelle Memorial Institute.  All Rights Reserved.
 Copyright 2010, Translational Genomics Research Institute.  All Rights Reserved.
 
-E-mail: ashoka@tgen.org or matthew.monroe@pnnl.gov
+E-mail: matthew.monroe@pnnl.gov or ashoka@tgen.org
 Website: http://omics.pnl.gov/software/InfernoRDN
 _______________________________________________________________________________
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
@@ -20,7 +19,7 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
+            var outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
             if (mchkBoxPlot.Checked && !outfolderOK)
                 MessageBox.Show("Invalid Folder name", "Error!", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -54,12 +53,11 @@ namespace DAnTE.Inferno
 
         private void mbtnSelectFolder_Click(object sender, EventArgs e)
         {
-            string folderName = null;
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            var folderBrowserDialog1 = new FolderBrowserDialog();
+            var result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                folderName = folderBrowserDialog1.SelectedPath;
+                var folderName = folderBrowserDialog1.SelectedPath;
                 mtxtBoxFolder.Text = folderName;
             }
             else mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
@@ -67,7 +65,7 @@ namespace DAnTE.Inferno
 
         private void mtrackBarSpan_Scroll(object sender, EventArgs e)
         {
-            Double span = (Double)mtrackBarSpan.Value / 10.0;
+            var span = mtrackBarSpan.Value / 10.0;
             mlblSpan.Text = span.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -144,7 +142,15 @@ namespace DAnTE.Inferno
 
         public string Factor
         {
-            get { return mcmbBoxFactors.SelectedItem.ToString(); }
+            get
+            {
+                if (mcmbBoxFactors.SelectedItem != null)
+                {
+                    return mcmbBoxFactors.SelectedItem.ToString();
+                }
+
+                return mcmbBoxFactors.Items[0].ToString();
+            }
         }
 
         public int FactorIndex

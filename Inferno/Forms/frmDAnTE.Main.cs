@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -16,7 +15,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "August 27, 2015";
+        public const string PROGRAM_DATE = "October 23, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT_CPU_INTENSIVE = 20;
@@ -276,9 +275,9 @@ namespace DAnTE.Inferno
 
                 if (!fileTypeError)
                 {
-                    if (fExt.Equals(".dnt"))
+                    if (fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
                         OpenSessionThreaded(s[0]);
-                    else if (fExt.Equals(".csv"))
+                    else if (fExt.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
                     {
                         dataSetType = enmDataType.ESET;
                         mstrLoadedfileName = s[0];
@@ -373,6 +372,6 @@ namespace DAnTE.Inferno
                 }
             }
         }
-     
+        
     }
 }

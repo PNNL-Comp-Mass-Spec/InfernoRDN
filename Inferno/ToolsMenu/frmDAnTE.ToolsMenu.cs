@@ -195,6 +195,7 @@ namespace DAnTE.Inferno
             {
                 DatasetInfo = marrDatasetInfo
             };
+
             if (mfrmArrCols.ShowDialog() == DialogResult.OK)
             {
                 var newOrder = mfrmArrCols.NewDatasetOrder;

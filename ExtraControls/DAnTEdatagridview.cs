@@ -18,7 +18,7 @@ namespace DAnTE.ExtraControls
             //numbers,
 
             //store a string representation of the row number in 'strRowNumber'
-            string strRowNumber = (e.RowIndex + 1).ToString();
+            var strRowNumber = (e.RowIndex + 1).ToString();
 
             //prepend leading zeros to the string if necessary to improve
             //appearance. For example, if there are ten rows in the grid,
@@ -28,7 +28,7 @@ namespace DAnTE.ExtraControls
 
             //determine the display size of the row number string using
             //the DataGridView's current font.
-            SizeF size = e.Graphics.MeasureString(strRowNumber, this.Font);
+            var size = e.Graphics.MeasureString(strRowNumber, this.Font);
 
             //adjust the width of the column that contains the row header cells 
             //if necessary
@@ -36,7 +36,7 @@ namespace DAnTE.ExtraControls
 
             //this brush will be used to draw the row number string on the
             //row header cell using the system's current ControlText color
-            Brush b = SystemBrushes.ControlText;
+            var b = SystemBrushes.ControlText;
 
             //draw the row number string on the current row header cell using
             //the brush defined above and the DataGridView's default font

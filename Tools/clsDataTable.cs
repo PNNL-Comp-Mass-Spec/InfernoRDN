@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using LumenWorks.Framework.IO.Csv;
 
@@ -40,9 +40,16 @@ namespace DAnTE.Tools
             var fileName = Path.GetFileName(FileName);
             var fExt = Path.GetExtension(fileName);
 
-            switch (fExt)
+            if (string.IsNullOrEmpty(fExt))
             {
-                case ".csv":// CSV files
+                Console.WriteLine("Unknown file type");
+                //fileOK = false;
+                return null;
+            }
+
+            switch (fExt.ToLower())
+            {
+                case ".csv": // CSV files
                     using (var parser = new clsGenericParserAdapter())
                     {
                         parser.SetDataSource(FileName);
@@ -68,7 +75,7 @@ namespace DAnTE.Tools
                         mdtOut = ReplaceMissingStr(mdtIn);
                     }
                     break;
-                case ".xls"://Excel files
+                case ".xls": //Excel files
                     sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                             FileName + ";" + "Extended Properties=Excel 8.0;";
                     goto case "Excel";
@@ -101,8 +108,10 @@ namespace DAnTE.Tools
                         }
                         var sheetCmd = "SELECT * FROM [" + excelSheets[0] +"]"; //read the first table
                         var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter();
-                        objAdapter1.SelectCommand = objCmdSelect;
+                        var objAdapter1 = new OleDbDataAdapter
+                        {
+                            SelectCommand = objCmdSelect
+                        };
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
@@ -125,7 +134,7 @@ namespace DAnTE.Tools
                     }
                     break;
                 default:
-                    Console.WriteLine("Unknown File");
+                    Console.WriteLine("Unknown File type");
                     //fileOK = false;
                     mdtOut = null;
                     break;
@@ -135,24 +144,27 @@ namespace DAnTE.Tools
 
         public static DataTable LoadFile2DataTableJETOLEDB(string FileName)
         {
-            var fileName = FileName;
-            var filePath = FileName;
-            string fExt;
             var mdtOut = new DataTable();
-            var mdtIn = new DataTable();
-            OleDbConnection objConn = null;
-            DataTable dt = null;
 
-            fileName = Path.GetFileName(FileName);
-            filePath = Path.GetDirectoryName(FileName);
-            fExt = Path.GetExtension(fileName);
+            OleDbConnection objConn;
+            DataTable dt;
 
-            switch (fExt)
+            var fileName = Path.GetFileName(FileName);
+            var filePath = Path.GetDirectoryName(FileName);
+            var fExt = Path.GetExtension(fileName);
+
+            if (string.IsNullOrEmpty(fExt))
+            {
+                Console.WriteLine("Unknown file type");
+                //fileOK = false;
+                return null;
+            }
+
+            switch (fExt.ToLower())
             {
                 case ".csv":// CSV files
                 case ".txt":
                     objConn = null;
-                    dt = null;
                     try
                     {
                         var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
@@ -163,8 +175,11 @@ namespace DAnTE.Tools
                         
                         var sheetCmd = "SELECT * FROM [" + fileName + "]"; //read the table
                         var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter();
-                        objAdapter1.SelectCommand = objCmdSelect;
+                        var objAdapter1 = new OleDbDataAdapter
+                        {
+                            SelectCommand = objCmdSelect
+                        };
+
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
@@ -179,10 +194,6 @@ namespace DAnTE.Tools
                         {
                             objConn.Close();
                             objConn.Dispose();
-                        }
-                        if (dt != null)
-                        {
-                            dt.Dispose();
                         }
                     }
                     break;
@@ -211,8 +222,11 @@ namespace DAnTE.Tools
                         }
                         var sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
                         var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter();
-                        objAdapter1.SelectCommand = objCmdSelect;
+                        var objAdapter1 = new OleDbDataAdapter
+                        {
+                            SelectCommand = objCmdSelect
+                        };
+
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
@@ -251,9 +265,16 @@ namespace DAnTE.Tools
             var fileName = Path.GetFileName(FileName);
             var fExt = Path.GetExtension(fileName);
 
-            switch (fExt)
+            if (string.IsNullOrEmpty(fExt))
             {
-                case ".csv":// CSV files
+                Console.WriteLine("Unknown file type");
+                //fileOK = false;
+                return null;
+            }
+
+            switch (fExt.ToLower())
+            {
+                case ".csv": // CSV files
                     using (var csv = new CsvReader(new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)), true))
                     {
                         csv.ParseError += csv_ParseError;
@@ -269,7 +290,7 @@ namespace DAnTE.Tools
                         mdtOut.Load(csv);
                     } 
                     break;
-                case ".xls"://Excel files
+                case ".xls": //Excel files
                     sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                             FileName + ";" + "Extended Properties=Excel 8.0;";
                     goto case "Excel";
@@ -313,7 +334,7 @@ namespace DAnTE.Tools
                             if (mfrmSheets.ShowDialog() == DialogResult.OK)
                             {
                                 i = mfrmSheets.SelectedSheet;
-                                mstrSheet = marrExcelSheets[i].ToString();
+                                mstrSheet = marrExcelSheets[i];
                             }
                             else
                             {
@@ -370,18 +391,18 @@ namespace DAnTE.Tools
 
             var mDataColumn = new DataColumn
             {
-                DataType = System.Type.GetType("System.String"),
+                DataType = Type.GetType("System.String"),
                 ColumnName = "Row_ID"
             };
             //mDataColumn.ReadOnly = true ;
             mDataTable.Columns.Add(mDataColumn);
 
-            for (var i = 0; i < colHeaders.Length; i++)
+            foreach (var header in colHeaders)
             {
                 mDataColumn = new DataColumn
                 {
-                    DataType = System.Type.GetType("System.String"),
-                    ColumnName = colHeaders[i]
+                    DataType = Type.GetType("System.String"),
+                    ColumnName = header
                 };
                 //mDataColumn.ReadOnly = true ;
                 mDataTable.Columns.Add(mDataColumn);
@@ -392,7 +413,7 @@ namespace DAnTE.Tools
                 mDataRow[0] = rowNames[i];
                 for (var j = 0; j < matrix.GetLength(1); j++)
                 {
-                    mDataRow[j + 1] = matrix[i, j].ToString();
+                    mDataRow[j + 1] = matrix[i, j].ToString(CultureInfo.InvariantCulture);
                 }
                 mDataTable.Rows.Add(mDataRow);
             }
@@ -420,19 +441,17 @@ namespace DAnTE.Tools
 
         public static DataTable ReplaceMissingStr(DataTable dt)
         {
-            string cell = null;
             var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
 
             for (var row = 0; row < Nrows; row++)
             {
                 //DataRow workRow = dt.Rows[row] ;
-                string[] obj;
-                obj = new string[dt.Rows[row].ItemArray.Length];
+                var obj = new object[dt.Rows[row].ItemArray.Length];
                 for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col].ToString();
-                    cell = dt.Rows[row].ItemArray[col].ToString();
+                    var cell = dt.Rows[row].ItemArray[col].ToString();
                     if (cell.Equals("999999") || cell.Equals(" 9.999990e+05"))
                     {
                         var s = "";
@@ -448,7 +467,6 @@ namespace DAnTE.Tools
 
         public static DataTable ReplaceMissing(DataTable dt)
         {
-            string cell = null;
             var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
 
@@ -460,10 +478,10 @@ namespace DAnTE.Tools
                 for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
-                    cell = dt.Rows[row].ItemArray[col].ToString();
+                    var cell = dt.Rows[row].ItemArray[col].ToString();
                     if (cell.Equals("999999") || cell.Equals(" 9.999990e+05"))
                     {
-                        obj[col] = System.DBNull.Value;
+                        obj[col] = DBNull.Value;
                     }
                 }
                 //outDtable.Rows.Add(obj);
@@ -476,20 +494,18 @@ namespace DAnTE.Tools
         public static DataTable ClearNulls(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
-            var outDtable = new DataTable();
 
             for (var row = 0; row < Nrows; row++)
             {
                 //DataRow workRow = dt.Rows[row] ;
-                object[] obj;
-                obj = new object[dt.Rows[row].ItemArray.Length];
+                var obj = new object[dt.Rows[row].ItemArray.Length];
                 for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
-                    if (dt.Rows[row].ItemArray[col] == System.DBNull.Value)
+                    if (dt.Rows[row].ItemArray[col] == DBNull.Value)
                     {
                         var s = "";
-                        obj[col] = (object)s;
+                        obj[col] = s;
                     }
                 }
                 dt.Rows[row].ItemArray = obj;
@@ -500,8 +516,8 @@ namespace DAnTE.Tools
 
         public static void RemoveDuplicateRows(DataTable dTable, string colName)
         {
-            var hTable = new Hashtable();
-            var duplicateList = new ArrayList();
+            var hTable = new Dictionary<object, string>();
+            var duplicateList = new List<DataRow>();
 
             foreach (DataRow drow in dTable.Rows)
             {
@@ -515,14 +531,14 @@ namespace DAnTE.Tools
                 }
             }
 
-            foreach (DataRow dRow in duplicateList)
+            foreach (var dRow in duplicateList)
                 dTable.Rows.Remove(dRow);
         }
 
         public static DataTable RemoveDuplicateRows2(DataTable dTable, string colName)
         {
-            var hTable = new Hashtable();            
-            var duplicateList = new ArrayList();
+            var hTable = new Dictionary<object, DataRow>();
+            var duplicateList = new List<DataRow>();
 
             foreach (DataColumn dC in dTable.Columns)
             {
@@ -541,7 +557,7 @@ namespace DAnTE.Tools
                     {
 						if (hTable.ContainsKey(thisRow[colName]))
 						{
-							AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
+							AddDuplicateRow(hTable, thisRow, duplicateList, colName);
 						}
 	                    else
 	                    {
@@ -551,7 +567,7 @@ namespace DAnTE.Tools
                     }
                     catch (Exception)
                     {
-						AddDuplicateRow(dTable, hTable, thisRow, duplicateList, colName);
+						AddDuplicateRow(hTable, thisRow, duplicateList, colName);
                     }
 
                 rowCountLoaded += 1;
@@ -563,16 +579,16 @@ namespace DAnTE.Tools
 
             dTable.AcceptChanges();
 
-            foreach (DataRow dRow in duplicateList)
+            foreach (var dRow in duplicateList)
                 dTable.Rows.Remove(dRow);
 
             return dTable;
         }
 
-		private static void AddDuplicateRow(DataTable dTable, Hashtable hTable, DataRow thisRow, ArrayList duplicateList, string keyColName)
+        private static void AddDuplicateRow(IDictionary<object, DataRow> hTable, DataRow thisRow, ICollection<DataRow> duplicateList, string keyColName)
 	    {
 			duplicateList.Add(thisRow);
-			var prevRow = (DataRow)hTable[thisRow[keyColName]];
+			var prevRow = hTable[thisRow[keyColName]];
 			if (!RowsIdentical(thisRow, prevRow))
 			{
 				var currentRow = addRows(prevRow, thisRow);
@@ -647,7 +663,7 @@ namespace DAnTE.Tools
         /// Removes duplicate rows from given DataTable
         /// </summary>
         /// <param name="tbl">Table to scan for duplicate rows</param>
-        /// <param name="KeyColumns">An array of DataColumns
+        /// <param name="keyColumns">An array of DataColumns
         /// containing the columns to match for duplicates</param>
         public static void RemoveDuplicates(DataTable tbl, DataColumn[] keyColumns)
         {
@@ -655,7 +671,7 @@ namespace DAnTE.Tools
             while (rowNdx < tbl.Rows.Count - 1)
             {
                 var dups = FindDups(tbl, rowNdx, keyColumns);
-                if (dups.Length > 0)
+                if (dups.Count > 0)
                 {
                     foreach (var dup in dups)
                     {
@@ -669,9 +685,9 @@ namespace DAnTE.Tools
             }
         }
 
-        private static DataRow[] FindDups(DataTable tbl, int sourceNdx, DataColumn[] keyColumns)
+        private static List<DataRow> FindDups(DataTable tbl, int sourceNdx, DataColumn[] keyColumns)
         {
-            var retVal = new ArrayList();
+            var retVal = new List<DataRow>();
             var sourceRow = tbl.Rows[sourceNdx];
             for (var i = sourceNdx + 1; i < tbl.Rows.Count; i++)
             {
@@ -681,7 +697,7 @@ namespace DAnTE.Tools
                     retVal.Add(targetRow);
                 }
             }
-            return (DataRow[])retVal.ToArray(typeof(DataRow));
+            return retVal;
         }
 
 
@@ -691,8 +707,9 @@ namespace DAnTE.Tools
             var retVal = true;
             foreach (var column in keyColumns)
             {
-                retVal = retVal && sourceRow[column].Equals(targetRow[column]);
-                if (!retVal) break;
+                retVal = sourceRow[column].Equals(targetRow[column]);
+                if (!retVal) 
+                    break;
             }
             return retVal;
         }
@@ -795,15 +812,8 @@ namespace DAnTE.Tools
         /// <returns></returns>
         public static List<string> DataTableRows(DataTable dt)
         {
-            var marrRows = new List<string>();
-
-            foreach (DataRow dRow in dt.Rows)
-            {
-                marrRows.Add(dRow.ItemArray[0].ToString());
-            }
-
+            var marrRows = (from DataRow dRow in dt.Rows select dRow.ItemArray[0].ToString()).ToList();
             return marrRows;
         }
-
     }
 }

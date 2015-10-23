@@ -251,6 +251,9 @@ namespace DAnTE.Inferno
             this.ctxtMnuItemPlotRows = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxtMnuItemFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxtMnuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxtMnuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStripDAnTE.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mContextMenuTreeV.SuspendLayout();
@@ -1451,28 +1454,50 @@ namespace DAnTE.Inferno
             this.mCntxtMnuGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtMnuItemPlotRows,
             this.toolStripSeparator13,
-            this.ctxtMnuItemFilter});
+            this.ctxtMnuItemFilter,
+            this.toolStripSeparator19,
+            this.ctxtMnuItemCopySelected,
+            this.ctxtMnuItemCopyAll});
             this.mCntxtMnuGrid.Name = "mCntxtMnuGrid";
-            this.mCntxtMnuGrid.Size = new System.Drawing.Size(292, 58);
+            this.mCntxtMnuGrid.Size = new System.Drawing.Size(314, 140);
             // 
             // ctxtMnuItemPlotRows
             // 
             this.ctxtMnuItemPlotRows.Name = "ctxtMnuItemPlotRows";
-            this.ctxtMnuItemPlotRows.Size = new System.Drawing.Size(291, 24);
+            this.ctxtMnuItemPlotRows.Size = new System.Drawing.Size(313, 24);
             this.ctxtMnuItemPlotRows.Text = "Plot Selected Rows";
             this.ctxtMnuItemPlotRows.Click += new System.EventHandler(this.ctxtMnuItemPlotRows_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(288, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(310, 6);
             // 
             // ctxtMnuItemFilter
             // 
             this.ctxtMnuItemFilter.Name = "ctxtMnuItemFilter";
-            this.ctxtMnuItemFilter.Size = new System.Drawing.Size(291, 24);
+            this.ctxtMnuItemFilter.Size = new System.Drawing.Size(313, 24);
             this.ctxtMnuItemFilter.Text = "Filter Based on Selected RowIDs";
             this.ctxtMnuItemFilter.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
+            // 
+            // toolStripSeparator19
+            // 
+            this.toolStripSeparator19.Name = "toolStripSeparator19";
+            this.toolStripSeparator19.Size = new System.Drawing.Size(310, 6);
+            // 
+            // ctxtMnuItemCopySelected
+            // 
+            this.ctxtMnuItemCopySelected.Name = "ctxtMnuItemCopySelected";
+            this.ctxtMnuItemCopySelected.Size = new System.Drawing.Size(313, 24);
+            this.ctxtMnuItemCopySelected.Text = "Copy to clipboard (Ctrl+C)";
+            this.ctxtMnuItemCopySelected.Click += new System.EventHandler(this.ctxtMnuItemCopySelected_Click);
+            // 
+            // ctxtMnuItemCopyAll
+            // 
+            this.ctxtMnuItemCopyAll.Name = "ctxtMnuItemCopyAll";
+            this.ctxtMnuItemCopyAll.Size = new System.Drawing.Size(313, 24);
+            this.ctxtMnuItemCopyAll.Text = "Copy all to clipboard";
+            this.ctxtMnuItemCopyAll.Click += new System.EventHandler(this.ctxtMnuItemCopyAll_Click);
             // 
             // frmDAnTE
             // 
@@ -1535,5 +1560,8 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem mnuItemFilterUsingSelectedRowIDs;
         private ToolStripSeparator toolStripSeparator18;
         private ToolStripMenuItem mnuShowRCommandLog;
+        private ToolStripSeparator toolStripSeparator19;
+        private ToolStripMenuItem ctxtMnuItemCopySelected;
+        private ToolStripMenuItem ctxtMnuItemCopyAll;
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -293,14 +292,14 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem.ToString().Equals("<One Color>"))
                     return "1";
-                else
-                {
-                    idx = mcmbBoxFactors.SelectedIndex + 1;
-                    return "factors[" + idx.ToString() + ",]";
-                }
+                
+                var idx = mcmbBoxFactors.SelectedIndex + 1;
+                if (idx < 1)
+                    idx = 1;
+
+                return "factors[" + idx + ",]";
             }
         }
 

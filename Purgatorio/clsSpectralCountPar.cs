@@ -1,10 +1,11 @@
-using System.Collections;
+
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
     public class clsSpectralCountPar
     {
-        public ArrayList marrFileNames;
+        public List<string> marrFileNames;
         public string mstrAnalysisFolder;
         public int XcRank = 1;
         public double XCorr1Th = 1.5;

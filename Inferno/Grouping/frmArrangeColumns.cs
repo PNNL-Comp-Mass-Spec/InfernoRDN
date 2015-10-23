@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using DAnTE.Tools;
@@ -118,13 +117,16 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList NewDatasetOrder
+        public List<int> NewDatasetOrder
         {
             get
             {
-                ArrayList newOrd = new ArrayList();
+                var newOrd = new List<int>();
                 foreach (ListViewItem it in mlistViewDatasets.Items)
-                    newOrd.Add(it.Tag);
+                {
+                    newOrd.Add((int)it.Tag);
+                }
+
                 return newOrd;
             }
         }

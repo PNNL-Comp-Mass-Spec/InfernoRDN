@@ -95,7 +95,14 @@ namespace DAnTE.Inferno
         {
             set
             {
-                mlstBoxAllCols.DataSource = value;
+                // Note: cannot use .DataSource = Value because we .Remove items from the listbox
+
+                mlstBoxAllCols.Items.Clear();
+                foreach (var item in value)
+                {
+                    mlstBoxAllCols.Items.Add(item);
+                }                
+
             }
         }
 

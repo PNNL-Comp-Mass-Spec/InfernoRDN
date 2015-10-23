@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DAnTE.Tools
@@ -28,7 +27,7 @@ namespace DAnTE.Tools
             marrValues = new List<string>();
         }
 
-        private List<string> MakeDeepCopy(List<string> sourceList)
+        private List<string> MakeDeepCopy(IEnumerable<string> sourceList)
         {
             var newList = new List<string>();
             foreach (var item in sourceList)

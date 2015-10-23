@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using DAnTE.Purgatorio;
 using DAnTE.Tools;
@@ -22,8 +21,14 @@ namespace DAnTE.Inferno
 
         private void Check4TtestFactors()
         {
+            if (marrFactors.Count == 0)
+            {
+                ttestFactors = new bool[1];
+                return;
+            }
+
             ttestFactors = new bool[marrFactors.Count];
-            for (int i = 0; i < marrFactors.Count; i++)
+            for (var i = 0; i < marrFactors.Count; i++)
             {
                 if (marrFactors[i].marrValues.Count == 2)
                     ttestFactors[i] = true;
@@ -49,21 +54,23 @@ namespace DAnTE.Inferno
 
         private void mlstBoxFactors_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selected = mlstBoxFactors.SelectedIndex;
+            var selected = mlstBoxFactors.SelectedIndex;
 
-            if (selected != -1)
+            if (selected == -1)
             {
-                Check4TtestFactors();
-                if (!ttestFactors[selected])
-                {
-                    MessageBox.Show("This factor has more than two levels." +
-                        Environment.NewLine + " Select a factor with two levels to perform the Wilcoxon Test.",
-                        "Factor not suitable", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    mlstBoxFactors.SelectedIndex = -1;
-                }
-                else
-                    sfactor = mlstBoxFactors.SelectedItem.ToString();
+                return;
             }
+
+            Check4TtestFactors();
+            if (!ttestFactors[selected])
+            {
+                MessageBox.Show("This factor has more than two levels." +
+                                Environment.NewLine + " Select a factor with two levels to perform the Wilcoxon Test.",
+                                "Factor not suitable", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                mlstBoxFactors.SelectedIndex = -1;
+            }
+            else
+                sfactor = mlstBoxFactors.SelectedItem.ToString();
         }
 
         private void frmWilcoxonPar_Load(object sender, EventArgs e)
@@ -72,7 +79,7 @@ namespace DAnTE.Inferno
             mlstBoxFactors.SelectedIndex = -1;
             //if (mlstBoxFactors.Items.Count > 0)
             //    mlstBoxFactors.SelectedIndex = mclsWilcoxonPar.nF;
-            mNumUpDthres.Value = (decimal)mclsWilcoxonPar.numDatapts;
+            mNumUpDthres.Value = mclsWilcoxonPar.numDatapts;
             //mrTBox.SelectionStart = 0;
             //mrTBox.Rtf = @"{\rtf1\ansi \ul Wilcoxon Rank Sum Test\ul0. \par Also known as Mann-Whitney test is the " + 
             //                @"non parametric equivalent of a t-test. The normality assumption is relaxed.}";

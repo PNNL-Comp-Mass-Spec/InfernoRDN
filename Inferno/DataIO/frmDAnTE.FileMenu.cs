@@ -18,9 +18,9 @@ namespace DAnTE.Inferno
 
         private static FileTypeExtension mMostRecentFileType = FileTypeExtension.Txt;
 
-        private void menuItemLoad_Click(object sender, System.EventArgs e)
+        private void menuItemLoad_Click(object sender, EventArgs e)
         {
-            string mstrOriginator = ((ToolStripMenuItem)sender).Text;
+            var mstrOriginator = ((ToolStripMenuItem)sender).Text;
 
             if (mstrOriginator.Contains("Expression"))
             {
@@ -61,7 +61,6 @@ namespace DAnTE.Inferno
                     GetOpenFileName(mMostRecentFileType);
                     if (mstrLoadedfileName != null)
                     {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
                         DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
                     }
                 }
@@ -77,7 +76,6 @@ namespace DAnTE.Inferno
                     GetOpenFileName(mMostRecentFileType);
                     if (mstrLoadedfileName != null)
                     {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
                         DataFileOpenThreaded(mstrLoadedfileName, "Loading Factor Information ...");
                     }
                 }
@@ -87,9 +85,8 @@ namespace DAnTE.Inferno
         private void DataFileOpenThreaded(string filename, string message)
         {
             #region Threading
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_OpenFiles);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_FileOpenCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenFiles;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_FileOpenCompleted;
             #endregion
 
             m_BackgroundWorker.RunWorkerAsync(filename);
@@ -97,26 +94,24 @@ namespace DAnTE.Inferno
             mfrmShowProgress.ShowDialog();
 
             #region Threading
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_OpenFiles);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_FileOpenCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenFiles;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_FileOpenCompleted;
             #endregion
         }
 
         private void menuItemMSMS_Click(object sender, EventArgs e)
         {
-            DataTable mDTspectral;
             if (mhtDatasets.ContainsKey("Expressions"))
                 MessageBox.Show("Expressions are already loaded.");
             else
             {
-                frmMSMSWizard msmsWizard = new frmMSMSWizard(mRConnector);
+                var msmsWizard = new frmMSMSWizard(mRConnector);
                 if (msmsWizard.ShowDialog(this) == DialogResult.OK)
                 {
-                    mDTspectral = msmsWizard.SpectralDT;
+                    var mDTspectral = msmsWizard.SpectralDT;
                     AddDataset2HashTable(mDTspectral);
 
-                    if (!(mDTspectral.Rows.Count == 0))
+                    if (mDTspectral.Rows.Count != 0)
                     {
                         AddDataNode(mhtDatasets["Expressions"]);
                     }
@@ -131,21 +126,19 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Threading
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_SaveSession);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_SaveSessionCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_SaveSession;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SaveSessionCompleted;
                 #endregion
 
-                bool success = true;
-                string FileName = null;
+                var success = true;
+                
                 //SaveFileDialog saveFdlg = new SaveFileDialog();
-                string rcmd1 = null, rcmd2 = null;
-                string rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
+                var rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
 
                 rcmd = rcmd + Vars2Save();
 
-                rcmd = rcmd.Substring(0, rcmd.LastIndexOf(","));
-                rcmd1 = rcmd + ")";
+                rcmd = rcmd.Substring(0, rcmd.LastIndexOf(','));
+                var rcmd1 = rcmd + ")";
 
                 try
                 {
@@ -159,7 +152,7 @@ namespace DAnTE.Inferno
                 }
                 if (success)
                 {
-                    rcmd2 = rcmd + ",\"vars\")";
+                    var rcmd2 = rcmd + ",\"vars\")";
                     mstrLoadedfileName = Settings.Default.SessionFileName;
                     if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
                     {
@@ -172,8 +165,8 @@ namespace DAnTE.Inferno
                         Settings.Default.SessionFileName = mstrLoadedfileName;
                         Settings.Default.Save();
 
-                        FileName = mstrLoadedfileName.Replace("\\", "/");
-                        rcmd2 = rcmd2.Substring(rcmd2.IndexOf("c"));
+                        var FileName = mstrLoadedfileName.Replace("\\", "/");
+                        rcmd2 = rcmd2.Substring(rcmd2.IndexOf('c'));
                         rcmd = "save(list=" + rcmd2 + ",file=\"" + FileName + "\")";
 
                         m_BackgroundWorker.RunWorkerAsync(rcmd);
@@ -185,9 +178,8 @@ namespace DAnTE.Inferno
                     MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 #region Threading
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_SaveSession);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_SaveSessionCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;
                 #endregion
             }
         }
@@ -197,21 +189,18 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Threading
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_SaveSession);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_SaveSessionCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_SaveSession;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SaveSessionCompleted;
                 #endregion
 
-                bool success = true;
-                string FileName = null;
+                var success = true;
                 //SaveFileDialog saveFdlg = new SaveFileDialog();
-                string rcmd1 = null, rcmd2 = null;
-                string rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
+                var rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
 
                 rcmd = rcmd + Vars2Save();
 
-                rcmd = rcmd.Substring(0, rcmd.LastIndexOf(","));
-                rcmd1 = rcmd + ")";
+                rcmd = rcmd.Substring(0, rcmd.LastIndexOf(','));
+                var rcmd1 = rcmd + ")";
 
                 try
                 {
@@ -225,7 +214,7 @@ namespace DAnTE.Inferno
                 }
                 if (success)
                 {
-                    rcmd2 = rcmd + ",\"vars\")";
+                    var rcmd2 = rcmd + ",\"vars\")";
 
                     mstrFldgTitle = "Select a file to save the session";
                     GetSaveFileName("DAnTE files (*.dnt)|*.dnt|All files (*.*)|*.*");
@@ -235,9 +224,9 @@ namespace DAnTE.Inferno
                         Settings.Default.SessionFileName = mstrLoadedfileName;
                         Settings.Default.Save();
 
-                        FileName = mstrLoadedfileName.Replace("\\", "/");
-                        rcmd2 = rcmd2.Substring(rcmd2.IndexOf("c"));
-                        rcmd = "save(list=" + rcmd2 + ",file=\"" + FileName + "\")";
+                        var fileName = mstrLoadedfileName.Replace("\\", "/");
+                        rcmd2 = rcmd2.Substring(rcmd2.IndexOf('c'));
+                        rcmd = "save(list=" + rcmd2 + ",file=\"" + fileName + "\")";
 
                         m_BackgroundWorker.RunWorkerAsync(rcmd);
                         mfrmShowProgress.Message = "Saving Session ...";
@@ -248,9 +237,8 @@ namespace DAnTE.Inferno
                     MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 #region Threading
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_SaveSession);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_SaveSessionCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;
                 #endregion
             }
         }
@@ -259,16 +247,15 @@ namespace DAnTE.Inferno
         private void mnuOpenSession_Click(object sender, EventArgs e)
         {
             #region Threading
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_OpenSession);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_SessionOpenCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SessionOpenCompleted;
             #endregion
 
-            bool doRun = true;
+            var doRun = true;
 
             if (mtabControlData.Controls.Count != 0)
             {
-                DialogResult res = MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
+                var res = MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
                     "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.No)
                     doRun = false;
@@ -290,9 +277,8 @@ namespace DAnTE.Inferno
                 }
             }
             #region Threading
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_OpenSession);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_SessionOpenCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenSession;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
             #endregion
         }
 
@@ -307,22 +293,25 @@ namespace DAnTE.Inferno
 
             if (mtabControlData.Controls.Count != 0)
             {
-                SaveFileDialog saveFdlg = new SaveFileDialog();
-
-                saveFdlg.Filter = "CSV files (*.csv)|*.csv|Tab delimited TXT files (*.txt)|*.txt|All files (*.*)|*.*";
-                saveFdlg.FilterIndex = 1;
-                saveFdlg.RestoreDirectory = true;
-
-                if (saveFdlg.ShowDialog() == DialogResult.OK)
+                var saveFdlg = new SaveFileDialog
                 {
-                    var outputFile = new FileInfo(saveFdlg.FileName);
+                    Filter = "CSV files (*.csv)|*.csv|Tab delimited TXT files (*.txt)|*.txt|All files (*.*)|*.*",
+                    FilterIndex = 1,
+                    RestoreDirectory = true
+                };
 
-                    using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
-                    {
-                        CsvWriter.WriteToStream(writer, mclsSelected.mDTable, true, false,
-                            outputFile.Extension.ToLower().Equals(".txt"));
-                        this.statusBarPanelMsg.Text = "File saved successfully.";
-                    }
+                if (saveFdlg.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                var outputFile = new FileInfo(saveFdlg.FileName);
+
+                using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
+                {
+                    CsvWriter.WriteToStream(writer, mclsSelected.mDTable, true, false,
+                                            outputFile.Extension.ToLower().Equals(".txt"));
+                    this.statusBarPanelMsg.Text = "File saved successfully.";
                 }
             }
         }
@@ -332,22 +321,20 @@ namespace DAnTE.Inferno
             base.OnClosing(e);
 
             // If the user canceled then exit.
-            if (e.Cancel == true)
+            if (e.Cancel)
                 return;
 
             if (OK2Exit())
             {
                 sessionFile = null;
                 e.Cancel = false;
-                return;
             }
             else
             {
                 e.Cancel = true;
-                return;
             }
 
-        } // End OnClosing()
+        }
 
         public bool OK2Exit()
         {
@@ -375,6 +362,7 @@ namespace DAnTE.Inferno
             if (!mhtDatasets.ContainsKey("Protein Info"))
             {
                 MessageBox.Show("No protein information found!", "Insufficient data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             mstrFldgTitle = "Select a file to save";
@@ -393,8 +381,7 @@ namespace DAnTE.Inferno
             else
             {
                 // Match not found; this is unexpected; export the data using R
-                string rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" +
-                   mstrLoadedfileName.Replace("\\", "/") + "\")";
+                var rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" + mstrLoadedfileName.Replace("\\", "/") + "\")";
                 try
                 {
                     mRConnector.EvaluateNoReturn(rcmd);
@@ -423,8 +410,8 @@ namespace DAnTE.Inferno
                 // Column 0 is Row_ID
                 // Column 1 is ProteinID
 
-                string rowID = row[0].ToString();
-                string proteinID = row[1].ToString();
+                var rowID = row[0].ToString();
+                var proteinID = row[1].ToString();
 
                 if (string.IsNullOrWhiteSpace(rowID) || string.IsNullOrWhiteSpace(proteinID))
                     continue;
@@ -445,15 +432,15 @@ namespace DAnTE.Inferno
             }
 
             const bool quoteAll = false;
-            bool tabDelimited = outputFile.Extension.ToLower() == ".txt";
+            var tabDelimited = outputFile.Extension.ToLower() == ".txt";
 
             using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
             {
 
-                int columnCount = currentDataset.mDTable.Columns.Count;
+                var columnCount = currentDataset.mDTable.Columns.Count;
                 var rowData = new List<string>(columnCount);
 
-                for (int i = 0; i < columnCount; i++)
+                for (var i = 0; i < columnCount; i++)
                 {
                     rowData.Add(currentDataset.mDTable.Columns[i].Caption);
 
@@ -466,7 +453,7 @@ namespace DAnTE.Inferno
 
                 foreach (DataRow row in currentDataset.mDTable.Rows)
                 {
-                    string rowID = row[0].ToString();
+                    var rowID = row[0].ToString();
                     List<string> proteinsForRow;
                     if (!proteinList.TryGetValue(rowID, out proteinsForRow))
                     {
@@ -480,9 +467,9 @@ namespace DAnTE.Inferno
                     {
                         rowData.Clear();
 
-                        for (int j = 0; j < columnCount; j++)
+                        for (var j = 0; j < columnCount; j++)
                         {
-                            string itemText = string.Empty;
+                            var itemText = string.Empty;
 
                             if (row[j] != null)
                             {
