@@ -1,25 +1,22 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
     public class clsKruskalWPar
     {
         private string rcmd;
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "Kruskal-Walis Test")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "Kruskal-Walis Test")]
         public string Rdataset;
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "Kruskal-Walis_Test")]
+        [Tools.clsAnalysisAttribute("Source_DataTable", "Kruskal-Walis_Test")]
         public string mstrDatasetName;
         public string tempFile;
-        [DAnTE.Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Kruskal-Walis_Test")]
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Kruskal-Walis_Test")]
         public int numDatapts;
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "Kruskal-Walis_Test")]
+        [Tools.clsAnalysisAttribute("Selected_Factor", "Kruskal-Walis_Test")]
         public string selectedFactor;
         public int nF;
-        public ArrayList marrFactors;
+        public List<string> marrFactors;
 
         public clsKruskalWPar()
         {

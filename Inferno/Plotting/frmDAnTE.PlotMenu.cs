@@ -36,7 +36,7 @@ namespace DAnTE.Inferno
             }
 
             mclsQQPar = new clsQQPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsQQPar.tempFile = mRTempFilePath;
             mclsQQPar.Rdataset = datasetNameInR;
@@ -54,31 +54,26 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_QQPlotCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QQPlotCompleted;
                 #endregion
 
-                clsRplotData mclsRplots;
-                frmQQPar mfrmQQPar;
+                var mfrmQQPar = new frmQQPar(clsQQPar);
 
-                mfrmQQPar = new frmQQPar(clsQQPar);
-
-                DialogResult res = mfrmQQPar.ShowDialog();
+                var res = mfrmQQPar.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     mclsQQPar = mfrmQQPar.clsQQPar;
 
-                    mclsRplots = new clsRplotData(clsQQPar.Rcmd, "QQ");
+                    var mclsRplots = new clsRplotData(clsQQPar.Rcmd, "QQ");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsRplots);
                     mfrmShowProgress.Message = "Generating Q-Q Plots ...";
                     mfrmShowProgress.ShowDialog();
                 }
                 #region Unhook Threading Events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_QQPlotCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QQPlotCompleted;
                 #endregion
             }
         }
@@ -103,7 +98,7 @@ namespace DAnTE.Inferno
             }
 
             mclsHistPar = new clsHistogramPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsHistPar.tempFile = mRTempFilePath;
             mclsHistPar.Rdataset = datasetNameInR;
@@ -121,31 +116,26 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_HistPlotCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_HistPlotCompleted;
                 #endregion
 
-                clsRplotData mclsRplots;
-                frmHistogramPar mfrmHistPar;
+                var mfrmHistPar = new frmHistogramPar(clsHistPar);
 
-                mfrmHistPar = new frmHistogramPar(clsHistPar);
-
-                DialogResult res = mfrmHistPar.ShowDialog();
+                var res = mfrmHistPar.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     mclsHistPar = mfrmHistPar.clsHistPar;
 
-                    mclsRplots = new clsRplotData(clsHistPar.Rcmd, "Hist");
+                    var mclsRplots = new clsRplotData(clsHistPar.Rcmd, "Hist");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsRplots);
                     mfrmShowProgress.Message = "Generating Histograms ...";
                     mfrmShowProgress.ShowDialog();
                 }
                 #region Unhook Threading Events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_HistPlotCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_HistPlotCompleted;
                 #endregion
             }
         }
@@ -165,7 +155,7 @@ namespace DAnTE.Inferno
             }
 
             mclsCorrPar = new clsCorrelationPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsCorrPar.tempFile = mRTempFilePath;
             mclsCorrPar.Rdataset = datasetNameInR;
@@ -183,12 +173,10 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_CorrPlotCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_CorrPlotCompleted;
                 #endregion
 
-                clsRplotData mclsRplots;
                 frmCorrelationPar mfrmCorrPar;
                 mfrmCorrPar = new frmCorrelationPar(clsCorrPar);
 
@@ -196,7 +184,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsCorrPar = mfrmCorrPar.clsCorrPar;
-                    mclsRplots = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
+                    var mclsRplots = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsRplots);
                     mfrmShowProgress.Message = "Generating Correlation Plot ...";
@@ -204,9 +192,8 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_CorrPlotCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_CorrPlotCompleted;
                 #endregion
             }
         }
@@ -226,7 +213,7 @@ namespace DAnTE.Inferno
             }
 
             mclsBoxPlotPar = new clsBoxPlotPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsBoxPlotPar.tempFile = mRTempFilePath;
             mclsBoxPlotPar.Rdataset = datasetNameInR;
@@ -234,7 +221,7 @@ namespace DAnTE.Inferno
             mclsBoxPlotPar.mstrDatasetName = mclsSelected.mstrDataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+                var mclsFactors = mhtDatasets["Factors"];
                 mclsBoxPlotPar.Factors = clsDataTable.DataTableRows(mclsFactors.mDTable);
             }
             else
@@ -251,21 +238,17 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_BoxPlotCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_BoxPlotCompleted;
                 #endregion
 
-                clsRplotData mclsRplots;
-                frmBoxPlotPar mfrmBoxplotPar;
+                var mfrmBoxplotPar = new frmBoxPlotPar(clsBoxPlotPar);
 
-                mfrmBoxplotPar = new frmBoxPlotPar(clsBoxPlotPar);
-
-                DialogResult res = mfrmBoxplotPar.ShowDialog();
+                var res = mfrmBoxplotPar.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     mclsBoxPlotPar = mfrmBoxplotPar.clsBoxPlotPar;
-                    mclsRplots = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
+                    var mclsRplots = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsRplots);
                     mfrmShowProgress.Message = "Generating the Box Plot ...";
@@ -273,17 +256,16 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_BoxPlotCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_BoxPlotCompleted;
                 #endregion
             }
         }
 
         private void mnuProteinRollupPlot_Click(object sender, EventArgs e)
         {
-            var dataSourceList = new ArrayList();
-            bool mblPlot = false;
+            var dataSourceList = new List<string>();
+            var mblPlot = false;
 
             if (mhtDatasets.ContainsKey("QRollup"))
             {
@@ -339,7 +321,7 @@ namespace DAnTE.Inferno
             }
 
             mclsMApar = new clsMAplotsPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsMApar.tempFile = mRTempFilePath;
             mclsMApar.Rdataset = datasetNameInR;
@@ -357,30 +339,25 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_MAplotCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MAplotCompleted;
                 #endregion
 
-                clsRplotData mclsRplots;
-                frmMAplotsPar mfrmMAPar;
+                var mfrmMAPar = new frmMAplotsPar(clsMApar);
 
-                mfrmMAPar = new frmMAplotsPar(clsMApar);
-
-                DialogResult res = mfrmMAPar.ShowDialog();
+                var res = mfrmMAPar.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     mclsMApar = mfrmMAPar.clsMAplotPar;
-                    mclsRplots = new clsRplotData(mclsMApar.Rcmd, "MA");
+                    var mclsRplots = new clsRplotData(mclsMApar.Rcmd, "MA");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsRplots);
                     mfrmShowProgress.Message = "Generating MA Plots ...";
                     mfrmShowProgress.ShowDialog();
                 }
                 #region Unhook Threading Events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_MAplotCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MAplotCompleted;
                 #endregion
             }
         }
@@ -394,20 +371,19 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            frmPlotDisplay mfrmPlotDisplay = new frmPlotDisplay();
-            DataGridView currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
+            var mfrmPlotDisplay = new frmPlotDisplay();
+            var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
 
             if (!ValidateIsPlottable(mclsSelected))
             {
                 return;
             }
 
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
-            string rcmd = null;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
-            DataGridViewSelectedRowCollection selectedRows = GetSelectedRows(currGrid);
+            var selectedRows = GetSelectedRows(currGrid);
             if (selectedRows.Count < 1)
             {
                 MessageBox.Show("No rows have been selected", "Nothing to plot");
@@ -422,7 +398,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            bool addComma = false;
+            var addComma = false;
             foreach (DataGridViewRow row in selectedRows)
             {
                 if (addComma)
@@ -433,7 +409,7 @@ namespace DAnTE.Inferno
             }
             selectedRowData.Append(")");
 
-            rcmd = "PlotRows(" + datasetNameInR + "," + selectedRowData + @",file=""" + mRTempFilePath + @""")";
+            var rcmd = "PlotRows(" + datasetNameInR + "," + selectedRowData + @",file=""" + mRTempFilePath + @""")";
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
@@ -465,7 +441,7 @@ namespace DAnTE.Inferno
             }
 
             mclsVennPar = new clsVennPar();
-            string datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = mclsSelected.mstrRdatasetName;
 
             mclsVennPar.tempFile = mRTempFilePath;
             mclsVennPar.Rdataset = datasetNameInR;
@@ -475,7 +451,7 @@ namespace DAnTE.Inferno
             mclsVennPar.mstrDatasetName = mclsSelected.mstrDataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+                var mclsFactors = mhtDatasets["Factors"];
                 mclsVennPar.marrFactorNames = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsVennPar.marrFactors = marrFactorInfo;
             }
@@ -491,13 +467,12 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
-                m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_VennCompleted);
+                m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_VennCompleted;
                 #endregion
 
-                frmVennDiagramPar mfrmVennPar = new frmVennDiagramPar(vennParameters);
-                DialogResult res = mfrmVennPar.ShowDialog();
+                var mfrmVennPar = new frmVennDiagramPar(vennParameters);
+                var res = mfrmVennPar.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     vennParameters = mfrmVennPar.clsVennPar;
@@ -509,9 +484,8 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
-                m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_GeneratePlots);
-                m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                    m_BackgroundWorker_VennCompleted);
+                m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
+                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_VennCompleted;
                 #endregion
             }
         }

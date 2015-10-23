@@ -1,15 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using DAnTE.Properties;
-using DAnTE.Tools;
-using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
 {
@@ -32,7 +24,7 @@ namespace DAnTE.Inferno
         }
 
 
-        public ArrayList PopulateFactorComboBox
+        public List<string> PopulateFactorComboBox
         {
             set
             {
@@ -44,7 +36,7 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = mcmbBoxFactors.SelectedIndex + 1;
+                var idx = mcmbBoxFactors.SelectedIndex + 1;
                 return "factors[" + idx.ToString() + ",]";
             }
         }

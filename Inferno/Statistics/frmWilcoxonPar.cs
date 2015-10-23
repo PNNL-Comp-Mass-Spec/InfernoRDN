@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using DAnTE.Purgatorio;
 using DAnTE.Tools;
 
@@ -13,11 +9,10 @@ namespace DAnTE.Inferno
 {
     public partial class frmWilcoxonPar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-        private ArrayList marrFactors = new ArrayList();
+        private List<clsFactorInfo> marrFactors = new List<clsFactorInfo>();
         private bool[] ttestFactors;
         private string sfactor = "";
-        private clsWilcoxonPar mclsWilcoxonPar = new clsWilcoxonPar();
+        private readonly clsWilcoxonPar mclsWilcoxonPar;
 
         public frmWilcoxonPar(clsWilcoxonPar clsWilcox)
         {
@@ -30,7 +25,7 @@ namespace DAnTE.Inferno
             ttestFactors = new bool[marrFactors.Count];
             for (int i = 0; i < marrFactors.Count; i++)
             {
-                if (((clsFactorInfo)marrFactors[i]).marrValues.Count == 2)
+                if (marrFactors[i].marrValues.Count == 2)
                     ttestFactors[i] = true;
                 else
                     ttestFactors[i] = false;
@@ -97,17 +92,12 @@ namespace DAnTE.Inferno
                 return mclsWilcoxonPar;
             }
         }
-                
-        public ArrayList PopulateListBox
+
+        public List<string> PopulateListBox
         {
             set
             {
-                marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxFactors, lstBoxEntries);
-                mlstBoxFactors.Items.AddRange(lboxObjColData);
+                mlstBoxFactors.DataSource = value;
             }
         }
                 
@@ -128,7 +118,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList FactorList
+        public List<clsFactorInfo> FactorList
         {
             set
             {

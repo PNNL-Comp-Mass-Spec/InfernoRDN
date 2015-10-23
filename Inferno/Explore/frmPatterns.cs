@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using ZedGraph;
 using DAnTE.Purgatorio;
@@ -15,10 +11,10 @@ namespace DAnTE.Inferno
     {
         private int nPatterns = 3;
         private int nDatasets = 10;
-        private Hashtable mhtPatterns;
+        private Dictionary<string, List<double>> mhtPatterns;
         private PointPairList list;
-        private ArrayList marrDatasets = new ArrayList();
-        private clsPatternSearchPar mclsPatternPar;
+        private List<string> marrDatasets = new List<string>();
+        private readonly clsPatternSearchPar mclsPatternPar;
 
         public frmPatterns(clsPatternSearchPar mclsPatterns)
         {
@@ -29,17 +25,16 @@ namespace DAnTE.Inferno
         private void GeneratePatterns()
         {
             // Random number generator for random shapes
-            Random RandomNum = new Random();
+            var RandomNum = new Random();
 
-            mhtPatterns = new Hashtable();
+            mhtPatterns = new Dictionary<string, List<double>>();
 
-            for (int k = 0; k < nPatterns; k++)
+            for (var k = 0; k < nPatterns; k++)
             {
-                ArrayList pattern = new ArrayList();
+                var pattern = new List<double>();
                 pattern.Clear();
-                for (int m = 0; m < nDatasets; m++)
+                for (var m = 0; m < nDatasets; m++)
                 {
-                    double x = (double)m + 1;
                     pattern.Add(RandomNum.NextDouble());
                 }
                 mhtPatterns.Add((k + 1).ToString(), pattern);
@@ -51,8 +46,7 @@ namespace DAnTE.Inferno
         // Call this method from the Form_Load method, passing your ZedGraphControl
         public void CreateChart(ZedGraphControl zgc, PointPairList pplist)
         {
-            ArrayList vpattern = new ArrayList();
-            MasterPane myMaster = zgc.MasterPane;
+            var myMaster = zgc.MasterPane;
 
             myMaster.PaneList.Clear();
 
@@ -67,17 +61,14 @@ namespace DAnTE.Inferno
             myMaster.Margin.All = 10;
 
             // Initialize a color and symbol type rotator
-            ColorSymbolRotator rotator = new ColorSymbolRotator();
-
-            // Random number generator for random shapes
-            Random RandomNum = new Random();
+            var rotator = new ColorSymbolRotator();
 
             // Create some new GraphPanes
-            for (int j = 0; j < nPatterns; j++)
+            for (var j = 0; j < nPatterns; j++)
             {
                 // Create a new graph - rect dimensions do not matter here, since it
                 // will be resized by MasterPane.AutoPaneLayout()
-                GraphPane myPane = new GraphPane(new Rectangle(10, 10, 10, 10),
+                var myPane = new GraphPane(new Rectangle(10, 10, 10, 10),
                    "Pattern: " + (j + 1).ToString(),
                    "Dataset Number",
                    "Intensity (normalized)");
@@ -98,18 +89,18 @@ namespace DAnTE.Inferno
 
                 // Data to plot
                 list = new PointPairList();
-                vpattern = (ArrayList)mhtPatterns[(j + 1).ToString()];
+                var vpattern = mhtPatterns[(j + 1).ToString()];
 
-                for (int i = 0; i < vpattern.Count; i++)
+                for (var i = 0; i < vpattern.Count; i++)
                 {
-                    double x = (double)i + 1;
-                    double y = (double)vpattern[i];
-                    //double y = 1;
+                    var x = (double)i + 1;
+                    var y = vpattern[i];
+                    
                     list.Add(x, y);
                 }
 
                 // Add a curve to the Graph, use the next sequential color and symbol
-                LineItem myCurve = myPane.AddCurve("Type " + j.ToString(),
+                var myCurve = myPane.AddCurve("Type " + j,
                    list, rotator.NextColor, rotator.NextSymbol);
 
                 myCurve.Line.Width = 1.5F;
@@ -124,7 +115,7 @@ namespace DAnTE.Inferno
 
             }
 
-            using (Graphics g = this.CreateGraphics())
+            using (var g = CreateGraphics())
             {
                 // Tell ZedGraph to auto layout the new GraphPanes
                 myMaster.SetLayout(g, PaneLayout.SquareRowPreferred);
@@ -138,11 +129,11 @@ namespace DAnTE.Inferno
             mhtPatterns.Clear();
             nPatterns = zg1.MasterPane.PaneList.Count;
 
-            for (int k = 0; k < nPatterns; k++)
+            for (var k = 0; k < nPatterns; k++)
             {
-                ArrayList pattern = new ArrayList();
+                var pattern = new List<double>();
 
-                for (int m = 0; m < nDatasets; m++)
+                for (var m = 0; m < nDatasets; m++)
                 {
                     pattern.Add(zg1.MasterPane.PaneList[k].CurveList[0].Points[m].Y);
                 }
@@ -173,17 +164,17 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListView
+        public List<string> PopulateListView
         {
             set
             {
                 marrDatasets = value;
-                ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var lstVcolln = new ListViewItem[marrDatasets.Count];
 
-                for (int i = 0; i < marrDatasets.Count; i++)
+                for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem((i+1).ToString());
-                    lstVItem.SubItems.Add(marrDatasets[i].ToString());
+                    var lstVItem = new ListViewItem((i+1).ToString());
+                    lstVItem.SubItems.Add(marrDatasets[i]);
                     lstVItem.Tag = i;
                     lstVcolln[i] = lstVItem;
                 }

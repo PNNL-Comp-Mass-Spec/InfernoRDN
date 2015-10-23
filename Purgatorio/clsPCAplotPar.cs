@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
@@ -29,8 +26,8 @@ namespace DAnTE.Purgatorio
         public string mstrDatasetName;
         public string tempFile;
         public string datasubset;
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsPCAplotPar()
         {

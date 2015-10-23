@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Text;
@@ -7,14 +6,15 @@ using System.Windows.Forms;
 using DAnTE.ExtraControls;
 using DAnTE.Purgatorio;
 using DAnTE.Tools;
+using System.Collections.Generic;
 
 namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
 
-        private ArrayList marrDatasetInfo = new ArrayList(); //of type clsDatasetInfo
-        private ArrayList marrFactorInfo = new ArrayList(); // of type clsFactorInfo
+        private List<clsDatasetInfo> marrDatasetInfo = new List<clsDatasetInfo>();
+        private List<clsFactorInfo> marrFactorInfo = new List<clsFactorInfo>();
         private clsAnovaPar mclsAnovaPar;
         private clsTamuQPar mclsTamuQPar;
         private clsKruskalWPar mclsKWpar;
@@ -22,37 +22,37 @@ namespace DAnTE.Inferno
         private clsShapiroWilksPar mclsShapiroWilksPar;
         private clsFoldChangePar mclsFoldChangePar;
         private clsOneSampleTtestPar mclsOneSampleTtestPar;
-        string Rdataset = null;
+        string Rdataset;
 
         #region Private Methods
+
         /// <summary>
         /// Extract Factor information from a datatable 
         /// to an arraylist of clsDatasetInfo type.
         /// </summary>
         /// <param name="dt"></param>
+        /// <param name="factorsLoaded"></param>
         private void DatasetFactorInfo(DataTable dt, bool factorsLoaded)
         {
-            ArrayList names = clsDataTable.DataTableColumns(dt, true); // get data only columns
-            ArrayList marrFactors = new ArrayList();
-            clsDatasetInfo dsetItem;
-            string factorname = null;
+            var factorNames = clsDataTable.DataTableColumns(dt, true); // get data only columns
+            var marrFactors = new List<string>();
 
             marrDatasetInfo.Clear();
-            for (int i = 0; i < names.Count; i++)
+            for (var i = 0; i < factorNames.Count; i++)
             {
-                dsetItem = new clsDatasetInfo(names[i].ToString());
+                var dsetItem = new clsDatasetInfo(factorNames[i]);
                 if (factorsLoaded)
                 {
-                    clsFactorInfo tmpFactorInfo = new clsFactorInfo();
-                    for (int k = 0; k < dt.Rows.Count; k++) // go thru each row
+
+                    for (var k = 0; k < dt.Rows.Count; k++) // go thru each row
                     {
-                        DataRow mDrow = dt.Rows[k];
+                        var mDrow = dt.Rows[k];
                         if (i == 0)
                         {
-                            factorname = mDrow.ItemArray[i].ToString(); // factor name at 0th position
+                            var factorname = mDrow.ItemArray[i].ToString();
                             marrFactors.Add(factorname);
                         }
-                        Factor currFactor = new Factor(marrFactors[k].ToString(), mDrow.ItemArray[i + 1].ToString());
+                        var currFactor = new Factor(marrFactors[k], mDrow.ItemArray[i + 1].ToString());
                         dsetItem.marrFactorAssnmnts.Add(currFactor);
                     }
                     //dsetItem.marrFactors = marrFactors;
@@ -68,116 +68,127 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private DataTable DatasetArr2DT()
         {
-            DataTable mDataTable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
+            var mDataTable = new DataTable();
 
-            mDataColumn = new DataColumn
+            var mDataColumn = new DataColumn
             {
-                DataType = System.Type.GetType("System.String"),
+                DataType = Type.GetType("System.String"),
                 ColumnName = "Factors"
             };
             mDataTable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < marrDatasetInfo.Count; i++)
+            foreach (var dataset in marrDatasetInfo)
             {
                 mDataColumn = new DataColumn
                 {
-                    DataType = System.Type.GetType("System.String"),
-                    ColumnName = ((clsDatasetInfo)marrDatasetInfo[i]).mstrDataSetName
+                    DataType = Type.GetType("System.String"),
+                    ColumnName = dataset.mstrDataSetName
                 };
                 mDataTable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < ((clsDatasetInfo)marrDatasetInfo[0]).marrFactorAssnmnts.Count; i++)
+
+            for (var i = 0; i < marrDatasetInfo[0].marrFactorAssnmnts.Count; i++)
             {
-                mDataRow = mDataTable.NewRow();
-                mDataRow[0] = ((Factor)((clsDatasetInfo)marrDatasetInfo[0]).marrFactorAssnmnts[i]).Name;
-                for (int j = 0; j < marrDatasetInfo.Count; j++)
+                var mDataRow = mDataTable.NewRow();
+                mDataRow[0] = marrDatasetInfo[0].marrFactorAssnmnts[i].Name;
+                for (var j = 0; j < marrDatasetInfo.Count; j++)
                 {
-                    mDataRow[j + 1] = ((Factor)((clsDatasetInfo)marrDatasetInfo[j]).marrFactorAssnmnts[i]).Value;
+                    mDataRow[j + 1] = marrDatasetInfo[j].marrFactorAssnmnts[i].Value;
                 }
                 mDataTable.Rows.Add(mDataRow);
             }
             return mDataTable;
         }
 
-        private ArrayList MakeDeepCopy(ArrayList marrIN) //Deep copy arraylists of classes
+        private List<clsDatasetInfo> MakeDeepCopy(IEnumerable<clsDatasetInfo> sourceList)
         {
-            ArrayList copyTo = new ArrayList();
-            foreach (object obj in marrIN)
+            var newList = new List<clsDatasetInfo>();
+            foreach (var item in sourceList)
             {
-                copyTo.Add(((ICloneable)obj).Clone());
+                newList.Add((clsDatasetInfo)(item.Clone()));
             }
-            return copyTo;
+            return newList;
+        }
+
+        private List<clsFactorInfo> MakeDeepCopy(IEnumerable<clsFactorInfo> sourceList)
+        {
+            var newList = new List<clsFactorInfo>();
+            foreach (var item in sourceList)
+            {
+                newList.Add((clsFactorInfo)(item.Clone()));
+            }
+            return newList;
         }
 
         private bool t_testPossible()
         {
-            bool ttest = false;
-            for (int i = 0; i < marrFactorInfo.Count; i++)
+            var ttest = false;
+            foreach (var factor in marrFactorInfo)
             {
-                if (((clsFactorInfo)marrFactorInfo[i]).marrValues.Count == 2)
+                if (factor.marrValues.Count == 2)
                     ttest = true;
             }
             return ttest;
         }
 
-        private void ChangeDatasetOrder(ArrayList marrNewNameOrder)
+        private void ChangeDatasetOrder(List<string> newNameOrder)
         {
-            var marrOldOrder = new ArrayList();
-            var marr2Remove = new ArrayList();
+            var marrOldOrder = new List<string>();
+            var marr2Remove = new List<string>();
 
             if (!ValidateExpressionsLoaded("change dataset order"))
             {
                 return;
             }
 
-            var expTable = ((clsDatasetTreeNode)mhtDatasets["Expressions"]).mDTable;
-            for (int num = 1; num < expTable.Columns.Count; num++)
+            var expTable = (mhtDatasets["Expressions"]).mDTable;
+            for (var num = 1; num < expTable.Columns.Count; num++)
             {
                 marrOldOrder.Add(expTable.Columns[num].ColumnName);
             }
-            marr2Remove.Clear();
-            for (int num = 0; num < marrOldOrder.Count; num++)
+
+            foreach (var item in marrOldOrder)
             {
-                if (!marrNewNameOrder.Contains(marrOldOrder[num]))
-                    marr2Remove.Add(marrOldOrder[num]);
+                if (!newNameOrder.Contains(item))
+                    marr2Remove.Add(item);
             }
 
-            foreach (string strKey in mhtDatasets.Keys)
+            foreach (var strKey in mhtDatasets.Keys)
             {
-                var currentNode = ((clsDatasetTreeNode)mhtDatasets[strKey]);
+                var currentNode = (mhtDatasets[strKey]);
                 if (currentNode.mblIsNumeric)
                 {
                     expTable = currentNode.mDTable;
-                    for (int num = 0; num < marr2Remove.Count; num++) //remove columns
+                    foreach (var colName in marr2Remove)
                     {
-                        expTable.Columns.Remove((string)marr2Remove[num]);
+                        expTable.Columns.Remove(colName);
                     }
-                    for (int num = 0; num < marrNewNameOrder.Count; num++) //reorder columns
+
+                    //reorder columns
+                    for (var num = 0; num < newNameOrder.Count; num++)
                     {
                         if (expTable.Columns.Contains("PepCount"))
-                            expTable.Columns[(string)marrNewNameOrder[num]].SetOrdinal(num + 2);
+                            expTable.Columns[newNameOrder[num]].SetOrdinal(num + 2);
                         else
-                            expTable.Columns[(string)marrNewNameOrder[num]].SetOrdinal(num + 1);
+                            expTable.Columns[newNameOrder[num]].SetOrdinal(num + 1);
                     }
                 }
             }
         }
 
-        private void ChangeDatasetOrderR(ArrayList marrNewOrder)
+        private void ChangeDatasetOrderR(List<int> newIndexOrder)
         {
-            string mstrOrder = @"newOrder=""c(";
-            string rcmd = null;
-            string vars = "numvars=" + NumericVars2R();
+            var mstrOrder = @"newOrder=""c(";
+            var vars = "numvars=" + NumericVars2R();
 
-            for (int num = 0; num < marrNewOrder.Count; num++)
+            foreach (var index in newIndexOrder)
             {
-                int currVal = (int)marrNewOrder[num] + 1;
-                mstrOrder += currVal.ToString() + ",";
+                var currVal = index + 1;
+                mstrOrder += currVal + ",";
             }
-            mstrOrder = mstrOrder.Substring(0, mstrOrder.LastIndexOf(",")) + @")""";
-            rcmd = "arrangeColumns(" + vars + "," + mstrOrder + ")";
+            mstrOrder = mstrOrder.Substring(0, mstrOrder.LastIndexOf(',')) + @")""";
+
+            var rcmd = "arrangeColumns(" + vars + "," + mstrOrder + ")";
             Console.WriteLine(rcmd);
             try
             {
@@ -196,10 +207,10 @@ namespace DAnTE.Inferno
 
         private void mnuItemDefFactors_Click(object sender, EventArgs e)
         {
-            ArrayList tmpDatasets = MakeDeepCopy(marrDatasetInfo); // keep copies
-            ArrayList tmpFactors = MakeDeepCopy(marrFactorInfo); // keep copies
-            //ArrayList newOrder = new ArrayList();
-            string mstrFrom = sender.ToString();
+            var tmpDatasets = MakeDeepCopy(marrDatasetInfo); // keep copies
+            var tmpFactors = MakeDeepCopy(marrFactorInfo); // keep copies
+            
+            var mstrFrom = sender.ToString();
 
             if (!mhtDatasets.ContainsKey("Factors"))
             {
@@ -234,13 +245,13 @@ namespace DAnTE.Inferno
                 marrFactorInfo = mfrmFactorInfo.FactorInfo;
                 if (marrFactorInfo.Count > 0)
                 {
-                    DataTable mDTFactors = DatasetArr2DT();
+                    var mDTFactors = DatasetArr2DT();
                     mDTFactors.Columns[0].ColumnName = "Factors";
                     mDTFactors.TableName = "factors";
                     AddDataset2HashTable(mDTFactors);
-                    if (mhtDatasets.Contains("Factors"))
+                    if (mhtDatasets.ContainsKey("Factors"))
                     {
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Factors"]);
+                        AddDataNode(mhtDatasets["Factors"]);
                     }
 
                     if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
@@ -279,9 +290,8 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_ANOVA);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_ANOVA;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
             #endregion
 
             mclsAnovaPar = new clsAnovaPar();
@@ -290,7 +300,7 @@ namespace DAnTE.Inferno
             mclsAnovaPar.tempFile = mRTempFilePath;
             mclsAnovaPar.Rdataset = Rdataset;
             mclsAnovaPar.mstrDatasetName = mclsSelected.mstrDataText;
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mclsAnovaPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (!ValidateDataMatrixTableSelected(mclsSelected))
@@ -316,9 +326,8 @@ namespace DAnTE.Inferno
 
 
             #region Unhook Threading Events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_ANOVA);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_ANOVA;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
             #endregion
 
         }
@@ -338,9 +347,8 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_TamuQ);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_TamuQCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_TamuQ;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_TamuQCompleted;
             #endregion
 
             mclsTamuQPar = new clsTamuQPar();
@@ -349,7 +357,7 @@ namespace DAnTE.Inferno
             mclsTamuQPar.tempFile = mRTempFilePath;
             mclsTamuQPar.Rdataset = Rdataset;
             mclsTamuQPar.mstrDatasetName = mclsSelected.mstrDataText;
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mclsTamuQPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (!ValidateDataMatrixTableSelected(mclsSelected))
@@ -374,9 +382,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_TamuQ);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_TamuQCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_TamuQ;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_TamuQCompleted;
             #endregion
 
         }
@@ -396,9 +403,8 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_KW);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_KW;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
             #endregion
 
             mclsKWpar = new clsKruskalWPar();
@@ -407,7 +413,7 @@ namespace DAnTE.Inferno
             mclsKWpar.tempFile = mRTempFilePath;
             mclsKWpar.Rdataset = Rdataset;
             mclsKWpar.mstrDatasetName = mclsSelected.mstrDataText;
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mclsKWpar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (!ValidateDataMatrixTableSelected(mclsSelected))
@@ -432,9 +438,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_KW);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_KW;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
             #endregion
 
         }
@@ -445,8 +450,8 @@ namespace DAnTE.Inferno
 
             if (!t_testPossible() || !mhtDatasets.ContainsKey("Factors"))
             {
-                MessageBox.Show("There is not a single factor with two levels" +
-                                Environment.NewLine + " to perform the Wilcoxon Test.", "No suitable factors",
+                MessageBox.Show("There is not a single factor with exactly two levels; " +
+                                Environment.NewLine + " cannot perform the Wilcoxon Test.", "No suitable factors",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
@@ -458,9 +463,8 @@ namespace DAnTE.Inferno
 
             #region Hook Threading Events
 
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Wilcox);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Wilcox;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
 
             #endregion
 
@@ -470,7 +474,7 @@ namespace DAnTE.Inferno
             mclsWilcoxPar.tempFile = mRTempFilePath;
             mclsWilcoxPar.Rdataset = Rdataset;
             mclsWilcoxPar.mstrDatasetName = mclsSelected.mstrDataText;
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mclsWilcoxPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (!ValidateDataMatrixTableSelected(mclsSelected, true))
@@ -498,9 +502,8 @@ namespace DAnTE.Inferno
 
             #region Unhook Threading Events
 
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Wilcox);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Wilcox;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
 
             #endregion
 
@@ -516,9 +519,8 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_ShapiroWilks);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_ShapiroWilks;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
             #endregion
 
             mclsShapiroWilksPar = new clsShapiroWilksPar();
@@ -545,9 +547,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_ShapiroWilks);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_ShapiroWilks;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
             #endregion
 
         }
@@ -592,12 +593,12 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(mclsFoldChangePar.Rcmd);
                 if (mRConnector.GetTableFromRmatrix("foldChanges"))
                 {
-                    DataTable mDTFoldChange = mRConnector.DataTable.Copy();
+                    var mDTFoldChange = mRConnector.DataTable.Copy();
                     if (mDTFoldChange != null)
                     {
                         mDTFoldChange.TableName = "foldChanges";
                         AddDataset2HashTable(mDTFoldChange);
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Fold Changes"]);
+                        AddDataNode(mhtDatasets["Fold Changes"]);
                     }
                 }
             }
@@ -617,9 +618,8 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Ttest);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Ttest;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
             #endregion
 
             mclsOneSampleTtestPar = new clsOneSampleTtestPar();
@@ -646,9 +646,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Ttest);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ANOVACompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Ttest;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
             #endregion
         }
 
@@ -663,12 +662,11 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            string rcmd = null;
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
-            DataGridView currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
-            DataGridViewSelectedRowCollection selectedRows = currGrid.SelectedRows;
+            var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
+            var selectedRows = currGrid.SelectedRows;
 
             if (selectedRows.Count < 2)
             {
@@ -676,7 +674,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            bool addComma = false;
+            var addComma = false;
             foreach (DataGridViewRow row in selectedRows)
             {
                 if (addComma)
@@ -697,25 +695,23 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            string datasetNameInR = ((clsDatasetTreeNode)mhtDatasets[mfrmRowFilter.Dataset]).mstrRdatasetName;
+            var datasetNameInR = (mhtDatasets[mfrmRowFilter.Dataset]).mstrRdatasetName;
 
             mintFilterTblNum++;
-            string filtTableName = "filteredData" + mintFilterTblNum;
-            rcmd = filtTableName + "<- filterOnRowIds(" + datasetNameInR + "," + selectedRowData + ")";
+            var filtTableName = "filteredData" + mintFilterTblNum;
+            var rcmd = filtTableName + "<- filterOnRowIds(" + datasetNameInR + "," + selectedRowData + ")";
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix(filtTableName))
                 {
-                    DataTable mDTfiltered = mRConnector.DataTable.Copy();
-                    if (mDTfiltered != null)
-                    {
-                        mDTfiltered.TableName = filtTableName;
-                        mDTfiltered.Columns[0].ColumnName = "ID";
-                        AddDataset2HashTable(mDTfiltered);
-                        if (mhtDatasets.Contains("Filtered Data" + mintFilterTblNum.ToString()))
-                            AddDataNode((clsDatasetTreeNode)mhtDatasets["Filtered Data" + mintFilterTblNum.ToString()]);
-                    }
+                    var mDTfiltered = mRConnector.DataTable.Copy();
+                    
+                    mDTfiltered.TableName = filtTableName;
+                    mDTfiltered.Columns[0].ColumnName = "ID";
+                    AddDataset2HashTable(mDTfiltered);
+                    if (mhtDatasets.ContainsKey("Filtered Data" + mintFilterTblNum.ToString()))
+                        AddDataNode(mhtDatasets["Filtered Data" + mintFilterTblNum.ToString()]);
                 }
             }
             catch (Exception ex)
@@ -726,10 +722,8 @@ namespace DAnTE.Inferno
 
         private bool DoAnova(string rcmd)
         {
-            DataTable mDTanovaP = new DataTable();
-            DataTable mDTanovaX = new DataTable();
-            bool mblAnovaAllUsed = false;
-            bool success = true;
+            var mblAnovaAllUsed = false;
+            var success = true;
 
             try
             {
@@ -746,7 +740,7 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = mRConnector.DataTable.Copy();
+                var mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -758,7 +752,7 @@ namespace DAnTE.Inferno
                 if (!mblAnovaAllUsed)
                 {
                     mRConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = mRConnector.DataTable.Copy();
+                    var mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -770,11 +764,10 @@ namespace DAnTE.Inferno
 
         private bool DoTamuQ(string rcmd)
         {
-            DataTable mDTamuQP = new DataTable();
-            DataTable mDTamuQYImputed = new DataTable();
-            DataTable mDTamuQX = new DataTable();
+
             /*bool mblAnovaAllUsed = false;*/
-            bool success = true;
+            var success = true;
+
             //rConnector.EvaluateNoReturn("a <- DoAnova");
             //rConnector.EvaluateNoReturn("a <- DoTamuQ");
             //rConnector.EvaluateNoReturn("pvalues<-1");
@@ -799,14 +792,14 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("yimputed"))
             {
-                mDTamuQYImputed = mRConnector.DataTable.Copy();
+                var mDTamuQYImputed = mRConnector.DataTable.Copy();
                 mDTamuQYImputed.TableName = "yimputed";
                 mDTamuQYImputed.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTamuQYImputed);
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTamuQP = mRConnector.DataTable.Copy();
+                var mDTamuQP = mRConnector.DataTable.Copy();
                 mDTamuQP.TableName = "pvalues";
                 mDTamuQP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTamuQP);
@@ -830,10 +823,8 @@ namespace DAnTE.Inferno
 
         private bool DoKWtest(string rcmd)
         {
-            DataTable mDTanovaP = new DataTable();
-            DataTable mDTanovaX = new DataTable();
-            bool mblAnovaAllUsed = false;
-            bool success = true;
+            var mblAnovaAllUsed = false;
+            var success = true;
 
             try
             {
@@ -850,7 +841,7 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = mRConnector.DataTable.Copy();
+                var mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -862,7 +853,7 @@ namespace DAnTE.Inferno
                 if (!mblAnovaAllUsed)
                 {
                     mRConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = mRConnector.DataTable.Copy();
+                    var mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -874,10 +865,8 @@ namespace DAnTE.Inferno
 
         private bool DoWilcoxtest(string rcmd)
         {
-            DataTable mDTanovaP = new DataTable();
-            DataTable mDTanovaX = new DataTable();
-            bool mblAnovaAllUsed = false;
-            bool success = true;
+            var mblAnovaAllUsed = false;
+            var success = true;
 
             try
             {
@@ -894,7 +883,7 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = mRConnector.DataTable.Copy();
+                var mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -906,7 +895,7 @@ namespace DAnTE.Inferno
                 if (!mblAnovaAllUsed)
                 {
                     mRConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = mRConnector.DataTable.Copy();
+                    var mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -918,10 +907,8 @@ namespace DAnTE.Inferno
 
         private bool DoShapiroWilkstest(string rcmd)
         {
-            DataTable mDTanovaP = new DataTable();
-            DataTable mDTanovaX = new DataTable();
-            bool mblAnovaAllUsed = false;
-            bool success = true;
+            var mblAnovaAllUsed = false;
+            var success = true;
 
             try
             {
@@ -938,7 +925,7 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = mRConnector.DataTable.Copy();
+                var mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -950,7 +937,7 @@ namespace DAnTE.Inferno
                 if (!mblAnovaAllUsed)
                 {
                     mRConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = mRConnector.DataTable.Copy();
+                    var mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }
@@ -962,10 +949,8 @@ namespace DAnTE.Inferno
 
         private bool DoOneSampleTtest(string rcmd)
         {
-            DataTable mDTanovaP = new DataTable();
-            DataTable mDTanovaX = new DataTable();
-            bool mblAnovaAllUsed = false;
-            bool success = true;
+            var mblAnovaAllUsed = false;
+            var success = true;
 
             try
             {
@@ -982,7 +967,7 @@ namespace DAnTE.Inferno
             }
             if (success && mRConnector.GetTableFromRmatrix("pvalues"))
             {
-                mDTanovaP = mRConnector.DataTable.Copy();
+                var mDTanovaP = mRConnector.DataTable.Copy();
                 mDTanovaP.TableName = "pvalues";
                 mDTanovaP.Columns[0].ColumnName = "ID";
                 AddDataset2HashTable(mDTanovaP);
@@ -994,7 +979,7 @@ namespace DAnTE.Inferno
                 if (!mblAnovaAllUsed)
                 {
                     mRConnector.GetTableFromRmatrix("notused");
-                    mDTanovaX = mRConnector.DataTable.Copy();
+                    var mDTanovaX = mRConnector.DataTable.Copy();
                     mDTanovaX.TableName = "notused";
                     AddDataset2HashTable(mDTanovaX);
                 }

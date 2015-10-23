@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
@@ -13,7 +7,7 @@ namespace DAnTE.Paradiso
         public frmSplash()
         {
             InitializeComponent();
-            mlblVersion.Text = "Version " + Application.ProductVersion.ToString();
+            mlblVersion.Text = "Version " + Application.ProductVersion;
         }
 
         #region ISplashForm

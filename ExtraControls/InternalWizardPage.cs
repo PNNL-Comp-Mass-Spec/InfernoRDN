@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace Wizard.UI
 {
 	public class InternalWizardPage : Wizard.UI.WizardPage

@@ -1,19 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmFilterBasedOnRowIDs : Form
     {
         //Double cutoff = 0.05;
-        private ArrayList marrColumns = new ArrayList();
 
         public frmFilterBasedOnRowIDs()
         {
@@ -32,7 +26,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public ArrayList PopulateDataComboBox
+        public List<string> PopulateDataComboBox
         {
             set
             {

@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace DAnTE.Tools
 {
     public class clsAnalysisObject
     {
-        private string _operation;
-        private object _o;
+        private readonly string _operation;
+        private readonly object _o;
 
         public clsAnalysisObject(string analysisStep, object o)
         {

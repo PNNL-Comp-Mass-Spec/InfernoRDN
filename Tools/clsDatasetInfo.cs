@@ -1,34 +1,39 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace DAnTE.Tools
 {
     public class clsDatasetInfo : ICloneable
     {
         public string mstrDataSetName;
-        public ArrayList marrFactorAssnmnts; // Each element is of type class Factor (see below)
+        public List<Factor> marrFactorAssnmnts; 
         public bool factorsSET = false;
 
         public clsDatasetInfo()
         {
             mstrDataSetName = null;
-            marrFactorAssnmnts = new ArrayList();
+            marrFactorAssnmnts = new List<Factor>();
         }
 
         public clsDatasetInfo(string Name)
         {
             mstrDataSetName = Name;
-            marrFactorAssnmnts = new ArrayList();
+            marrFactorAssnmnts = new List<Factor>();
         }
 
         #region ICloneable Members
 
         public object Clone()
         {
-            clsDatasetInfo dataset = new clsDatasetInfo(mstrDataSetName);
-            dataset.marrFactorAssnmnts = (ArrayList)this.marrFactorAssnmnts.Clone();
+            var dataset = new clsDatasetInfo(mstrDataSetName);
+
+            foreach (var item in marrFactorAssnmnts)
+            {
+                dataset.marrFactorAssnmnts.Add(new Factor(string.Copy(item.Name), string.Copy(item.Value)));
+            }
+            
             return dataset;
         }
 
@@ -41,36 +46,14 @@ namespace DAnTE.Tools
     /// </summary>
     public class Factor
     {
-        private string name, val;
-
         public Factor(string Name, string Value)
         {
-            name = Name;
-            val = Value;
+            this.Name = Name;
+            this.Value = Value;
         }
         
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }
 
-        public string Value
-        {
-            get
-            {
-                return val;
-            }
-            set
-            {
-                val = value;
-            }
-        }
+        public string Value { get; set; }
     }
 }

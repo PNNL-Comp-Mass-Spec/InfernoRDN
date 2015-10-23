@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
-using DAnTE.Tools;
 using DAnTE.Properties;
 
 namespace DAnTE.Inferno
@@ -115,7 +110,7 @@ namespace DAnTE.Inferno
             get { return mchkBoxPlot.Checked; }
         }
 
-        public ArrayList PopulateFactorComboBox
+        public List<string> PopulateFactorComboBox
         {
             set { mcmbBoxFactors.DataSource = value; }
         }

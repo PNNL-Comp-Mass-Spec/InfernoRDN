@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
@@ -11,22 +8,20 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         private string mstrOutFolder;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "LinearRegression")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "LinearRegression")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
+
         public bool mblPlot;
-        private string mstrFactor;
         public int mintFactorIndex;
 
-        [DAnTE.Tools.clsAnalysisAttribute("Reference_Criteria", "LinearRegression")]
+        [Tools.clsAnalysisAttribute("Reference_Criteria", "LinearRegression")]
         private string mstrReference;
-        public ArrayList marrFactors;
+        public List<string> marrFactors;
 
         public clsLinRegrnPar()
         {
-            mstrDatasetName = "Eset";
-            mstrFactor = "";
+            DataSetName = "Eset";
+            FactorSelected = "";
             mintFactorIndex = 1;
             mblPlot = false;
             mstrReference = "LeastMissing";
@@ -47,7 +42,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; ;
+                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
             }
         }
 
@@ -62,24 +57,16 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "LinearRegression")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "LinearRegression")]
+        public string DataSetName { get; set; }
 
         private string Factors
         {
             get { return "factors[" + mintFactorIndex.ToString() + ",]"; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "LinearRegression")]
-        public string FactorSelected
-        {
-            set { mstrFactor = value; }
-            get { return mstrFactor; }
-        }
+        [Tools.clsAnalysisAttribute("Selected_Factor", "LinearRegression")]
+        public string FactorSelected { set; get; }
 
         private string Reference
         {
@@ -96,14 +83,14 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Baseline_Criteria", "LinearRegression")]
+        [Tools.clsAnalysisAttribute("Baseline_Criteria", "LinearRegression")]
         public string Reference_pub
         {
             get { return mstrReference; }
             set { mstrReference = value; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LinearRegression")]
+        [Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LinearRegression")]
         public string OutFolder_pub
         {
             get
@@ -116,7 +103,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Save_Plots", "LinearRegression")]
+        [Tools.clsAnalysisAttribute("Save_Plots", "LinearRegression")]
         public string DoPlot
         {
             get

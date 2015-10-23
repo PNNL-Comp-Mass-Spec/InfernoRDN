@@ -30,14 +30,14 @@ namespace DAnTE.Tools
 
 		protected XmlNode OpenXmlNode(string id, string type, int index, bool isNode)
 		{
-			for (int i=0; i<root.ChildNodes.Count; i++)
+			for (var i=0; i<root.ChildNodes.Count; i++)
 			{
-				string name = root.ChildNodes[i].Name;
+				var name = root.ChildNodes[i].Name;
 				if(root.ChildNodes[i].Name == id)
 				{
 					if (index >= 0)
 					{
-						string strIndex = root.ChildNodes [i].Attributes["index"].Value;
+						var strIndex = root.ChildNodes [i].Attributes["index"].Value;
 						if (strIndex.Equals (index.ToString()))
 							return (root.ChildNodes[i]);
 					}
@@ -46,11 +46,11 @@ namespace DAnTE.Tools
 				}
 			}
 
-			XmlNode newNode = doc.CreateNode(XmlNodeType.Element, id, "");
+			var newNode = doc.CreateNode(XmlNodeType.Element, id, "");
 			root.AppendChild (newNode);
 			if (!isNode)
 				newNode.InnerText = "0";
-			XmlNode attr = doc.CreateNode(XmlNodeType.Attribute, "type", "");
+			var attr = doc.CreateNode(XmlNodeType.Attribute, "type", "");
 			attr.Value = type;
 			newNode.Attributes.SetNamedItem(attr);
 
@@ -66,13 +66,13 @@ namespace DAnTE.Tools
 
 		protected void RemoveChild(string id, int index)
 		{
-			for (int i=0; i<root.ChildNodes.Count; i++)
+			for (var i=0; i<root.ChildNodes.Count; i++)
 			{
 				if(root.ChildNodes[i].Name == id)
 				{
 					if (index >= 0)
 					{
-						string strIndex = root.ChildNodes [i].Attributes["index"].Value;
+						var strIndex = root.ChildNodes [i].Attributes["index"].Value;
 						if (strIndex.Equals (index.ToString()))
 						{
 							root.RemoveChild(root.ChildNodes[i]);
@@ -98,17 +98,17 @@ namespace DAnTE.Tools
 
 		public MetaNode OpenChild(string id, string childType, int index)
 		{
-			XmlNode node = OpenXmlNode(id, childType, index, true);
+			var node = OpenXmlNode(id, childType, index, true);
 
-			MetaNode retNode = new MetaNode(node, doc);
+			var retNode = new MetaNode(node, doc);
 			return (retNode);
 		}
 
 		public MetaNode OpenChild(string id, int index)
 		{
-			XmlNode node = OpenXmlNode(id, "node", index, true);
+			var node = OpenXmlNode(id, "node", index, true);
 
-			MetaNode retNode = new MetaNode(node, doc);
+			var retNode = new MetaNode(node, doc);
 			return (retNode);
 		}
 
@@ -123,7 +123,7 @@ namespace DAnTE.Tools
 		{
 			try
 			{
-				XmlNode node = OpenXmlNode(id, type, index, false);
+				var node = OpenXmlNode(id, type, index, false);
 				node.InnerText = val;
 			}
 			catch{}
@@ -148,13 +148,13 @@ namespace DAnTE.Tools
 		/// <returns>the boxed object containing the value from the xml node</returns>
 		public Object GetValue(string id, int index) 
 		{
-			string type = GetType (id, index);
+			var type = GetType (id, index);
 
 			try 
 			{
 				type = type.Replace("System.", "");
 				// first select the first element of the name xmlName
-				string xmlValue = GetString (id, index);
+				var xmlValue = GetString (id, index);
 
 				// convert, box and return the value of the specific type
 				if ( type == "Byte" )		return Byte.Parse( xmlValue.Trim() );
@@ -174,11 +174,11 @@ namespace DAnTE.Tools
 				if ( type == "String" )		return xmlValue;
 				if ( type == "Color" )
 				{
-					MetaNode child = this.OpenChild(id);
-					int r = (int) child.GetValue ("R");
-					int g = (int) child.GetValue ("G");
-					int b = (int) child.GetValue ("B");
-					System.Drawing.Color c = System.Drawing.Color.FromArgb(r,g,b);
+					var child = this.OpenChild(id);
+					var r = (int) child.GetValue ("R");
+					var g = (int) child.GetValue ("G");
+					var b = (int) child.GetValue ("B");
+					var c = System.Drawing.Color.FromArgb(r,g,b);
 					return c;
 				}
 			
@@ -205,7 +205,7 @@ namespace DAnTE.Tools
                 /// 
                 try
                 {
-                    Type t = System.Type.GetType(type);
+                    var t = System.Type.GetType(type);
                     if (t.IsEnum)
                     {
                         return Enum.Parse(t, xmlValue.Trim());
@@ -237,20 +237,20 @@ namespace DAnTE.Tools
 
 		public void SetValue(string id, Object obj, int index)
 		{
-			string typeName = obj.GetType().ToString().Replace ("System.", "");
+			var typeName = obj.GetType().ToString().Replace ("System.", "");
 
 			if (obj.GetType()==typeof(System.Drawing.Color))
 			{
-				System.Drawing.Color c = (System.Drawing.Color) obj;
-				MetaNode child = this.OpenChild(id, "Color", -1);
+				var c = (System.Drawing.Color) obj;
+				var child = this.OpenChild(id, "Color", -1);
 				child.SetValue ("R", (int)c.R);
 				child.SetValue ("G", (int)c.G);
 				child.SetValue ("B", (int)c.B);
 			}
 			else if(obj.GetType()==typeof(ArrayList))
 			{
-				ArrayList a = obj as ArrayList;
-				for (int i=0; i<a.Count; i++)
+				var a = obj as ArrayList;
+				for (var i=0; i<a.Count; i++)
 				{
 					SetValue (id, a[i], i);
 				}
@@ -266,7 +266,7 @@ namespace DAnTE.Tools
 
 		public string GetType(string id, int index)
 		{
-			XmlNode node = OpenXmlNode(id, "", index, false);
+			var node = OpenXmlNode(id, "", index, false);
 
 			if (node == null)
 				return ("");
@@ -280,7 +280,7 @@ namespace DAnTE.Tools
 
 		private string GetString(string id, int index)
 		{
-			XmlNode node = OpenXmlNode(id, "", index, false);
+			var node = OpenXmlNode(id, "", index, false);
 
 			if (node == null)
 				return ("");
@@ -313,8 +313,8 @@ namespace DAnTE.Tools
 		{
 			try
 			{
-				StreamReader sr = File.OpenText(fName);
-				string xStr = sr.ReadToEnd();
+				var sr = File.OpenText(fName);
+				var xStr = sr.ReadToEnd();
 				doc.LoadXml (xStr);
 				sr.Close();
 
@@ -328,7 +328,7 @@ namespace DAnTE.Tools
 		{
 			try
 			{
-				StreamWriter sw = File.CreateText (fName);
+				var sw = File.CreateText (fName);
 				sw.Write(doc.InnerXml);
 				sw.Close();
 			}
@@ -341,7 +341,7 @@ namespace DAnTE.Tools
 			{
 				doc = new XmlDocument();
 
-				XmlNode dec = doc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
+				var dec = doc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
 				doc.InsertAfter(dec, null);
 				root = doc.CreateNode(XmlNodeType.Element, rootName, "");
 				doc.InsertAfter(root, dec);

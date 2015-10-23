@@ -38,7 +38,6 @@
  * The Text namespace is included to import the
  * StringBuilder class.
  */
-using System;
 using System.Text;
 
 #endregion
@@ -122,11 +121,11 @@ namespace DAnTE.Tools
 	/// <summary>
 	/// The type of the parameter.
 	/// </summary>
-	private ParameterType type	  = ParameterType.OPTIONAL;
+	private readonly ParameterType type	  = ParameterType.OPTIONAL;
 	/// <summary>
 	/// The name of the parameter.
 	/// </summary>
-	private	string		  name	  = "";
+	private readonly string		  name;
 	/// <summary>
 	/// The value of the parameter.
 	/// </summary>
@@ -163,7 +162,7 @@ namespace DAnTE.Tools
 	/// </summary>
 	public Parameter()
 	{
-	  name = Parameter.NEW_PARAMETER;
+	  name = NEW_PARAMETER;
 	}
 	/// <summary>
 	/// Creates a new instance of the Parameter class, with the
@@ -253,10 +252,10 @@ namespace DAnTE.Tools
 	/// <returns>A human readable string describing the Parameter.</returns>
 	public override string ToString()
 	{
-	  StringBuilder sb = new StringBuilder(name);
+	  var sb = new StringBuilder(name);
 	  sb.Append(" ");
-	  sb.Append(Parameter.ParameterTypeShortName(type));
-	  if(val!=null && val.Length>0)
+	  sb.Append(ParameterTypeShortName(type));
+	  if(!string.IsNullOrEmpty(val))
 	  {
 		sb.Append(" {");
 		sb.Append(val);

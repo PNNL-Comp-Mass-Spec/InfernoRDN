@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
@@ -23,9 +21,9 @@ namespace DAnTE.Purgatorio
         public bool showcount;
         public bool stamp;
         public string tempFile;
-        public ArrayList Factors = new ArrayList();
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
+        public List<string> Factors = new List<string>();
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsBoxPlotPar()
         {
@@ -48,7 +46,7 @@ namespace DAnTE.Purgatorio
             stamp = false;
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("RBoxPlotCmd", "Plots")]
+        [Tools.clsAnalysisAttribute("RBoxPlotCmd", "Plots")]
         public string Rcmd
         {
             get

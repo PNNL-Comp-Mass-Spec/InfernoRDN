@@ -161,12 +161,12 @@ namespace DAnTE.Tools
 	/// <summary>
 	/// Name of the cfg file to be read.
 	/// </summary>
-	private string		  filename	  = "";
+	private string		  filename;
 	/// <summary>
 	/// Collection of the Parameters defined for the Engine.
 	/// The Collection is organized as parameter_name => Parameter instance.
 	/// </summary>
-	private Hashtable	  parameters  = new Hashtable();
+	private readonly Hashtable	  parameters  = new Hashtable();
 
 	#endregion
 
@@ -196,7 +196,7 @@ namespace DAnTE.Tools
 	{
 	  get
 	  {
-		Hashtable r = new Hashtable();
+		var r = new Hashtable();
 		foreach(DictionaryEntry de in parameters)
 		  r.Add(de.Key, ((Parameter)de.Value).Clone());
 		return r;
@@ -329,10 +329,10 @@ namespace DAnTE.Tools
 	  if(	status!=EngineStatus.INIT
 		&&	status!=EngineStatus.OK	)
 		throw new ApplicationException("CFGLite: [Engine::ReadFile()]\n"+
-		  "The Engine is currently in its "+Engine.EngineStatusName(status)+" state.\n"+
+		  "The Engine is currently in its "+ Engine.EngineStatusName(status)+" state.\n"+
 		  "The Engine must be reset before a new cfg file may be read.");
 
-	  StringBuilder sb = new StringBuilder();
+	  var sb = new StringBuilder();
 	  status=EngineStatus.WORKING;
 
 	  filename=filename.Trim();
@@ -397,8 +397,7 @@ namespace DAnTE.Tools
 	  try
 	  {
 		sr = File.OpenText(filename);
-		string line = "";
-		line = sr.ReadLine();
+	    var line = sr.ReadLine();
 		while(line!=null)
 		{
 		  ProcessLine(line);
@@ -465,7 +464,10 @@ namespace DAnTE.Tools
 	  }
 	  finally
 	  {
-		sr.Close();
+	      if (sr != null)
+	      {
+	          sr.Close();
+	      }
 	  }
 	}
 
@@ -502,7 +504,7 @@ namespace DAnTE.Tools
 
 	  if(line[0]=='#')	  return;
 
-	  StringBuilder sb = new StringBuilder();
+	  var sb = new StringBuilder();
 
 	  if(line.IndexOf('=')<0)
 	  {
@@ -514,7 +516,7 @@ namespace DAnTE.Tools
 		return;
 	  }
 
-	  string[] parts = line.Split(new char[] {'='}, 2);
+	  var parts = line.Split(new[] {'='}, 2);
 
 	  if(parts[0]!=null)  parts[0]=parts[0].Trim();
 	  if(parts[1]!=null)  parts[1]=parts[1].Trim();
@@ -539,7 +541,7 @@ namespace DAnTE.Tools
 	  }
 
 	  if(!parameters.ContainsKey(parts[0]))	return;
-	  Parameter p = (Parameter)parameters[parts[0]];
+	  var p = (Parameter)parameters[parts[0]];
 	  p.Val=parts[1];
 	  parameters[parts[0]]=p;
 	}
@@ -551,7 +553,7 @@ namespace DAnTE.Tools
 	/// </summary>
 	private void CheckParameters()
 	{
-	  StringBuilder sb = new StringBuilder("The following Required Parameters are missing from the\n");
+	  var sb = new StringBuilder("The following Required Parameters are missing from the\n");
 	  sb.Append("cfg file read ('");
 	  sb.Append(filename);
 	  sb.Append("'):\n");

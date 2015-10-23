@@ -1,7 +1,4 @@
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using DAnTE.Properties;
 
@@ -10,21 +7,21 @@ namespace DAnTE.Paradiso
 	/// <summary>
 	/// Summary description for frmTracWebBugReport.
 	/// </summary>
-	public class frmTracWebBugReport : System.Windows.Forms.Form
+	public class frmTracWebBugReport : Form
     {
-		private System.Windows.Forms.GroupBox grpBoxUserInfo;
-		private System.Windows.Forms.Label lblEmail;
-		private System.Windows.Forms.Label lblRqstType;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox grpBoxFullDes;
-		private System.Windows.Forms.TextBox mtxtBoxSummary;
-		private System.Windows.Forms.TextBox mtxtBoxEmail;
-		private System.Windows.Forms.ComboBox mcmbBoxRequest;
-		private System.Windows.Forms.Label mlblDisclaimer;
-		private System.Windows.Forms.RichTextBox mrichTxtBoxFull;
-		private System.Windows.Forms.Label mlblbtns;
-		private System.Windows.Forms.Button mbtnSend;
-		private System.Windows.Forms.Button mbtnCancel;
+		private GroupBox grpBoxUserInfo;
+		private Label lblEmail;
+		private Label lblRqstType;
+		private Label label1;
+		private GroupBox grpBoxFullDes;
+		private TextBox mtxtBoxSummary;
+		private TextBox mtxtBoxEmail;
+		private ComboBox mcmbBoxRequest;
+		private Label mlblDisclaimer;
+		private RichTextBox mrichTxtBoxFull;
+		private Label mlblbtns;
+		private Button mbtnSend;
+		private Button mbtnCancel;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -76,18 +73,18 @@ namespace DAnTE.Paradiso
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTracWebBugReport));
             this.grpBoxFullDes = new System.Windows.Forms.GroupBox();
-            this.mrichTxtBoxFull = new System.Windows.Forms.RichTextBox();
+            mrichTxtBoxFull = new System.Windows.Forms.RichTextBox();
             this.grpBoxUserInfo = new System.Windows.Forms.GroupBox();
-            this.mlblDisclaimer = new System.Windows.Forms.Label();
-            this.mcmbBoxRequest = new System.Windows.Forms.ComboBox();
+            mlblDisclaimer = new System.Windows.Forms.Label();
+            mcmbBoxRequest = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblRqstType = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
-            this.mtxtBoxSummary = new System.Windows.Forms.TextBox();
-            this.mtxtBoxEmail = new System.Windows.Forms.TextBox();
-            this.mbtnCancel = new System.Windows.Forms.Button();
-            this.mbtnSend = new System.Windows.Forms.Button();
-            this.mlblbtns = new System.Windows.Forms.Label();
+            mtxtBoxSummary = new System.Windows.Forms.TextBox();
+            mtxtBoxEmail = new System.Windows.Forms.TextBox();
+            mbtnCancel = new System.Windows.Forms.Button();
+            mbtnSend = new System.Windows.Forms.Button();
+            mlblbtns = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.niceLine4 = new DAnTE.ExtraControls.NiceLine();
@@ -99,7 +96,7 @@ namespace DAnTE.Paradiso
             // 
             // grpBoxFullDes
             // 
-            this.grpBoxFullDes.Controls.Add(this.mrichTxtBoxFull);
+            this.grpBoxFullDes.Controls.Add(mrichTxtBoxFull);
             this.grpBoxFullDes.Location = new System.Drawing.Point(15, 196);
             this.grpBoxFullDes.Name = "grpBoxFullDes";
             this.grpBoxFullDes.Size = new System.Drawing.Size(552, 271);
@@ -109,21 +106,21 @@ namespace DAnTE.Paradiso
             // 
             // mrichTxtBoxFull
             // 
-            this.mrichTxtBoxFull.Location = new System.Drawing.Point(8, 19);
-            this.mrichTxtBoxFull.Name = "mrichTxtBoxFull";
-            this.mrichTxtBoxFull.Size = new System.Drawing.Size(536, 245);
-            this.mrichTxtBoxFull.TabIndex = 3;
-            this.mrichTxtBoxFull.Text = "";
+            mrichTxtBoxFull.Location = new System.Drawing.Point(8, 19);
+            mrichTxtBoxFull.Name = "mrichTxtBoxFull";
+            mrichTxtBoxFull.Size = new System.Drawing.Size(536, 245);
+            mrichTxtBoxFull.TabIndex = 3;
+            mrichTxtBoxFull.Text = "";
             // 
             // grpBoxUserInfo
             // 
-            this.grpBoxUserInfo.Controls.Add(this.mlblDisclaimer);
-            this.grpBoxUserInfo.Controls.Add(this.mcmbBoxRequest);
+            this.grpBoxUserInfo.Controls.Add(mlblDisclaimer);
+            this.grpBoxUserInfo.Controls.Add(mcmbBoxRequest);
             this.grpBoxUserInfo.Controls.Add(this.label1);
             this.grpBoxUserInfo.Controls.Add(this.lblRqstType);
             this.grpBoxUserInfo.Controls.Add(this.lblEmail);
-            this.grpBoxUserInfo.Controls.Add(this.mtxtBoxSummary);
-            this.grpBoxUserInfo.Controls.Add(this.mtxtBoxEmail);
+            this.grpBoxUserInfo.Controls.Add(mtxtBoxSummary);
+            this.grpBoxUserInfo.Controls.Add(mtxtBoxEmail);
             this.grpBoxUserInfo.Location = new System.Drawing.Point(15, 46);
             this.grpBoxUserInfo.Name = "grpBoxUserInfo";
             this.grpBoxUserInfo.Size = new System.Drawing.Size(552, 144);
@@ -133,25 +130,25 @@ namespace DAnTE.Paradiso
             // 
             // mlblDisclaimer
             // 
-            this.mlblDisclaimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mlblDisclaimer.Location = new System.Drawing.Point(8, 104);
-            this.mlblDisclaimer.Name = "mlblDisclaimer";
-            this.mlblDisclaimer.Size = new System.Drawing.Size(536, 37);
-            this.mlblDisclaimer.TabIndex = 6;
-            this.mlblDisclaimer.Text = "Your personal information will be used only for the purpose of providing an ident" +
+            mlblDisclaimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            mlblDisclaimer.Location = new System.Drawing.Point(8, 104);
+            mlblDisclaimer.Name = "mlblDisclaimer";
+            mlblDisclaimer.Size = new System.Drawing.Size(536, 37);
+            mlblDisclaimer.TabIndex = 6;
+            mlblDisclaimer.Text = "Your personal information will be used only for the purpose of providing an ident" +
                 "ifier for your bug report, as well as providing a contact address for the develo" +
                 "per in case of further questions.";
-            this.mlblDisclaimer.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            mlblDisclaimer.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // mcmbBoxRequest
             // 
-            this.mcmbBoxRequest.Items.AddRange(new object[] {
+            mcmbBoxRequest.Items.AddRange(new object[] {
             "Bug Report",
             "Feature Request"});
-            this.mcmbBoxRequest.Location = new System.Drawing.Point(288, 32);
-            this.mcmbBoxRequest.Name = "mcmbBoxRequest";
-            this.mcmbBoxRequest.Size = new System.Drawing.Size(256, 21);
-            this.mcmbBoxRequest.TabIndex = 1;
+            mcmbBoxRequest.Location = new System.Drawing.Point(288, 32);
+            mcmbBoxRequest.Name = "mcmbBoxRequest";
+            mcmbBoxRequest.Size = new System.Drawing.Size(256, 21);
+            mcmbBoxRequest.TabIndex = 1;
             // 
             // label1
             // 
@@ -179,48 +176,48 @@ namespace DAnTE.Paradiso
             // 
             // mtxtBoxSummary
             // 
-            this.mtxtBoxSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            mtxtBoxSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.mtxtBoxSummary.Location = new System.Drawing.Point(8, 72);
-            this.mtxtBoxSummary.Name = "mtxtBoxSummary";
-            this.mtxtBoxSummary.Size = new System.Drawing.Size(536, 20);
-            this.mtxtBoxSummary.TabIndex = 2;
+            mtxtBoxSummary.Location = new System.Drawing.Point(8, 72);
+            mtxtBoxSummary.Name = "mtxtBoxSummary";
+            mtxtBoxSummary.Size = new System.Drawing.Size(536, 20);
+            mtxtBoxSummary.TabIndex = 2;
             // 
             // mtxtBoxEmail
             // 
-            this.mtxtBoxEmail.Location = new System.Drawing.Point(8, 32);
-            this.mtxtBoxEmail.Name = "mtxtBoxEmail";
-            this.mtxtBoxEmail.Size = new System.Drawing.Size(264, 20);
-            this.mtxtBoxEmail.TabIndex = 0;
+            mtxtBoxEmail.Location = new System.Drawing.Point(8, 32);
+            mtxtBoxEmail.Name = "mtxtBoxEmail";
+            mtxtBoxEmail.Size = new System.Drawing.Size(264, 20);
+            mtxtBoxEmail.TabIndex = 0;
             // 
             // mbtnCancel
             // 
-            this.mbtnCancel.Location = new System.Drawing.Point(462, 499);
-            this.mbtnCancel.Name = "mbtnCancel";
-            this.mbtnCancel.Size = new System.Drawing.Size(80, 23);
-            this.mbtnCancel.TabIndex = 5;
-            this.mbtnCancel.Text = "Cancel";
-            this.mbtnCancel.Click += new System.EventHandler(this.mbtnCancel_Click);
+            mbtnCancel.Location = new System.Drawing.Point(462, 499);
+            mbtnCancel.Name = "mbtnCancel";
+            mbtnCancel.Size = new System.Drawing.Size(80, 23);
+            mbtnCancel.TabIndex = 5;
+            mbtnCancel.Text = "Cancel";
+            mbtnCancel.Click += new System.EventHandler(mbtnCancel_Click);
             // 
             // mbtnSend
             // 
-            this.mbtnSend.Location = new System.Drawing.Point(367, 499);
-            this.mbtnSend.Name = "mbtnSend";
-            this.mbtnSend.Size = new System.Drawing.Size(80, 23);
-            this.mbtnSend.TabIndex = 4;
-            this.mbtnSend.Text = "Send Report";
-            this.mbtnSend.Click += new System.EventHandler(this.mbtnSend_Click);
+            mbtnSend.Location = new System.Drawing.Point(367, 499);
+            mbtnSend.Name = "mbtnSend";
+            mbtnSend.Size = new System.Drawing.Size(80, 23);
+            mbtnSend.TabIndex = 4;
+            mbtnSend.Text = "Send Report";
+            mbtnSend.Click += new System.EventHandler(mbtnSend_Click);
             // 
             // mlblbtns
             // 
-            this.mlblbtns.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mlblbtns.Location = new System.Drawing.Point(21, 491);
-            this.mlblbtns.Name = "mlblbtns";
-            this.mlblbtns.Size = new System.Drawing.Size(320, 40);
-            this.mlblbtns.TabIndex = 0;
-            this.mlblbtns.Text = "Clicking \'Send Report\' will open a new web browser window to the DAnTE Website <h" +
+            mlblbtns.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            mlblbtns.Location = new System.Drawing.Point(21, 491);
+            mlblbtns.Name = "mlblbtns";
+            mlblbtns.Size = new System.Drawing.Size(320, 40);
+            mlblbtns.TabIndex = 0;
+            mlblbtns.Text = "Clicking \'Send Report\' will open a new web browser window to the DAnTE Website <h" +
                 "ttps://prismtrac.pnl.gov/dante> and fill in a request ticket for you to submit.";
-            this.mlblbtns.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            mlblbtns.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
@@ -266,10 +263,10 @@ namespace DAnTE.Paradiso
             this.Controls.Add(this.label2);
             this.Controls.Add(this.niceLine4);
             this.Controls.Add(this.niceLine1);
-            this.Controls.Add(this.mbtnCancel);
-            this.Controls.Add(this.mbtnSend);
+            this.Controls.Add(mbtnCancel);
+            this.Controls.Add(mbtnSend);
             this.Controls.Add(this.grpBoxFullDes);
-            this.Controls.Add(this.mlblbtns);
+            this.Controls.Add(mlblbtns);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -291,21 +288,21 @@ namespace DAnTE.Paradiso
 		private void frmTracWebBugReport_Load(object sender, System.EventArgs e)
 		{
             mstrUserEmail = Settings.Default.email;
-			this.mcmbBoxRequest.Text = "Bug Report";
-			this.mcmbBoxRequest.SelectedIndex = 0 ;
-			if (mstrUserEmail != null && mstrUserEmail.Length > 0)
+			mcmbBoxRequest.Text = "Bug Report";
+			mcmbBoxRequest.SelectedIndex = 0 ;
+			if (!string.IsNullOrEmpty(mstrUserEmail))
 				mtxtBoxEmail.Text = mstrUserEmail ;
 		}
 
-		private void mbtnSend_Click(object sender, System.EventArgs e)
+		private void mbtnSend_Click(object sender, EventArgs e)
 		{
-			string summary = mtxtBoxSummary.Text ;
-			if (summary == null || summary.Length == 0)
+			var summary = mtxtBoxSummary.Text ;
+			if (string.IsNullOrEmpty(summary))
 				MessageBox.Show("Specify your problem first!","Problem summary ?") ;
 			else
 			{
-				string tracLink = this.BuildTracLink();
-				if (this.WebSiteIsAvailable(DAnTEsite)) 
+				var tracLink = BuildTracLink();
+				if (WebSiteIsAvailable(DAnTEsite)) 
 				{
 					System.Diagnostics.Process.Start(tracLink);
 				}
@@ -319,7 +316,7 @@ namespace DAnTE.Paradiso
 			}
 		}
 
-		private void mbtnCancel_Click(object sender, System.EventArgs e)
+		private void mbtnCancel_Click(object sender, EventArgs e)
 		{
             this.Close();
 		}
@@ -339,17 +336,15 @@ namespace DAnTE.Paradiso
 			// ----------------------------------------------------
 			//  Local Constant/Variable Declarations
 			// ----------------------------------------------------
-			System.Uri URL_Object = new System.Uri(linkText);
-			System.Net.WebRequest URL_WebRequest;
-			System.Net.WebResponse URL_WebResponse;
-			bool Response_Result;
+			var URL_Object = new Uri(linkText);
+		    bool Response_Result;
 			// ----------------------------------------------------
 			//  Attempt to get a response from the URL
 			// ----------------------------------------------------
 			try 
 			{
-				URL_WebRequest = System.Net.WebRequest.Create(URL_Object);
-				URL_WebResponse = URL_WebRequest.GetResponse();
+				var URL_WebRequest = System.Net.WebRequest.Create(URL_Object);
+				URL_WebRequest.GetResponse();
 				Response_Result = true;
 			}
 			catch (Exception Any_Error) 
@@ -357,21 +352,18 @@ namespace DAnTE.Paradiso
 				Console.WriteLine(Any_Error.ToString()) ;
 				Response_Result = false;
 			}
-			URL_WebResponse = null;
-			URL_WebRequest = null;
-			URL_Object = null;
-			return Response_Result;
+		    return Response_Result;
 		}
 
 
 		private string BuildTracLink() 
 		{
-			System.Text.StringBuilder addressSB = new System.Text.StringBuilder();
-			System.Text.StringBuilder optionsSB = new System.Text.StringBuilder();
-			this.mstrUserEmail = this.mtxtBoxEmail.Text;
-			this.mstrShortSummary = this.mtxtBoxSummary.Text;
-			this.mstrDescription = this.mrichTxtBoxFull.Text;
-            //this.mstrDescription = this.mtxtBoxDesc.Text;
+			var addressSB = new System.Text.StringBuilder();
+			var optionsSB = new System.Text.StringBuilder();
+			mstrUserEmail = mtxtBoxEmail.Text;
+			mstrShortSummary = mtxtBoxSummary.Text;
+			mstrDescription = mrichTxtBoxFull.Text;
+            //mstrDescription = mtxtBoxDesc.Text;
             Settings.Default.email = mstrUserEmail;
             Settings.Default.Save();
 
@@ -383,7 +375,7 @@ namespace DAnTE.Paradiso
 			addressSB.Append("simpleticket") ;
 
 			optionsSB.Append("type=") ;
-			switch (this.mcmbBoxRequest.Text) 
+			switch (mcmbBoxRequest.Text) 
 			{
 				case "Bug Report":
 					optionsSB.Append("defect") ;
@@ -395,38 +387,38 @@ namespace DAnTE.Paradiso
 
             optionsSB.Append("&version=" + System.Web.HttpUtility.UrlEncode(version));
 
-			if (this.mstrUserEmail.Length > 0)
+			if (mstrUserEmail.Length > 0)
 			{
 				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
 				{
 					optionsSB.Append("&");
 				}
 				optionsSB.Append("reporter=") ;
-                optionsSB.Append(this.mstrUserEmail);
+                optionsSB.Append(mstrUserEmail);
 			}
 
-			if (this.mstrShortSummary.Length > 0)
+			if (mstrShortSummary.Length > 0)
 			{
 				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
 				{
 					optionsSB.Append("&");
 				}
 				optionsSB.Append("summary=") ;
-                optionsSB.Append(System.Web.HttpUtility.UrlEncode(this.mstrShortSummary)) ;
-                //optionsSB.Append(this.mstrShortSummary);
+                optionsSB.Append(System.Web.HttpUtility.UrlEncode(mstrShortSummary)) ;
+                //optionsSB.Append(mstrShortSummary);
 			}
 
-			if (this.mstrDescription.Length > 0) 
+			if (mstrDescription.Length > 0) 
 			{
 				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
 				{
 					optionsSB.Append("&");
 				}
 				optionsSB.Append("description=") ;
-				//optionsSB.Append(this.mstrDescription) ;
-                optionsSB.Append(System.Web.HttpUtility.UrlEncode(this.mstrDescription));
+				//optionsSB.Append(mstrDescription) ;
+                optionsSB.Append(System.Web.HttpUtility.UrlEncode(mstrDescription));
 			}
-			string tracLink = addressSB.ToString() + "?" + optionsSB.ToString();
+			var tracLink = addressSB + "?" + optionsSB;
             //MessageBox.Show(tracLink);
             return tracLink;
 		}

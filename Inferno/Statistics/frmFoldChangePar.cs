@@ -1,10 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using DAnTE.Purgatorio;
 using DAnTE.Tools;
@@ -13,11 +8,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmFoldChangePar : Form
     {
-        private const int MAX_LEVELS = 100;
-        private ArrayList marrFactors;
-        private string[] strarrFactors = new string[MAX_LEVELS];
-        private int numFactors = 0;
-        private clsFoldChangePar mclsFCPar = new clsFoldChangePar();
+        private List<clsFactorInfo> marrFactors;
+
+        private readonly clsFoldChangePar mclsFCPar;
 
         public frmFoldChangePar(clsFoldChangePar mclsFCpar)
         {
@@ -27,22 +20,14 @@ namespace DAnTE.Inferno
 
         private void updateFactorForm()
         {
-            ArrayList marrFs = new ArrayList();
+            var marrFs = new List<string>();
 
-            fillFactorArray();
-
-            for (int num = 0; num < marrFactors.Count; num++)
-                marrFs.Add(((clsFactorInfo)marrFactors[num]).mstrFactor);
+            foreach (var factor in marrFactors)
+                marrFs.Add(factor.mstrFactor);
 
             mcmbBoxFactors.DataSource = marrFs;
         }
 
-        private void fillFactorArray()
-        {
-            for (int num = 0; num < marrFactors.Count; num++)
-                strarrFactors[num] = ((clsFactorInfo)marrFactors[num]).mstrFactor;
-            numFactors = marrFactors.Count;
-        }
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
@@ -77,20 +62,16 @@ namespace DAnTE.Inferno
 
         private void mcmbBoxFactors_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int nSelected;
-            string[] strArrTmp = new string[MAX_LEVELS];
-            clsFactorInfo selectedF = new clsFactorInfo();
-
             if (mcmbBoxFactors.SelectedIndex > -1)
             {
-                nSelected = mcmbBoxFactors.SelectedIndex;
+                var nSelected = mcmbBoxFactors.SelectedIndex;
                 mlstBoxFactrVals.Items.Clear();
-                selectedF = ((clsFactorInfo)marrFactors[nSelected]);
+                var selectedF = marrFactors[nSelected];
                 if (selectedF.vCount > 0)
                 {
-                    for (int i = 0; i < selectedF.vCount; i++)
+                    for (var i = 0; i < selectedF.vCount; i++)
                     {
-                        mlstBoxFactrVals.Items.Add(selectedF.marrValues[i].ToString());
+                        mlstBoxFactrVals.Items.Add(selectedF.marrValues[i]);
                     }
                     mlstBoxFactrVals.SelectedIndex = -1;
                 }
@@ -125,8 +106,8 @@ namespace DAnTE.Inferno
                 mlblDataName.Text = value;
             }
         }
-                
-        private ArrayList PopulateFactorComboBox
+
+        private List<string> PopulateFactorComboBox
         {
             set
             {
@@ -147,7 +128,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList FactorInfoArray
+        public List<clsFactorInfo> FactorInfoArray
         {
             set
             {

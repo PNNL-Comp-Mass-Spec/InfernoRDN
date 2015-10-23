@@ -1,15 +1,7 @@
 using System;
-using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using DAnTE.Tools;
-using DAnTE.ExtraControls;
-using DAnTE.Properties;
 
 namespace DAnTE.Inferno
 {
@@ -38,12 +30,12 @@ namespace DAnTE.Inferno
                 // succeeded.
                 if ((bool)e.Result)
                 {
-                    if (mhtDatasets.Contains("RRollup"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["RRollup"]);
-                    if (mhtDatasets.Contains("ScaledData"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["ScaledData"]);
-                    if (mhtDatasets.Contains("OutliersRemoved"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["OutliersRemoved"]);
+                    if (mhtDatasets.ContainsKey("RRollup"))
+                        AddDataNode(mhtDatasets["RRollup"]);
+                    if (mhtDatasets.ContainsKey("ScaledData"))
+                        AddDataNode(mhtDatasets["ScaledData"]);
+                    if (mhtDatasets.ContainsKey("OutliersRemoved"))
+                        AddDataNode(mhtDatasets["OutliersRemoved"]);
                 }
                 else
                     MessageBox.Show("Ref. Scaling/Rolling up failed." + Environment.NewLine +
@@ -78,8 +70,8 @@ namespace DAnTE.Inferno
                 // succeeded.
                 if ((bool)e.Result)
                 {
-                    if (mhtDatasets.Contains("ZRollup"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["ZRollup"]);
+                    if (mhtDatasets.ContainsKey("ZRollup"))
+                        AddDataNode(mhtDatasets["ZRollup"]);
                 }
                 else
                     MessageBox.Show("Scaling/Rolling up failed." + Environment.NewLine +
@@ -113,8 +105,8 @@ namespace DAnTE.Inferno
                 // succeeded.
                 if ((bool)e.Result)
                 {
-                    if (mhtDatasets.Contains("QRollup"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["QRollup"]);
+                    if (mhtDatasets.ContainsKey("QRollup"))
+                        AddDataNode(mhtDatasets["QRollup"]);
                 }
                 else
                     MessageBox.Show("QRollup failed." + Environment.NewLine +

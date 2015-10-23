@@ -42,7 +42,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = "R Init failed: " + e.Message;
+                var errmsg = "R Init failed: " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -101,7 +101,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -132,7 +132,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -156,7 +156,7 @@ namespace DAnTE.Tools
                 var rownames = _rdn.GetSymbolAsStrings("Rows");
 
                 var rowH = rownames as string[];
-                string colH = colheaders[0];
+                var colH = colheaders[0];
                 mRarr = new clsRarray(((double[,])matrix), rowH, colH);
                 DataTable.Clear();
                 DataTable = RDoubleVector2DataTable(mRarr);
@@ -165,7 +165,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -197,7 +197,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -228,7 +228,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -261,7 +261,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -279,7 +279,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -295,7 +295,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -304,7 +304,7 @@ namespace DAnTE.Tools
 
         public bool SendTable2RmatrixNumeric(string varName, DataTable mDtable)
         {
-            clsRarray mRarrySend = DataTable2Rarray(mDtable);
+            var mRarrySend = DataTable2Rarray(mDtable);
             if (mRarrySend.matrix != null)
             {
                 try
@@ -325,7 +325,7 @@ namespace DAnTE.Tools
                 }
                 catch (Exception e)
                 {
-                    string errmsg = _rcmd + " " + e.Message;
+                    var errmsg = _rcmd + " " + e.Message;
                     Console.WriteLine(errmsg);
                     Message = e.Message;
                     return false;
@@ -337,7 +337,7 @@ namespace DAnTE.Tools
 
         public bool SendTable2RmatrixNonNumeric(string varName, DataTable mDtable)
         {
-            clsRarray mRarrySend = DataTable2RstrArray(mDtable);
+            var mRarrySend = DataTable2RstrArray(mDtable);
             if (mRarrySend.mstrMatrix != null)
             {
                 try
@@ -357,7 +357,7 @@ namespace DAnTE.Tools
                 }
                 catch (Exception e)
                 {
-                    string errmsg = _rcmd + " " + e.Message;
+                    var errmsg = _rcmd + " " + e.Message;
                     Console.WriteLine(errmsg);
                     Message = e.Message;
                     return false;
@@ -377,7 +377,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -394,7 +394,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = _rcmd + " " + e.Message;
+                var errmsg = _rcmd + " " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -414,7 +414,7 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                string errmsg = "R Close failed: " + e.Message;
+                var errmsg = "R Close failed: " + e.Message;
                 Console.WriteLine(errmsg);
                 Message = e.Message;
                 return false;
@@ -425,10 +425,10 @@ namespace DAnTE.Tools
 
         private DataTable RDoubleArray2DataTable(clsRarray mRary)
         {
-            double[,] matrix = mRary.matrix;
-            string[] rowNames = mRary.rowNames;
-            string[] colHeaders = mRary.colHeaders;
-            DataTable mdatatable = new DataTable();
+            var matrix = mRary.matrix;
+            var rowNames = mRary.rowNames;
+            var colHeaders = mRary.colHeaders;
+            var mdatatable = new DataTable();
             DataColumn mDataColumn;
             DataRow mDataRow;
 
@@ -438,7 +438,7 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mdatatable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < colHeaders.Length; i++)
+            for (var i = 0; i < colHeaders.Length; i++)
             {
                 mDataColumn = new DataColumn();
                 mDataColumn.DataType = System.Type.GetType("System.Double");
@@ -446,11 +446,11 @@ namespace DAnTE.Tools
                 //mDataColumn.ReadOnly = true ;
                 mdatatable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
                 mDataRow = mdatatable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j];
                 }
@@ -462,10 +462,10 @@ namespace DAnTE.Tools
 
         private DataTable RDoubleVector2DataTable(clsRarray mRary)
         {
-            double[,] matrix = mRary.matrix;
-            string[] rowNames = mRary.rowNames;
-            string colHeaders = mRary.colHs;
-            DataTable mdatatable = new DataTable();
+            var matrix = mRary.matrix;
+            var rowNames = mRary.rowNames;
+            var colHeaders = mRary.colHs;
+            var mdatatable = new DataTable();
             DataColumn mDataColumn;
             DataRow mDataRow;
 
@@ -481,11 +481,11 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mdatatable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
                 mDataRow = mdatatable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j];
                 }
@@ -497,10 +497,10 @@ namespace DAnTE.Tools
 
         private DataTable RstrArray2DataTable(clsRarray mRary)
         {
-            string[,] matrix = mRary.mstrMatrix;
-            string[] rowNames = mRary.rowNames;
-            string[] colHeaders = mRary.colHeaders;
-            DataTable mdatatable = new DataTable();
+            var matrix = mRary.mstrMatrix;
+            var rowNames = mRary.rowNames;
+            var colHeaders = mRary.colHeaders;
+            var mdatatable = new DataTable();
             DataColumn mDataColumn;
             DataRow mDataRow;
 
@@ -510,7 +510,7 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mdatatable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < colHeaders.Length; i++)
+            for (var i = 0; i < colHeaders.Length; i++)
             {
                 mDataColumn = new DataColumn();
                 mDataColumn.DataType = System.Type.GetType("System.String");
@@ -518,11 +518,11 @@ namespace DAnTE.Tools
                 //mDataColumn.ReadOnly = true ;
                 mdatatable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
                 mDataRow = mdatatable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j];
                 }
@@ -536,9 +536,9 @@ namespace DAnTE.Tools
         {
             string[,] matrix;
             matrix = mRary.mstrMatrix;
-            string[] rowNames = mRary.rowNames;
-            string[] colHeaders = mRary.colHeaders;
-            DataTable mdatatable = new DataTable();
+            var rowNames = mRary.rowNames;
+            var colHeaders = mRary.colHeaders;
+            var mdatatable = new DataTable();
             DataColumn mDataColumn;
             DataRow mDataRow;
 
@@ -548,7 +548,7 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mdatatable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < colHeaders.Length; i++)
+            for (var i = 0; i < colHeaders.Length; i++)
             {
                 mDataColumn = new DataColumn();
                 mDataColumn.DataType = System.Type.GetType("System.String");
@@ -560,11 +560,11 @@ namespace DAnTE.Tools
                 //mDataColumn.ReadOnly = true ;
                 mdatatable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
                 mDataRow = mdatatable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j];
                 }
@@ -576,10 +576,10 @@ namespace DAnTE.Tools
 
         private DataTable RProteinArray2DataTable(clsRarray mRary)
         {
-            double[,] matrix = mRary.matrix;
-            string[] rowNames = mRary.rowNames;
-            string[] colHeaders = mRary.colHeaders;
-            DataTable mdatatable = new DataTable();
+            var matrix = mRary.matrix;
+            var rowNames = mRary.rowNames;
+            var colHeaders = mRary.colHeaders;
+            var mdatatable = new DataTable();
             DataColumn mDataColumn;
             DataRow mDataRow;
 
@@ -589,7 +589,7 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mdatatable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < colHeaders.Length; i++)
+            for (var i = 0; i < colHeaders.Length; i++)
             {
                 mDataColumn = new DataColumn();
                 mDataColumn.DataType = System.Type.GetType("System.Double");
@@ -597,11 +597,11 @@ namespace DAnTE.Tools
                 //mDataColumn.ReadOnly = true ;
                 mdatatable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
                 mDataRow = mdatatable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j];
                 }
@@ -621,13 +621,13 @@ namespace DAnTE.Tools
             var typerror = false;
 
             //DataColumnCollection columnHeaders = mTable.Columns ;
-            for (int col = 0; col < mTable.Columns.Count; col++)
+            for (var col = 0; col < mTable.Columns.Count; col++)
             {
                 if (typerror)
                     break;
                 if (col > 0) //Start from 2nd column
                     colHeaders[col - 1] = mTable.Columns[col].ToString();
-                for (int row = 0; row < mTable.Rows.Count; row++)
+                for (var row = 0; row < mTable.Rows.Count; row++)
                 {
                     if (typerror)
                         break;
@@ -669,12 +669,12 @@ namespace DAnTE.Tools
 
         private clsRarray DataTable2RstrArray(DataTable mTable)
         {
-            string[,] matrix = new string[mTable.Rows.Count, mTable.Columns.Count - 1];
-            string[] rowNames = new string[mTable.Rows.Count];
-            string[] colHeaders = new string[mTable.Columns.Count - 1];
+            var matrix = new string[mTable.Rows.Count, mTable.Columns.Count - 1];
+            var rowNames = new string[mTable.Rows.Count];
+            var colHeaders = new string[mTable.Columns.Count - 1];
             string cellValue = null;
-            clsRarray mRary = new clsRarray();
-            bool typerror = false;
+            var mRary = new clsRarray();
+            var typerror = false;
 
             //DataColumnCollection columnHeaders = mTable.Columns ;
             for (var col = 0; col < mTable.Columns.Count; col++)
@@ -683,7 +683,7 @@ namespace DAnTE.Tools
                     break;
                 if (col > 0) //Start from 2nd column
                     colHeaders[col - 1] = mTable.Columns[col].ToString();
-                for (int row = 0; row < mTable.Rows.Count; row++)
+                for (var row = 0; row < mTable.Rows.Count; row++)
                 {
                     if (typerror)
                         break;

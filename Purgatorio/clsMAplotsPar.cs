@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text;
 using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
@@ -17,8 +14,8 @@ namespace DAnTE.Purgatorio
         public string mstrDatasetName;
         public string tempFile;
         public bool stamp;
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsMAplotsPar()
         {

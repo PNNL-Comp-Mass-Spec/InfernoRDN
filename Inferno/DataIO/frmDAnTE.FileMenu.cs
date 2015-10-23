@@ -118,7 +118,7 @@ namespace DAnTE.Inferno
 
                     if (!(mDTspectral.Rows.Count == 0))
                     {
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Expressions"]);
+                        AddDataNode(mhtDatasets["Expressions"]);
                     }
                     else
                         MessageBox.Show("No data matches your parameters", "No Data");
@@ -411,8 +411,8 @@ namespace DAnTE.Inferno
         private void SaveTableWithProteinIDs(clsDatasetTreeNode selectedTable, FileInfo outputFile)
         {
             // Write out the current dataset, but with the the protein info included
-            var currentDataset = (clsDatasetTreeNode)mhtDatasets[selectedTable.mstrDataText];
-            var proteinDataset = (clsDatasetTreeNode)mhtDatasets["Protein Info"];
+            var currentDataset = mhtDatasets[selectedTable.mstrDataText];
+            var proteinDataset = mhtDatasets["Protein Info"];
 
             // Store the proteins in a dictionary so that we can quickly lookup the info
             // Keys are row_id, values are Lists of protein names

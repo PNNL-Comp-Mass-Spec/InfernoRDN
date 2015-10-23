@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
+using DAnTE.Tools;
 
 namespace DAnTE.Purgatorio
 {
@@ -10,18 +8,18 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")]
+        [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")]
         public string mstrDatasetName;
         public string tempFile;
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")]
+        [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")]
         public string selectedFactor;
-        [DAnTE.Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")]
+        [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")]
         public string selectedfVal1;
-        [DAnTE.Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")]
+        [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")]
         public string selectedfVal2;
-        [DAnTE.Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")]
+        [Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")]
         public bool mbllogScale;
-        public ArrayList marrFactors;
+        public List<clsFactorInfo> marrFactors;
 
         public clsFoldChangePar()
         {

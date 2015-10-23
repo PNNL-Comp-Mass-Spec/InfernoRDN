@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Globalization;
 
 namespace DAnTE.Purgatorio
 {
@@ -10,9 +6,8 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         private string mstrLogBase;
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "Log")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "Log")]
         public string Rdataset;
-        private string mstrDatasetName;
         private double mdblBias;
         private string mstrBiasOp;
 
@@ -22,7 +17,7 @@ namespace DAnTE.Purgatorio
             mdblBias = 1;
             mstrBiasOp = "Multiplicative";
             Rdataset = "Eset";
-            mstrDatasetName = "Expressions";
+            DatasetName = "Expressions";
         }
 
         public string Rcmd
@@ -52,7 +47,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "bias=" + mdblBias.ToString();
+                return "bias=" + mdblBias.ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -67,28 +62,24 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "Log")]
-        public string DatasetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "Log")]
+        public string DatasetName { get; set; }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Log_Base", "Log")]
+        [Tools.clsAnalysisAttribute("Log_Base", "Log")]
         public string LogBase
         {
             get { return mstrLogBase; }
             set { mstrLogBase = value; }
         }
         
-        [DAnTE.Tools.clsAnalysisAttribute("Bias", "Log")]
+        [Tools.clsAnalysisAttribute("Bias", "Log")]
         public double LogBias
         {
             get { return mdblBias; }
             set { mdblBias = value; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Bias_Operation", "Log")]
+        [Tools.clsAnalysisAttribute("Bias_Operation", "Log")]
         public string BiasOp
         {
             get { return mstrBiasOp; }

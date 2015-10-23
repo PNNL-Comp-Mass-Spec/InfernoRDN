@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Data;
 using System.Globalization;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -14,18 +11,18 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")]
         public string mstrDatasetName;
         public string mstrFactor;
         public int mintFactorIndex; // 1,2,3,...
         public string tempFile;
-        [DAnTE.Tools.clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")]
         public bool rowClust;
-        [DAnTE.Tools.clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")]
         public bool colClust;
-        [DAnTE.Tools.clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")]
         public bool hclust;
-        [DAnTE.Tools.clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")]
         public bool rowScale;
         public int agglomeration;
         public int distance;
@@ -42,17 +39,17 @@ namespace DAnTE.Purgatorio
         public double mdblMinCol;
         public double mdblMaxCol;
         public string customCol;
-        private string lowC, midC, highC;
         public bool noxlab;
-        public ArrayList Factors = new ArrayList();
-        public ArrayList marrSelRows = new ArrayList();
+        public List<string> Factors = new List<string>();
+        public List<string> marrSelRows = new List<string>();
 
 
         public clsHeatmapPar()
         {
-            lowC = Settings.Default.colCustLow;
-            midC = Settings.Default.colCustMid;
-            highC = Settings.Default.colCustHigh;
+            var lowC = Settings.Default.colCustLow;
+            var midC = Settings.Default.colCustMid;
+            var highC = Settings.Default.colCustHigh;
+
             if ((lowC == "") || (midC == "") || (highC == ""))
             {
                 lowC = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Blue));
@@ -108,7 +105,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                string colRange = "colRange=c(";
+                var colRange = "colRange=c(";
                 if (mblsetColRng)
                     colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + ")";
                 else
@@ -117,12 +114,12 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("ColorRange", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("ColorRange", "Heatmap_Clustering")]
         public string ColorRangeProp
         {
             get
             {
-                string colRange = "[";
+                var colRange = "[";
                 if (mblsetColRng)
                     colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + "]";
                 else
@@ -135,7 +132,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                string subset = "c(";
+                var subset = "c(";
                 if (marrSelRows.Count == 0 || customSelect)
                 {
                     subset = subset + rStart + ":" + rEnd + ")";
@@ -143,9 +140,9 @@ namespace DAnTE.Purgatorio
                 }
                 else
                 {
-                    for (int i = 0; i < marrSelRows.Count; i++)
+                    foreach (var item in marrSelRows)
                     {
-                        subset = subset + @"""" + marrSelRows[i] + @"""" + ",";
+                        subset = subset + @"""" + item + @"""" + ",";
                     }
                     subset = subset.Substring(0, subset.Length - 1) + ")";
                     gridSelect = true;
@@ -165,28 +162,28 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Selected_Factor", "Heatmap_Clustering")]
         public string FactorSelected
         {
             set { mstrFactor = value; }
             get { return mstrFactor; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("DataSubset", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("DataSubset", "Heatmap_Clustering")]
         public string DataRowSubset
         {
             get
             {
-                string subset = "";
+                var subset = "";
                 if (marrSelRows.Count == 0 || customSelect)
                 {
                     subset = rStart + ":" + rEnd;
                 }
                 else
                 {
-                    for (int i = 0; i < marrSelRows.Count; i++)
+                    foreach (var item in marrSelRows)
                     {
-                        subset = marrSelRows[i] + ",";
+                        subset = item + ",";
                     }
                     subset = subset.Substring(0, subset.Length - 1);
                 }
@@ -224,7 +221,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Agglomeration", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Agglomeration", "Heatmap_Clustering")]
         public string Agglomeration
         {
             get
@@ -259,7 +256,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Distance_Metric", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Distance_Metric", "Heatmap_Clustering")]
         public string Distance
         {
             get
@@ -312,7 +309,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("K_for_kmeans", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("K_for_kmeans", "Heatmap_Clustering")]
         public string K
         {
             get
@@ -324,7 +321,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Kmeans_Clustering", "Heatmap_Clustering")]
+        [clsAnalysisAttribute("Kmeans_Clustering", "Heatmap_Clustering")]
         public string DoKmeans
         {
             get
@@ -393,7 +390,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        public ArrayList SelectedRows
+        public List<string> SelectedRows
         {
             set
             {

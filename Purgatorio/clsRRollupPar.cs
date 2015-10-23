@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
-
 namespace DAnTE.Purgatorio
 {
     public class clsRRollupPar
@@ -11,30 +5,29 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         private string mstrOutFolder;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "RRollup")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "RRollup")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
-        [DAnTE.Tools.clsAnalysisAttribute("PlotResults", "RRollup")]
+
+        [Tools.clsAnalysisAttribute("PlotResults", "RRollup")]
         public bool mblPlot;
-        [DAnTE.Tools.clsAnalysisAttribute("Minimum_Presence", "RRollup")]
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "RRollup")]
         public string mstrMinPresence;
-        [DAnTE.Tools.clsAnalysisAttribute("Include_OneHitWonders", "RRollup")]
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "RRollup")]
         public bool mblOneHits;
-        [DAnTE.Tools.clsAnalysisAttribute("Exclude_threshold", "RRollup")]
+        [Tools.clsAnalysisAttribute("Exclude_threshold", "RRollup")]
         public string mstrOverlap;
-        [DAnTE.Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "RRollup")]
+        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "RRollup")]
         public string mstrGrubsNum;
-        [DAnTE.Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "RRollup")]
+        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "RRollup")]
         public string mstrGrubsP;
-        [DAnTE.Tools.clsAnalysisAttribute("Rollup_as_Mean", "RRollup")]
+        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "RRollup")]
         public bool mblModeMean;
-        [DAnTE.Tools.clsAnalysisAttribute("MeanCenter", "RRollup")]
+        [Tools.clsAnalysisAttribute("MeanCenter", "RRollup")]
         public bool mblDoCentering;
 
         public clsRRollupPar()
         {
-            mstrDatasetName = "Eset";
+            DataSetName = "Eset";
             mblPlot = false;
             mstrOutFolder = @"C:\";
         }
@@ -44,9 +37,9 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "pScaled1 <- RRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence +
-                                    "," + this.OneHitWonders + "," + this.Mode + ",minOverlap=" + mstrOverlap + ",gpvalue=" + mstrGrubsP +
-                                    ",gminPCount=" + mstrGrubsNum + "," + this.OutFolder + "," +
-                                    this.PlotFlag + "," + this.MeanCenter + ")";
+                                    "," + OneHitWonders + "," + Mode + ",minOverlap=" + mstrOverlap + ",gpvalue=" + mstrGrubsP +
+                                    ",gminPCount=" + mstrGrubsNum + "," + OutFolder + "," +
+                                    PlotFlag + "," + MeanCenter + ")";
                 return rcmd;
             }
         }
@@ -88,7 +81,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; ;
+                return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
             }
         }
 
@@ -103,14 +96,10 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "RRollup")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "RRollup")]
+        public string DataSetName { get; set; }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Results_Folder", "RRollup")]
+        [Tools.clsAnalysisAttribute("Results_Folder", "RRollup")]
         public string OutFolder_pub
         {
             get

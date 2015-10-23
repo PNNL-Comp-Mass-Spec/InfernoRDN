@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
@@ -22,8 +20,8 @@ namespace DAnTE.Purgatorio
         public bool autoBins;
         public bool stamp;
         public string tempFile;
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsHistogramPar()
         {

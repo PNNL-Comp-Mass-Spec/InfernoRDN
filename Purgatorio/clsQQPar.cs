@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
@@ -23,8 +21,8 @@ namespace DAnTE.Purgatorio
         public string wscale;
         public string df;
         public string exprate;
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsQQPar()
         {
@@ -66,7 +64,7 @@ namespace DAnTE.Purgatorio
 
         private string RefDistr(int refd)
         {
-            string dist = @"reference=""Normal""";
+            string dist;
 
             switch (refd)
             {

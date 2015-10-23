@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.IO;
-using System.Windows.Forms;
 using Wizard.UI;
-using DAnTE.Properties;
 
 namespace DAnTE.Inferno
 {

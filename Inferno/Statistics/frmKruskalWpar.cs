@@ -1,21 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using DAnTE.Purgatorio;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmKruskalWpar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
         private string sfactor = "";
-        private clsKruskalWPar mclsKruskalWPar = new clsKruskalWPar();
+        private readonly clsKruskalWPar mclsKruskalWPar;
 
         public frmKruskalWpar(clsKruskalWPar clsKW)
         {
@@ -48,7 +42,7 @@ namespace DAnTE.Inferno
             mlblDataName.Text = mclsKruskalWPar.mstrDatasetName;
             if (mlstBoxFactors.Items.Count > 0)
                 mlstBoxFactors.SelectedIndex = mclsKruskalWPar.nF;
-            mNumUpDthres.Value = (decimal)mclsKruskalWPar.numDatapts;
+            mNumUpDthres.Value = mclsKruskalWPar.numDatapts;
             //mrtBox.Rtf = @"{\rtf1\ansi \ul Kruskal-Wallis Test\ul0  is the non parametric equivalent" + 
             //    "of One-way ANOVA. The normality assumption is relaxed.}";
         }
@@ -67,17 +61,12 @@ namespace DAnTE.Inferno
                 return mclsKruskalWPar;
             }
         }
-                
-        public ArrayList PopulateListBox
+
+        public List<string> PopulateListBox
         {
             set
             {
-                marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxFactors, lstBoxEntries);
-                mlstBoxFactors.Items.AddRange(lboxObjColData);
+                mlstBoxFactors.DataSource = value;
             }
         }
                 

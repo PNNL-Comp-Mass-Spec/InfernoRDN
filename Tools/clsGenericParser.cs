@@ -22,7 +22,6 @@
 using System;
 using System.IO;
 using System.Xml;
-using System.Text;
 using System.Data;
 using System.Collections;
 using System.Security.Permissions;
@@ -37,7 +36,7 @@ namespace DAnTE.Tools
   #region GenericParsing Classes
 
 	/// <summary>
-	/// The <see cref="GenericParser"/> class is designed to be a flexible and efficient manner
+    /// The <see cref="clsGenericParser"/> class is designed to be a flexible and efficient manner
 	/// of parsing various flat files formats.
 	/// </summary>
 	/// <threadsafety static="false" instance="false"/>
@@ -123,7 +122,7 @@ namespace DAnTE.Tools
     #region Constructors
 
     /// <summary>
-    ///   Constructs an instance of a <see cref="GenericParser"/> with the default settings.
+    ///   Constructs an instance of a <see cref="clsGenericParser"/> with the default settings.
     /// </summary>
     /// <remarks>
     ///   If you use this constructor, you must set the datasource
@@ -132,27 +131,27 @@ namespace DAnTE.Tools
     /// </remarks>
     public clsGenericParser()
     {
-      this.m_ParserState = ParserState.NoDataSource;
-      this.m_txtReader = null;
-      this.m_blnDisposed = false;
+      m_ParserState = ParserState.NoDataSource;
+      m_txtReader = null;
+      m_blnDisposed = false;
 
-      this.m_iaColumnWidths = null;
-      this.m_intMaxBufferSize = DEFAULT_MAX_BUFFER_SIZE;
-      this.m_intMaxRows = DEFAULT_MAX_ROWS;
-      this.m_intSkipDataRows = DEFAULT_SKIP_DATA_ROWS;
-      this.m_intExpectedColumnCount = DEFAULT_EXPECTED_COLUMN_COUNT;
-      this.m_blnFirstRowHasHeader = DEFAULT_FIRST_ROW_HAS_HEADER;
-      this.m_blnTrimResults = DEFAULT_TRIM_RESULTS;
-      this.m_blnFixedWidth = DEFAULT_FIXED_WIDTH;
-      this.m_caRowDelimiter = Environment.NewLine.ToCharArray();
-      this.m_caColumnDelimiter = DEFAULT_ROW_DELIMITER.ToCharArray();
-      this.m_chTextQualifier = DEFAULT_TEXT_QUALIFIER;
-      this.m_chEscapeCharacter = DEFAULT_ESCAPE_CHARACTER;
-      this.m_chCommentCharacter = DEFAULT_COMMENT_CHARACTER;
+      m_iaColumnWidths = null;
+      m_intMaxBufferSize = DEFAULT_MAX_BUFFER_SIZE;
+      m_intMaxRows = DEFAULT_MAX_ROWS;
+      m_intSkipDataRows = DEFAULT_SKIP_DATA_ROWS;
+      m_intExpectedColumnCount = DEFAULT_EXPECTED_COLUMN_COUNT;
+      m_blnFirstRowHasHeader = DEFAULT_FIRST_ROW_HAS_HEADER;
+      m_blnTrimResults = DEFAULT_TRIM_RESULTS;
+      m_blnFixedWidth = DEFAULT_FIXED_WIDTH;
+      m_caRowDelimiter = Environment.NewLine.ToCharArray();
+      m_caColumnDelimiter = DEFAULT_ROW_DELIMITER.ToCharArray();
+      m_chTextQualifier = DEFAULT_TEXT_QUALIFIER;
+      m_chEscapeCharacter = DEFAULT_ESCAPE_CHARACTER;
+      m_chCommentCharacter = DEFAULT_COMMENT_CHARACTER;
     }
 
     /// <summary>
-    ///   Constructs an instance of a <see cref="GenericParser"/> and sets the initial datasource
+    ///   Constructs an instance of a <see cref="clsGenericParser"/> and sets the initial datasource
     ///   as the file referenced by the string passed in.
     /// </summary>
     /// <param name="strFileName">The file name to set as the initial datasource.</param>
@@ -162,7 +161,7 @@ namespace DAnTE.Tools
     }
 
     /// <summary>
-    ///   Constructs an instance of a <see cref="GenericParser"/> and sets the initial datasource
+    ///   Constructs an instance of a <see cref="clsGenericParser"/> and sets the initial datasource
     ///   as the <see cref="TextReader"/> passed in.
     /// </summary>
     /// <param name="txtReader">The <see cref="TextReader"/> containing the data to be parsed.</param>
@@ -192,7 +191,7 @@ namespace DAnTE.Tools
     {
       get
       {
-        return this.m_blnDisposed;
+        return m_blnDisposed;
       }
     }
 
@@ -202,7 +201,7 @@ namespace DAnTE.Tools
     ///     column.
     ///   </para>
     ///   <para>
-    ///     By setting this properly, you automatically set the <see cref="GenericParser"/>
+    ///     By setting this properly, you automatically set the <see cref="clsGenericParser"/>
     ///     for <see cref="FixedWidth"/> format and the <see cref="ExpectedColumnCount"/> is set.
     ///   </para>
     /// </summary>
@@ -216,33 +215,33 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_iaColumnWidths;
+        return m_iaColumnWidths;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_iaColumnWidths = value;
+        m_iaColumnWidths = value;
 
         if (value == null)
-          this.m_blnFixedWidth = false;
+          m_blnFixedWidth = false;
         else
         {
-          if (this.m_iaColumnWidths.Length < 1)
+          if (m_iaColumnWidths.Length < 1)
             throw new ArgumentOutOfRangeException("ColumnWidths", "You cannot set the value of ColumnWidths to an empty array.");
 
           // Make sure all of the ColumnWidths are valid.
-          for (int intColumnIndex = 0; intColumnIndex < this.m_iaColumnWidths.Length; ++intColumnIndex)
+          for (var intColumnIndex = 0; intColumnIndex < m_iaColumnWidths.Length; ++intColumnIndex)
           {
-            if (this.m_iaColumnWidths[intColumnIndex] < 1)
+            if (m_iaColumnWidths[intColumnIndex] < 1)
               throw new ArgumentOutOfRangeException("ColumnWidths", "You cannot set the value of a ColumnWidth to a number less than one.");
           }
 
-          this.m_blnFixedWidth = true;
-          this.m_intExpectedColumnCount = this.m_iaColumnWidths.Length;
+          m_blnFixedWidth = true;
+          m_intExpectedColumnCount = m_iaColumnWidths.Length;
         }
       }
     }
@@ -272,17 +271,17 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intMaxBufferSize;
+        return m_intMaxBufferSize;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
         if (value > 0)
-          this.m_intMaxBufferSize = value;
+          m_intMaxBufferSize = value;
         else
           throw new ArgumentOutOfRangeException("MaxBufferSize", value, "The value must be greater than 0.");
       }
@@ -308,19 +307,19 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intMaxRows;
+        return m_intMaxRows;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_intMaxRows = value;
+        m_intMaxRows = value;
 
-        if (this.m_intMaxRows < 0)
-          this.m_intMaxRows = 0;
+        if (m_intMaxRows < 0)
+          m_intMaxRows = 0;
       }
     }
 
@@ -346,19 +345,19 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intSkipDataRows;
+        return m_intSkipDataRows;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
         
-        this.m_intSkipDataRows = value;
+        m_intSkipDataRows = value;
 
-        if (this.m_intSkipDataRows < 0)
-          this.m_intSkipDataRows = 0;
+        if (m_intSkipDataRows < 0)
+          m_intSkipDataRows = 0;
       }
     }
 
@@ -373,7 +372,7 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intDataRowNumber;
+        return m_intDataRowNumber;
       }
     }
 
@@ -389,7 +388,7 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intFileRowNumber;
+        return m_intFileRowNumber;
       }
     }
 
@@ -402,7 +401,7 @@ namespace DAnTE.Tools
     ///     By setting <see cref="ColumnWidths"/>, this property is automatically set.
     ///   </para>
     ///   <para>
-    ///     Setting the value to zero will cause the <see cref="GenericParser"/> to ignore
+    ///     Setting the value to zero will cause the <see cref="clsGenericParser"/> to ignore
     ///     the column count in case the number changes per row.
     ///   </para>
     ///   <para>
@@ -420,29 +419,29 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_intExpectedColumnCount;
+        return m_intExpectedColumnCount;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_intExpectedColumnCount = value;
+        m_intExpectedColumnCount = value;
 
         // Make sure the ExpectedColumnCount matches the column width's
         // supplied.
-        if (this.m_blnFixedWidth
-        && (this.m_iaColumnWidths != null)
-        && (this.m_iaColumnWidths.Length != this.m_intExpectedColumnCount))
+        if (m_blnFixedWidth
+        && (m_iaColumnWidths != null)
+        && (m_iaColumnWidths.Length != m_intExpectedColumnCount))
         {
           // Null it out to force the proper column width's to be supplied.
-          this.m_iaColumnWidths = null;
-          this.m_blnFixedWidth = false;
+          m_iaColumnWidths = null;
+          m_blnFixedWidth = false;
         }
-        else if (this.m_intExpectedColumnCount < 0)
-          this.m_intExpectedColumnCount = 0;
+        else if (m_intExpectedColumnCount < 0)
+          m_intExpectedColumnCount = 0;
       }
     }
 
@@ -472,16 +471,16 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_blnFirstRowHasHeader;
+        return m_blnFirstRowHasHeader;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_blnFirstRowHasHeader = value;
+        m_blnFirstRowHasHeader = value;
       }
     }
 
@@ -517,16 +516,16 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_blnTrimResults;
+        return m_blnTrimResults;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_blnTrimResults = value;
+        m_blnTrimResults = value;
       }
     }
 
@@ -556,21 +555,21 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_blnFixedWidth;
+        return m_blnFixedWidth;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_blnFixedWidth = value;
+        m_blnFixedWidth = value;
 
-        if (this.m_blnFixedWidth)
-          this.m_caColumnDelimiter = null;
+        if (m_blnFixedWidth)
+          m_caColumnDelimiter = null;
         else
-          this.m_iaColumnWidths = null;
+          m_iaColumnWidths = null;
       }
     }
 
@@ -586,7 +585,7 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_ParserState;
+        return m_ParserState;
       }
     }
 
@@ -609,13 +608,13 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_caRowDelimiter;
+        return m_caRowDelimiter;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
         if (value == null)
@@ -623,7 +622,7 @@ namespace DAnTE.Tools
         else if (value.Length < 1)
           throw new ArgumentException("You cannot set the value of RowDelimiter to an empty array.", "RowDelimiter");
         else
-          this.m_caRowDelimiter = value;          
+          m_caRowDelimiter = value;          
       }
     }
 
@@ -649,13 +648,13 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_caColumnDelimiter;
+        return m_caColumnDelimiter;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
         if (value == null)
@@ -663,7 +662,7 @@ namespace DAnTE.Tools
         else if (value.Length < 1)
           throw new ArgumentException("You cannot set the value of ColumnDelimiter to an empty array.", "ColumnDelimiter");
         else
-          this.m_caColumnDelimiter = value;          
+          m_caColumnDelimiter = value;          
       }
     }
 
@@ -686,16 +685,16 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_chTextQualifier;
+        return m_chTextQualifier;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_chTextQualifier = value;
+        m_chTextQualifier = value;
       }
     }
 
@@ -728,16 +727,16 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_chEscapeCharacter;
+        return m_chEscapeCharacter;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_chEscapeCharacter = value;
+        m_chEscapeCharacter = value;
       }
     }
 
@@ -762,16 +761,16 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_chCommentCharacter;
+        return m_chCommentCharacter;
       }
       set
       {
         this._CheckDiposed();
 
-        if (this.m_ParserState == ParserState.Parsing)
+        if (m_ParserState == ParserState.Parsing)
           return;
 
-        this.m_chCommentCharacter = value;
+        m_chCommentCharacter = value;
       }
     }
 
@@ -790,8 +789,8 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        if ((intColumnIndex > -1) && (intColumnIndex < this.m_scData.Count))
-          return this.m_scData[intColumnIndex];
+        if ((intColumnIndex > -1) && (intColumnIndex < m_scData.Count))
+          return m_scData[intColumnIndex];
         else
           return null;
       }
@@ -828,7 +827,7 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_scData.Count;
+        return m_scData.Count;
       }
     }
 
@@ -867,8 +866,8 @@ namespace DAnTE.Tools
       if (!File.Exists(strFileName))
         throw new ArgumentException(string.Format("File, {0}, does not exist.", strFileName), "strFileName");
 
-      this.m_ParserState = ParserState.Ready;
-      this.m_txtReader = new StreamReader(strFileName);
+      m_ParserState = ParserState.Ready;
+      m_txtReader = new StreamReader(strFileName);
     }
 
     /// <summary>
@@ -894,8 +893,8 @@ namespace DAnTE.Tools
       if (txtReader == null)
         throw new ArgumentNullException("txtReader", "You cannot supply a null for the value of txtReader.");
 
-      this.m_ParserState = ParserState.Ready;
-      this.m_txtReader = txtReader;
+      m_ParserState = ParserState.Ready;
+      m_txtReader = txtReader;
     }
 
 
@@ -927,8 +926,8 @@ namespace DAnTE.Tools
     ///   </para>
     /// </remarks>
     /// <exception cref="ParserSetupException">Attempting to read without properly
-    /// setting up the <see cref="GenericParser"/>.</exception>
-    /// <exception cref="ParsingException">Thrown in the situations where the <see cref="GenericParser"/>
+    /// setting up the <see cref="clsGenericParser"/>.</exception>
+    /// <exception cref="ParsingException">Thrown in the situations where the <see cref="clsGenericParser"/>
     /// cannot continue due to a conflict between the setup and the data being parsed.</exception>
     /// <example>
     ///   <code lang="C#" escaped="true">
@@ -951,25 +950,25 @@ namespace DAnTE.Tools
       this._InitializeParse();
 
       // Do we need to stop parsing rows.
-      if (this.m_ParserState == ParserState.Finished)
+      if (m_ParserState == ParserState.Finished)
         return false;
 
       // Read chunks of the data into the buffer, then parse each chunk for data.
       while (this._ReadDataIntoBuffer())
       {
-        while (this.m_intCurrentIndex < this.m_intCharactersInBuffer)
+        while (m_intCurrentIndex < m_intCharactersInBuffer)
         {
           // If we're in the state of parsing the row type, it means we're at the beginning of a row.
-          if (this.m_ParserRowState == RowState.GetRowType)
+          if (m_ParserRowState == RowState.GetRowType)
           {
             this._ParseRowType();
 
             // In the event that we read in a comment row, we need to skip
             // the comment character, just in case they use it for something
             // else in the file (row delimiter possibly).
-            if (this.m_ParserRowState == RowState.CommentRow)
+            if (m_ParserRowState == RowState.CommentRow)
             {
-              ++this.m_intCurrentIndex;
+              ++m_intCurrentIndex;
               continue;
             }
           }
@@ -981,35 +980,35 @@ namespace DAnTE.Tools
 
           // If we're in comment, we want to bypass any special considerations and just
           // find the end.
-          if (this.m_ParserRowState != RowState.CommentRow)
+          if (m_ParserRowState != RowState.CommentRow)
           {
-            if (this.m_blnEscapeCharacterFound)
+            if (m_blnEscapeCharacterFound)
             {
-              this.m_blnEscapeCharacterFound = false;
-              ++this.m_intCurrentIndex;
+              m_blnEscapeCharacterFound = false;
+              ++m_intCurrentIndex;
               continue;
             }
 
             // Skip this character and then the next one, so that we ignore the escaped character.
-            if (this.m_caBuffer[this.m_intCurrentIndex] == this.m_chEscapeCharacter)
+            if (m_caBuffer[m_intCurrentIndex] == m_chEscapeCharacter)
             {
-              this.m_blnEscapeCharacterFound = true;
-              ++this.m_intCurrentIndex;
+              m_blnEscapeCharacterFound = true;
+              ++m_intCurrentIndex;
               continue;
             }
 
             // Text qualifiers cause us to ignore row/column delimiters.
-            if (this.m_caBuffer[this.m_intCurrentIndex] == this.m_chTextQualifier)
+            if (m_caBuffer[m_intCurrentIndex] == m_chTextQualifier)
             {
-              this.m_blnInText = !this.m_blnInText;
-              ++this.m_intCurrentIndex;
+              m_blnInText = !m_blnInText;
+              ++m_intCurrentIndex;
               continue;
             }
 
             // If we're still within text, so we don't care about the row/column delimiters.
-            if (this.m_blnInText)
+            if (m_blnInText)
             {
-              ++this.m_intCurrentIndex;
+              ++m_intCurrentIndex;
               continue;
             }
           }
@@ -1018,69 +1017,69 @@ namespace DAnTE.Tools
           {
             // Move back one character to get the last character in the column
             // (ended with row delimiter).
-            if (!this._IsEmptyRow(this.m_intCurrentIndex))
+            if (!this._IsEmptyRow(m_intCurrentIndex))
             {
-              if ((this.m_ParserRowState == RowState.DataRow)
-               || (this.m_ParserRowState == RowState.SkippedRow))
-                ++this.m_intDataRowNumber;
+              if ((m_ParserRowState == RowState.DataRow)
+               || (m_ParserRowState == RowState.SkippedRow))
+                ++m_intDataRowNumber;
 
-              if ((this.m_ParserRowState == RowState.DataRow)
-               || (this.m_ParserRowState == RowState.HeaderRow))
-                this._ExtractColumn(this.m_intCurrentIndex - 1);
+              if ((m_ParserRowState == RowState.DataRow)
+               || (m_ParserRowState == RowState.HeaderRow))
+                this._ExtractColumn(m_intCurrentIndex - 1);
             }
 
             // Add the length of the RowDelimiter to the CurrentIndex to move us along.
-            this.m_intCurrentIndex += this.m_caRowDelimiter.Length;
-            this.m_intCurrentColumnStartIndex = this.m_intCurrentIndex;
-            this.m_blnEndOfRowFound = true;
+            m_intCurrentIndex += m_caRowDelimiter.Length;
+            m_intCurrentColumnStartIndex = m_intCurrentIndex;
+            m_blnEndOfRowFound = true;
 
             // Ensure that we have some data, before trying to do something with it.
             // This prevents problems with empty rows.
-            if (this.m_scData.Count > 0)
+            if (m_scData.Count > 0)
             {
               // Have we got a row that meets our expected number of columns.
-              if ((this.m_intExpectedColumnCount > 0) && (this.m_scData.Count != this.m_intExpectedColumnCount))
+              if ((m_intExpectedColumnCount > 0) && (m_scData.Count != m_intExpectedColumnCount))
                 throw new ParsingException(string.Format("Number of columns ({0}) differs from the expected column count ({1}).",
-                  this.m_scData.Count,
-                  this.m_intExpectedColumnCount),
-                  this.m_intFileRowNumber);
+                  m_scData.Count,
+                  m_intExpectedColumnCount),
+                  m_intFileRowNumber);
 
               // If we were in a data row, we need to stop.
-              if (this.m_ParserRowState == RowState.DataRow)
+              if (m_ParserRowState == RowState.DataRow)
                 break;
-              else if (this.m_ParserRowState == RowState.HeaderRow)
+              else if (m_ParserRowState == RowState.HeaderRow)
                 this._SetColumnNames();
             }
 
-            this.m_ParserRowState = RowState.GetRowType;
+            m_ParserRowState = RowState.GetRowType;
             continue;
           }
-          else if ((this.m_ParserRowState != RowState.CommentRow) && this._IsEndOfColumn())
+          else if ((m_ParserRowState != RowState.CommentRow) && this._IsEndOfColumn())
           {
             // Mark that this row has an end of column (ensures that we didn't find an empty row).
-            this.m_blnEndOfColumnFound = true;
+            m_blnEndOfColumnFound = true;
 
             // Move back one character to get the last character in the column
             // (ended with column delimiter).
-            if ((this.m_ParserRowState == RowState.DataRow)
-              || (this.m_ParserRowState == RowState.HeaderRow))
-              this._ExtractColumn(this.m_intCurrentIndex - 1);
+            if ((m_ParserRowState == RowState.DataRow)
+              || (m_ParserRowState == RowState.HeaderRow))
+              this._ExtractColumn(m_intCurrentIndex - 1);
 
             // Add the length of the ColumnDelimiter to the CurrentIndex to move us along.
-            if (!this.m_blnFixedWidth)
-              this.m_intCurrentIndex += this.m_caColumnDelimiter.Length;
+            if (!m_blnFixedWidth)
+              m_intCurrentIndex += m_caColumnDelimiter.Length;
 
             // Set the start of the column indice at the start of a new column.
-            this.m_intCurrentColumnStartIndex = this.m_intCurrentIndex;
+            m_intCurrentColumnStartIndex = m_intCurrentIndex;
             continue;
           }
           else
-            ++this.m_intCurrentIndex;
+            ++m_intCurrentIndex;
         }
 
         // We found the end of a row..return normally.
-        if (this.m_blnEndOfRowFound)
-          return (this.m_scData.Count > 0);
+        if (m_blnEndOfRowFound)
+          return (m_scData.Count > 0);
         else
         {
           //////////////////////////////////////////////////
@@ -1088,23 +1087,23 @@ namespace DAnTE.Tools
           //////////////////////////////////////////////////
 
           // We ran out of data, flush out the last column and return.
-          if (this.m_BufferState == BufferState.NoFetchableData)
+          if (m_BufferState == BufferState.NoFetchableData)
           {
-            this.m_BufferState = BufferState.NoDataLeft;
-            this.m_ParserState = ParserState.Finished;
+            m_BufferState = BufferState.NoDataLeft;
+            m_ParserState = ParserState.Finished;
 
-            if (!this._IsEmptyRow(this.m_intCurrentIndex))
+            if (!this._IsEmptyRow(m_intCurrentIndex))
             {
-              if ((this.m_ParserRowState == RowState.DataRow)
-               || (this.m_ParserRowState == RowState.SkippedRow))
-                ++this.m_intDataRowNumber;
+              if ((m_ParserRowState == RowState.DataRow)
+               || (m_ParserRowState == RowState.SkippedRow))
+                ++m_intDataRowNumber;
 
               // Move back one character to get the last character in the column (ended with EOF).
-              if (this.m_ParserRowState == RowState.DataRow)
+              if (m_ParserRowState == RowState.DataRow)
               {
                 // There's one column left to extract.
-                this._ExtractColumn(this.m_intCurrentIndex - 1);
-                return (this.m_scData.Count > 0);
+                this._ExtractColumn(m_intCurrentIndex - 1);
+                return (m_scData.Count > 0);
               }
             }
             
@@ -1114,16 +1113,16 @@ namespace DAnTE.Tools
           else
           {
             // Move the leftover data in the buffer to the front and start over.
-            this._CopyRemainingDataToFront(this.m_intCurrentColumnStartIndex);
+            this._CopyRemainingDataToFront(m_intCurrentColumnStartIndex);
 
             // Indicate that we need to fetch more data.
-            this.m_BufferState = BufferState.FetchData;
+            m_BufferState = BufferState.FetchData;
             continue;
           }
         }
       }
 
-      this.m_ParserState = ParserState.Finished;
+      m_ParserState = ParserState.Finished;
       return false;
     }
 
@@ -1133,7 +1132,7 @@ namespace DAnTE.Tools
     #region Loading
 
     /// <summary>
-    /// Loads the configuration of the <see cref="GenericParser"/> object from an <see cref="XmlReader"/>.
+    /// Loads the configuration of the <see cref="clsGenericParser"/> object from an <see cref="XmlReader"/>.
     /// </summary>
     /// <param name="xrConfigXmlFile">The <see cref="XmlReader"/> containing the XmlConfig file to load configuration from.</param>
     /// <exception cref="ArgumentException">In the event that the XmlConfig file contains a value that is invalid,
@@ -1153,7 +1152,7 @@ namespace DAnTE.Tools
     /// </example>
     public void Load(XmlReader xrConfigXmlFile)
     {
-      XmlDocument xmlConfig = new XmlDocument();
+      var xmlConfig = new XmlDocument();
 
       xmlConfig.Load(xrConfigXmlFile);
 
@@ -1161,7 +1160,7 @@ namespace DAnTE.Tools
     }
 
     /// <summary>
-    /// Loads the configuration of the <see cref="GenericParser"/> object from an <see cref="TextReader"/>.
+    /// Loads the configuration of the <see cref="clsGenericParser"/> object from an <see cref="TextReader"/>.
     /// </summary>
     /// <param name="trConfigXmlFile">The <see cref="TextReader"/> containing the XmlConfig file to load configuration from.</param>
     /// <exception cref="ArgumentException">In the event that the XmlConfig file contains a value that is invalid,
@@ -1180,7 +1179,7 @@ namespace DAnTE.Tools
     /// </example>
     public void Load(TextReader trConfigXmlFile)
     {
-      XmlDocument xmlConfig = new XmlDocument();
+      var xmlConfig = new XmlDocument();
 
       xmlConfig.Load(trConfigXmlFile);
 
@@ -1188,7 +1187,7 @@ namespace DAnTE.Tools
     }
 
     /// <summary>
-    /// Loads the configuration of the <see cref="GenericParser"/> object from an <see cref="Stream"/>.
+    /// Loads the configuration of the <see cref="clsGenericParser"/> object from an <see cref="Stream"/>.
     /// </summary>
     /// <param name="sConfigXmlFile">The <see cref="Stream"/> containing the XmlConfig file to load configuration from.</param>
     /// <exception cref="ArgumentException">In the event that the XmlConfig file contains a value that is invalid,
@@ -1207,7 +1206,7 @@ namespace DAnTE.Tools
     /// </example>
     public void Load(Stream sConfigXmlFile)
     {
-      XmlDocument xmlConfig = new XmlDocument();
+      var xmlConfig = new XmlDocument();
 
       xmlConfig.Load(sConfigXmlFile);
 
@@ -1215,7 +1214,7 @@ namespace DAnTE.Tools
     }
 
     /// <summary>
-    /// Loads the configuration of the <see cref="GenericParser"/> object from a file on the file system.
+    /// Loads the configuration of the <see cref="clsGenericParser"/> object from a file on the file system.
     /// </summary>
     /// <param name="strConfigXmlFile">The full path to the XmlConfig file on the file system.</param>
     /// <exception cref="ArgumentException">In the event that the XmlConfig file contains a value that is invalid,
@@ -1232,7 +1231,7 @@ namespace DAnTE.Tools
     /// </example>
     public void Load(string strConfigXmlFile)
     {
-      XmlDocument xmlConfig = new XmlDocument();
+      var xmlConfig = new XmlDocument();
 
       xmlConfig.Load(strConfigXmlFile);
 
@@ -1240,7 +1239,7 @@ namespace DAnTE.Tools
     }
 
     /// <summary>
-    /// Loads the configuration of the <see cref="GenericParser"/> object from an <see cref="XmlDocument"/>.
+    /// Loads the configuration of the <see cref="clsGenericParser"/> object from an <see cref="XmlDocument"/>.
     /// </summary>
     /// <param name="xmlConfig">The <see cref="XmlDocument"/> object containing the configuration information.</param>
     /// <exception cref="ArgumentException">In the event that the XmlConfig file contains a value that is invalid,
@@ -1261,7 +1260,7 @@ namespace DAnTE.Tools
     public virtual void Load(XmlDocument xmlConfig)
     {
       XmlElement xmlElement;
-      ArrayList alBuffer = new ArrayList();
+      var alBuffer = new ArrayList();
       char[] caDelimiter;
 
       this._CheckDiposed();
@@ -1338,7 +1337,7 @@ namespace DAnTE.Tools
 
       xmlElement = xmlConfig.DocumentElement[XML_ROW_DELIMITER];
 
-      if ((xmlElement != null) && (xmlElement.InnerText != null) && (xmlElement.InnerText.Length > 0))
+      if ((xmlElement != null) && (!string.IsNullOrEmpty(xmlElement.InnerText)))
       {
         caDelimiter = this._ConvertFromSafeString(xmlElement.InnerText);
 
@@ -1350,7 +1349,7 @@ namespace DAnTE.Tools
 
       xmlElement = xmlConfig.DocumentElement[XML_COLUMN_DELIMITER];
 
-      if ((xmlElement != null) && (xmlElement.InnerText != null) && (xmlElement.InnerText.Length > 0))
+      if ((xmlElement != null) && (!string.IsNullOrEmpty(xmlElement.InnerText)))
       {
         caDelimiter = this._ConvertFromSafeString(xmlElement.InnerText);
 
@@ -1362,21 +1361,21 @@ namespace DAnTE.Tools
 
       xmlElement = xmlConfig.DocumentElement[XML_TEXT_QUALIFIER];
 
-      if ((xmlElement != null) && (xmlElement.InnerText != null) && (xmlElement.InnerText.Length > 0))
+      if ((xmlElement != null) && (!string.IsNullOrEmpty(xmlElement.InnerText)))
         this.TextQualifier = Convert.ToChar(Convert.ToInt32(xmlElement.InnerText));
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.DocumentElement[XML_ESCAPE_CHARACTER];
 
-      if ((xmlElement != null) && (xmlElement.InnerText != null) && (xmlElement.InnerText.Length > 0))
+      if ((xmlElement != null) && (!string.IsNullOrEmpty(xmlElement.InnerText)))
         this.EscapeCharacter = Convert.ToChar(Convert.ToInt32(xmlElement.InnerText));
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.DocumentElement[XML_COMMENT_CHARACTER];
 
-      if ((xmlElement != null) && (xmlElement.InnerText != null) && (xmlElement.InnerText.Length > 0))
+      if ((xmlElement != null) && (!string.IsNullOrEmpty(xmlElement.InnerText)))
         this.CommentCharacter = Convert.ToChar(Convert.ToInt32(xmlElement.InnerText));
     }
 
@@ -1386,7 +1385,7 @@ namespace DAnTE.Tools
     #region Saving
 
     /// <summary>
-    /// Saves the configuration of the <see cref="GenericParser"/> object to a <see cref="XmlWriter"/>.
+    /// Saves the configuration of the <see cref="clsGenericParser"/> object to a <see cref="XmlWriter"/>.
     /// </summary>
     /// <param name="xwXmlConfig">The XmlWriter to save the the <see cref="XmlDocument"/> to.</param>
     /// <example>
@@ -1399,13 +1398,13 @@ namespace DAnTE.Tools
     /// </example>
     public void Save(XmlWriter xwXmlConfig)
     {
-      XmlDocument xmlConfig = this.Save();
+      var xmlConfig = this.Save();
 
       xmlConfig.Save(xwXmlConfig);
     }
 
     /// <summary>
-    /// Saves the configuration of the <see cref="GenericParser"/> object to a <see cref="TextWriter"/>.
+    /// Saves the configuration of the <see cref="clsGenericParser"/> object to a <see cref="TextWriter"/>.
     /// </summary>
     /// <param name="twXmlConfig">The TextWriter to save the <see cref="XmlDocument"/> to.</param>
     /// <example>
@@ -1418,13 +1417,13 @@ namespace DAnTE.Tools
     /// </example>
     public void Save(TextWriter twXmlConfig)
     {
-      XmlDocument xmlConfig = this.Save();
+      var xmlConfig = this.Save();
 
       xmlConfig.Save(twXmlConfig);
     }
 
     /// <summary>
-    /// Saves the configuration of the <see cref="GenericParser"/> object to a <see cref="Stream"/>.
+    /// Saves the configuration of the <see cref="clsGenericParser"/> object to a <see cref="Stream"/>.
     /// </summary>
     /// <param name="sXmlConfig">The stream to save the <see cref="XmlDocument"/> to.</param>
     /// <example>
@@ -1437,13 +1436,13 @@ namespace DAnTE.Tools
     /// </example>
     public void Save(Stream sXmlConfig)
     {
-      XmlDocument xmlConfig = this.Save();
+      var xmlConfig = this.Save();
 
       xmlConfig.Save(sXmlConfig);
     }
 
     /// <summary>
-    /// Saves the configuration of the <see cref="GenericParser"/> object to a the file system.
+    /// Saves the configuration of the <see cref="clsGenericParser"/> object to a the file system.
     /// </summary>
     /// <param name="strConfigXmlFile">The file name to save the XmlConfig file.</param>
     /// <example>
@@ -1454,16 +1453,16 @@ namespace DAnTE.Tools
     /// </example>
     public void Save(string strConfigXmlFile)
     {
-      XmlDocument xmlConfig = this.Save();
+      var xmlConfig = this.Save();
 
       xmlConfig.Save(strConfigXmlFile);
     }
 
     /// <summary>
-    /// Saves the configuration of the <see cref="GenericParser"/> object to an <see cref="XmlDocument"/>.
+    /// Saves the configuration of the <see cref="clsGenericParser"/> object to an <see cref="XmlDocument"/>.
     /// </summary>
     /// <returns>The <see cref="XmlDocument"/> containing the configuration information of the
-    /// <see cref="GenericParser"/> object.</returns>
+    /// <see cref="clsGenericParser"/> object.</returns>
     /// <example>
     ///   <code lang="C#" escaped="true">
     ///     GenericParser p = new GenericParser();
@@ -1472,7 +1471,7 @@ namespace DAnTE.Tools
     /// </example>
     public virtual XmlDocument Save()
     {
-      XmlDocument xmlConfig = new XmlDocument();
+      var xmlConfig = new XmlDocument();
       XmlDeclaration xmlDeclaration;
       XmlElement xmlRoot, xmlElement, xmlSubElement;
 
@@ -1491,13 +1490,13 @@ namespace DAnTE.Tools
       // GenericParser object into the XmlDocument.                     //
       ////////////////////////////////////////////////////////////////////
 
-      if (this.m_iaColumnWidths != null)
+      if (m_iaColumnWidths != null)
       {
         xmlElement = xmlConfig.CreateElement(XML_COLUMN_WIDTHS);
         xmlRoot.AppendChild(xmlElement);
 
         // Create the column width elements underneath the column widths node.
-        foreach (int intColumnWidth in this.m_iaColumnWidths)
+        foreach (var intColumnWidth in m_iaColumnWidths)
         {
           xmlSubElement = xmlConfig.CreateElement(XML_COLUMN_WIDTH);
           xmlSubElement.InnerText = intColumnWidth.ToString();
@@ -1508,73 +1507,73 @@ namespace DAnTE.Tools
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_MAX_BUFFER_SIZE);
-      xmlElement.InnerText = this.m_intMaxBufferSize.ToString();
+      xmlElement.InnerText = m_intMaxBufferSize.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_MAX_ROWS);
-      xmlElement.InnerText = this.m_intMaxRows.ToString();
+      xmlElement.InnerText = m_intMaxRows.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_SKIP_DATA_ROWS);
-      xmlElement.InnerText = this.m_intSkipDataRows.ToString();
+      xmlElement.InnerText = m_intSkipDataRows.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_EXPECTED_COLUMN_COUNT);
-      xmlElement.InnerText = this.m_intExpectedColumnCount.ToString();
+      xmlElement.InnerText = m_intExpectedColumnCount.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
       
       xmlElement = xmlConfig.CreateElement(XML_FIRST_ROW_HAS_HEADER);
-      xmlElement.InnerText = this.m_blnFirstRowHasHeader.ToString();
+      xmlElement.InnerText = m_blnFirstRowHasHeader.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_TRIM_RESULTS);
-      xmlElement.InnerText = this.m_blnTrimResults.ToString();
+      xmlElement.InnerText = m_blnTrimResults.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_FIXED_WIDTH);
-      xmlElement.InnerText = this.m_blnFixedWidth.ToString();
+      xmlElement.InnerText = m_blnFixedWidth.ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_ROW_DELIMITER);
-      xmlElement.InnerText = this._ConvertToSafeString(this.m_caRowDelimiter);
+      xmlElement.InnerText = this._ConvertToSafeString(m_caRowDelimiter);
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_COLUMN_DELIMITER);
-      xmlElement.InnerText = this. _ConvertToSafeString(this.m_caColumnDelimiter);
+      xmlElement.InnerText = this. _ConvertToSafeString(m_caColumnDelimiter);
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_TEXT_QUALIFIER);
-      xmlElement.InnerText = Convert.ToInt32(this.m_chTextQualifier).ToString();
+      xmlElement.InnerText = Convert.ToInt32(m_chTextQualifier).ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_ESCAPE_CHARACTER);
-      xmlElement.InnerText = Convert.ToInt32(this.m_chEscapeCharacter).ToString();
+      xmlElement.InnerText = Convert.ToInt32(m_chEscapeCharacter).ToString();
       xmlRoot.AppendChild(xmlElement);
 
       /////////////////////////////////////////////////////////////
 
       xmlElement = xmlConfig.CreateElement(XML_COMMENT_CHARACTER);
-      xmlElement.InnerText = Convert.ToInt32(this.m_chCommentCharacter).ToString();
+      xmlElement.InnerText = Convert.ToInt32(m_chCommentCharacter).ToString();
       xmlRoot.AppendChild(xmlElement);
 
       return xmlConfig;
@@ -1586,7 +1585,7 @@ namespace DAnTE.Tools
     #region Miscellaneous
 
     /// <summary>
-    ///   Releases the underlying resources of the <see cref="GenericParser"/>.
+    ///   Releases the underlying resources of the <see cref="clsGenericParser"/>.
     /// </summary>
     /// <example>
     ///   <code lang="C#" escaped="true">
@@ -1751,11 +1750,11 @@ namespace DAnTE.Tools
     ///   of state during parsing.
     /// </summary>
     /// <exception cref="ParserSetupException">
-    ///   In the event that the <see cref="GenericParser"/> wasn't setup properly, this exception will be thrown.
+    ///   In the event that the <see cref="clsGenericParser"/> wasn't setup properly, this exception will be thrown.
     /// </exception>
     private void _InitializeParse()
     {
-      switch (this.m_ParserState)
+      switch (m_ParserState)
       {
           /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1767,41 +1766,41 @@ namespace DAnTE.Tools
         case ParserState.Ready:
 
           // Peform a quick sanity check if we're doing FixedWidth.
-          if (this.m_blnFixedWidth && (this.m_iaColumnWidths == null))
+          if (m_blnFixedWidth && (m_iaColumnWidths == null))
             throw new ParserSetupException("You must supply the appropriate column widths before attempting to parse fixed width data.");
 
-          this.m_ParserState = ParserState.Parsing;
-          this.m_ParserRowState = RowState.GetRowType;
-          this.m_BufferState = BufferState.FetchData;
+          m_ParserState = ParserState.Parsing;
+          m_ParserRowState = RowState.GetRowType;
+          m_BufferState = BufferState.FetchData;
 
-          this.m_blnInText = false;
-          this.m_blnEndOfRowFound = false;
-          this.m_blnEndOfColumnFound = false;
-          this.m_blnEscapeCharacterFound = false;
+          m_blnInText = false;
+          m_blnEndOfRowFound = false;
+          m_blnEndOfColumnFound = false;
+          m_blnEscapeCharacterFound = false;
 
-          this.m_blnHeaderRowFound = false;
-          this.m_intStartIndexOfNewData = 0;
-          this.m_intDataRowNumber = 0;
-          this.m_intFileRowNumber = 0;
+          m_blnHeaderRowFound = false;
+          m_intStartIndexOfNewData = 0;
+          m_intDataRowNumber = 0;
+          m_intFileRowNumber = 0;
 
-          if (this.m_scData == null)
-            this.m_scData = new StringCollection();
+          if (m_scData == null)
+            m_scData = new StringCollection();
           else
-            this.m_scData.Clear();
+            m_scData.Clear();
 
-          if (this.m_scColumnNames == null)
-            this.m_scColumnNames = new StringCollection();
+          if (m_scColumnNames == null)
+            m_scColumnNames = new StringCollection();
           else
-            this.m_scColumnNames.Clear();
+            m_scColumnNames.Clear();
 
           // I only allocate the following if it is null or is improperly sized.
-          if ((this.m_caBuffer == null) || (this.m_caBuffer.Length != this.m_intMaxBufferSize))
-            this.m_caBuffer = new char[this.m_intMaxBufferSize];
+          if ((m_caBuffer == null) || (m_caBuffer.Length != m_intMaxBufferSize))
+            m_caBuffer = new char[m_intMaxBufferSize];
 
           // Allocate the escape buffer in case where we have characters to unescape.
-          if ((this.m_chEscapeCharacter != NULL_CHAR)
-            && ((this.m_chEscapeBuffer == null) || (this.m_chEscapeBuffer.Length != this.m_intMaxBufferSize)))
-            this.m_chEscapeBuffer = new char[this.m_intMaxBufferSize];
+          if ((m_chEscapeCharacter != NULL_CHAR)
+            && ((m_chEscapeBuffer == null) || (m_chEscapeBuffer.Length != m_intMaxBufferSize)))
+            m_chEscapeBuffer = new char[m_intMaxBufferSize];
 
           break;
 
@@ -1809,19 +1808,19 @@ namespace DAnTE.Tools
 
         case ParserState.Parsing:
 
-          this.m_scData.Clear();
+          m_scData.Clear();
 
           // Have we hit the max row count?
-          if ((this.m_intMaxRows > 0) && ((this.m_intDataRowNumber - this.m_intSkipDataRows) >= this.m_intMaxRows))
-            this.m_ParserState = ParserState.Finished;
+          if ((m_intMaxRows > 0) && ((m_intDataRowNumber - m_intSkipDataRows) >= m_intMaxRows))
+            m_ParserState = ParserState.Finished;
           else
           {
-            this.m_ParserRowState = RowState.GetRowType;
+            m_ParserRowState = RowState.GetRowType;
 
-            this.m_blnInText = false;
-            this.m_blnEndOfRowFound = false;
-            this.m_blnEndOfColumnFound = false;
-            this.m_blnEscapeCharacterFound = false;
+            m_blnInText = false;
+            m_blnEndOfRowFound = false;
+            m_blnEndOfColumnFound = false;
+            m_blnEscapeCharacterFound = false;
           }
 
           break;
@@ -1851,22 +1850,22 @@ namespace DAnTE.Tools
     /// </param>
     private void _CleanUpParser(bool blnCompletely)
     {
-      this.m_ParserState = ParserState.Finished;
+      m_ParserState = ParserState.Finished;
 
-      if (this.m_txtReader != null)
-        this.m_txtReader.Close();
+      if (m_txtReader != null)
+        m_txtReader.Close();
 
-      this.m_txtReader = null;
-      this.m_caBuffer = null;
-      this.m_chEscapeBuffer = null;
-      this.m_scData = null;
+      m_txtReader = null;
+      m_caBuffer = null;
+      m_chEscapeBuffer = null;
+      m_scData = null;
 
       if (blnCompletely)
       {
-        this.m_caColumnDelimiter = null;
-        this.m_caRowDelimiter = null;
-        this.m_iaColumnWidths = null;
-        this.m_scColumnNames = null;
+        m_caColumnDelimiter = null;
+        m_caRowDelimiter = null;
+        m_iaColumnWidths = null;
+        m_scColumnNames = null;
       }
     }
 
@@ -1878,24 +1877,24 @@ namespace DAnTE.Tools
     private void _ParseRowType()
     {
       // Increment our file row counter to help with debugging in case of an error in syntax.
-      ++this.m_intFileRowNumber;
+      ++m_intFileRowNumber;
 
       // Because we're at a new row, we need initialize the StartColumnIndex.
-      this.m_intCurrentColumnStartIndex = this.m_intCurrentIndex;
-      this.m_blnInText = false;
-      this.m_blnEndOfRowFound = false;
-      this.m_blnEndOfColumnFound = false;
-      this.m_blnEscapeCharacterFound = false;
+      m_intCurrentColumnStartIndex = m_intCurrentIndex;
+      m_blnInText = false;
+      m_blnEndOfRowFound = false;
+      m_blnEndOfColumnFound = false;
+      m_blnEscapeCharacterFound = false;
 
       // We need to verify if this is a comment row or not.
-      if (this.m_caBuffer[this.m_intCurrentIndex] == this.m_chCommentCharacter)
-        this.m_ParserRowState = RowState.CommentRow;
-      else if (this.m_blnFirstRowHasHeader && !this.m_blnHeaderRowFound)
-        this.m_ParserRowState = RowState.HeaderRow;
-      else if (this.m_intDataRowNumber < this.m_intSkipDataRows)
-        this.m_ParserRowState = RowState.SkippedRow;
+      if (m_caBuffer[m_intCurrentIndex] == m_chCommentCharacter)
+        m_ParserRowState = RowState.CommentRow;
+      else if (m_blnFirstRowHasHeader && !m_blnHeaderRowFound)
+        m_ParserRowState = RowState.HeaderRow;
+      else if (m_intDataRowNumber < m_intSkipDataRows)
+        m_ParserRowState = RowState.SkippedRow;
       else
-        this.m_ParserRowState = RowState.DataRow;
+        m_ParserRowState = RowState.DataRow;
     }
 
     /// <summary>
@@ -1914,32 +1913,32 @@ namespace DAnTE.Tools
     private bool _ReadDataIntoBuffer()
     {
       // Do we need to read in more data?
-      if (this.m_BufferState == BufferState.FetchData)
+      if (m_BufferState == BufferState.FetchData)
       {
-        this.m_intCharactersRead = this.m_txtReader.Read(this.m_caBuffer, this.m_intStartIndexOfNewData, (this.m_intMaxBufferSize - this.m_intStartIndexOfNewData));
-        this.m_intCharactersInBuffer = this.m_intCharactersRead + this.m_intStartIndexOfNewData;
+        m_intCharactersRead = m_txtReader.Read(m_caBuffer, m_intStartIndexOfNewData, (m_intMaxBufferSize - m_intStartIndexOfNewData));
+        m_intCharactersInBuffer = m_intCharactersRead + m_intStartIndexOfNewData;
 
         // If we didn't read in all that we could, then we're at the end of the data.
-        if (this.m_intCharactersInBuffer < this.m_intMaxBufferSize)
+        if (m_intCharactersInBuffer < m_intMaxBufferSize)
         {
-          this.m_BufferState = BufferState.NoFetchableData;
+          m_BufferState = BufferState.NoFetchableData;
 
           // Since we don't have any more data to be read, close the reader off.
-          this.m_txtReader.Close();
+          m_txtReader.Close();
         }
         else
-          this.m_BufferState = BufferState.NoAction;
+          m_BufferState = BufferState.NoAction;
 
         // Since we read in data, we need to reset the current index and start of a column back to the zero indice.
-        this.m_intCurrentIndex = 0;
-        this.m_intCurrentColumnStartIndex = 0;
-        this.m_blnInText = false;
-        this.m_blnEscapeCharacterFound = false;
+        m_intCurrentIndex = 0;
+        m_intCurrentColumnStartIndex = 0;
+        m_blnInText = false;
+        m_blnEscapeCharacterFound = false;
       }
 
       // If we read in characters or old characters already exist in the buffer,
       // then we've got data left that needs to be parsed.
-      return ((this.m_intCharactersRead > 0) || (this.m_intStartIndexOfNewData > 0));
+      return ((m_intCharactersRead > 0) || (m_intStartIndexOfNewData > 0));
     }
 
     /// <summary>
@@ -1949,13 +1948,13 @@ namespace DAnTE.Tools
     {
       // Move the strings in the data array into the string collection
       // because they are the header names.
-      for (int intColumnIndex = 0; intColumnIndex < this.m_scData.Count; ++intColumnIndex)
-        this.m_scColumnNames.Add(this.m_scData[intColumnIndex]);
+      for (var intColumnIndex = 0; intColumnIndex < m_scData.Count; ++intColumnIndex)
+        m_scColumnNames.Add(m_scData[intColumnIndex]);
 
-      this.m_blnHeaderRowFound = true;
+      m_blnHeaderRowFound = true;
 
       // Clear out the data (the header names) from our data collection.
-      this.m_scData.Clear();
+      m_scData.Clear();
     }
 
     /// <summary>
@@ -1971,10 +1970,10 @@ namespace DAnTE.Tools
     /// </returns>
     private bool _IsEndOfRow()
     {
-      if (this.m_BufferState == BufferState.FetchData)
+      if (m_BufferState == BufferState.FetchData)
         return false;
       else
-        return this._MatchesDelimiter(this.m_caRowDelimiter);
+        return this._MatchesDelimiter(m_caRowDelimiter);
     }
 
     /// <summary>
@@ -1994,25 +1993,25 @@ namespace DAnTE.Tools
     /// </exception>
     private bool _IsEndOfColumn()
     {
-      if (this.m_BufferState == BufferState.FetchData)
+      if (m_BufferState == BufferState.FetchData)
         return false;
 
       // Determine the end of the column based on the type of data being read.
-      if (this.m_blnFixedWidth)
+      if (m_blnFixedWidth)
       {
-        if (this.m_scData.Count >= this.m_iaColumnWidths.Length)
+        if (m_scData.Count >= m_iaColumnWidths.Length)
           throw new ParsingException(string.Format("Number of columns ({0}) differs from the expected column count ({1}).",
-            this.m_scData.Count + 1,
-            this.m_intExpectedColumnCount),
-            this.m_intFileRowNumber);
+            m_scData.Count + 1,
+            m_intExpectedColumnCount),
+            m_intFileRowNumber);
         else
         {
 
-          return (this.m_intCurrentIndex >= (this.m_intCurrentColumnStartIndex + this.m_iaColumnWidths[this.m_scData.Count]));
+          return (m_intCurrentIndex >= (m_intCurrentColumnStartIndex + m_iaColumnWidths[m_scData.Count]));
         }
       }
       else
-        return this._MatchesDelimiter(this.m_caColumnDelimiter);
+        return this._MatchesDelimiter(m_caColumnDelimiter);
     }
 
     /// <summary>
@@ -2029,7 +2028,7 @@ namespace DAnTE.Tools
     /// </returns>
     private bool _IsEmptyRow(int intEndOfRowIndex)
     {
-      return (!this.m_blnEndOfColumnFound && (intEndOfRowIndex <= this.m_intCurrentColumnStartIndex));
+      return (!m_blnEndOfColumnFound && (intEndOfRowIndex <= m_intCurrentColumnStartIndex));
     }
 
     /// <summary>
@@ -2048,21 +2047,21 @@ namespace DAnTE.Tools
     {
       int intStartOfDataIndex;
       string strUnescaped;
-      bool blnTrimResults = this.m_blnTrimResults;
+      var blnTrimResults = m_blnTrimResults;
 
       // Make sure we haven't exceeded our expected column count.
-      if ((this.m_intExpectedColumnCount > 0) && (this.m_scData.Count > this.m_intExpectedColumnCount))
+      if ((m_intExpectedColumnCount > 0) && (m_scData.Count > m_intExpectedColumnCount))
         throw new ParsingException(string.Format("Current column ({0}) exceeds ExpectedColumnCount of {1}.",
-          this.m_scData.Count + 1,
-          this.m_intExpectedColumnCount),
-          this.m_intFileRowNumber);
+          m_scData.Count + 1,
+          m_intExpectedColumnCount),
+          m_intFileRowNumber);
 
-      intStartOfDataIndex = this.m_intCurrentColumnStartIndex;
+      intStartOfDataIndex = m_intCurrentColumnStartIndex;
 
       // Strip off any text qualifiers, if they are present.
-      if ((this.m_chTextQualifier != NULL_CHAR)
-        && (this.m_caBuffer[intStartOfDataIndex] == this.m_chTextQualifier)
-        && (this.m_caBuffer[intEndOfDataIndex] == this.m_chTextQualifier))
+      if ((m_chTextQualifier != NULL_CHAR)
+        && (m_caBuffer[intStartOfDataIndex] == m_chTextQualifier)
+        && (m_caBuffer[intEndOfDataIndex] == m_chTextQualifier))
       {
         blnTrimResults = false;
         ++intStartOfDataIndex;
@@ -2070,8 +2069,8 @@ namespace DAnTE.Tools
       }
 
       // No escape character was set, so we do not need to look for it.
-      if (this.m_chEscapeCharacter == NULL_CHAR)
-        strUnescaped = this._GenerateStringFromArray(this.m_caBuffer, intStartOfDataIndex, intEndOfDataIndex, blnTrimResults);
+      if (m_chEscapeCharacter == NULL_CHAR)
+        strUnescaped = this._GenerateStringFromArray(m_caBuffer, intStartOfDataIndex, intEndOfDataIndex, blnTrimResults);
       else
       {
         // An escape character was set, so we need to perform a check to make sure there
@@ -2081,7 +2080,7 @@ namespace DAnTE.Tools
         // Iterate over every character from the starting index to the end index (includes the end).
         for (intIndex = intStartOfDataIndex; intIndex <= intEndOfDataIndex; ++intIndex)
         {
-          if (this.m_caBuffer[intIndex] == this.m_chEscapeCharacter)
+          if (m_caBuffer[intIndex] == m_chEscapeCharacter)
           {
             // Increment the current index, so that we skip over the escaped character.
             // Though, make sure we don't go beyond the intEndIndex.
@@ -2092,15 +2091,15 @@ namespace DAnTE.Tools
           // Insert the following character into the chUnescaped buffer, if we've found
           // an escaped character yet.  Make sure though we're still in the proper range
           // between the start/end indices.
-          this.m_chEscapeBuffer[++intEscapeBufferIndex] = this.m_caBuffer[intIndex];
+          m_chEscapeBuffer[++intEscapeBufferIndex] = m_caBuffer[intIndex];
         }
 
         // Return the unescaped characters from the m_chEscapeBuffer
-        strUnescaped = this._GenerateStringFromArray(this.m_chEscapeBuffer, 0, intEscapeBufferIndex, blnTrimResults);
+        strUnescaped = this._GenerateStringFromArray(m_chEscapeBuffer, 0, intEscapeBufferIndex, blnTrimResults);
       }
 
       // Only trim on non-textqualified strings.  Add the results to the string collection of data.
-      this.m_scData.Add(strUnescaped);
+      m_scData.Add(strUnescaped);
     }
 
     /// <summary>
@@ -2144,16 +2143,16 @@ namespace DAnTE.Tools
 
       if (intStartIndex == 0)
         throw new ParsingException(string.Format("Current column ({0}) exceeds MaxBufferSize of {1}.",
-          this.m_scData.Count,
-          this.m_intMaxBufferSize),
-          this.m_intFileRowNumber);
+          m_scData.Count,
+          m_intMaxBufferSize),
+          m_intFileRowNumber);
 
       // Shift the value from the end of the buffer to the beginning.
-      for (intIndex = 0; intStartIndex < this.m_intMaxBufferSize; ++intIndex, ++intStartIndex)
-        this.m_caBuffer[intIndex] = this.m_caBuffer[intStartIndex];
+      for (intIndex = 0; intStartIndex < m_intMaxBufferSize; ++intIndex, ++intStartIndex)
+        m_caBuffer[intIndex] = m_caBuffer[intStartIndex];
 
       // Set the next position to begin placing data.
-      this.m_intStartIndexOfNewData = intIndex;
+      m_intStartIndexOfNewData = intIndex;
     }
 
     /// <summary>
@@ -2174,25 +2173,25 @@ namespace DAnTE.Tools
       int intCheckIndex, intBufferIndex;
 
       // Just check the first character to perform a quick check.
-      if (this.m_caBuffer[this.m_intCurrentIndex] != caDelimiter[0])
+      if (m_caBuffer[m_intCurrentIndex] != caDelimiter[0])
         return false;
 
       // See if we could even match it based on available characters left in the buffer.
-      if ((this.m_intCurrentIndex + caDelimiter.Length) > this.m_intCharactersInBuffer)
+      if ((m_intCurrentIndex + caDelimiter.Length) > m_intCharactersInBuffer)
       {
         // Indicate we need to grab more data.
-        if (this.m_BufferState == BufferState.NoAction)
-          this.m_BufferState = BufferState.FetchData;
+        if (m_BufferState == BufferState.NoAction)
+          m_BufferState = BufferState.FetchData;
 
         return false;
       }
 
       // Increment the intBufferIndex because we already checked the first character.
-      intBufferIndex = this.m_intCurrentIndex + 1;
+      intBufferIndex = m_intCurrentIndex + 1;
 
       for (intCheckIndex = 1; intCheckIndex < caDelimiter.Length; ++intCheckIndex, ++intBufferIndex)
       {
-        if (this.m_caBuffer[intBufferIndex] != caDelimiter[intCheckIndex])
+        if (m_caBuffer[intBufferIndex] != caDelimiter[intCheckIndex])
           return false;
       }
 
@@ -2213,12 +2212,12 @@ namespace DAnTE.Tools
     /// characters in the character array.</returns>
     private string _ConvertToSafeString(char[] caArray)
     {
-      string strResult = string.Empty;
-      bool blnFirstValue = true;
+      var strResult = string.Empty;
+      var blnFirstValue = true;
 
       if (caArray != null)
       {
-        foreach (char c in caArray)
+        foreach (var c in caArray)
         {
           strResult += string.Format("{0}{1}",
             (blnFirstValue) ? string.Empty : XML_SAFE_STRING_DELIMITER,
@@ -2247,7 +2246,7 @@ namespace DAnTE.Tools
         alChars = new ArrayList();
         saValues = strSafeString.Split(XML_SAFE_STRING_DELIMITER.ToCharArray());
 
-        foreach (string s in saValues)
+        foreach (var s in saValues)
           alChars.Add(Convert.ToChar(Convert.ToInt32(s)));
 
         return ((char[]) alChars.ToArray(typeof(char)));
@@ -2272,11 +2271,11 @@ namespace DAnTE.Tools
     /// If none exists, -1 will be returned.</returns>
     private int _GetColumnIndex(string strColumnName)
     {
-      if (this.m_blnHeaderRowFound && (strColumnName != null))
+      if (m_blnHeaderRowFound && (strColumnName != null))
       {
-        for (int intColumnIndex = 0; intColumnIndex < this.m_scColumnNames.Count; ++intColumnIndex)
+        for (var intColumnIndex = 0; intColumnIndex < m_scColumnNames.Count; ++intColumnIndex)
         {
-          if (this.m_scColumnNames[intColumnIndex] == strColumnName)
+          if (m_scColumnNames[intColumnIndex] == strColumnName)
             return intColumnIndex;
         }
       }
@@ -2296,9 +2295,9 @@ namespace DAnTE.Tools
     /// none exists <see langword="null"/> is returned.</returns>
     public string _GetColumnName(int intColumnIndex)
     {
-      if (this.m_blnHeaderRowFound
-        && ((intColumnIndex > -1) && (intColumnIndex < this.m_scColumnNames.Count)))
-        return this.m_scColumnNames[intColumnIndex];
+      if (m_blnHeaderRowFound
+        && ((intColumnIndex > -1) && (intColumnIndex < m_scColumnNames.Count)))
+        return m_scColumnNames[intColumnIndex];
       else
         return null;
     }
@@ -2382,7 +2381,7 @@ namespace DAnTE.Tools
           }
           finally
           {
-            this.m_blnDisposed = true;
+            m_blnDisposed = true;
           }
         }
       }
@@ -2408,7 +2407,7 @@ namespace DAnTE.Tools
   }
 
   /// <summary>
-  ///   The <see cref="GenericParserAdapter"/> is used to modify the <see cref="GenericParser"/>
+  ///   The <see cref="GenericParserAdapter"/> is used to modify the <see cref="clsGenericParser"/>
   ///   to allow it parse a file and place them into various formats.
   /// </summary>
   /// <threadsafety static="false" instance="false"/>
@@ -2484,7 +2483,7 @@ namespace DAnTE.Tools
       {
         this._CheckDiposed();
 
-        return this.m_blnIncludeFileLineNumber;
+        return m_blnIncludeFileLineNumber;
       }
       set
       {
@@ -2493,7 +2492,7 @@ namespace DAnTE.Tools
         if (this.State == ParserState.Parsing)
           return;
 
-        this.m_blnIncludeFileLineNumber = value;
+        m_blnIncludeFileLineNumber = value;
       }
     }
 
@@ -2611,7 +2610,7 @@ namespace DAnTE.Tools
       this._CheckDiposed();
 
       DataRow drRow;
-      DataTable dtData = new DataTable();
+      var dtData = new DataTable();
       int intColumnIndex, intFoundColumns = 0, intCurrentColumnCount;
 
       dtData.BeginLoadData();
@@ -2680,7 +2679,7 @@ namespace DAnTE.Tools
         else
         {
           string strNewColumnName;
-          int intCount = 0;
+          var intCount = 0;
 
           // Looks like we need to generate a new column name.
           do
@@ -2701,7 +2700,7 @@ namespace DAnTE.Tools
     #region Overridden Methods
 
     /// <summary>
-    ///   Loads the base <see cref="GenericParser"/> class from the
+    ///   Loads the base <see cref="clsGenericParser"/> class from the
     ///   <see cref="XmlDocument"/> and then retrieves additional information
     ///    from the Xml that is specific to the <see cref="GenericParserAdapter"/>.
     /// </summary>
@@ -2736,7 +2735,7 @@ namespace DAnTE.Tools
     /// </returns>
     public override XmlDocument Save()
     {
-      XmlDocument xmlConfig = base.Save ();
+      var xmlConfig = base.Save ();
       XmlElement xmlElement;
 
       ///////////////////////////////////////////////////////////////
@@ -2819,7 +2818,7 @@ namespace DAnTE.Tools
     public ParsingException(string strMessage, int intFileRowNumber)
       : base(strMessage)
     {
-      this.m_intFileRowNumber = intFileRowNumber;
+      m_intFileRowNumber = intFileRowNumber;
     }
 
     /// <summary>
@@ -2836,7 +2835,7 @@ namespace DAnTE.Tools
     public ParsingException(SerializationInfo sInfo, StreamingContext sContext)
       : base(sInfo, sContext)
     {
-      this.m_intFileRowNumber = sInfo.GetInt32(SERIALIZATION_FILE_ROW_NUMBER);
+      m_intFileRowNumber = sInfo.GetInt32(SERIALIZATION_FILE_ROW_NUMBER);
     }
 
 
@@ -2851,7 +2850,7 @@ namespace DAnTE.Tools
     {
       get
       {
-        return this.m_intFileRowNumber;
+        return m_intFileRowNumber;
       }
     }
 
@@ -2883,7 +2882,7 @@ namespace DAnTE.Tools
     {
       base.GetObjectData(sInfo, sContext);
 
-      sInfo.AddValue(SERIALIZATION_FILE_ROW_NUMBER, this.m_intFileRowNumber);
+      sInfo.AddValue(SERIALIZATION_FILE_ROW_NUMBER, m_intFileRowNumber);
     }
 
 

@@ -1,10 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using DAnTE.Tools;
 
@@ -12,7 +8,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmArrangeColumns : Form
     {
-        private ArrayList marrDatasetInfo = new ArrayList();
+        private List<clsDatasetInfo> marrDatasetInfo = new List<clsDatasetInfo>();
 
         public frmArrangeColumns()
         {
@@ -22,19 +18,22 @@ namespace DAnTE.Inferno
         private void FillListView()
         {
             mlistViewDatasets.Clear();
-            clsDatasetInfo currDataset = (clsDatasetInfo)marrDatasetInfo[0];
 
-            ColumnHeader col = new ColumnHeader();
-            col.Text = "Dataset Name";
-            col.Width = 400;
+            var col = new ColumnHeader
+            {
+                Text = "Dataset Name",
+                Width = 400
+            };
             mlistViewDatasets.Columns.Add(col);
 
-            // Fill only the dataset names
-            for (int row = 0; row < marrDatasetInfo.Count; row++)
+            // Fill only the dataset names        
+            for (var row = 0; row < marrDatasetInfo.Count; row++)
             {
-                currDataset = (clsDatasetInfo)marrDatasetInfo[row];
-                ListViewItem dataItem = new ListViewItem(currDataset.mstrDataSetName);
-                dataItem.Tag = row + 1;
+                var currDataset = marrDatasetInfo[row];
+                var dataItem = new ListViewItem(currDataset.mstrDataSetName)
+                {
+                    Tag = row + 1
+                };
                 mlistViewDatasets.Items.Add(dataItem);
             }
 
@@ -76,12 +75,11 @@ namespace DAnTE.Inferno
 
         private void MoveListViewItem(bool mblMoveUp)
         {
-            string mstrSelected;
-            int selectedTag, index, newIndex = -1;
+            var newIndex = -1;
 
             if (mlistViewDatasets.SelectedIndices.Count != 0)
             {
-                index = mlistViewDatasets.SelectedIndices[0];
+                var index = mlistViewDatasets.SelectedIndices[0];
                 if (mblMoveUp)
                 {
                     if (index != 0)
@@ -94,8 +92,8 @@ namespace DAnTE.Inferno
                 }
                 if (newIndex != -1)
                 {
-                    mstrSelected = mlistViewDatasets.Items[index].Text;
-                    selectedTag = (int)mlistViewDatasets.Items[index].Tag;
+                    var mstrSelected = mlistViewDatasets.Items[index].Text;
+                    var selectedTag = (int)mlistViewDatasets.Items[index].Tag;
                     mlistViewDatasets.Items[index].Text = mlistViewDatasets.Items[newIndex].Text;
                     mlistViewDatasets.Items[index].Tag = mlistViewDatasets.Items[newIndex].Tag;
                     mlistViewDatasets.Items[newIndex].Text = mstrSelected;
@@ -108,7 +106,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public ArrayList DatasetInfo
+        public List<clsDatasetInfo> DatasetInfo
         {
             set
             {

@@ -1,20 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmFilterAnova : Form
     {
         Double cutoff = 0.05;
-        private ArrayList marrColumns = new ArrayList();
+        private List<string> marrColumns = new List<string>();
 
         public frmFilterAnova()
         {
@@ -51,7 +46,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public ArrayList PopulateDataComboBox
+        public List<string> PopulateDataComboBox
         {
             set
             {
@@ -67,18 +62,12 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListBox
+        public List<string> PopulateListBox
         {
             set
             {
                 marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxpvals, lstBoxEntries);
-                mlstBoxpvals.Items.AddRange(lboxObjColData);
-                //for (int i = 0; i < mlstBoxAllCols.Items.Count; i++)
-                //    mlstBoxAllCols.SetSelected(i, true);
+                mlstBoxpvals.DataSource = value;
             }
         }
 

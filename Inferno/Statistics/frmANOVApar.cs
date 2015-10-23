@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using DAnTE.Purgatorio;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmANOVApar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-        private clsAnovaPar mclsAnovaPar = new clsAnovaPar();
+        private readonly clsAnovaPar mclsAnovaPar;
 
         public frmANOVApar(clsAnovaPar clsAnova)
         {
@@ -182,18 +176,11 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListBox
+        public List<string> PopulateListBox
         {
             set
             {
-                marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxFactors, lstBoxEntries);
-                mlstBoxFactors.Items.AddRange(lboxObjColData);
-                //for (int i = 0; i < mlstBoxAllCols.Items.Count; i++)
-                //    mlstBoxAllCols.SetSelected(i, true);
+                mlstBoxFactors.DataSource = value;
             }
         }
                 

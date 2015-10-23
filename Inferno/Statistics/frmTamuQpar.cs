@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using DAnTE.Purgatorio;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmTamuQpar : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-        private clsTamuQPar mclsTamuQPar = new clsTamuQPar();
+        private readonly clsTamuQPar mclsTamuQPar = new clsTamuQPar();
 
         public frmTamuQpar(clsTamuQPar clsTamuQ)
         {
@@ -89,27 +83,20 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListBox
+        public List<string> PopulateListBox
         {
             set
             {
-                marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxFactors, lstBoxEntries);
-                mlstBoxFactors.Items.AddRange(lboxObjColData);
-                //for (int i = 0; i < mlstBoxAllCols.Items.Count; i++)
-                //    mlstBoxAllCols.SetSelected(i, true);
+                mlstBoxFactors.DataSource = value;
             }
         }
-                
-        public ArrayList FixedFactors
+
+        public List<string> FixedFactors
         {
             get
             {
-                ArrayList strarrFECols = new ArrayList();
-                for (int i = 0; i < mlstBoxFixed.Items.Count; i++)
+                var strarrFECols = new List<string>();
+                for (var i = 0; i < mlstBoxFixed.Items.Count; i++)
                 {
                     strarrFECols.Add(mlstBoxFixed.Items[i].ToString());
                 }

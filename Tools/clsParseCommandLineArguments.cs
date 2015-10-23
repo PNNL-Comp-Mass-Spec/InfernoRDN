@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Text;
 
 namespace DAnTE.Tools
 {
@@ -27,9 +24,9 @@ namespace DAnTE.Tools
         public ProgramArguments(string[] args)
             : this()
         {
-            for (int i = 0; i < args.Length; i++)
+            for (var i = 0; i < args.Length; i++)
             {
-                string arg = args[i];
+                var arg = args[i];
 
                 if (arg[0] != '-' && arg[0] != '/')
                     throw new ArgumentException(string.Concat("Invalid argument '", arg, "'"));
@@ -69,7 +66,7 @@ namespace DAnTE.Tools
             if (args.Length < i + 2) 
                 throw new ArgumentException();
 
-            string value = args[++i];
+            var value = args[++i];
 
             if (value[0] == '-' || value[0] == '/') 
                 throw new ArgumentException();

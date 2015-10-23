@@ -1,7 +1,8 @@
 using System;
-using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Tools;
 
@@ -28,9 +29,9 @@ namespace DAnTE.Inferno
         private IContainer components;
 
 		public const int MAX_LEVELS = 100 ;
-		private ArrayList marrFactors;// = new ArrayList() ;
+		private List<clsFactorInfo> marrFactors;
         //private ArrayList marrFactorsCopy;
-		private string [] strarrFactors = new string [MAX_LEVELS] ;
+		private readonly string [] strarrFactors = new string [MAX_LEVELS] ;
 		private int numFactors = 0 ;
 		private bool restoreFactors = false;
 
@@ -55,13 +56,12 @@ namespace DAnTE.Inferno
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
-            marrFactors = new ArrayList();
+            marrFactors = new List<clsFactorInfo>();
 			restoreFactors = false;
 		}
 
-		public frmDefFactors(ArrayList factorInfoArr)
+        public frmDefFactors(List<clsFactorInfo> factorInfoArr)
 		{
-            marrFactors = new ArrayList();
 			marrFactors = factorInfoArr;
 			InitializeComponent();
 			restoreFactors = true;
@@ -345,14 +345,16 @@ namespace DAnTE.Inferno
 
 		private void updateFactorForm()
 		{
-			System.Object[] ItemObject = new System.Object[marrFactors.Count] ;
-
+			
 			fillFactorArray() ;
 
-			for (int num = 0 ; num < marrFactors.Count ; num++)
-				ItemObject[num] = ((clsFactorInfo)marrFactors[num]).mstrFactor ;
+		    var factorNames = new List<string>();
+		    foreach (var item in marrFactors)
+		    {
+		        factorNames.Add(item.mstrFactor);
+		    }
 
-			lstBoxFactors.Items.AddRange(ItemObject) ;
+		    lstBoxFactors.DataSource = factorNames;
 			txtBoxFactors.Text = "" ;
 			txtBoxValues.Text = "" ;
 		}
@@ -361,13 +363,13 @@ namespace DAnTE.Inferno
 
         private void Add_Factor()
         {
-            clsFactorInfo tmpfactorInfo = new clsFactorInfo();
+            var tmpfactorInfo = new clsFactorInfo();
 
             if (lstBoxFactors.Items.Count == MAX_LEVELS)
                 MessageBox.Show("Maximum number of factors reached!");
             else if (txtBoxFactors.Text != "")
             {
-                string strFactor = txtBoxFactors.Text.Replace(" ", "_");
+                var strFactor = txtBoxFactors.Text.Replace(" ", "_");
                 if (Array.IndexOf(strarrFactors, strFactor) < 0)
                 { // no duplicates
                     txtBoxFactors.Text = "";
@@ -414,7 +416,7 @@ namespace DAnTE.Inferno
                 {
                     txtBoxValues.Text = "";
                     lstBoxValues.Items.Add(strValue);
-                    ((clsFactorInfo)marrFactors[nCurrentidx]).marrValues.Add(strValue);
+                    marrFactors[nCurrentidx].marrValues.Add(strValue);
                 }
                 else
                 {
@@ -447,19 +449,16 @@ namespace DAnTE.Inferno
 		
 		private void lstBoxFactors_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			int nSelected ;
-			string [] strArrTmp = new string [MAX_LEVELS] ;
-			clsFactorInfo selectedF = new clsFactorInfo() ;
-			
-			if (lstBoxFactors.SelectedIndex > -1)
+		    if (lstBoxFactors.SelectedIndex > -1)
 			{
-				nSelected = lstBoxFactors.SelectedIndex ;
+				var nSelected = lstBoxFactors.SelectedIndex;
 				txtBoxFactors.Text = lstBoxFactors.SelectedItem.ToString() ;
 				lstBoxValues.Items.Clear() ;
-				selectedF = ((clsFactorInfo)marrFactors[nSelected]) ;
+
+				var selectedF = marrFactors[nSelected];
 				if ( selectedF.vCount > 0 )
 				{
-					for (int i = 0; i < selectedF.vCount; i++)
+					for (var i = 0; i < selectedF.vCount; i++)
 					{
 						lstBoxValues.Items.Add(selectedF.marrValues[i].ToString());
 					}
@@ -479,7 +478,7 @@ namespace DAnTE.Inferno
 
 		private void btnOK_Click(object sender, System.EventArgs e)
 		{
-			bool correctFactors = FactorCheck() ;
+			var correctFactors = FactorCheck() ;
 			if (correctFactors)
 			{
 				DialogResult = DialogResult.OK ;
@@ -514,8 +513,8 @@ namespace DAnTE.Inferno
 
 		private void btnValueDelete_Click(object sender, System.EventArgs e)
 		{
-			int nSelectedV = lstBoxValues.SelectedIndex ;
-			int nSelectedF = lstBoxFactors.SelectedIndex ;
+			var nSelectedV = lstBoxValues.SelectedIndex ;
+			var nSelectedF = lstBoxFactors.SelectedIndex ;
 
 			if (nSelectedV < 0)
 				MessageBox.Show("Select a value to delete.") ;
@@ -524,46 +523,45 @@ namespace DAnTE.Inferno
 				lstBoxValues.Items.Remove(lstBoxValues.SelectedItem) ;
 				lstBoxValues.SelectedIndex = -1 ;
 				txtBoxValues.Text = "" ;
-				((clsFactorInfo)marrFactors[nSelectedF]).marrValues.RemoveAt(nSelectedV) ;
+				marrFactors[nSelectedF].marrValues.RemoveAt(nSelectedV) ;
 			}
 		}
 		#endregion
 
 
 		private bool FactorCheck()
-		{// check if each factor has at least two distinct values.
-			bool factorsOK = false ;
+		{
+            // check if each factor has at least two distinct values.
+			var factorCountOK = marrFactors.Count(factor => factor.marrValues.Count > 1);
 
-			for (int num = 0 ; num < marrFactors.Count ; num++)
-			{
-				if (((clsFactorInfo)marrFactors[num]).marrValues.Count > 1)
-					factorsOK = true ;
-			}
-			return factorsOK ;
+		    return factorCountOK == marrFactors.Count;
 		}
 
 
 		private void fillFactorArray()
 		{
-			for (int num = 0; num < marrFactors.Count; num++)
-				strarrFactors[num] = ((clsFactorInfo)marrFactors[num]).mstrFactor ;
+			for (var num = 0; num < marrFactors.Count; num++)
+				strarrFactors[num] = marrFactors[num].mstrFactor ;
+
 			numFactors = marrFactors.Count ;
 		}
 
 		private bool foundDuplicates(string strValue)
 		{
-			bool found = false ;
-			string [] strarrValues ;
-			for (int num = 0; num < numFactors; num++)
+			var found = false ;
+		    for (var num = 0; num < numFactors; num++)
 			{
-				if (((clsFactorInfo)marrFactors[num]).vCount > 0)
-				{
-					strarrValues = ((clsFactorInfo)marrFactors[num]).FactorValues ;
-					if (Array.IndexOf(strarrValues,strValue) > -1)
-						found = true ;
-				}
+			    if (marrFactors[num].vCount <= 0)
+			    {
+			        continue;
+			    }
+
+			    var strarrValues = marrFactors[num].FactorValues;
+			    if (Array.IndexOf(strarrValues, strValue) > -1)
+			        found = true;
 			}
-			return found ;
+
+			return found;
 		}
 
 		private void txtBoxFactors_textCh(object sender, System.EventArgs e)
@@ -588,7 +586,7 @@ namespace DAnTE.Inferno
 			get	{return numFactors ;}
 		}
 
-		public ArrayList FactorInfoArray
+        public List<clsFactorInfo> FactorInfoArray
 		{
 			get {return marrFactors ;}
 			set 

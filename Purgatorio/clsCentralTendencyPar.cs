@@ -1,27 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
-
 namespace DAnTE.Purgatorio
 {
     public class clsCentralTendencyPar
     {
         private string rcmd;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "CentralTendency")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "CentralTendency")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
+
         public bool mblUseMeanTend;
-        [DAnTE.Tools.clsAnalysisAttribute("Zero_Center_Data", "CentralTendency")]
+        [Tools.clsAnalysisAttribute("Zero_Center_Data", "CentralTendency")]
         public bool mblCenterZero;
         public string mstrmethod;
 
         public clsCentralTendencyPar()
         {
-            mstrDatasetName = "Eset";
+            DataSetName = "Eset";
             mblUseMeanTend = true;
             mblCenterZero = true;
             mstrmethod = "MeanCenter.Sub";
@@ -39,7 +32,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Adjustment_Method", "CentralTendency")]
+        [Tools.clsAnalysisAttribute("Adjustment_Method", "CentralTendency")]
         public string AdjustmentMethod
         {
             get
@@ -51,7 +44,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Tendency", "CentralTendency")]
+        [Tools.clsAnalysisAttribute("Tendency", "CentralTendency")]
         public string Tendency
         {
             get
@@ -85,12 +78,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "CentralTendency")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
-                
+        [Tools.clsAnalysisAttribute("Source_DataTable", "CentralTendency")]
+        public string DataSetName { get; set; }
     }
 }

@@ -19,14 +19,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Log2 Operation Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Log2 Operation Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Log Expressions"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Log Expressions"]);
+          if (mhtDatasets.ContainsKey("Log Expressions"))
+            AddDataNode(mhtDatasets["Log Expressions"]);
         } else
           MessageBox.Show("Unknown error in data. Check if your file matches the format required",
               "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -35,9 +34,9 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_Log2(object sender, DoWorkEventArgs e)
     {
-      DataTable mDTLogEset1 = new DataTable();
+      var mDTLogEset1 = new DataTable();
 
-      string rcmd = (string)e.Argument;
+      var rcmd = (string)e.Argument;
       try {
         mRConnector.EvaluateNoReturn(rcmd);
         if (mRConnector.GetTableFromRmatrix("logEset")) {
@@ -66,14 +65,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Loess Normalization Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Loess Normalization Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("LOESS Data"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["LOESS Data"]);
+          if (mhtDatasets.ContainsKey("LOESS Data"))
+            AddDataNode(mhtDatasets["LOESS Data"]);
         } else
           MessageBox.Show("Loess failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -95,14 +93,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Linear Regression Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Linear Regression Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Linear Regressed"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Linear Regressed"]);
+            if (mhtDatasets.ContainsKey("Linear Regressed"))
+            AddDataNode(mhtDatasets["Linear Regressed"]);
         } else
           MessageBox.Show("Linear Regression failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -129,10 +126,10 @@ namespace DAnTE.Inferno
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Mean Centered"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Mean Centered"]);
-          if (mhtDatasets.Contains("Median Centered"))
-              AddDataNode((clsDatasetTreeNode)mhtDatasets["Median Centered"]);
+            if (mhtDatasets.ContainsKey("Mean Centered"))
+            AddDataNode(mhtDatasets["Mean Centered"]);
+            if (mhtDatasets.ContainsKey("Median Centered"))
+              AddDataNode(mhtDatasets["Median Centered"]);
         } else
           MessageBox.Show("Mean/Median Centering failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -154,14 +151,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Quantile Normalization Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Quantile Normalization Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Quantile Normalized"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Quantile Normalized"]);
+            if (mhtDatasets.ContainsKey("Quantile Normalized"))
+            AddDataNode(mhtDatasets["Quantile Normalized"]);
         } else
           MessageBox.Show("Quantile Normalization failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -183,14 +179,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("MAD Adjustment Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("MAD Adjustment Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("MAD Adjusted"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["MAD Adjusted"]);
+            if (mhtDatasets.ContainsKey("MAD Adjusted"))
+            AddDataNode(mhtDatasets["MAD Adjusted"]);
         } else
           MessageBox.Show("MAD Adjustment failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -212,14 +207,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Imputation Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Imputation Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Imputed Data"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Imputed Data"]);
+            if (mhtDatasets.ContainsKey("Imputed Data"))
+            AddDataNode(mhtDatasets["Imputed Data"]);
         } else
           MessageBox.Show("Imputation failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",
@@ -241,14 +235,13 @@ namespace DAnTE.Inferno
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
-        Console.WriteLine("Imputation Canceled", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        Console.WriteLine("Imputation Canceled");
       } else {
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Merged Data"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Merged Data"]);
+            if (mhtDatasets.ContainsKey("Merged Data"))
+            AddDataNode(mhtDatasets["Merged Data"]);
         } else
           MessageBox.Show("Imputation failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
@@ -28,12 +27,11 @@ namespace DAnTE.Inferno
           {
               ctltreeView.Nodes[0].Nodes.Clear();
 
-              IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
-              while (_enumerator.MoveNext())
+              foreach (var dataset in mhtDatasets)
               {
-                  AddDataNode((clsDatasetTreeNode)_enumerator.Value);
-
+                  AddDataNode(dataset.Value);
               }
+             
 
               statusBarPanelMsg.Text = "Session opened successfully.";
               if (string.IsNullOrEmpty(mstrLoadedfileName))
@@ -90,7 +88,7 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_SaveSession(object sender, DoWorkEventArgs e)
     {
-      string arg = (string)e.Argument;
+      var arg = (string)e.Argument;
 
       try {
 

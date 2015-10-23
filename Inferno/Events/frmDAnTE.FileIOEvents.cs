@@ -1,14 +1,8 @@
 using System;
-using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using DAnTE.Tools;
-using DAnTE.ExtraControls;
 using DAnTE.Properties;
 
 namespace DAnTE.Inferno
@@ -74,25 +68,25 @@ namespace DAnTE.Inferno
             {
                 if (mhtDatasets.ContainsKey("Protein Info"))
                 {
-                    AddDataNode((clsDatasetTreeNode)mhtDatasets["Protein Info"]);
+                    AddDataNode(mhtDatasets["Protein Info"]);
                 }
-                AddDataNode((clsDatasetTreeNode)mhtDatasets["Expressions"]);
+                AddDataNode(mhtDatasets["Expressions"]);
                 if (mstrLoadedfileName != null)
                 {
                     this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
                 }
                 marrDataSetNames = clsDataTable.DataTableColumns(
-                    ((clsDatasetTreeNode)mhtDatasets["Expressions"]).mDTable, true);
+                    (mhtDatasets["Expressions"]).mDTable, true);
             }
 
             if (mhtDatasets.ContainsKey("Protein Info") && (dataSetType == enmDataType.PROTINFO))
             {
-                AddDataNode((clsDatasetTreeNode)mhtDatasets["Protein Info"]);
+                AddDataNode(mhtDatasets["Protein Info"]);
             }
 
             if (mhtDatasets.ContainsKey("Factors") && (dataSetType == enmDataType.FACTORS))
             {
-                AddDataNode((clsDatasetTreeNode)mhtDatasets["Factors"]);
+                AddDataNode(mhtDatasets["Factors"]);
             }
 
             Settings.Default.SessionFileName = null;

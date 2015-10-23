@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
@@ -17,7 +12,7 @@ namespace DAnTE.Paradiso
             InitializeComponent();
         }
 
-        private void m_fadeInOutTimer_Tick(object sender, System.EventArgs e)
+        private void m_fadeInOutTimer_Tick(object sender, EventArgs e)
         {
 
             // How should we fade?
@@ -94,7 +89,7 @@ namespace DAnTE.Paradiso
         
         private void ShowCredits()
         {
-            string credits = "Thanks:" + Environment.NewLine + Environment.NewLine + "DAnTE project @PNNL";
+            var credits = "Thanks:" + Environment.NewLine + Environment.NewLine + "DAnTE project @PNNL";
             mTransparentlbl.Caption = credits;
         }
 

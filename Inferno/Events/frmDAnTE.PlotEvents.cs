@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_QQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmQQplotDisplay mfrmQQplotDisplay = new frmQQplotDisplay(mclsQQPar);
+      var mfrmQQplotDisplay = new frmQQplotDisplay(mclsQQPar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
@@ -43,7 +43,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_HistPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmHistDisplay mfrmHistDisplay = new frmHistDisplay(mclsHistPar);
+      var mfrmHistDisplay = new frmHistDisplay(mclsHistPar);
       //mfrmShowProgress.Hide();
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
@@ -76,7 +76,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_CorrPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmCorrDisplay mfrmCorrDisplay = new frmCorrDisplay(mclsCorrPar);
+      var mfrmCorrDisplay = new frmCorrDisplay(mclsCorrPar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       //this.Focus();
@@ -108,7 +108,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_BoxPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmBoxPlotDisplay mfrmBoxPlotDisplay = new frmBoxPlotDisplay(mclsBoxPlotPar);
+      var mfrmBoxPlotDisplay = new frmBoxPlotDisplay(mclsBoxPlotPar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
@@ -130,7 +130,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_MAplotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmMAplotDisplay mfrmMAplotDisplay = new frmMAplotDisplay(mclsMApar);
+      var mfrmMAplotDisplay = new frmMAplotDisplay(mclsMApar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
@@ -152,7 +152,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_VennCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmVennDisplay mfrmVennDisplay = new frmVennDisplay(mclsVennPar);
+      var mfrmVennDisplay = new frmVennDisplay(mclsVennPar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
@@ -183,9 +183,9 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_GeneratePlots(object sender, DoWorkEventArgs e)
     {
-      clsRplotData arg = (clsRplotData)e.Argument;
-      string rcmd = arg.mstrRcmd;
-      string plotname = arg.mstrPlotName;
+      var arg = (clsRplotData)e.Argument;
+      var rcmd = arg.mstrRcmd;
+      var plotname = arg.mstrPlotName;
       clsPlotResult mclsPlotResult;
 
       try {

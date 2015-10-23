@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
@@ -11,24 +8,22 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         private string mstrOutFolder;
 
-        [DAnTE.Tools.clsAnalysisAttribute("Span", "LOESS")]
+        [Tools.clsAnalysisAttribute("Span", "LOESS")]
         public string span;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "LOESS")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "LOESS")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
+
         public bool mblPlot;
-        private string mstrFactor;
         public int mintFactorIndex;
 
         private string mstrReference;
-        public ArrayList marrFactors;
+        public List<string> marrFactors;
 
         public clsLoessPar()
         {
-            mstrDatasetName = "Eset";
-            mstrFactor = "";
+            DataSetName = "Eset";
+            FactorSelected = "";
             mintFactorIndex = 1;
             mblPlot = false;
             mstrReference = "LeastMissing";
@@ -58,7 +53,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; ;
+                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
             }
         }
 
@@ -73,24 +68,16 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "LOESS")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "LOESS")]
+        public string DataSetName { get; set; }
 
         private string Factors
         {
             get { return "factors[" + mintFactorIndex.ToString() + ",]"; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "LOESS")]
-        public string FactorSelected
-        {
-            set { mstrFactor = value; }
-            get { return mstrFactor; }
-        }
+        [Tools.clsAnalysisAttribute("Selected_Factor", "LOESS")]
+        public string FactorSelected { set; get; }
 
         private string Reference
         {
@@ -107,14 +94,14 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Baseline_Criteria", "LOESS")]
+        [Tools.clsAnalysisAttribute("Baseline_Criteria", "LOESS")]
         public string Reference_pub
         {
             get { return mstrReference; }
             set { mstrReference = value; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LOESS")]
+        [Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LOESS")]
         public string OutFolder_pub
         {
             get
@@ -127,7 +114,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Save_Plots", "LOESS")]
+        [Tools.clsAnalysisAttribute("Save_Plots", "LOESS")]
         public string DoPlot
         {
             get

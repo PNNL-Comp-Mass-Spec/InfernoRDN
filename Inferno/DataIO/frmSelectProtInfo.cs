@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace DAnTE.Inferno
 {
     public partial class frmSelectProtInfo : Form
     {
-        private ArrayList marrColumns = new ArrayList();
-
         public frmSelectProtInfo()
         {
             InitializeComponent();
@@ -98,18 +91,11 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public ArrayList PopulateListBox
+        public List<string> PopulateListBox
         {
             set
             {
-                marrColumns = value;
-                int mintMaxColumns = value.Count;
-                object[] lstBoxEntries = new object[mintMaxColumns];
-                value.CopyTo(lstBoxEntries);
-                ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxAllCols, lstBoxEntries);
-                mlstBoxAllCols.Items.AddRange(lboxObjColData);
-                //for (int i = 0; i < mlstBoxAllCols.Items.Count; i++)
-                //    mlstBoxAllCols.SetSelected(i, true);
+                mlstBoxAllCols.DataSource = value;
             }
         }
 
@@ -117,8 +103,8 @@ namespace DAnTE.Inferno
         {
             get
             {
-                string[] strarr2Rem = new string[mlstBoxAllCols.Items.Count];
-                for (int i = 0; i < mlstBoxAllCols.Items.Count; i++)
+                var strarr2Rem = new string[mlstBoxAllCols.Items.Count];
+                for (var i = 0; i < mlstBoxAllCols.Items.Count; i++)
                 {
                     strarr2Rem[i] = mlstBoxAllCols.Items[i].ToString();
                 }

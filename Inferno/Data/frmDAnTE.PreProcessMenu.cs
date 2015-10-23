@@ -111,7 +111,7 @@ namespace DAnTE.Inferno
             frmLOESSPar mfrmLoessPar = new frmLOESSPar(mclsLoessPar);
             mfrmLoessPar.DataSetName = mclsSelected.mstrDataText;
 
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
             mfrmLoessPar.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (mfrmLoessPar.ShowDialog() == DialogResult.OK)
@@ -303,7 +303,7 @@ namespace DAnTE.Inferno
             mfrmMad.DataSetName = mclsSelected.mstrDataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+                clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
                 mfrmMad.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsMADPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
             }
@@ -369,7 +369,7 @@ namespace DAnTE.Inferno
                 DataSetName = mclsSelected.mstrDataText
             };
 
-            clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+            clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
             mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             frmLinRegPar mfrmLinReg = new frmLinRegPar(mclsLinRegPar);
@@ -434,7 +434,7 @@ namespace DAnTE.Inferno
 
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = (clsDatasetTreeNode)mhtDatasets["Factors"];
+                clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
                 mfrmImpute.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsImputePar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
             }

@@ -1,15 +1,7 @@
 using System;
-using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using DAnTE.Tools;
-using DAnTE.ExtraControls;
-using DAnTE.Properties;
 
 namespace DAnTE.Inferno
 {
@@ -29,8 +21,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("ANOVA Canceled", "Error!", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                Console.WriteLine("ANOVA Canceled");
             }
             else
             {
@@ -38,14 +29,14 @@ namespace DAnTE.Inferno
                 // succeeded.
                 if ((bool)e.Result)
                 {
-                    if (mhtDatasets.Contains("p-Values"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["p-Values"]);
-                    if (mhtDatasets.Contains("Unused Data"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Unused Data"]);
+                    if (mhtDatasets.ContainsKey("p-Values"))
+                        AddDataNode(mhtDatasets["p-Values"]);
+                    if (mhtDatasets.ContainsKey("Unused Data"))
+                        AddDataNode(mhtDatasets["Unused Data"]);
                 }
                 else
                     MessageBox.Show("ANOVA failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
+                        "Check if you have all data requirements and in correct format.  Also consider using a smaller value for 'Minimum Number of Data Points per Factor Level'", "Error!",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -77,8 +68,7 @@ namespace DAnTE.Inferno
 
 	void m_BackgroundWorker_TamuQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            clsPlotResult mclsPlotResult;
-            frmQQplotDisplay mfrmTamuQplotDisplay = new frmQQplotDisplay(mclsQQPar);
+	    var mfrmTamuQplotDisplay = new frmQQplotDisplay(mclsQQPar);
             mfrmShowProgress.Hide();
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
@@ -101,7 +91,7 @@ namespace DAnTE.Inferno
                 // succeeded.
                 //mfrmPlot.Image = e.Result as Image;
                 //DialogResult dres = mfrmPlot.ShowDialog();
-                mclsPlotResult = (clsPlotResult)e.Result;
+                var mclsPlotResult = (clsPlotResult)e.Result;
                 mfrmTamuQplotDisplay.Image = mclsPlotResult.mImage;
                 mfrmTamuQplotDisplay.PlotName = mclsPlotResult.mstrPlotName;
                 mfrmTamuQplotDisplay.DAnTEinstance = this;
@@ -123,8 +113,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("TamuQ Canceled", "Error!", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                Console.WriteLine("TamuQ Canceled");
             }
             else
             {
@@ -132,12 +121,12 @@ namespace DAnTE.Inferno
                 // succeeded.
                 if ((bool)e.Result)
                 {
-                    if (mhtDatasets.Contains("p-Values"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["p-Values"]);
-                    if (mhtDatasets.Contains("Imputed Values"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Imputed Values"]);
-                    if (mhtDatasets.Contains("Unused Data"))
-                        AddDataNode((clsDatasetTreeNode)mhtDatasets["Unused Data"]);
+                    if (mhtDatasets.ContainsKey("p-Values"))
+                        AddDataNode(mhtDatasets["p-Values"]);
+                    if (mhtDatasets.ContainsKey("Imputed Values"))
+                        AddDataNode(mhtDatasets["Imputed Values"]);
+                    if (mhtDatasets.ContainsKey("Unused Data"))
+                        AddDataNode(mhtDatasets["Unused Data"]);
                 }
                 else
                     MessageBox.Show("TamuQ failed." + Environment.NewLine +

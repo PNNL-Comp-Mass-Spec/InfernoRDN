@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Data;
 using System.Data.OleDb;
@@ -20,7 +21,7 @@ namespace DAnTE.Tools
 
         private static void OnProgressUpdate(ProgressEventArgs e)
         {          
-            EventHandler<ProgressEventArgs> handler = OnProgress;
+            var handler = OnProgress;
             if (handler != null)
             {
                 handler(null, e);
@@ -89,8 +90,8 @@ namespace DAnTE.Tools
                         {
                             return null;
                         }
-                        string[] excelSheets = new string[dt.Rows.Count];
-                        int i = 0;
+                        var excelSheets = new string[dt.Rows.Count];
+                        var i = 0;
 
                         // Add the sheet name to the string array.
                         foreach (DataRow row in dt.Rows)
@@ -98,16 +99,16 @@ namespace DAnTE.Tools
                             excelSheets[i] = row["TABLE_NAME"].ToString();
                             i++;
                         }
-                        string sheetCmd = "SELECT * FROM [" + excelSheets[0] +"]"; //read the first table
-                        OleDbCommand objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
+                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] +"]"; //read the first table
+                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
+                        var objAdapter1 = new OleDbDataAdapter();
                         objAdapter1.SelectCommand = objCmdSelect;
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message.ToString());
+                        Console.WriteLine(ex.Message);
                     }
                     finally
                     {
@@ -134,11 +135,11 @@ namespace DAnTE.Tools
 
         public static DataTable LoadFile2DataTableJETOLEDB(string FileName)
         {
-            string fileName = FileName;
-            string filePath = FileName;
+            var fileName = FileName;
+            var filePath = FileName;
             string fExt;
-            DataTable mdtOut = new DataTable();
-            DataTable mdtIn = new DataTable();
+            var mdtOut = new DataTable();
+            var mdtIn = new DataTable();
             OleDbConnection objConn = null;
             DataTable dt = null;
 
@@ -154,22 +155,22 @@ namespace DAnTE.Tools
                     dt = null;
                     try
                     {
-                        string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                        var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
                                 "Data Source=" + filePath + ";" + 
                                 @"Extended Properties=""text;HDR=Yes;FMT=Delimited""";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
                         
-                        string sheetCmd = "SELECT * FROM [" + fileName + "]"; //read the table
-                        OleDbCommand objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
+                        var sheetCmd = "SELECT * FROM [" + fileName + "]"; //read the table
+                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
+                        var objAdapter1 = new OleDbDataAdapter();
                         objAdapter1.SelectCommand = objCmdSelect;
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message.ToString());
+                        Console.WriteLine(ex.Message);
                     }
                     finally
                     {
@@ -190,7 +191,7 @@ namespace DAnTE.Tools
                     dt = null;
                     try
                     {
-                        string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
+                        var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                             FileName + ";" + "Extended Properties=Excel 8.0;";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
@@ -199,8 +200,8 @@ namespace DAnTE.Tools
                         {
                             return null;
                         }
-                        string[] excelSheets = new string[dt.Rows.Count];
-                        int i = 0;
+                        var excelSheets = new string[dt.Rows.Count];
+                        var i = 0;
 
                         // Add the sheet name to the string array.
                         foreach (DataRow row in dt.Rows)
@@ -208,16 +209,16 @@ namespace DAnTE.Tools
                             excelSheets[i] = row["TABLE_NAME"].ToString();
                             i++;
                         }
-                        string sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
-                        OleDbCommand objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        OleDbDataAdapter objAdapter1 = new OleDbDataAdapter();
+                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
+                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
+                        var objAdapter1 = new OleDbDataAdapter();
                         objAdapter1.SelectCommand = objCmdSelect;
                         objAdapter1.Fill(mdtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message.ToString());
+                        Console.WriteLine(ex.Message);
                     }
                     finally
                     {
@@ -295,7 +296,7 @@ namespace DAnTE.Tools
                             mstrSheet = (dt.Rows[0])["TABLE_NAME"].ToString();
                         else
                         {
-                            var marrExcelSheets = new ArrayList();
+                            var marrExcelSheets = new List<string>();
                             var i = 0;
 
                             // Add the sheet name to the string array.
@@ -367,7 +368,7 @@ namespace DAnTE.Tools
         {
             var mDataTable = new DataTable();
 
-            DataColumn mDataColumn = new DataColumn
+            var mDataColumn = new DataColumn
             {
                 DataType = System.Type.GetType("System.String"),
                 ColumnName = "Row_ID"
@@ -375,7 +376,7 @@ namespace DAnTE.Tools
             //mDataColumn.ReadOnly = true ;
             mDataTable.Columns.Add(mDataColumn);
 
-            for (int i = 0; i < colHeaders.Length; i++)
+            for (var i = 0; i < colHeaders.Length; i++)
             {
                 mDataColumn = new DataColumn
                 {
@@ -385,11 +386,11 @@ namespace DAnTE.Tools
                 //mDataColumn.ReadOnly = true ;
                 mDataTable.Columns.Add(mDataColumn);
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (var i = 0; i < matrix.GetLength(0); i++)
             {
-                DataRow mDataRow = mDataTable.NewRow();
+                var mDataRow = mDataTable.NewRow();
                 mDataRow[0] = rowNames[i];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     mDataRow[j + 1] = matrix[i, j].ToString();
                 }
@@ -400,9 +401,9 @@ namespace DAnTE.Tools
 
         public static string[] DataColumn2strArray(DataTable mTab, string Colmn)
         {
-            string[] mStrArr = new string[mTab.Rows.Count];
-            DataColumnCollection columns = mTab.Columns;
-            int i = 0;
+            var mStrArr = new string[mTab.Rows.Count];
+            var columns = mTab.Columns;
+            var i = 0;
             foreach (DataColumn column in columns)
             {
                 if (!Colmn.Equals(column.ColumnName))
@@ -410,7 +411,7 @@ namespace DAnTE.Tools
                 else
                     break;
             }
-            for (int row = 0; row < mTab.Rows.Count; row++)
+            for (var row = 0; row < mTab.Rows.Count; row++)
             {
                 mStrArr[row] = mTab.Rows[row].ItemArray[i].ToString();
             }
@@ -420,21 +421,21 @@ namespace DAnTE.Tools
         public static DataTable ReplaceMissingStr(DataTable dt)
         {
             string cell = null;
-            int Nrows = dt.Rows.Count;
+            var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
 
-            for (int row = 0; row < Nrows; row++)
+            for (var row = 0; row < Nrows; row++)
             {
                 //DataRow workRow = dt.Rows[row] ;
                 string[] obj;
                 obj = new string[dt.Rows[row].ItemArray.Length];
-                for (int col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col].ToString();
                     cell = dt.Rows[row].ItemArray[col].ToString();
                     if (cell.Equals("999999") || cell.Equals(" 9.999990e+05"))
                     {
-                        string s = "";
+                        var s = "";
                         obj[col] = s;
                     }
                 }
@@ -448,15 +449,15 @@ namespace DAnTE.Tools
         public static DataTable ReplaceMissing(DataTable dt)
         {
             string cell = null;
-            int Nrows = dt.Rows.Count;
+            var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
 
-            for (int row = 0; row < Nrows; row++)
+            for (var row = 0; row < Nrows; row++)
             {
                 //DataRow workRow = dt.Rows[row] ;
-                Object[] obj = new object[dt.Rows[row].ItemArray.Length];
+                var obj = new object[dt.Rows[row].ItemArray.Length];
                 //obj = new string[dt.Rows[row].ItemArray.Length];
-                for (int col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
                     cell = dt.Rows[row].ItemArray[col].ToString();
@@ -474,20 +475,20 @@ namespace DAnTE.Tools
 
         public static DataTable ClearNulls(DataTable dt)
         {
-            int Nrows = dt.Rows.Count;
-            DataTable outDtable = new DataTable();
+            var Nrows = dt.Rows.Count;
+            var outDtable = new DataTable();
 
-            for (int row = 0; row < Nrows; row++)
+            for (var row = 0; row < Nrows; row++)
             {
                 //DataRow workRow = dt.Rows[row] ;
                 object[] obj;
                 obj = new object[dt.Rows[row].ItemArray.Length];
-                for (int col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
                     if (dt.Rows[row].ItemArray[col] == System.DBNull.Value)
                     {
-                        string s = "";
+                        var s = "";
                         obj[col] = (object)s;
                     }
                 }
@@ -499,8 +500,8 @@ namespace DAnTE.Tools
 
         public static void RemoveDuplicateRows(DataTable dTable, string colName)
         {
-            Hashtable hTable = new Hashtable();
-            ArrayList duplicateList = new ArrayList();
+            var hTable = new Hashtable();
+            var duplicateList = new ArrayList();
 
             foreach (DataRow drow in dTable.Rows)
             {
@@ -520,16 +521,16 @@ namespace DAnTE.Tools
 
         public static DataTable RemoveDuplicateRows2(DataTable dTable, string colName)
         {
-            Hashtable hTable = new Hashtable();            
-            ArrayList duplicateList = new ArrayList();
+            var hTable = new Hashtable();            
+            var duplicateList = new ArrayList();
 
             foreach (DataColumn dC in dTable.Columns)
             {
                 dC.ReadOnly = false;
             }
 
-            int rowCountLoaded = 0;
-            int rowCountTotal = dTable.Rows.Count;
+            var rowCountLoaded = 0;
+            var rowCountTotal = dTable.Rows.Count;
 
             foreach (DataRow thisRow in dTable.Rows)
             {
@@ -554,7 +555,7 @@ namespace DAnTE.Tools
                     }
 
                 rowCountLoaded += 1;
-                float percentComplete = rowCountLoaded / (float)rowCountTotal * 100;
+                var percentComplete = rowCountLoaded / (float)rowCountTotal * 100;
 
                 if (rowCountLoaded % 100 == 0)
                     OnProgressUpdate(new ProgressEventArgs(percentComplete));
@@ -574,14 +575,14 @@ namespace DAnTE.Tools
 			var prevRow = (DataRow)hTable[thisRow[keyColName]];
 			if (!RowsIdentical(thisRow, prevRow))
 			{
-				DataRow currentRow = addRows(prevRow, thisRow);
+				var currentRow = addRows(prevRow, thisRow);
 				hTable[thisRow[keyColName]] = currentRow;
 			}
 	    }
 
 	    public static bool RowsIdentical(DataRow row1, DataRow row2)
         {
-            for (int i = 0; i < row1.ItemArray.Length; i++)
+            for (var i = 0; i < row1.ItemArray.Length; i++)
             {
                 var item1 = row1.ItemArray[i];
                 var item2 = row2.ItemArray[i];
@@ -603,8 +604,8 @@ namespace DAnTE.Tools
 
         public static bool ValidRow(DataRow row) // not all empty
         {
-            bool success = false;
-            for (int i = 1; i < row.ItemArray.Length; i++)
+            var success = false;
+            for (var i = 1; i < row.ItemArray.Length; i++)
             {
                 if (!(row.ItemArray[i].Equals("")))
                 {
@@ -618,11 +619,11 @@ namespace DAnTE.Tools
 
         public static DataRow addRows(DataRow row1, DataRow row2)
         {
-            for (int i = 1; i < row1.ItemArray.Length; i++)
+            for (var i = 1; i < row1.ItemArray.Length; i++)
             {
-                double val1 = CDblSafe(row1.ItemArray[i]);
-                double val2 = CDblSafe(row2.ItemArray[i]);
-                double val3 = val1 + val2;
+                var val1 = CDblSafe(row1.ItemArray[i]);
+                var val2 = CDblSafe(row2.ItemArray[i]);
+                var val3 = val1 + val2;
                 if (Math.Abs(val3) > double.Epsilon)
                     row1[i] = val3.ToString(CultureInfo.InvariantCulture);
             }
@@ -650,13 +651,13 @@ namespace DAnTE.Tools
         /// containing the columns to match for duplicates</param>
         public static void RemoveDuplicates(DataTable tbl, DataColumn[] keyColumns)
         {
-            int rowNdx = 0;
+            var rowNdx = 0;
             while (rowNdx < tbl.Rows.Count - 1)
             {
-                DataRow[] dups = FindDups(tbl, rowNdx, keyColumns);
+                var dups = FindDups(tbl, rowNdx, keyColumns);
                 if (dups.Length > 0)
                 {
-                    foreach (DataRow dup in dups)
+                    foreach (var dup in dups)
                     {
                         tbl.Rows.Remove(dup);
                     }
@@ -670,11 +671,11 @@ namespace DAnTE.Tools
 
         private static DataRow[] FindDups(DataTable tbl, int sourceNdx, DataColumn[] keyColumns)
         {
-            ArrayList retVal = new ArrayList();
-            DataRow sourceRow = tbl.Rows[sourceNdx];
-            for (int i = sourceNdx + 1; i < tbl.Rows.Count; i++)
+            var retVal = new ArrayList();
+            var sourceRow = tbl.Rows[sourceNdx];
+            for (var i = sourceNdx + 1; i < tbl.Rows.Count; i++)
             {
-                DataRow targetRow = tbl.Rows[i];
+                var targetRow = tbl.Rows[i];
                 if (IsDup(sourceRow, targetRow, keyColumns) || Is1stColumnEmpty(targetRow))
                 {
                     retVal.Add(targetRow);
@@ -687,8 +688,8 @@ namespace DAnTE.Tools
 
         private static bool IsDup(DataRow sourceRow, DataRow targetRow, DataColumn[] keyColumns)
         {
-            bool retVal = true;
-            foreach (DataColumn column in keyColumns)
+            var retVal = true;
+            foreach (var column in keyColumns)
             {
                 retVal = retVal && sourceRow[column].Equals(targetRow[column]);
                 if (!retVal) break;
@@ -739,12 +740,12 @@ namespace DAnTE.Tools
         //}
 
         /// <summary>
-        /// Get the DataTable column names to an arraylist
+        /// Get the DataTable column names to an list
         /// </summary>
-        public static ArrayList DataTableColumns(DataTable dt, bool dataonly)
+        public static List<string> DataTableColumns(DataTable dt, bool dataonly)
         {
-            ArrayList marrCols = new ArrayList();
-            int i = 0;
+            var marrCols = new List<string>();
+            var i = 0;
             foreach (DataColumn column in dt.Columns)
             {
                 if (dataonly)
@@ -761,11 +762,11 @@ namespace DAnTE.Tools
             return marrCols;
         }
 
-        public static ArrayList DataTableColumns(DataTable dt, string dataset)
+        public static List<string> DataTableColumns(DataTable dt, string dataset)
         {
-            ArrayList marrCols = new ArrayList();
-            int i = 0;
-            bool prots = (dataset.Contains("pData") || dataset.Contains("qrollup"));
+            var marrCols = new List<string>();
+            var i = 0;
+            var prots = (dataset.Contains("pData") || dataset.Contains("qrollup"));
 
             foreach (DataColumn column in dt.Columns)
             {
@@ -787,14 +788,20 @@ namespace DAnTE.Tools
             return marrCols;
         }
 
-        public static ArrayList DataTableRows(DataTable dt)
+        /// <summary>
+        /// Get a list of the first column value for each row
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static List<string> DataTableRows(DataTable dt)
         {
-            ArrayList marrRows = new ArrayList();
+            var marrRows = new List<string>();
 
             foreach (DataRow dRow in dt.Rows)
             {
                 marrRows.Add(dRow.ItemArray[0].ToString());
             }
+
             return marrRows;
         }
 

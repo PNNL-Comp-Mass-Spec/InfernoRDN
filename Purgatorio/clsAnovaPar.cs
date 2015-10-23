@@ -1,31 +1,28 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
     public class clsAnovaPar
     {
         private string rcmd;
-        [DAnTE.Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")]
         public bool unbalanced;
         public bool randomE;
-        [DAnTE.Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")]
         public bool useREML;
-        [DAnTE.Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")]
         public bool interactions;
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "ANOVA")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "ANOVA")]
         public string Rdataset;
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")]
         public string mstrDatasetName;
         public string tempFile;
-        [DAnTE.Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")]
         public int numDatapts;
         public ArrayList fixedEff;
         public ArrayList randomEff;
-        public ArrayList marrFactors;
+        public List<string> marrFactors;
 
         public clsAnovaPar()
         {
@@ -51,7 +48,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Fixed_Effect_Factors", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Fixed_Effect_Factors", "ANOVA")]
         public string FixedEffectsFactors
         {
             get
@@ -63,9 +60,9 @@ namespace DAnTE.Purgatorio
                 else
                     fEff = fixedEff[0].ToString();
 
-                for (int i = 1; i < fixedEff.Count; i++)
+                for (var i = 1; i < fixedEff.Count; i++)
                 {
-                    fEff = fEff + "," + fixedEff[i].ToString();
+                    fEff = fEff + "," + fixedEff[i];
                 }
 
                 return fEff;
@@ -81,11 +78,11 @@ namespace DAnTE.Purgatorio
                 if (fixedEff.Count == 0)
                     return "NULL";
                 else
-                    fEff = @"c(""" + fixedEff[0].ToString() + @"""";
+                    fEff = @"c(""" + fixedEff[0] + @"""";
 
-                for (int i = 1; i < fixedEff.Count; i++)
+                for (var i = 1; i < fixedEff.Count; i++)
                 {
-                    fEff = fEff +  @",""" + fixedEff[i].ToString() + @"""";
+                    fEff = fEff +  @",""" + fixedEff[i] + @"""";
                 }
                 fEff = fEff + ")";
 
@@ -93,7 +90,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Random_Effect_Factors", "ANOVA")]
+        [Tools.clsAnalysisAttribute("Random_Effect_Factors", "ANOVA")]
         public string RandomEffectsFactors
         {
             get
@@ -105,9 +102,9 @@ namespace DAnTE.Purgatorio
                 else
                     rEff = randomEff[0].ToString();
 
-                for (int i = 1; i < randomEff.Count; i++)
+                for (var i = 1; i < randomEff.Count; i++)
                 {
-                    rEff = rEff + "," + randomEff[i].ToString();
+                    rEff = rEff + "," + randomEff[i];
                 }
 
                 return rEff;
@@ -123,11 +120,11 @@ namespace DAnTE.Purgatorio
                 if (randomEff.Count == 0)
                     return "NULL";
                 else
-                    rEff = @"c(""" + randomEff[0].ToString() + @"""";
+                    rEff = @"c(""" + randomEff[0] + @"""";
 
-                for (int i = 1; i < randomEff.Count; i++)
+                for (var i = 1; i < randomEff.Count; i++)
                 {
-                    rEff = rEff + @",""" + randomEff[i].ToString() + @"""";
+                    rEff = rEff + @",""" + randomEff[i] + @"""";
                 }
                 rEff = rEff + ")";
 

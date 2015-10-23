@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DAnTE.Tools;
 
@@ -14,10 +10,8 @@ namespace DAnTE.Inferno
     {
         private const int MAX_LEVELS = 100;
         private readonly string[] strarrFactors = new string[MAX_LEVELS];
-        private ArrayList marrFactors;
-        private int numFactors = 0;
-        private ArrayList marrListDatasets = new ArrayList();
-        private readonly DAnTE.Purgatorio.clsVennPar mclsVennPar = new DAnTE.Purgatorio.clsVennPar();
+        private List<clsFactorInfo> marrFactors;
+        private readonly DAnTE.Purgatorio.clsVennPar mclsVennPar;
         private bool mblPlotFactors = false;
 
 
@@ -26,7 +20,6 @@ namespace DAnTE.Inferno
         {
             InitializeComponent();
             mclsVennPar = mclsVPar;
-            marrListDatasets = mclsVennPar.marrDatasets;
         }
         
         private void mbtnOK_Click(object sender, EventArgs e)
@@ -113,53 +106,48 @@ namespace DAnTE.Inferno
 
         private void updateFactorForm()
         {
-            ArrayList marrFs = new ArrayList();
+            var marrFs = new List<string>();
 
             fillFactorArray();
 
-            for (int num = 0; num < marrFactors.Count; num++)
-                marrFs.Add(((clsFactorInfo)marrFactors[num]).mstrFactor);
+            foreach (var factor in marrFactors)
+                marrFs.Add((factor).mstrFactor);
 
             mcmbBoxFactors.DataSource = marrFs;
         }
 
         private void fillFactorArray()
         {
-            for (int num = 0; num < marrFactors.Count; num++)
-                strarrFactors[num] = ((clsFactorInfo)marrFactors[num]).mstrFactor;
-            numFactors = marrFactors.Count;
+            for (var num = 0; num < marrFactors.Count && num < strarrFactors.Length; num++)
+                strarrFactors[num] = marrFactors[num].mstrFactor;
         }
 
         private void mcmbBoxFactors_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int nSelected;
-            string[] strArrTmp = new string[MAX_LEVELS];
-            clsFactorInfo selectedF = new clsFactorInfo();
-
-            if (mcmbBoxFactors.SelectedIndex > -1)
+            if (mcmbBoxFactors.SelectedIndex <= -1)
             {
-                nSelected = mcmbBoxFactors.SelectedIndex;
-                mlistBoxLevels.Items.Clear();
-                selectedF = ((clsFactorInfo)marrFactors[nSelected]);
-                if (selectedF.vCount > 0)
-                {
-                    for (int i = 0; i < selectedF.vCount; i++)
-                    {
-                        mlistBoxLevels.Items.Add(selectedF.marrValues[i].ToString());
-                    }
-                    mlistBoxLevels.SelectedIndex = -1;
-                }
+                return;
             }
+
+            var nSelected = mcmbBoxFactors.SelectedIndex;
+            mlistBoxLevels.Items.Clear();
+            var selectedF = marrFactors[nSelected];
+
+            if (selectedF.vCount <= 0)
+            {
+                return;
+            }
+
+            for (var i = 0; i < selectedF.vCount; i++)
+            {
+                mlistBoxLevels.Items.Add(selectedF.marrValues[i].ToString());
+            }
+            mlistBoxLevels.SelectedIndex = -1;
         }
 
         public void PopulateDataListBox()
         {
-            int mintMaxColumns = mclsVennPar.marrDatasets.Count;
-            object[] lstBoxEntries = new object[mintMaxColumns];
-            mclsVennPar.marrDatasets.CopyTo(lstBoxEntries);
-            ListBox.ObjectCollection lboxObjColData = new ListBox.ObjectCollection(mlstBoxDataLists, lstBoxEntries);
-            mlstBoxDataLists.Items.Clear();
-            mlstBoxDataLists.Items.AddRange(lboxObjColData);
+            mlstBoxDataLists.DataSource = mclsVennPar.marrDatasets;
         }
 
         private void frmVennDiagramPar_Load(object sender, EventArgs e)
@@ -171,6 +159,7 @@ namespace DAnTE.Inferno
             mtxtBoxA.Text = mclsVennPar.x1;
             mtxtBoxB.Text = mclsVennPar.x2;
             mtxtBoxC.Text = mclsVennPar.x3;
+
             //this.PopulateFactorComboBox = mclsVennPar.marrFactorNames;
             this.FactorInfoArray = mclsVennPar.marrFactors;
             updateFactorForm();
@@ -282,7 +271,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateFactorComboBox
+        public List<string> PopulateFactorComboBox
         {
             set
             {
@@ -323,7 +312,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList FactorInfoArray
+        public List<clsFactorInfo> FactorInfoArray
         {
             set
             {

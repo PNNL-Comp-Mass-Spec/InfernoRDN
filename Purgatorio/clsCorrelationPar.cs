@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using System.Drawing;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -31,9 +29,8 @@ namespace DAnTE.Purgatorio
         public bool mblShowOverlap;
         public bool mblShowLoess;
         public decimal fontScale;
-        public ArrayList Datasets = new ArrayList();
-        public ArrayList CheckedDatasets = new ArrayList();
-        private string lowC, midC, highC;
+        public List<string> Datasets = new List<string>();
+        public List<string> CheckedDatasets = new List<string>();
 
         public clsCorrelationPar()
         {
@@ -61,9 +58,9 @@ namespace DAnTE.Purgatorio
             eColor = Settings.Default.ellipseCol;
             if (eColor == "")
                 eColor = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Green));
-            lowC = Settings.Default.colCustLow;
-            midC = Settings.Default.colCustMid;
-            highC = Settings.Default.colCustHigh;
+            var lowC = Settings.Default.colCustLow;
+            var midC = Settings.Default.colCustMid;
+            var highC = Settings.Default.colCustHigh;
             if ((lowC == "") || (midC == "") || (highC == ""))
             {
                 lowC = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Blue));
@@ -89,7 +86,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                string func = "plotScatterCorr";
+                var func = "plotScatterCorr";
                 switch (RplotType)
                 {
                     case 1: func = "plotScatterCorr"; break;
@@ -223,7 +220,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                string Rfunction = RplotFunc;
+                var Rfunction = RplotFunc;
 
                 rcmd = Rfunction + "(" + Rdataset + "[," + datasubset + "]," + this.Background + ",";
                 rcmd = rcmd + this.Stamp + @",file=""" + tempFile + "\"";

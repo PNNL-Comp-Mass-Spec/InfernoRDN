@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using DAnTE.Tools;
 using DAnTE.Properties;
 
 namespace DAnTE.Inferno
@@ -131,7 +126,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateFactorComboBox
+        public List<string> PopulateFactorComboBox
         {
             set
             {

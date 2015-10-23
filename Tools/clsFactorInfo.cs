@@ -1,8 +1,6 @@
 using System;
-using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace DAnTE.Tools
 {
@@ -12,7 +10,7 @@ namespace DAnTE.Tools
 	public class clsFactorInfo : ICloneable
 	{
 		public string mstrFactor;
-		public ArrayList marrValues;
+		public List<string> marrValues;
 
 
 		public clsFactorInfo()
@@ -21,31 +19,35 @@ namespace DAnTE.Tools
 			// TODO: Add constructor logic here
 			//
 			mstrFactor = null;
-            marrValues = new ArrayList();
+            marrValues = new List<string>();
 		}
 
         public clsFactorInfo(string factor)
         {
             mstrFactor = factor;
-            marrValues = new ArrayList();
+            marrValues = new List<string>();
         }
 
-        private ArrayList MakeDeepCopy(ArrayList marrIN) //Deep copy arraylists of classes
+        private List<string> MakeDeepCopy(List<string> sourceList)
         {
-            ArrayList copyTo = new ArrayList();
-            foreach (object obj in marrIN)
+            var newList = new List<string>();
+            foreach (var item in sourceList)
             {
-                copyTo.Add(((ICloneable)obj).Clone());
+                newList.Add(string.Copy(item));
             }
-            return copyTo;
+
+            return newList;
         }
 
         #region ICloneable Members
 
         public object Clone()
         {
-            clsFactorInfo factorInfo = new clsFactorInfo(mstrFactor);
-            factorInfo.marrValues = (ArrayList)this.marrValues.Clone();
+            var factorInfo = new clsFactorInfo(mstrFactor)
+            {
+                marrValues = MakeDeepCopy(marrValues)
+            };
+
             return factorInfo;
         }
 
@@ -56,15 +58,14 @@ namespace DAnTE.Tools
 		{
 			get
 			{
-				string [] values = new string[marrValues.Count];
+				var values = new string[marrValues.Count];
 				if (marrValues.Count == 0)
 					return null;
-				else
-				{
-					for (int i = 0; i < marrValues.Count; i++)
-						values[i] = marrValues[i].ToString();
-					return values;
-				}
+			    
+                for (var i = 0; i < marrValues.Count; i++)
+			        values[i] = marrValues[i];
+			    
+                return values;
 			}
 		}
 
@@ -73,7 +74,7 @@ namespace DAnTE.Tools
 			get {return marrValues.Count;}
         }
 
-        public ArrayList SetFvals
+        public List<string> SetFvals
         {
             set
             {

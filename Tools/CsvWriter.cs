@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.IO;
 
 namespace DAnTE.Tools
@@ -14,7 +12,7 @@ namespace DAnTE.Tools
 	{
         public static string WriteToString(DataTable table, bool header, bool quoteAll, bool tab)
 		{
-			StringWriter writer = new StringWriter();
+			var writer = new StringWriter();
 			WriteToStream(writer, table, header, quoteAll, tab);
 			return writer.ToString();
 		}
@@ -23,7 +21,7 @@ namespace DAnTE.Tools
 		{
 			if (header)
 			{
-				for (int i = 0; i < table.Columns.Count; i++)
+				for (var i = 0; i < table.Columns.Count; i++)
 				{
 					WriteItem(stream, table.Columns[i].Caption, quoteAll);
 					if (i < table.Columns.Count - 1)
@@ -34,7 +32,7 @@ namespace DAnTE.Tools
 			}
 			foreach (DataRow row in table.Rows)
 			{
-				for (int i = 0; i < table.Columns.Count; i++)
+				for (var i = 0; i < table.Columns.Count; i++)
 				{
 					WriteItem(stream, row[i], quoteAll);
 					if (i < table.Columns.Count - 1)
@@ -74,10 +72,10 @@ namespace DAnTE.Tools
 
 	    public static void WriteHeaderRow(TextWriter stream, DataTable table, bool quoteAll, bool tabDelimited)
 	    {
-	        int columnCount = table.Columns.Count;
+	        var columnCount = table.Columns.Count;
             var rowData = new List<string>(columnCount);
 
-            for (int i = 0; i < columnCount; i++)
+            for (var i = 0; i < columnCount; i++)
             {               
                 rowData.Add(table.Columns[i].Caption);
             }
@@ -89,9 +87,9 @@ namespace DAnTE.Tools
 	    {
             var rowData = new List<string>(columnCount);
 
-            for (int i = 0; i < columnCount; i++)
+            for (var i = 0; i < columnCount; i++)
             {
-                string itemText = string.Empty;
+                var itemText = string.Empty;
 
                 if (row[i] != null)
                 {
@@ -106,7 +104,7 @@ namespace DAnTE.Tools
 
         public static void WriteRow(TextWriter stream, List<string> rowData, bool quoteAll, bool tabDelimited)
 	    {
-            for (int i = 0; i < rowData.Count; i++)
+            for (var i = 0; i < rowData.Count; i++)
             {
 
                 if (tabDelimited && !quoteAll)
@@ -130,7 +128,7 @@ namespace DAnTE.Tools
                 stream.Write("DataFile:" + mstrHeader);
                 stream.Write("\r\n");
             }
-            DateTime CurrTime = DateTime.Now;
+            var CurrTime = DateTime.Now;
             stream.Write("Time:" + 
                 CurrTime.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us")));
             stream.Write("\r\n");
@@ -140,12 +138,12 @@ namespace DAnTE.Tools
             {
                 WriteItem(stream, lgrp.Header, quoteAll);
                 stream.Write("\r\n");
-                for (int i = 0; i < lgrp.Header.Length; i++)
+                for (var i = 0; i < lgrp.Header.Length; i++)
                     stream.Write("-");
                 stream.Write("\r\n");
                 foreach (System.Windows.Forms.ListViewItem litem in lgrp.Items)
                 {
-                    for (int i = 0; i < lstView.Columns.Count; i++)
+                    for (var i = 0; i < lstView.Columns.Count; i++)
                     {
                         WriteItem(stream, litem.SubItems[i].Text, quoteAll);
                         if (i < lstView.Columns.Count - 1)

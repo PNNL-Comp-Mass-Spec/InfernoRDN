@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
 {
@@ -10,14 +6,14 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "PatternSearch")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "PatternSearch")]
         public string Rdataset;
         
-        [DAnTE.Tools.clsAnalysisAttribute("Number_of_Patterns", "PatternSearch")]
+        [Tools.clsAnalysisAttribute("Number_of_Patterns", "PatternSearch")]
         public int nPatterns;
-        public Hashtable mhtVectorPatterns;
+        public Dictionary<string, List<double>> mhtVectorPatterns;
         public string mstrDatasetName;
-        public ArrayList Datasets = new ArrayList();
+        public List<string> Datasets = new List<string>();
 
         public clsPatternSearchPar()
         {
@@ -29,12 +25,12 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                rcmd = "patternData <- patternSearch(" + Rdataset + "," + this.Patterns + ")";
+                rcmd = "patternData <- patternSearch(" + Rdataset + "," + Patterns + ")";
                 return rcmd;
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "PatternSearch")]
+        [Tools.clsAnalysisAttribute("Source_DataTable", "PatternSearch")]
         public string DataSetName
         {
             get { return mstrDatasetName; }
@@ -45,18 +41,25 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                int nDatasets = Datasets.Count;
-                string mstrPattern = "c(";
-                ArrayList marrPattern = new ArrayList();
-                IDictionaryEnumerator en = mhtVectorPatterns.GetEnumerator();
-                while (en.MoveNext())
+                var nDatasets = Datasets.Count;
+                var mstrPattern = "c(";
+
+                foreach (var pattern in mhtVectorPatterns)
                 {
-                    marrPattern = (ArrayList)en.Value;
-                    for (int i = 0; i < marrPattern.Count; i++)
+                    var marrPattern = pattern.Value;
+                    for (var i = 0; i < marrPattern.Count; i++)
                     {
-                        mstrPattern = mstrPattern + marrPattern[i].ToString() + ",";
+                        mstrPattern = mstrPattern + marrPattern[i] + ",";
                     }
                 }
+                
+                if (mstrPattern.Length < 3)
+                {
+                    // mhtVectorPatterns was empty; add a dummy data point
+                    mstrPattern += "0,";
+                }
+
+                // Remove the trailing comma, then add the closing parenthesis
                 mstrPattern = mstrPattern.Substring(0, mstrPattern.Length - 1) + ")";
                 mstrPattern = "matrix(" + mstrPattern + "," + nDatasets + "," + nPatterns + ")";
                 return mstrPattern;

@@ -13,10 +13,10 @@ namespace DAnTE.Tools
 
         // log file
         //private static readonly string LogPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        private static readonly string LogPath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string LogPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string LogAppPath = Path.Combine(LogPath, "Inferno");
         private static string LogFilePath = Path.Combine(LogAppPath, "rcmdlog.txt");
-        private static TextWriter _logwriter = null;
+        private static TextWriter _logwriter;
 
         // for stack tracing
         private static bool _traceEnabled = true;
@@ -64,7 +64,7 @@ namespace DAnTE.Tools
             try
             {
                 // Uniquify LogFilePath
-                int append = 0;
+                var append = 0;
 
                 while (fiLogFile.Directory != null)
                 {
@@ -170,7 +170,7 @@ namespace DAnTE.Tools
                     _logwriter.Flush();
                 }
             }
-            Console.WriteLine(string.Format("# {0}", comment));
+            Console.WriteLine("# {0}", comment);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace DAnTE.Tools
         {
             var stackTrace = new StackTrace();
             var frameCount = stackTrace.FrameCount;
-            int lastFrame = TraceStartingFrame + TraceFramesToShow;
+            var lastFrame = TraceStartingFrame + TraceFramesToShow;
             var fc = (frameCount < TraceFramesToShow) ? frameCount : lastFrame;
 
             var sb = new StringBuilder("# trace: ");
@@ -192,9 +192,12 @@ namespace DAnTE.Tools
                 var methodBase = stackTrace.GetFrame(i).GetMethod();
                 var Class = methodBase.ReflectedType;
                 sb.Append(" | ");
-                sb.Append(Class.Namespace);
-                sb.Append(".");
-                sb.Append(Class.Name);
+                if (Class != null)
+                {
+                    sb.Append(Class.Namespace);
+                    sb.Append(".");
+                    sb.Append(Class.Name);
+                }
                 sb.Append(".");
                 sb.Append(methodBase.Name);
             }

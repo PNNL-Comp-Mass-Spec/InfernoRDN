@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
@@ -9,11 +7,10 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "Imputation")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "Imputation")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
-        [DAnTE.Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")]
+
+        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")]
         public string mstrFiltCutoff;
         public string mstrmode;
         public string mstrK;
@@ -21,17 +18,17 @@ namespace DAnTE.Purgatorio
         public string mstrSVDth;
         public string mstrMaxIter;
         public string mstrSubConst;
-        [DAnTE.Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")]
+        [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")]
         public bool mblNoFill;
                 
         private string mstrFactor;
         public int mintFactorIndex;
-                
-        public ArrayList marrFactors;
+
+        public List<string> marrFactors;
 
         public clsImputePar()
         {
-            mstrDatasetName = "Eset";
+            DataSetName = "Eset";
             mstrFiltCutoff = "20";
             mstrmode = "mean";
             mstrK = "10";
@@ -55,7 +52,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Method", "Imputation")]
+        [Tools.clsAnalysisAttribute("Method", "Imputation")]
         public string Mode
         {
             get
@@ -79,7 +76,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("k_in_kNN", "Imputation")]
+        [Tools.clsAnalysisAttribute("k_in_kNN", "Imputation")]
         public string kNN
         {
             get
@@ -91,7 +88,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")]
+        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")]
         public string nPCS
         {
             get
@@ -103,7 +100,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("SVDImpute_iterations", "Imputation")]
+        [Tools.clsAnalysisAttribute("SVDImpute_iterations", "Imputation")]
         public string MaxIter
         {
             get
@@ -115,7 +112,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("SVDImpute_threshold", "Imputation")]
+        [Tools.clsAnalysisAttribute("SVDImpute_threshold", "Imputation")]
         public string SVDthresh
         {
             get
@@ -127,7 +124,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Constant_to_Substitute", "Imputation")]
+        [Tools.clsAnalysisAttribute("Constant_to_Substitute", "Imputation")]
         public string Const2Sub
         {
             get
@@ -150,12 +147,8 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "Imputation")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "Imputation")]
+        public string DataSetName { get; set; }
 
         private string Factor
         {
@@ -174,7 +167,7 @@ namespace DAnTE.Purgatorio
             get { return mstrFactor; }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "Imputation")]
+        [Tools.clsAnalysisAttribute("Selected_Factor", "Imputation")]
         public string FactorSelectedAttr
         {
             get 

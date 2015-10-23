@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
@@ -10,21 +7,20 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "MedianAbsoluteDeviation_Adjustment")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "MedianAbsoluteDeviation_Adjustment")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
-        [DAnTE.Tools.clsAnalysisAttribute("Set_Zero_Mean", "MedianAbsoluteDeviation_Adjustment")]
+
+        [Tools.clsAnalysisAttribute("Set_Zero_Mean", "MedianAbsoluteDeviation_Adjustment")]
         public bool mblMeanAdj;
-        private string mstrFactor;
+
         public int mintFactorIndex;
-                
-        public ArrayList marrFactors;
+
+        public List<string> marrFactors;
 
         public clsMADPar()
         {
-            mstrDatasetName = "Eset";
-            mstrFactor = "";
+            DataSetName = "Eset";
+            FactorSelected = "";
             mintFactorIndex = 1;
             mblMeanAdj = false;
         }
@@ -38,12 +34,8 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "MedianAbsoluteDeviation_Adjustment")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "MedianAbsoluteDeviation_Adjustment")]
+        public string DataSetName { get; set; }
 
         private string Factor
         {
@@ -67,11 +59,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "MedianAbsoluteDeviation_Adjustment")]
-        public string FactorSelected
-        {
-            set { mstrFactor = value; }
-            get { return mstrFactor; }
-        }
+        [Tools.clsAnalysisAttribute("Selected_Factor", "MedianAbsoluteDeviation_Adjustment")]
+        public string FactorSelected { set; get; }
     }
 }

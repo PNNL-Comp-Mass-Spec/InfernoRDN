@@ -12,11 +12,11 @@ namespace DAnTE.Inferno
 
     void m_BackgroundWorker_PCAPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      DataTable mDTpcaLoads = new DataTable();
-      DataTable mDTplsLoads = new DataTable();
-      string mstrType = "PCA";
+      var mDTpcaLoads = new DataTable();
+      var mDTplsLoads = new DataTable();
+      var mstrType = "PCA";
       clsPlotResult mclsPlotResult;
-      frmPCAPlotDisplay mfrmPCAPlotDisplay = new frmPCAPlotDisplay(mclsPCApar);
+      var mfrmPCAPlotDisplay = new frmPCAPlotDisplay(mclsPCApar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
@@ -44,8 +44,8 @@ namespace DAnTE.Inferno
               mDTpcaLoads.Columns[0].ColumnName = "ID";
               mRConnector.EvaluateNoReturn("cat(\"PCA calculated.\n\")");
               AddDataset2HashTable(mDTpcaLoads);
-              if (mhtDatasets.Contains("PCA Weights"))
-                AddDataNode((clsDatasetTreeNode)mhtDatasets["PCA Weights"]);
+              if (mhtDatasets.ContainsKey("PCA Weights"))
+                AddDataNode(mhtDatasets["PCA Weights"]);
             }
           }
           if (mstrType.Equals("PLS")) {
@@ -56,8 +56,8 @@ namespace DAnTE.Inferno
               mDTplsLoads.Columns[0].ColumnName = "ID";
               mRConnector.EvaluateNoReturn("cat(\"PLS calculated.\n\")");
               AddDataset2HashTable(mDTplsLoads);
-              if (mhtDatasets.Contains("PLS Weights"))
-                AddDataNode((clsDatasetTreeNode)mhtDatasets["PLS Weights"]);
+              if (mhtDatasets.ContainsKey("PLS Weights"))
+                AddDataNode(mhtDatasets["PLS Weights"]);
             }
           }
         }
@@ -70,7 +70,7 @@ namespace DAnTE.Inferno
     void m_BackgroundWorker_HeatMapCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       clsPlotResult mclsPlotResult;
-      frmHeatmapDisplay mfrmHmapDisplay = new frmHeatmapDisplay(mclsHeatmapPar);
+      var mfrmHmapDisplay = new frmHeatmapDisplay(mclsHeatmapPar);
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
@@ -87,18 +87,18 @@ namespace DAnTE.Inferno
         mfrmHmapDisplay.Title = "Heatmap";
         mfrmHmapDisplay.Show();
         if (doClust) {
-          if (mhtDatasets.Contains("Heatmap Clusters"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Heatmap Clusters"]);
+            if (mhtDatasets.ContainsKey("Heatmap Clusters"))
+            AddDataNode(mhtDatasets["Heatmap Clusters"]);
         }
       }
     }
 
     void m_BackgroundWorker_GenerateHeatmap(object sender, DoWorkEventArgs e)
     {
-      DataTable mDTclusters = new DataTable();
-      clsRplotData arg = (clsRplotData)e.Argument;
-      string rcmd = arg.mstrRcmd;
-      string plotname = arg.mstrPlotName;
+      var mDTclusters = new DataTable();
+      var arg = (clsRplotData)e.Argument;
+      var rcmd = arg.mstrRcmd;
+      var plotname = arg.mstrPlotName;
       clsPlotResult mclsPlotResult;
 
       try {
@@ -137,8 +137,8 @@ namespace DAnTE.Inferno
         // Finally, handle the case where the operation 
         // succeeded.
         if ((bool)e.Result) {
-          if (mhtDatasets.Contains("Pattern Corr"))
-            AddDataNode((clsDatasetTreeNode)mhtDatasets["Pattern Corr"]);
+            if (mhtDatasets.ContainsKey("Pattern Corr"))
+            AddDataNode(mhtDatasets["Pattern Corr"]);
         } else
           MessageBox.Show("Pattern Search failed." + Environment.NewLine +
               "Check if you have all data requirements and in correct format.", "Error!",

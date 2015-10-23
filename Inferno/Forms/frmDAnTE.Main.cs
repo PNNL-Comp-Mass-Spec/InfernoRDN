@@ -31,7 +31,9 @@ namespace DAnTE.Inferno
         
         private readonly frmShowProgress mfrmShowProgress;
 
-        private ArrayList marrDataSetNames = new ArrayList();
+        // ReSharper disable once NotAccessedField.Local
+        // Used by HandleFileOpenCompleted in Inferno\Events\frmDAnTE.FileIOEvents.cs
+        private List<string> marrDataSetNames = new List<string>();
 
         private string[] mstrArrProteins;
         private string[] mstrArrMassTags;
@@ -57,9 +59,9 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem ctxtMnuItemFilter;
         private ToolStripSeparator toolStripSeparator13;
 
-        private readonly Hashtable mhtDatasets = new Hashtable();
-        private readonly Hashtable mhtAnalysisObjects = new Hashtable();
-        private readonly ArrayList marrAnalysisObjects = new ArrayList();
+        private readonly Dictionary<string, clsDatasetTreeNode> mhtDatasets = new Dictionary<string, clsDatasetTreeNode>();
+        private readonly Dictionary<string, string> mhtAnalysisObjects = new Dictionary<string, string>();
+        private readonly List<clsAnalysisObject> marrAnalysisObjects = new List<clsAnalysisObject>();
         private ToolStripMenuItem mnuItemVenn;
 
         private int mintFilterTblNum;

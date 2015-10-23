@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
 
 namespace DAnTE.Purgatorio
 {
@@ -10,15 +6,15 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "Wilcoxon_Test")]
+        [Tools.clsAnalysisAttribute("Source_DataTable", "Wilcoxon_Test")]
         public string mstrDatasetName;
         public string tempFile;
-        [DAnTE.Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Wilcoxon_Test")]
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Wilcoxon_Test")]
         public int numDatapts;
-        [DAnTE.Tools.clsAnalysisAttribute("Selected_Factor", "Wilcoxon_Test")]
+        [Tools.clsAnalysisAttribute("Selected_Factor", "Wilcoxon_Test")]
         public string selectedFactor;
         public int nF;
-        public ArrayList marrFactors;
+        public List<string> marrFactors;
 
         public clsWilcoxonPar()
         {

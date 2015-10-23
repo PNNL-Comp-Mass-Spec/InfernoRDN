@@ -1,12 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
-using DAnTE.Tools;
 using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
@@ -14,8 +9,8 @@ namespace DAnTE.Inferno
     public partial class frmPCAplotPar : Form
     {
         private readonly clsPCAplotPar mclsPCApar;
-        private ArrayList marrDatasets = new ArrayList();
-        private ArrayList marrFactorList = new ArrayList();
+        private List<string> marrDatasets = new List<string>();
+        private List<string> marrFactorList = new List<string>();
 
         public frmPCAplotPar(clsPCAplotPar mclsPCA)
         {
@@ -24,14 +19,16 @@ namespace DAnTE.Inferno
         }
 
 
-        private ArrayList PrincipalComponents()
+        private List<string> PrincipalComponents()
         {
-            ArrayList marrPCs = new ArrayList();
-            marrPCs.Add("PC1");
-            marrPCs.Add("PC2");
-            marrPCs.Add("PC3");
-            marrPCs.Add("PC4");
-            marrPCs.Add("PC5");
+            var marrPCs = new List<string>
+            {
+                "PC1",
+                "PC2",
+                "PC3",
+                "PC4",
+                "PC5"
+            };
 
             return marrPCs;
         }
@@ -92,9 +89,9 @@ namespace DAnTE.Inferno
                 mrBtnPLS.Enabled = true;
         }
 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
+            for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
             {
                 if (mlstViewDataSets.Items[i].Checked)
                 {
@@ -167,8 +164,8 @@ namespace DAnTE.Inferno
                 return mclsPCApar;
             }
         }
-        
-        public ArrayList PopulateFactorComboBox
+
+        public List<string> PopulateFactorComboBox
         {
             set
             {
@@ -186,18 +183,18 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListView
+        public List<string> PopulateListView
         {
             set
             {
 
                 marrDatasets = value;
-                ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
 
-                for (int i = 0; i < marrDatasets.Count; i++)
+                for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i])
                     {
                         Tag = i
                     };
@@ -219,10 +216,10 @@ namespace DAnTE.Inferno
             get
             {
                 string selected = null;
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
-                    int k = 0;
+                    var k = 0;
                     foreach (int i in indexes)
                     {
                         if (k == 0)
@@ -236,28 +233,25 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList SelectedDatasets
+        public List<string> SelectedDatasets
         {
             get
             {
-                ArrayList selectedDS = new ArrayList();
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var selectedDS = new List<string>();
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
-                    foreach (int i in indexes)
-                    {
-                        selectedDS.Add(mlstViewDataSets.Items[i].ToString());
-                    }
+                    selectedDS.AddRange(from int i in indexes select mlstViewDataSets.Items[i].ToString());
                 }
                 return selectedDS;
             }
             set
             {
-                ArrayList selectedDS = value;
-                for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
-                    for (int j = 0; j < selectedDS.Count; j++)
+                var selectedDS = value;
+                for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
+                    foreach (var datasetName in selectedDS)
                     {
-                        if (selectedDS[j].ToString().Equals(mlstViewDataSets.Items[i].ToString()))
+                        if (datasetName.Equals(mlstViewDataSets.Items[i].ToString()))
                             mlstViewDataSets.Items[i].Checked = true;
                     }
             }
@@ -267,14 +261,11 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem.ToString().Equals("<One Color>"))
                     return "1";
-                else
-                {
-                    idx = mcmbBoxFactors.SelectedIndex + 1;
-                    return "factors[" + idx.ToString() + ",]";
-                }
+                
+                var idx = mcmbBoxFactors.SelectedIndex + 1;
+                return "factors[" + idx.ToString() + ",]";
             }
         }
 
@@ -283,7 +274,7 @@ namespace DAnTE.Inferno
         {
             get
             {
-                string PCs = "PCs=c(";
+                var PCs = "PCs=c(";
 
                 PCs = PCs + Convert.ToString(mcmbBoxX.SelectedIndex + 1) + "," +
                     Convert.ToString(mcmbBoxY.SelectedIndex + 1);

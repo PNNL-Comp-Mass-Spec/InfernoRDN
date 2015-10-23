@@ -1,27 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using DAnTE.Properties;
+using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmAnalysisSummary : Form
     {
-        private Hashtable mhtSummaries = new Hashtable();
-        private ArrayList marrAnalyses = new ArrayList();
-        private string mstrFileName = null;
-        private DateTime CurrTime = DateTime.Now;
-        private string mstrTime = null; 
+        private List<clsAnalysisObject> marrAnalyses = new List<clsAnalysisObject>();
+        private string mstrFileName;
+        
+        private readonly string mstrTime; 
 
         public frmAnalysisSummary()
         {
             InitializeComponent();
-            mstrTime = CurrTime.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
+            mstrTime = DateTime.Now.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
         }
 
 
@@ -30,89 +25,99 @@ namespace DAnTE.Inferno
             mlstViewSummary.Columns.Add("Parameter", 200, HorizontalAlignment.Left);
             mlstViewSummary.Columns.Add("Value", 350, HorizontalAlignment.Left);
 
-            for (int i = 0; i < marrAnalyses.Count; i++)
+            foreach (var analysis in marrAnalyses)
             {
-                object o = ((DAnTE.Tools.clsAnalysisObject)marrAnalyses[i]).AnalysisObject;
-                string strKey = ((DAnTE.Tools.clsAnalysisObject)marrAnalyses[i]).Operation;
+                object o = analysis.AnalysisObject;
+                string strKey = analysis.Operation;
 
-                ListViewGroup grp = new ListViewGroup(strKey, HorizontalAlignment.Left);
+                var grp = new ListViewGroup(strKey, HorizontalAlignment.Left);
                 mlstViewSummary.Groups.Add(grp);
 
-                System.Reflection.PropertyInfo[] props = o.GetType().GetProperties();
-                foreach (System.Reflection.PropertyInfo prop in props)
+                var props = o.GetType().GetProperties();
+                foreach (var prop in props)
                 {
                     try
                     {
-                        object[] customAttributes = prop.GetCustomAttributes(typeof(DAnTE.Tools.clsAnalysisAttribute), true);
-                        if (customAttributes.Length > 0 && prop.CanRead)
+                        var customAttributes = prop.GetCustomAttributes(typeof(clsAnalysisAttribute), true);
+                        if (customAttributes.Length <= 0 || !prop.CanRead)
                         {
-                            DAnTE.Tools.clsAnalysisAttribute attr = customAttributes[0] as DAnTE.Tools.clsAnalysisAttribute;
-                            object objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
-                                null, null, null);
-                            if (objectValue != null && attr != null)
-                            {
-                                ListViewItem tmpItem = new ListViewItem(attr.Description, grp);
-                                tmpItem.SubItems.Add(objectValue.ToString());
-                                mlstViewSummary.Items.Add(tmpItem);
-                            }
+                            continue;
                         }
+
+                        var attr = customAttributes[0] as clsAnalysisAttribute;
+                        var objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
+                                                           null, null, null);
+                        if (objectValue == null || attr == null)
+                        {
+                            continue;
+                        }
+
+                        var tmpItem = new ListViewItem(attr.Description, grp);
+                        tmpItem.SubItems.Add(objectValue.ToString());
+                        mlstViewSummary.Items.Add(tmpItem);
                     }
                     catch
                     {
+                        // Ignore exceptions here
                     }
                 }
-                foreach (System.Reflection.FieldInfo field in o.GetType().GetFields())
+                foreach (var field in o.GetType().GetFields())
                 {
                     try
                     {
-                        object[] customAttributes = field.GetCustomAttributes(typeof(DAnTE.Tools.clsAnalysisAttribute), true);
+                        var customAttributes = field.GetCustomAttributes(typeof(clsAnalysisAttribute), true);
                         if (customAttributes.Length > 0)
                         {
-                            DAnTE.Tools.clsAnalysisAttribute attr = customAttributes[0] as DAnTE.Tools.clsAnalysisAttribute;
-                            object objectValue = field.GetValue(o);
-                            if (objectValue != null && attr != null)
+                            var attr = customAttributes[0] as clsAnalysisAttribute;
+                            var objectValue = field.GetValue(o);
+                            if (objectValue == null || attr == null)
                             {
-                                ListViewItem tmpItem = new ListViewItem(attr.Description, grp);
-                                tmpItem.SubItems.Add(objectValue.ToString());
-                                mlstViewSummary.Items.Add(tmpItem);
+                                continue;
                             }
+
+                            var tmpItem = new ListViewItem(attr.Description, grp);
+                            tmpItem.SubItems.Add(objectValue.ToString());
+                            mlstViewSummary.Items.Add(tmpItem);
                         }
                     }
                     catch
                     {
+                        // Ignore exceptions here
                     }
                 }
             }
         }
 
-        private DAnTE.Tools.MetaData FillSummaryXML()
+        private MetaData FillSummaryXML()
         {
-            DAnTE.Tools.MetaData metaData = new DAnTE.Tools.MetaData("DAnTE_Analysis");
+            var metaData = new MetaData("DAnTE_Analysis");
             metaData.SetValue("DataFile", mstrFileName);
             metaData.SetValue("Time", mstrTime);
 
-            for (int i = 0; i < marrAnalyses.Count; i++)
+            foreach (var analysis in marrAnalyses)
             {
-                object o = ((DAnTE.Tools.clsAnalysisObject)marrAnalyses[i]).AnalysisObject;
-                string strKey = ((DAnTE.Tools.clsAnalysisObject)marrAnalyses[i]).Operation;
+                var o = analysis.AnalysisObject;
+                var strKey = analysis.Operation;
 
-                DAnTE.Tools.MetaNode metaNode = metaData.OpenChild(strKey);
+                var metaNode = metaData.OpenChild(strKey);
                 
-                System.Reflection.PropertyInfo[] props = o.GetType().GetProperties();
-                foreach (System.Reflection.PropertyInfo prop in props)
+                var props = o.GetType().GetProperties();
+                foreach (var prop in props)
                 {
                     try
                     {
-                        object[] customAttributes = prop.GetCustomAttributes(typeof(DAnTE.Tools.clsAnalysisAttribute), true);
-                        if (customAttributes.Length > 0 && prop.CanRead)
+                        var customAttributes = prop.GetCustomAttributes(typeof(clsAnalysisAttribute), true);
+                        if (customAttributes.Length <= 0 || !prop.CanRead)
                         {
-                            DAnTE.Tools.clsAnalysisAttribute attr = customAttributes[0] as DAnTE.Tools.clsAnalysisAttribute;
-                            object objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
-                                null, null, null);
-                            if (objectValue != null && attr != null)
-                            {
-                                metaNode.SetValue(attr.Description, objectValue.ToString());
-                            }
+                            continue;
+                        }
+
+                        var attr = customAttributes[0] as clsAnalysisAttribute;
+                        var objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
+                                                           null, null, null);
+                        if (objectValue != null && attr != null)
+                        {
+                            metaNode.SetValue(attr.Description, objectValue.ToString());
                         }
                     }
                     catch
@@ -120,19 +125,22 @@ namespace DAnTE.Inferno
                         return null;
                     }
                 }
-                foreach (System.Reflection.FieldInfo field in o.GetType().GetFields())
+
+                foreach (var field in o.GetType().GetFields())
                 {
                     try
                     {
-                        object[] customAttributes = field.GetCustomAttributes(typeof(DAnTE.Tools.clsAnalysisAttribute), true);
-                        if (customAttributes.Length > 0)
+                        var customAttributes = field.GetCustomAttributes(typeof(clsAnalysisAttribute), true);
+                        if (customAttributes.Length <= 0)
                         {
-                            DAnTE.Tools.clsAnalysisAttribute attr = customAttributes[0] as DAnTE.Tools.clsAnalysisAttribute;
-                            object objectValue = field.GetValue(o);
-                            if (objectValue != null && attr != null)
-                            {
-                                metaNode.SetValue(attr.Description, objectValue.ToString());
-                            }
+                            continue;
+                        }
+
+                        var attr = customAttributes[0] as clsAnalysisAttribute;
+                        var objectValue = field.GetValue(o);
+                        if (objectValue != null && attr != null)
+                        {
+                            metaNode.SetValue(attr.Description, objectValue.ToString());
                         }
                     }
                     catch
@@ -148,49 +156,57 @@ namespace DAnTE.Inferno
         private void frmAnalysisSummary_Load(object sender, EventArgs e)
         {
             FillSummaryListView();
-            this.mlblTime.Text = mstrTime;
-            this.mlblDataFile.Text = mstrFileName;
+            mlblTime.Text = mstrTime;
+            mlblDataFile.Text = mstrFileName;
         }
 
         
 
         private void mBtnSave_Click(object sender, EventArgs e)
         {
-            string fileName = GetSaveFileName("Select a file to save summary",
+            var fileName = GetSaveFileName("Select a file to save summary",
                 "XML files (*.xml)|*.xml|Tab delimited txt files (*.txt)|*.txt");
-            string fExt = System.IO.Path.GetExtension(fileName);
-            if (fileName != null)
+            var fExt = System.IO.Path.GetExtension(fileName);
+            
+            if (fileName == null || fExt == null)
             {
-                if (fExt.Equals(".xml"))
+                return;
+            }
+
+            if (fExt.Equals(".xml", StringComparison.CurrentCultureIgnoreCase))
+            {
+                var metaDataXML = FillSummaryXML();
+                if (metaDataXML != null)
                 {
-                    DAnTE.Tools.MetaData metaDataXML = FillSummaryXML();
-                    if (metaDataXML != null)
-                    {
-                        metaDataXML.WriteFile(fileName);
-                    }
+                    metaDataXML.WriteFile(fileName);
                 }
-                if (fExt.Equals(".txt"))
+            }
+
+            if (fExt.Equals(".txt", StringComparison.CurrentCultureIgnoreCase))
+            {
+                using (System.IO.TextWriter streamWriter = new System.IO.StreamWriter(fileName))
                 {
-                    using (System.IO.TextWriter streamWriter = new System.IO.StreamWriter(fileName))
-                    {
-                        DAnTE.Tools.CsvWriter.WriteListViewToStream(streamWriter, this.mlstViewSummary, 
-                            mstrFileName, false);
-                    }
+                    CsvWriter.WriteListViewToStream(streamWriter, mlstViewSummary, 
+                                                                mstrFileName, false);
                 }
             }
         }
 
         private string GetSaveFileName(string mstrFldgTitle, string filter)
         {
-            string workingFolder = Settings.Default.WorkingFolder;
-            string fileName = null;
+            var workingFolder = Settings.Default.WorkingFolder;
+            string fileName;
 
-            SaveFileDialog fdlg = new SaveFileDialog();
-            fdlg.Title = mstrFldgTitle;
+            var fdlg = new SaveFileDialog
+            {
+                Title = mstrFldgTitle
+            };
+
             if (workingFolder != null)
                 fdlg.InitialDirectory = workingFolder;
             else
                 fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
             fdlg.Filter = filter;
             fdlg.FilterIndex = 1;
             fdlg.RestoreDirectory = false;
@@ -209,15 +225,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public Hashtable SummaryHashTable
-        {
-            set
-            {
-                mhtSummaries = value;
-            }
-        }
-
-        public ArrayList SummaryArrayList
+        public List<clsAnalysisObject> SummaryArrayList
         {
             set
             {

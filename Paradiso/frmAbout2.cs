@@ -1,10 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
@@ -18,7 +12,7 @@ namespace DAnTE.Paradiso
             InitializeComponent();
         }
 
-        private void m_fadeInOutTimer_Tick(object sender, System.EventArgs e)
+        private void m_fadeInOutTimer_Tick(object sender, EventArgs e)
         {
 
             if (m_fadeInFlag == false)
@@ -105,12 +99,12 @@ namespace DAnTE.Paradiso
         private void ShowCredits()
         {
 
-            string credits = string.Empty +
+            var credits = string.Empty +
                              "Maintained by Matthew Monroe and Gary Kiebel at Pacific Northwest National Laboratory" +
                              Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
                              Environment.NewLine +
                              Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
-                             Environment.NewLine + DAnTE.Inferno.frmDAnTE.PROGRAM_DATE +
+                             Environment.NewLine + Inferno.frmDAnTE.PROGRAM_DATE +
                              Environment.NewLine +
                              Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
                              Environment.NewLine + "Center for Proteomics staff at TGen." +

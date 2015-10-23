@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -22,7 +20,7 @@ namespace DAnTE.Inferno
             Xlsx = 3
 	    }
 
-        private bool mProgressEventWired = false;
+        private bool mProgressEventWired;
 
 	    private bool DeleteTempFile(string tempfile)
 		{
@@ -54,7 +52,7 @@ namespace DAnTE.Inferno
 	        if (fileExtension.StartsWith("."))
 	            fileExtension = fileExtension.Substring(1);
 
-            foreach (string enumName in Enum.GetNames(typeof(FileTypeExtension)))
+            foreach (var enumName in Enum.GetNames(typeof(FileTypeExtension)))
             {
                 if (string.Equals(enumName, fileExtension, StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -72,11 +70,11 @@ namespace DAnTE.Inferno
 		/// </summary>
 		private Image LoadImage(string tempFile)
 		{
-			Image currImg = null;
-			using (FileStream fs = new FileStream(tempFile, FileMode.Open,
+			Image currImg;
+			using (var fs = new FileStream(tempFile, FileMode.Open,
 								FileAccess.Read, FileShare.ReadWrite))
 			{
-				Image img = Image.FromStream(fs);
+				var img = Image.FromStream(fs);
 				fs.Close();
 				currImg = img.Clone() as Image;
 				img.Dispose();
@@ -95,7 +93,7 @@ namespace DAnTE.Inferno
                 FileTypeExtension.Xlsx
             };
 
-            string filter = GetFilterSpec(preferredFileType);
+            var filter = GetFilterSpec(preferredFileType);
 
             foreach (var fileType in fileTypesUsed)
             {
@@ -115,7 +113,7 @@ namespace DAnTE.Inferno
 		{
 			const string WORKING_FOLDER = "Working_Directory";
 
-			string workingFolder = Settings.Default.WorkingFolder;
+			var workingFolder = Settings.Default.WorkingFolder;
 
 			if (string.IsNullOrWhiteSpace(workingFolder))
 			{
@@ -144,9 +142,12 @@ namespace DAnTE.Inferno
 				}			
 			}
 
-			OpenFileDialog fdlg = new OpenFileDialog();
-			fdlg.Title = mstrFldgTitle;
-			if (!string.IsNullOrWhiteSpace(workingFolder))
+	        var fdlg = new OpenFileDialog
+	        {
+	            Title = mstrFldgTitle
+	        };
+
+	        if (!string.IsNullOrWhiteSpace(workingFolder))
 			{				
 				fdlg.InitialDirectory = workingFolder;
 			}
@@ -198,14 +199,18 @@ namespace DAnTE.Inferno
 
 	    private void GetSaveFileName(string filter)
 		{
-			string workingFolder = Settings.Default.WorkingFolder;
+			var workingFolder = Settings.Default.WorkingFolder;
 
-			SaveFileDialog fdlg = new SaveFileDialog();
-			fdlg.Title = mstrFldgTitle;
-			if (workingFolder != null)
+	        var fdlg = new SaveFileDialog
+	        {
+	            Title = mstrFldgTitle
+	        };
+
+	        if (workingFolder != null)
 				fdlg.InitialDirectory = workingFolder;
 			else
 				fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
 			fdlg.Filter = filter;
 			fdlg.FilterIndex = 1;
 			fdlg.RestoreDirectory = false;
@@ -220,54 +225,55 @@ namespace DAnTE.Inferno
 				mstrLoadedfileName = null;
 		}
 
-		/// <summary>
-		/// Creates a new datatable with first column having unique rowIDs and
-		/// multiple columns with data
-		/// </summary>
-		/// <param name="RowID"></param>
-		/// <param name="DataCols"></param>
-		/// <returns></returns>
-		private DataTable ArrangeDataTable(DataTable mDT, string RowID, string[] DataCols)
+	    /// <summary>
+	    /// Creates a new datatable with first column having unique rowIDs and
+	    /// multiple columns with data
+	    /// </summary>
+	    /// <param name="mDT"></param>
+	    /// <param name="RowID"></param>
+	    /// <param name="DataCols"></param>
+	    /// <returns></returns>
+	    private DataTable ArrangeDataTable(DataTable mDT, string RowID, string[] DataCols)
 		{
-			DataTable dtEset = mDT.Copy();
-			DataColumnCollection columns = dtEset.Columns;
+			var dtEset = mDT.Copy();
+			var columns = dtEset.Columns;
 			Array.Sort(DataCols);
-			string[] Cols2Rem = new string[dtEset.Columns.Count -
-									DataCols.Length - 1];
+			var Cols2Rem = new string[dtEset.Columns.Count - DataCols.Length - 1];
 
-			int z = 0;
+			var z = 0;
 			foreach (DataColumn column in columns)
 			{
 				if (Array.BinarySearch(DataCols, column.ColumnName) < 0 &&
 					!column.ColumnName.Equals(RowID))
 					Cols2Rem[z++] = column.ColumnName;
 			}
-			foreach (string s in Cols2Rem)
+			foreach (var s in Cols2Rem)
 			{
 				dtEset.Columns.Remove(s);
 			}
 			return dtEset;
 		}
 
-		/// <summary>
-		/// Overloaded method of the above to create a table with only two columns.
-		/// </summary>
-		/// <param name="RowID"></param>
-		/// <param name="Cols"></param>
-		/// <returns></returns>
-		private DataTable ArrangeDataTable(DataTable mDT, string RowID, string Cols)
+	    /// <summary>
+	    /// Overloaded method of the above to create a table with only two columns.
+	    /// </summary>
+	    /// <param name="mDT"></param>
+	    /// <param name="RowID"></param>
+	    /// <param name="Cols"></param>
+	    /// <returns></returns>
+	    private DataTable ArrangeDataTable(DataTable mDT, string RowID, string Cols)
 		{
-			DataTable dtEset = mDT.Copy();
-			DataColumnCollection columns = dtEset.Columns;
-			string[] Cols2Rem = new string[dtEset.Columns.Count - 2];
+			var dtEset = mDT.Copy();
+			var columns = dtEset.Columns;
+			var Cols2Rem = new string[dtEset.Columns.Count - 2];
 
-			int z = 0;
+			var z = 0;
 			foreach (DataColumn column in columns)
 			{
 				if (!Cols.Equals(column.ColumnName) && !RowID.Equals(column.ColumnName))
 					Cols2Rem[z++] = column.ColumnName;
 			}
-			foreach (string s in Cols2Rem)
+			foreach (var s in Cols2Rem)
 			{
 				dtEset.Columns.Remove(s);
 			}
@@ -286,10 +292,9 @@ namespace DAnTE.Inferno
 		/// <returns></returns>
 		private DataTable LoadProtColumns(DataTable mDT, string protIPI, string rowID)
 		{
-			DataTable mDTProts = new DataTable();
-			string rcmd = null;
+			DataTable mDTProts;
 
-			try
+		    try
 			{
 				mDTProts = ArrangeDataTable(mDT, rowID, protIPI);
 				mDTProts.TableName = "ProtInfo";
@@ -300,7 +305,7 @@ namespace DAnTE.Inferno
 				{
 					mRConnector.SetSymbolCharVector("protIPI", mstrArrProteins);
 					mRConnector.SetSymbolCharVector("MassTags", mstrArrMassTags);
-					rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=protIPI)";
+					var rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=protIPI)";
 					mRConnector.EvaluateNoReturn(rcmd);
 					if (mhtDatasets.ContainsKey("Expressions"))
 						rcmd = "ProtInfo<-remove.emptyProtInfo(ProtInfo, checkEset=TRUE)";
@@ -339,7 +344,7 @@ namespace DAnTE.Inferno
 
 		private DataTable GetProtInfoMatrix()
 		{
-			DataTable mDTProtInfo = new DataTable();
+			DataTable mDTProtInfo;
 
 			clsRarray.rowNamesID = "RowID"; // Otherwise this will conflict with 'Row_ID'
 			if (mRConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
@@ -360,56 +365,56 @@ namespace DAnTE.Inferno
 
 		private DataTable OpenFile_test(string filename)
 		{
-			string rowID = null;
-			string[] dataCols;
-			//bool success = true;
+		    //bool success = true;
 			//bool FactorsValid = true;
-			string fExt = ".csv";
-			DataTable mDTtmp = new DataTable();
-			DataTable mDTloaded = new DataTable();
-			DataTable mDTselectedEset1 = new DataTable();
-			DataTable mDTFactors = new DataTable();
+		    
+		    var dTselectedEset1 = new DataTable();
 
 			// check that the file exists before opening it
-			if (File.Exists(mstrLoadedfileName))
-			{
-				fExt = Path.GetExtension(filename);
-				if (!(fExt.Equals(".csv") || fExt.Equals(".txt") || fExt.Equals(".xls")))
-				{
-					MessageBox.Show("Filetype not allowed.", "Error!");
-					return null;
-				}
+		    if (!File.Exists(mstrLoadedfileName))
+		    {
+		        return dTselectedEset1;
+		    }
 
-				//FactorsValid = true;
-				mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
-				if (mDTloaded == null)
-				{
-					return null;
-				}
-				mDTloaded.TableName = "AllEset";
-				//Select columns
-				frmSelectColumns mfrmSelectCols = new frmSelectColumns();
-				mfrmSelectCols.PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false);
-				mfrmSelectCols.Proteins = mhtDatasets.ContainsKey("Protein Info");
-				if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
-				{
-					rowID = mfrmSelectCols.RowIDColumn; //mass tags
-					dataCols = mfrmSelectCols.DataColumns; //dataset columns
-					try
-					{
-						mDTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols); // create the datatable
-						mDTselectedEset1.TableName = "Eset";
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show("Error: " + ex.Message,
-							"Exception while extracting data columns");
-						//success = false;
-						return null;
-					}
-				}
-			}
-			return mDTselectedEset1;
+		    var fExt = Path.GetExtension(filename);
+            if (!ValidExtension(fExt))
+		    {
+		        MessageBox.Show("Filetype not allowed.", "Error!");
+		        return null;
+		    }
+
+		    //FactorsValid = true;
+		    var mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+		    if (mDTloaded == null)
+		    {
+		        return null;
+		    }
+		    mDTloaded.TableName = "AllEset";
+		    //Select columns
+		    var mfrmSelectCols = new frmSelectColumns
+		    {
+		        PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false),
+		        Proteins = mhtDatasets.ContainsKey("Protein Info")
+		    };
+
+		    if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
+		    {
+		        var rowID = mfrmSelectCols.RowIDColumn;
+		        var dataCols = mfrmSelectCols.DataColumns;
+		        try
+		        {
+		            dTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols); // create the datatable
+		            dTselectedEset1.TableName = "Eset";
+		        }
+		        catch (Exception ex)
+		        {
+		            MessageBox.Show("Error: " + ex.Message,
+		                            "Exception while extracting data columns");
+		            //success = false;
+		            return null;
+		        }
+		    }
+		    return dTselectedEset1;
 		}
 
 
@@ -439,7 +444,7 @@ namespace DAnTE.Inferno
 		        return false;
 		    }
 
-		    if (!(fExt.Equals(".csv") || fExt.Equals(".txt") || fExt.Equals(".xls") || fExt.Equals(".xlsx")))
+            if (!ValidExtension(fExt))
 		    {
 		        MessageBox.Show("Filetype not allowed (must be csv, txt, xls, or xlsx)", "Error!");
 		        return false;
@@ -466,9 +471,12 @@ namespace DAnTE.Inferno
 		            }
 		            mDTloaded.TableName = "AllEset";
 		            //Select columns
-		            frmSelectColumns mfrmSelectCols = new frmSelectColumns();
-		            mfrmSelectCols.PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false);
-		            mfrmSelectCols.Proteins = mhtDatasets.ContainsKey("Protein Info");
+		            var mfrmSelectCols = new frmSelectColumns
+		            {
+		                PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false),
+		                Proteins = mhtDatasets.ContainsKey("Protein Info")
+		            };
+
 		            if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
 		            {
 		                rowID = mfrmSelectCols.RowIDColumn; //mass tags
@@ -503,14 +511,13 @@ namespace DAnTE.Inferno
 		                {
 		                    MessageBox.Show("Error: " + ex.Message,
 		                                    "Exception while extracting data columns");
-		                    success = false;
 		                    return false;
 		                }
 
 		                if (mfrmSelectCols.Proteins && success) // Protein info needs to be loaded ?
 		                {
 		                    // loads to mDataTableProtInfo and then sends to R
-		                    DataTable mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
+		                    var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
 		                    mdtProts.TableName = "ProtInfo";
 		                    AddDataset2HashTable(mdtProts);
 		                }
@@ -532,13 +539,16 @@ namespace DAnTE.Inferno
 		            {
 		                return false;
 		            }
-		            frmSelectProtInfo mfrmSelectProts = new frmSelectProtInfo();
-		            mfrmSelectProts.PopulateListBox = clsDataTable.DataTableColumns(mDTtmp, false);
+		            var mfrmSelectProts = new frmSelectProtInfo
+		            {
+		                PopulateListBox = clsDataTable.DataTableColumns(mDTtmp, false)
+		            };
+
 		            if (mfrmSelectProts.ShowDialog() == DialogResult.OK)
 		            {
 		                rowID = mfrmSelectProts.RowIDColumn; //mass tags
 		                var protIPI = mfrmSelectProts.ProteinIDColumn;
-		                DataTable mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
+		                var mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
 		                mdtProts.TableName = "ProtInfo";
 		                AddDataset2HashTable(mdtProts);
 		            }
@@ -614,220 +624,240 @@ namespace DAnTE.Inferno
 		/// <returns></returns>
 		private bool OpenFile2(string filename)
 		{
-			string rowID = null, protIPI = null;
-			string[] dataCols;
-			string rcmd = null;
-			bool success = true;
-			bool FactorsValid = true;
-			string fExt = ".csv";
-			DataTable mDTtmp = new DataTable();
-			DataTable mDTloaded = new DataTable();
-			DataTable mDTselectedEset1 = new DataTable();
-			DataTable mDTFactors = new DataTable();
+		    var success = true;
 
-			// check that the file exists before opening it
-			if (File.Exists(mstrLoadedfileName))
-			{
-				fExt = Path.GetExtension(filename);
-				if (!(fExt.Equals(".csv") || fExt.Equals(".txt") || fExt.Equals(".xls")))
-				{
-					MessageBox.Show("Filetype not allowed.", "Error!");
-					return false;
-				}
+		    // check that the file exists before opening it
+		    if (!File.Exists(mstrLoadedfileName))
+		    {
+                return false;
+		    }
 
-				switch (dataSetType)
-				{
-					case enmDataType.ESET:
-						#region Load Expressions
-						FactorsValid = true;
-						mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
-						if (mDTloaded == null)
-						{
-							return false;
-						}
-						mDTloaded.TableName = "AllEset";
-						//Select columns
-						frmSelectColumns mfrmSelectCols = new frmSelectColumns();
-						mfrmSelectCols.PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false);
-						mfrmSelectCols.Proteins = mhtDatasets.ContainsKey("Protein Info");
-						if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
-						{
-							rowID = mfrmSelectCols.RowIDColumn; //mass tags
-							dataCols = mfrmSelectCols.DataColumns; //dataset columns
-							try
-							{
-								mDTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols); // create the datatable
-								mDTselectedEset1.TableName = "Eset";
-							}
-							catch (Exception ex)
-							{
-								MessageBox.Show("Error: " + ex.Message,
-									"Exception while extracting data columns");
-								success = false;
-								return false;
-							}
+		    var fExt = Path.GetExtension(filename);
+            if (!ValidExtension(fExt))
+		    {
+		        MessageBox.Show("Filetype not allowed.", "Error!");
+		        return false;
+		    }
 
-							//clsRarray.rowNamesID = mDTselectedEset.Columns[0].ToString();
-							clsRarray.rowNamesID = "Row_ID";
-							if (mRConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1) && success)
-							// Duplicates are handled during the call 'SendTable2RmatrixNumeric'
-							{
-								try
-								{
-									if (mhtDatasets.ContainsKey("Factors"))
-									{
-										rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-										mRConnector.EvaluateNoReturn(rcmd);
-										FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
-									}
-									if (!FactorsValid)
-									{
-										success = false;
-									}
-									else
-									{
-										mRConnector.GetTableFromRmatrix("Eset"); // Get the cleaned data matrix
-										mDTselectedEset1 = mRConnector.DataTable.Copy();
-										mDTselectedEset1.TableName = "Eset";
-										mRConnector.EvaluateNoReturn("print(dim(Eset))");
-										mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
-										AddDataset2HashTable(mDTselectedEset1);
-									}
-								}
-								catch (Exception ex)
-								{
-									MessageBox.Show("Error: " + ex.Message, "Exception while talking to R");
-									success = false;
-								}
-							}
-							else
-							{
-								success = false;
-							}
-							if (mfrmSelectCols.Proteins && success) // Protein info needs to be loaded ?
-							{
-								// loads to mDataTableProtInfo and then sends to R
-								DataTable mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
-								mdtProts.TableName = "ProtInfo";
-								AddDataset2HashTable(mdtProts);
-							}
-						}
-						else
-						{
-							success = false;
-						}
-						#endregion
-						break;
-					case enmDataType.PROTINFO:
-						#region Load Protein Info
-						mDTtmp = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
-						if (mDTtmp == null)
-						{
-							return false;
-						}
-						frmSelectProtInfo mfrmSelectProts = new frmSelectProtInfo();
-						mfrmSelectProts.PopulateListBox = clsDataTable.DataTableColumns(mDTtmp, false);
-						if (mfrmSelectProts.ShowDialog() == DialogResult.OK)
-						{
-							rowID = mfrmSelectProts.RowIDColumn; //mass tags
-							protIPI = mfrmSelectProts.ProteinIDColumn; //IPI# column
-							DataTable mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
-							mdtProts.TableName = "ProtInfo";
-							AddDataset2HashTable(mdtProts);
-						}
-						else
-						{
-							success = false;
-						}
-						#endregion
-						break;
-					case enmDataType.FACTORS:
-						#region Load Factors
-						FactorsValid = true;
-						mDTFactors = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
-						if (mDTFactors == null)
-						{
-							return false;
-						}
-						if (mDTFactors.Rows.Count > 20)
-						{
-							return false;
-						}
-						if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
-						{
-							try
-							{
-								if (mhtDatasets.ContainsKey("Expressions"))
-								{
-									rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-									mRConnector.EvaluateNoReturn(rcmd);
-									FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
-								}
-								if (!FactorsValid)
-								{
-									success = false;
-								}
-								else
-								{
-									UpdateFactorInfoArray();
-									mDTFactors.Columns[0].ColumnName = "Factors";
-									mDTFactors.TableName = "factors";
-									mRConnector.EvaluateNoReturn("print(factors)");
-									mRConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
-								}
-							}
-							catch (Exception ex)
-							{
-								MessageBox.Show("Error: " + ex.Message, "Exception while talking to R");
-								success = false;
-							}
-						}
-						if (success)
-							AddDataset2HashTable(mDTFactors);
-						#endregion
-						break;
-					default:
-						break;
-				}
-			}
-			else
-				success = false;
-			return success;
+		    string rowID;
+		    string rcmd;
+		    bool FactorsValid;
+		    switch (dataSetType)
+		    {
+		        case enmDataType.ESET:
+
+		            #region Load Expressions
+
+		            FactorsValid = true;
+		            var mDTloaded = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+		            if (mDTloaded == null)
+		            {
+		                return false;
+		            }
+		            mDTloaded.TableName = "AllEset";
+
+		            //Select columns
+		            var mfrmSelectCols = new frmSelectColumns
+		            {
+		                PopulateListBox = clsDataTable.DataTableColumns(mDTloaded, false),
+		                Proteins = mhtDatasets.ContainsKey("Protein Info")
+		            };
+
+		            if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
+		            {
+		                rowID = mfrmSelectCols.RowIDColumn; //mass tags
+		                var dataCols = mfrmSelectCols.DataColumns;
+		                DataTable mDTselectedEset1;
+		                try
+		                {
+		                    mDTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols); // create the datatable
+		                    mDTselectedEset1.TableName = "Eset";
+		                }
+		                catch (Exception ex)
+		                {
+		                    MessageBox.Show("Error: " + ex.Message,
+		                                    "Exception while extracting data columns");
+		                    return false;
+		                }
+
+		                //clsRarray.rowNamesID = mDTselectedEset.Columns[0].ToString();
+		                clsRarray.rowNamesID = "Row_ID";
+		                if (mRConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1))
+		                    // Duplicates are handled during the call 'SendTable2RmatrixNumeric'
+		                {
+		                    try
+		                    {
+		                        if (mhtDatasets.ContainsKey("Factors"))
+		                        {
+		                            rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
+		                            mRConnector.EvaluateNoReturn(rcmd);
+		                            FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
+		                        }
+		                        if (!FactorsValid)
+		                        {
+		                            success = false;
+		                        }
+		                        else
+		                        {
+		                            mRConnector.GetTableFromRmatrix("Eset"); // Get the cleaned data matrix
+		                            mDTselectedEset1 = mRConnector.DataTable.Copy();
+		                            mDTselectedEset1.TableName = "Eset";
+		                            mRConnector.EvaluateNoReturn("print(dim(Eset))");
+		                            mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
+		                            AddDataset2HashTable(mDTselectedEset1);
+		                        }
+		                    }
+		                    catch (Exception ex)
+		                    {
+		                        MessageBox.Show("Error: " + ex.Message, "Exception while talking to R");
+		                        success = false;
+		                    }
+		                }
+		                else
+		                {
+		                    success = false;
+		                }
+		                if (mfrmSelectCols.Proteins && success) // Protein info needs to be loaded ?
+		                {
+		                    // loads to mDataTableProtInfo and then sends to R
+		                    var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
+		                    mdtProts.TableName = "ProtInfo";
+		                    AddDataset2HashTable(mdtProts);
+		                }
+		            }
+		            else
+		            {
+		                success = false;
+		            }
+
+		            #endregion
+
+		            break;
+		        case enmDataType.PROTINFO:
+
+		            #region Load Protein Info
+
+		            var mDTtmp = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+		            if (mDTtmp == null)
+		            {
+		                return false;
+		            }
+		            var mfrmSelectProts = new frmSelectProtInfo
+		            {
+		                PopulateListBox = clsDataTable.DataTableColumns(mDTtmp, false)
+		            };
+
+		            if (mfrmSelectProts.ShowDialog() == DialogResult.OK)
+		            {
+		                rowID = mfrmSelectProts.RowIDColumn; //mass tags
+		                var protIPI = mfrmSelectProts.ProteinIDColumn;
+		                var mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
+		                mdtProts.TableName = "ProtInfo";
+		                AddDataset2HashTable(mdtProts);
+		            }
+		            else
+		            {
+		                success = false;
+		            }
+
+		            #endregion
+
+		            break;
+		        case enmDataType.FACTORS:
+
+		            #region Load Factors
+
+		            FactorsValid = true;
+		            var mDTFactors = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+		            if (mDTFactors == null)
+		            {
+		                return false;
+		            }
+		            if (mDTFactors.Rows.Count > 20)
+		            {
+		                return false;
+		            }
+		            if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
+		            {
+		                try
+		                {
+		                    if (mhtDatasets.ContainsKey("Expressions"))
+		                    {
+		                        rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
+		                        mRConnector.EvaluateNoReturn(rcmd);
+		                        FactorsValid = mRConnector.GetSymbolAsBool("FactorsValid");
+		                    }
+		                    if (!FactorsValid)
+		                    {
+		                        success = false;
+		                    }
+		                    else
+		                    {
+		                        UpdateFactorInfoArray();
+		                        mDTFactors.Columns[0].ColumnName = "Factors";
+		                        mDTFactors.TableName = "factors";
+		                        mRConnector.EvaluateNoReturn("print(factors)");
+		                        mRConnector.EvaluateNoReturn("cat(\"Factors loaded.\n\")");
+		                    }
+		                }
+		                catch (Exception ex)
+		                {
+		                    MessageBox.Show("Error: " + ex.Message, "Exception while talking to R");
+		                    success = false;
+		                }
+		            }
+		            if (success)
+		            {
+		                AddDataset2HashTable(mDTFactors);
+		            }
+
+		            #endregion
+
+		            break;
+		        default:
+		            break;
+		    }
+		    return success;
 		}
 
 
 		private void UpdateFactorInfoArray()
 		{
-			clsFactorInfo currFactorInfo;
-			ArrayList marrFV = new ArrayList();
+		    var marrFV = new List<string>();
 		
 			marrFactorInfo.Clear();
 			try
 			{
 				mRConnector.EvaluateNoReturn("factorNames <- rownames(factors)");
 				var factorNames = mRConnector.GetSymbolAsStrings("factorNames");
-				string[] factors = factorNames;
-				for (int numF = 0; numF < factors.Length; numF++)
+				var factors = factorNames;
+				for (var numF = 0; numF < factors.Length; numF++)
 				{
 					marrFV.Clear();
 					mRConnector.EvaluateNoReturn("fVals <- unique(factors[" +
 						Convert.ToString(numF + 1) + ",])");
 					mRConnector.EvaluateNoReturn("nfVals <- length(fVals)");
-					var fVals = mRConnector.GetSymbolAsStrings("fVals");
-					var nfVals = mRConnector.GetSymbolAsNumbers("nfVals");
-					if ((int)nfVals[0] > 1)
-					{ //more than one factor value
-						for (int i = 0; i < fVals.Length; i++)
-							marrFV.Add(fVals[i]);
+
+					var factorValues = mRConnector.GetSymbolAsStrings("fVals");
+					var factorCounts = mRConnector.GetSymbolAsNumbers("nfVals");
+
+					if ((int)factorCounts[0] > 1)
+					{ 
+                        //more than one factor value
+					    marrFV.AddRange(factorValues);
 					}
 					else
 					{
-						marrFV.Add(fVals[0]);
+						marrFV.Add(factorValues[0]);
 					}
-					currFactorInfo = new clsFactorInfo();
-					currFactorInfo.SetFvals = marrFV;
-					currFactorInfo.mstrFactor = factors[numF];
-					marrFactorInfo.Add(currFactorInfo);
+
+				    var currFactorInfo = new clsFactorInfo
+				    {
+				        SetFvals = marrFV,
+				        mstrFactor = factors[numF]
+				    };
+
+				    marrFactorInfo.Add(currFactorInfo);
 				}
 			}
 			catch (Exception ex)
@@ -839,7 +869,7 @@ namespace DAnTE.Inferno
 
 		public void OpenSessionThreaded(string mstrFile)
 		{
-			bool doLoad = true;
+			var doLoad = true;
 			if (mtabControlData.Controls.Count != 0)
 			//    if (mblEsetLoaded || mblFactorsLoaded || mblProtInfoLoaded || mblLogEsetOK)
 			{
@@ -849,9 +879,8 @@ namespace DAnTE.Inferno
 			if (doLoad)
 			{
 				#region Threading
-				m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_OpenSession);
-				m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-					m_BackgroundWorker_SessionOpenCompleted);
+				m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
+				m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SessionOpenCompleted;
 				#endregion
 
 				marrAnalysisObjects.Clear();
@@ -862,20 +891,19 @@ namespace DAnTE.Inferno
 				mfrmShowProgress.ShowDialog();
 
 				#region Threading
-				m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_OpenSession);
-				m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-					m_BackgroundWorker_SessionOpenCompleted);
+				m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenSession;
+				m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
 				#endregion
 			}
 		}
 
 		private string NumericVars2R()
 		{
-			string vars = "c("; // dummy to make vars an array of strings always
+			var vars = "c("; // dummy to make vars an array of strings always
 
 			vars += NumericVars();
 
-			vars = vars.Substring(0, vars.LastIndexOf(","));
+			vars = vars.Substring(0, vars.LastIndexOf(','));
 			vars = vars + ")";
 
 			return vars;
@@ -895,5 +923,21 @@ namespace DAnTE.Inferno
             }
         }
 
+	    private bool ValidExtension(string fExt)
+	    {
+	        if (string.IsNullOrWhiteSpace(fExt))
+	            return false;
+
+	        switch (fExt.ToLower())
+	        {
+                case ".csv":
+                case ".txt":
+                case ".xls":
+                case ".xlsx":
+	                return true;
+	        }
+
+	        return false;
+	    }
 	}
 }

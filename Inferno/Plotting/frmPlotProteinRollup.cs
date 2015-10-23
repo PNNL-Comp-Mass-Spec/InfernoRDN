@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -198,7 +199,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateDataComboBox
+        public List<string> PopulateDataComboBox
         {
             set
             {
@@ -206,7 +207,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulatePDataComboBox
+        public List<string> PopulatePDataComboBox
         {
             set
             {
@@ -218,8 +219,8 @@ namespace DAnTE.Inferno
         {
             get
             {
-                string selected = mcmbBoxData.SelectedItem.ToString();
-                string dataset = m_frmDAnTE.CorrespondingRdataset(selected);
+                var selected = mcmbBoxData.SelectedItem.ToString();
+                var dataset = m_frmDAnTE.CorrespondingRdataset(selected);
                 return dataset;
             }
         }

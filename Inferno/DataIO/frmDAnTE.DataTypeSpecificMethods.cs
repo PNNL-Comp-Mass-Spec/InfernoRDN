@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace DAnTE.Inferno
 
         private void AddDataset2HashTable(DataTable mDT)
         {
-            string mstrRdataset = mDT.TableName;
+            var mstrRdataset = mDT.TableName;
             var mclsDataset = new clsDatasetTreeNode
             {
                 mDTable = mDT
@@ -425,8 +426,8 @@ namespace DAnTE.Inferno
                     #region All other tables (filteredData)
                     if (mstrRdataset.Contains("filteredData"))
                     {
-                        string setNum = mstrRdataset.Substring(12);
-                        string nodeTxt = "Filtered Data" + setNum;
+                        var setNum = mstrRdataset.Substring(12);
+                        var nodeTxt = "Filtered Data" + setNum;
                         mclsDataset.mTNode = new TreeNode(nodeTxt, 1, 2);
                         mclsDataset.mstrDataText = nodeTxt;
                         mclsDataset.mstrMessage = "Filtered Data selected.";
@@ -437,7 +438,6 @@ namespace DAnTE.Inferno
                             mhtDatasets[nodeTxt] = mclsDataset;
                         else
                             mhtDatasets.Add(nodeTxt, mclsDataset);
-                        break;
                     }
                     break;
                     #endregion
@@ -453,10 +453,10 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private bool OpenSession(string dataFilePath)
         {
-            string rcmd = null;
-            object vars = null;
-            bool success = true;
-            DataTable mDTvar = new DataTable();
+            object vars;
+            var success = true;
+            var mDTvar = new DataTable();
+
             mhtDatasets.Clear();
 
             LastSessionLoadError = string.Empty;
@@ -469,7 +469,7 @@ namespace DAnTE.Inferno
                 return false;
             }
 
-            rcmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
+            var rcmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
@@ -489,7 +489,7 @@ namespace DAnTE.Inferno
             {
                 try
                 {
-                    Console.WriteLine(string.Format("frmDAnTE.OpenSession:{0} -> {1}", "", variables[i]));
+                    Console.WriteLine("frmDAnTE.OpenSession:{0} -> {1}", "", variables[i]);
                     switch (variables[i])
                     {
                         case ("ProtInfo"):
@@ -612,7 +612,7 @@ namespace DAnTE.Inferno
                  mhtDatasets.ContainsKey("Factors")))
             {
                 #region Add Controls on tab page
-                ucDataGridView dataGridTab = new ucDataGridView();
+                var dataGridTab = new ucDataGridView();
                 this.ctltabPage = new TabPage();
                 this.mtabControlData.Controls.Add(this.ctltabPage);
                 this.ctltabPage.Name = "ctltabPageData";
@@ -642,19 +642,19 @@ namespace DAnTE.Inferno
                     ctltreeView.Nodes[0].Nodes.Add(mdataNode.mTNode);
                 else
                 {
-                    TreeNode mtnParent = ((clsDatasetTreeNode)mhtDatasets[mdataNode.mstrParentNode]).mTNode;
+                    var mtnParent = (mhtDatasets[mdataNode.mstrParentNode]).mTNode;
                     mtnParent.Nodes.Add(mdataNode.mTNode);
                 }
                 ctltreeView.ExpandAll();
                 ctltreeView.SelectedNode = mdataNode.mTNode;
                 this.statusBarPanelMsg.Text = mdataNode.mstrMessage;
-                this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count.ToString() + " Rows/" +
-                                                 mdataNode.mDTable.Columns.Count.ToString() + " Columns.";
+                this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count + " Rows/" +
+                                                 mdataNode.mDTable.Columns.Count + " Columns.";
                 mdataNode.mTNode.Tag = mdataNode;
             }
             else
             {
-                tn.Tag = (clsDatasetTreeNode)mdataNode;
+                tn.Tag = mdataNode;
                 ctltreeView.SelectedNode = tn;
                 NodeSelect(tn);
             }
@@ -666,23 +666,27 @@ namespace DAnTE.Inferno
         /// <param name="tn"></param>
         private void NodeSelect(TreeNode tn)
         {
-            if (tn.Tag != null)
+            if (tn.Tag == null)
             {
-                clsDatasetTreeNode mdataNode = (clsDatasetTreeNode)tn.Tag;
-                if (this.ctltabPage != null)
-                {
-                    this.ctltabPage.Text = mdataNode.mstrDataText;
-                    ((ucDataGridView)this.ctltabPage.Controls[0]).SetDataSource = mdataNode.mDTable;
-                    if (mdataNode.mblAddDGridCtxtMnu)
-                        ((ucDataGridView)this.ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
-                    if (mdataNode.mblAddTVCtxtMnu)
-                        tn.ContextMenuStrip = mContextMenuTreeV;
-                    this.statusBarPanelMsg.Text = mdataNode.mstrMessage;
-                    this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count.ToString() + " Rows/" +
-                        mdataNode.mDTable.Columns.Count.ToString() + " Columns.";
-                    //mDTselected = mdataNode.mDTable;
-                }
+                return;
             }
+
+            var mdataNode = (clsDatasetTreeNode)tn.Tag;
+            if (this.ctltabPage == null)
+            {
+                return;
+            }
+
+            this.ctltabPage.Text = mdataNode.mstrDataText;
+            ((ucDataGridView)this.ctltabPage.Controls[0]).SetDataSource = mdataNode.mDTable;
+            if (mdataNode.mblAddDGridCtxtMnu)
+                ((ucDataGridView)this.ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
+            if (mdataNode.mblAddTVCtxtMnu)
+                tn.ContextMenuStrip = mContextMenuTreeV;
+            this.statusBarPanelMsg.Text = mdataNode.mstrMessage;
+            this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count.ToString() + " Rows/" +
+                                             mdataNode.mDTable.Columns.Count.ToString() + " Columns.";
+            //mDTselected = mdataNode.mDTable;
         }
 
 
@@ -692,17 +696,14 @@ namespace DAnTE.Inferno
         /// This is set in a bool variable in each node class
         /// </summary>
         /// <returns></returns>
-        private ArrayList AvailableDataSources()
+        private List<string> AvailableDataSources()
         {
-            ArrayList marrDataList = new ArrayList();
-            string mstrDataset = "";
-            clsDatasetTreeNode mclsDataset;
+            var marrDataList = new List<string>();
 
-            IDictionaryEnumerator _enumerator = mhtDatasets.GetEnumerator();
-            while (_enumerator.MoveNext())
+            foreach (var dataset in mhtDatasets)
             {
-                mstrDataset = _enumerator.Key.ToString();
-                mclsDataset = (clsDatasetTreeNode)_enumerator.Value;
+                var mstrDataset = dataset.Key;
+                var mclsDataset = dataset.Value;
                 if (mclsDataset.mblIsNumeric)
                     marrDataList.Add(mstrDataset);
             }
@@ -717,7 +718,7 @@ namespace DAnTE.Inferno
         public string CorrespondingRdataset(string selected)
         {
             if (mhtDatasets.ContainsKey(selected))
-                return ((clsDatasetTreeNode)mhtDatasets[selected]).mstrRdatasetName;
+                return (mhtDatasets[selected]).mstrRdatasetName;
             else
                 return "Eset";
         }
@@ -849,7 +850,7 @@ namespace DAnTE.Inferno
                 strKey = operation + "_" + i.ToString();
             }
             mhtAnalysisObjects.Add(strKey, "");
-            clsAnalysisObject mclsAnalysis = new clsAnalysisObject(strKey, o);
+            var mclsAnalysis = new clsAnalysisObject(strKey, o);
             marrAnalysisObjects.Add(mclsAnalysis);
         }
     }

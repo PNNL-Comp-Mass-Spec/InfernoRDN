@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Data;
 using System.Text;
@@ -25,16 +24,16 @@ namespace DAnTE.Tools
 
 		public static DataTable Parse(TextReader stream, bool headers)
 		{
-			DataTable table = new DataTable();
-			CsvStream csv = new CsvStream(stream);
-			string[] row = csv.GetNextRow();
+			var table = new DataTable();
+			var csv = new CsvStream(stream);
+			var row = csv.GetNextRow();
 			if (row == null)
 				return null;
 			if (headers)
 			{
-				foreach (string header in row)
+				foreach (var header in row)
 				{
-					if (header != null && header.Length > 0 && !table.Columns.Contains(header))
+					if (!string.IsNullOrEmpty(header) && !table.Columns.Contains(header))
 						table.Columns.Add(header, typeof(string));
 					else
 						table.Columns.Add(GetNextColumnHeader(table), typeof(string));
@@ -53,10 +52,10 @@ namespace DAnTE.Tools
 
 		private static string GetNextColumnHeader(DataTable table)
 		{
-			int c = 1;
+			var c = 1;
 			while (true)
 			{
-				string h = "Column" + c++;
+				var h = "Column" + c++;
 				if (!table.Columns.Contains(h))
 					return h;
 			}
@@ -64,7 +63,7 @@ namespace DAnTE.Tools
 
 		private class CsvStream
 		{
-			private TextReader stream;                 
+			private readonly TextReader stream;                 
                        
 			public CsvStream(TextReader s)
 			{
@@ -73,18 +72,18 @@ namespace DAnTE.Tools
 
 			public string[] GetNextRow()
 			{
-				ArrayList row = new ArrayList();
+				var row = new ArrayList();
 				while (true)
 				{
-					string item = GetNextItem();
+					var item = GetNextItem();
 					if (item == null)
 						return row.Count == 0 ? null : (string[])row.ToArray(typeof(string));
 					row.Add(item);
 				}
 			}
 
-			private bool EOS = false;
-			private bool EOL = false;
+			private bool EOS;
+			private bool EOL;
 
 			private string GetNextItem()
 			{
@@ -95,14 +94,14 @@ namespace DAnTE.Tools
 					return null;
 				}
 
-				bool quoted = false;
-				bool predata = true;
-				bool postdata = false;
-				StringBuilder item = new StringBuilder();
+				var quoted = false;
+				var predata = true;
+				var postdata = false;
+				var item = new StringBuilder();
                                
 				while (true)
 				{
-					char c = GetNextChar(true);
+					var c = GetNextChar(true);
 					if (EOS)
 						return item.Length > 0 ? item.ToString() : null;
 
@@ -156,9 +155,9 @@ namespace DAnTE.Tools
 				}
 			}
 
-			private char[] buffer = new char[4096];
-			private int pos = 0;
-			private int length = 0;
+			private readonly char[] buffer = new char[4096];
+			private int pos;
+			private int length;
 
 			private char GetNextChar(bool eat)
 			{

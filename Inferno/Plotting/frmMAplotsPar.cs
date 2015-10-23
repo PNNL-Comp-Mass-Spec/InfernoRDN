@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
@@ -16,9 +11,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmMAplotsPar : Form
     {
-        private clsMAplotsPar mclsMApar = new clsMAplotsPar();
+        private readonly clsMAplotsPar mclsMApar;
         private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
-        private ArrayList marrDatasets = new ArrayList();
+        private List<string> marrDatasets = new List<string>();
         string dataColor = "#00FF00", lColor = "#FF0000";
         private bool mWarnedTooManyDatasets = false;
         private bool mPopulating = false;
@@ -173,17 +168,17 @@ namespace DAnTE.Inferno
         }
 
 
-        public ArrayList PopulateListView
+        public List<string> PopulateListView
         {
             set
             {
                 marrDatasets = value;
-                ListViewItem[] lstVcolln = new ListViewItem[marrDatasets.Count];
+                var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
 
-                for (int i = 0; i < marrDatasets.Count; i++)
+                for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    ListViewItem lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i].ToString())
                     {
                         Tag = i
                     };
@@ -228,12 +223,12 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList SelectedDatasets
+        public List<string> SelectedDatasets
         {
             get
             {
-                ArrayList selectedDS = new ArrayList();
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var selectedDS = new List<string>();
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
                     foreach (int i in indexes)
@@ -245,11 +240,11 @@ namespace DAnTE.Inferno
             }
             set
             {
-                ArrayList selectedDS = value;
-                for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
-                    for (int j = 0; j < selectedDS.Count; j++)
+                var selectedDS = value;
+                for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
+                    foreach (var datasetName in selectedDS)
                     {
-                        if (selectedDS[j].ToString().Equals(mlstViewDataSets.Items[i].ToString()))
+                        if (datasetName.Equals(mlstViewDataSets.Items[i].ToString()))
                             mlstViewDataSets.Items[i].Checked = true;
                     }
             }

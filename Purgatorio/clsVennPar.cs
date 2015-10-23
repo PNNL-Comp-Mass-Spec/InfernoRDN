@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using DAnTE.Properties;
+using System.Collections.Generic;
+using DAnTE.Tools;
 
 namespace DAnTE.Purgatorio
 {
@@ -14,10 +12,10 @@ namespace DAnTE.Purgatorio
         public string labelA, labelB, labelC;
         public string tempFile;
         public string factor;
-        public ArrayList marrFactorNames = new ArrayList();
-        public ArrayList marrFactors = new ArrayList();
-        public ArrayList marrDatasets;
-        public Hashtable mhtDatasets;
+        public List<string> marrFactorNames = new List<string>();
+        public List<clsFactorInfo> marrFactors = new List<clsFactorInfo>();
+        public List<string> marrDatasets;
+        public Dictionary<string, clsDatasetTreeNode> mhtDatasets;
         public string mstrDatasetName;
         public string Rdataset;
         public bool mblPlotFac = false;
@@ -27,8 +25,8 @@ namespace DAnTE.Purgatorio
             labelA = "A";
             labelB = "B";
             labelC = "C";
-            marrDatasets = new ArrayList();
-            mhtDatasets = new Hashtable();
+            marrDatasets = new List<string>();
+            mhtDatasets = new Dictionary<string, clsDatasetTreeNode>();
             tempFile = "C:/_temp.png";
         }
 
@@ -61,12 +59,12 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (x3 != "")
-                    return "x1=" + ((DAnTE.Tools.clsDatasetTreeNode)mhtDatasets[x1]).mstrRdatasetName +
-                        ", x2=" + ((DAnTE.Tools.clsDatasetTreeNode)mhtDatasets[x2]).mstrRdatasetName +
-                        ", x3=" + ((DAnTE.Tools.clsDatasetTreeNode)mhtDatasets[x3]).mstrRdatasetName;
+                    return "x1=" + mhtDatasets[x1].mstrRdatasetName +
+                        ", x2=" + mhtDatasets[x2].mstrRdatasetName +
+                        ", x3=" + mhtDatasets[x3].mstrRdatasetName;
                 else
-                    return "x1=" + ((DAnTE.Tools.clsDatasetTreeNode)mhtDatasets[x1]).mstrRdatasetName +
-                        ", x2=" + ((DAnTE.Tools.clsDatasetTreeNode)mhtDatasets[x2]).mstrRdatasetName;
+                    return "x1=" + mhtDatasets[x1].mstrRdatasetName +
+                        ", x2=" + mhtDatasets[x2].mstrRdatasetName;
             }
         }
                 
@@ -74,7 +72,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                string labl = @"listNames=c(""" + labelA + @""",""" + labelB;
+                var labl = @"listNames=c(""" + labelA + @""",""" + labelB;
                 if (x3 != null)
                     labl += @""",""" + labelC + @""")";
                 else

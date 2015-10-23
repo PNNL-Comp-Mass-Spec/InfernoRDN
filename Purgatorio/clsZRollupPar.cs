@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using DAnTE.Properties;
-
 namespace DAnTE.Purgatorio
 {
     public class clsZRollupPar
@@ -11,26 +5,25 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         private string mstrOutFolder;
 
-        //[DAnTE.Tools.clsAnalysisAttribute("Dataset(R)", "ZRollup")]
+        //[Tools.clsAnalysisAttribute("Dataset(R)", "ZRollup")]
         public string Rdataset;
-        
-        private string mstrDatasetName;
-        [DAnTE.Tools.clsAnalysisAttribute("PlotResults", "ZRollup")]
+
+        [Tools.clsAnalysisAttribute("PlotResults", "ZRollup")]
         public bool mblPlot;
-        [DAnTE.Tools.clsAnalysisAttribute("Minimum_Presence", "ZRollup")]
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "ZRollup")]
         public string mstrMinPresence;
-        [DAnTE.Tools.clsAnalysisAttribute("Include_OneHitWonders", "ZRollup")]
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "ZRollup")]
         public bool mblOneHits;
-        [DAnTE.Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "ZRollup")]
+        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "ZRollup")]
         public string mstrGrubsNum;
-        [DAnTE.Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "ZRollup")]
+        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "ZRollup")]
         public string mstrGrubsP;
-        [DAnTE.Tools.clsAnalysisAttribute("Rollup_as_Mean", "ZRollup")]
+        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "ZRollup")]
         public bool mblModeMean;
 
         public clsZRollupPar()
         {
-            mstrDatasetName = "Eset";
+            DataSetName = "Eset";
             mblPlot = false;
             mstrOutFolder = @"C:\";
         }
@@ -72,7 +65,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; ;
+                return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
             }
         }
 
@@ -87,14 +80,10 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Source_DataTable", "ZRollup")]
-        public string DataSetName
-        {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
-        }
+        [Tools.clsAnalysisAttribute("Source_DataTable", "ZRollup")]
+        public string DataSetName { get; set; }
 
-        [DAnTE.Tools.clsAnalysisAttribute("Results_Folder", "ZRollup")]
+        [Tools.clsAnalysisAttribute("Results_Folder", "ZRollup")]
         public string OutFolder_pub
         {
             get

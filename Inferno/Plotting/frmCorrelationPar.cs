@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Text;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
@@ -19,7 +15,7 @@ namespace DAnTE.Inferno
     {
         private readonly clsCorrelationPar mclsCorrPar;
         private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
-        private ArrayList marrDatasets = new ArrayList();
+        private List<string> marrDatasets = new List<string>();
         private string ellipseC = null;
         private string mstrPaletteName = "Black-Body", customCol = null;
         private int mintPalette;
@@ -365,7 +361,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public ArrayList PopulateListView
+        public List<string> PopulateListView
         {
             set
             {
@@ -374,9 +370,9 @@ namespace DAnTE.Inferno
                 var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
                 
-                for (int i = 0; i < marrDatasets.Count; i++)
+                for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    var lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i])
                     {
                         Tag = i
                     };
@@ -419,12 +415,11 @@ namespace DAnTE.Inferno
                 return "c(" + selected + ")";
             }
         }
-
-        public ArrayList SelectedDatasets
+        public List<string> SelectedDatasets
         {
             get
             {
-                var selectedDS = new ArrayList();
+                var selectedDS = new List<string>();
                 var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
@@ -437,16 +432,16 @@ namespace DAnTE.Inferno
             }
             set
             {
-                ArrayList selectedDS = value;
-                for (int i = 0; i < mlstViewDataSets.Items.Count; i++)
-                    for (int j = 0; j < selectedDS.Count; j++)
+                var selectedDS = value;
+                for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
+                    foreach (var datasetName in selectedDS)
                     {
-                        if (selectedDS[j].ToString().Equals(mlstViewDataSets.Items[i].ToString()))
+                        if (datasetName.Equals(mlstViewDataSets.Items[i].ToString()))
                             mlstViewDataSets.Items[i].Checked = true;
                     }
             }
         }
-
+        
         public int ColorPalette
         {
             get
