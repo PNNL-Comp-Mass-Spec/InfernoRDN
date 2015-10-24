@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
@@ -49,7 +49,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       //this.Focus();
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
@@ -81,7 +81,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       //this.Focus();
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.
@@ -113,7 +113,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         Console.WriteLine("Canceled");
       } else {
@@ -135,7 +135,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
 
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         Console.WriteLine("Canceled");
       } else {
@@ -156,7 +156,7 @@ namespace DAnTE.Inferno
       mfrmShowProgress.Hide();
       mfrmShowProgress.DialogResult = DialogResult.Cancel;
       if (e.Error != null) {
-        MessageBox.Show(e.Error.Message);
+        MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       } else if (e.Cancelled) {
         // Next, handle the case where the user canceled 
         // the operation.

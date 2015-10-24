@@ -157,7 +157,7 @@ namespace DAnTE.Inferno
 
             if (mhtDatasets.ContainsKey("Protein (Q)rollup"))
             {
-                MessageBox.Show("Protein (Q)rollup is already done.", "Nothing to do");
+                MessageBox.Show("Protein (Q)rollup is already done.", "Nothing to do", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
                 

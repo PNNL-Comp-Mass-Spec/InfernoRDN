@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Data;
 using System.Windows.Forms;
 using DAnTE.Tools;
 
@@ -8,13 +6,13 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        DAnTE.Purgatorio.clsLogTransformPar mclsLogPar;
-        DAnTE.Purgatorio.clsLinRegrnPar mclsLinRegPar;
-        DAnTE.Purgatorio.clsLoessPar mclsLoessPar;
-        DAnTE.Purgatorio.clsCentralTendencyPar mclsMeanCPar;
-        DAnTE.Purgatorio.clsQnormPar mclsQnormPar;
-        DAnTE.Purgatorio.clsMADPar mclsMADPar;
-        DAnTE.Purgatorio.clsImputePar mclsImputePar;
+        Purgatorio.clsLogTransformPar mclsLogPar;
+        Purgatorio.clsLinRegrnPar mclsLinRegPar;
+        Purgatorio.clsLoessPar mclsLoessPar;
+        Purgatorio.clsCentralTendencyPar mclsMeanCPar;
+        Purgatorio.clsQnormPar mclsQnormPar;
+        Purgatorio.clsMADPar mclsMADPar;
+        Purgatorio.clsImputePar mclsImputePar;
 
         #region Pre-processing Menu items
 
@@ -38,35 +36,33 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Log2);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_Log2Completed);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Log2;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_Log2Completed;
             #endregion
 
-            mclsLogPar = new DAnTE.Purgatorio.clsLogTransformPar
+            mclsLogPar = new Purgatorio.clsLogTransformPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DatasetName = mclsSelected.mstrDataText
             };
 
-            frmLogPar mfrmLog = new frmLogPar(mclsLogPar);
+            var mfrmLog = new frmLogPar(mclsLogPar);
 
-            DialogResult res = mfrmLog.ShowDialog();
+            var res = mfrmLog.ShowDialog();
             if (res == DialogResult.OK)
             {
                 mclsLogPar = mfrmLog.clsLogPar;
                 Add2AnalysisHTable(mclsLogPar, "LogTransform");
 
-                string rcmd = mclsLogPar.Rcmd;
+                var rcmd = mclsLogPar.Rcmd;
 
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
                 mfrmShowProgress.Message = "Calculating Log Expressions ...";
                 mfrmShowProgress.ShowDialog();
             }
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Log2);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_Log2Completed);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Log2;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_Log2Completed;
             #endregion
         }
 
@@ -96,22 +92,23 @@ namespace DAnTE.Inferno
 
             #region Hook Threading events
 
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Lowess);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_LowessCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Lowess;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_LowessCompleted;
 
             #endregion
 
-            mclsLoessPar = new DAnTE.Purgatorio.clsLoessPar
+            mclsLoessPar = new Purgatorio.clsLoessPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
             };
 
-            frmLOESSPar mfrmLoessPar = new frmLOESSPar(mclsLoessPar);
-            mfrmLoessPar.DataSetName = mclsSelected.mstrDataText;
+            var mfrmLoessPar = new frmLOESSPar(mclsLoessPar)
+            {
+                DataSetName = mclsSelected.mstrDataText
+            };
 
-            clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mfrmLoessPar.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
             if (mfrmLoessPar.ShowDialog() == DialogResult.OK)
@@ -120,7 +117,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsLoessPar, "LOESS");
 
-                string rcmd = mclsLoessPar.Rcmd;
+                var rcmd = mclsLoessPar.Rcmd;
 
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
                 mfrmShowProgress.Message = "LOESS Normalizing Data ...";
@@ -129,9 +126,8 @@ namespace DAnTE.Inferno
 
             #region Unhook Threading events
 
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Lowess);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_LowessCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Lowess;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_LowessCompleted;
 
             #endregion
         }
@@ -145,8 +141,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            string rcmd = null;
-            bool qnOK = false;
+            var qnOK = false;
 
 
             if (!ValidateExpressionsLoaded("normalize"))
@@ -160,11 +155,11 @@ namespace DAnTE.Inferno
             }
 
             // check if there's enough complete data to do Quantile normalization
-            rcmd = "qnOK <- IsCompleteData(" + mclsSelected.mstrRdatasetName + ")";
+            var rcmd = "qnOK <- IsCompleteData(" + mclsSelected.mstrRdatasetName + ")";
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
-                qnOK = mRConnector.GetSymbolAsBool("qnOK"); ;
+                qnOK = mRConnector.GetSymbolAsBool("qnOK");
             }
             catch (Exception ex)
             {
@@ -180,13 +175,12 @@ namespace DAnTE.Inferno
 
             #region Hook Threading events
 
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Quantile);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_QuantileCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Quantile;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QuantileCompleted;
 
             #endregion
 
-            mclsQnormPar = new DAnTE.Purgatorio.clsQnormPar
+            mclsQnormPar = new Purgatorio.clsQnormPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
@@ -202,9 +196,8 @@ namespace DAnTE.Inferno
 
             #region Unhook Threading events
 
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Quantile);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_QuantileCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Quantile;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QuantileCompleted;
 
             #endregion
         }
@@ -229,19 +222,20 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_MeanC);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_MeanCCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_MeanC;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MeanCCompleted;
             #endregion
 
-            mclsMeanCPar = new DAnTE.Purgatorio.clsCentralTendencyPar
+            mclsMeanCPar = new Purgatorio.clsCentralTendencyPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
             };
 
-            frmMeanCenterPar mfrmMeanC = new frmMeanCenterPar(mclsMeanCPar);
-            mfrmMeanC.DataSetName = mclsSelected.mstrDataText;
+            var mfrmMeanC = new frmMeanCenterPar(mclsMeanCPar)
+            {
+                DataSetName = mclsSelected.mstrDataText
+            };
 
             if (mfrmMeanC.ShowDialog() == DialogResult.OK)
             {
@@ -249,7 +243,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsMeanCPar, "CentralTendency");
 
-                string rcmd = mclsMeanCPar.Rcmd;                
+                var rcmd = mclsMeanCPar.Rcmd;                
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
 
                 if (mclsMeanCPar.mblUseMeanTend)
@@ -261,9 +255,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_MeanC);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_MeanCCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_MeanC;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MeanCCompleted;
             #endregion
 
         }
@@ -288,22 +281,23 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_MAD);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_MADCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_MAD;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MADCompleted;
             #endregion
 
-            mclsMADPar = new DAnTE.Purgatorio.clsMADPar
+            mclsMADPar = new Purgatorio.clsMADPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
             };
 
-            frmMADPar mfrmMad = new frmMADPar(mclsMADPar);
-            mfrmMad.DataSetName = mclsSelected.mstrDataText;
+            var mfrmMad = new frmMADPar(mclsMADPar)
+            {
+                DataSetName = mclsSelected.mstrDataText
+            };
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
+                var mclsFactors = mhtDatasets["Factors"];
                 mfrmMad.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsMADPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
             }
@@ -316,7 +310,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsMADPar, "MedianAbsoluteDeviation_Adjustment");
 
-                string rcmd = mclsMADPar.Rcmd;
+                var rcmd = mclsMADPar.Rcmd;
 
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
                 mfrmShowProgress.Message = "MAD Adjusting Data ...";
@@ -324,9 +318,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_MAD);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_MADCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_MAD;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MADCompleted;
             #endregion
 
         }
@@ -357,29 +350,28 @@ namespace DAnTE.Inferno
 
             #region Hook Threading events
 
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_LinReg);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_LinRegCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_LinReg;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_LinRegCompleted;
 
             #endregion
 
-            mclsLinRegPar = new DAnTE.Purgatorio.clsLinRegrnPar
+            mclsLinRegPar = new Purgatorio.clsLinRegrnPar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
             };
 
-            clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
+            var mclsFactors = mhtDatasets["Factors"];
             mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
 
-            frmLinRegPar mfrmLinReg = new frmLinRegPar(mclsLinRegPar);
+            var mfrmLinReg = new frmLinRegPar(mclsLinRegPar);
             if (mfrmLinReg.ShowDialog() == DialogResult.OK)
             {
                 mclsLinRegPar = mfrmLinReg.clsLinRegPar;
 
                 Add2AnalysisHTable(mclsLinRegPar, "LinearRegression");
 
-                string rcmd = mclsLinRegPar.Rcmd;
+                var rcmd = mclsLinRegPar.Rcmd;
 
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
                 mfrmShowProgress.Message = "Linear Regressing Data ...";
@@ -388,9 +380,8 @@ namespace DAnTE.Inferno
 
             #region Unhook Threading events
 
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_LinReg);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_LinRegCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_LinReg;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_LinRegCompleted;
 
             #endregion
 
@@ -416,12 +407,11 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_Impute);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ImputeCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_Impute;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ImputeCompleted;
             #endregion
 
-            mclsImputePar = new DAnTE.Purgatorio.clsImputePar
+            mclsImputePar = new Purgatorio.clsImputePar
             {
                 Rdataset = mclsSelected.mstrRdatasetName,
                 DataSetName = mclsSelected.mstrDataText
@@ -434,7 +424,7 @@ namespace DAnTE.Inferno
 
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                clsDatasetTreeNode mclsFactors = mhtDatasets["Factors"];
+                var mclsFactors = mhtDatasets["Factors"];
                 mfrmImpute.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsImputePar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
             }
@@ -447,16 +437,15 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsImputePar, "Imputation");
 
-                string rcmd = mclsImputePar.Rcmd;
+                var rcmd = mclsImputePar.Rcmd;
 
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
                 mfrmShowProgress.Message = "Imputing Data ...";
                 mfrmShowProgress.ShowDialog();
             }
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_Impute);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ImputeCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_Impute;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ImputeCompleted;
             #endregion
 
         }
@@ -466,14 +455,13 @@ namespace DAnTE.Inferno
         #region Private Methods
         private bool DoMADAdjustment(string rcmd)
         {
-            DataTable mDTMAD = new DataTable();
-            bool success = true;
+            var success = true;
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("madEset"))
                 {
-                    mDTMAD = mRConnector.DataTable.Copy();
+                    var mDTMAD = mRConnector.DataTable.Copy();
                     mDTMAD.TableName = "madEset";
                     mRConnector.EvaluateNoReturn("cat(\"Data MAD Adjusted.\n\")");
                     AddDataset2HashTable(mDTMAD);
@@ -491,7 +479,7 @@ namespace DAnTE.Inferno
 
         private bool DoMeanCenter(string rcmd)
         {
-            bool success = true;
+            var success = true;
 
             try
             {
@@ -533,15 +521,14 @@ namespace DAnTE.Inferno
 
         private bool DoQuantileN(string rcmd)
         {
-            DataTable mDTQuantile = new DataTable();
-            bool success = true;
+            var success = true;
 
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("quaNormEset"))
                 {
-                    mDTQuantile = mRConnector.DataTable.Copy();
+                    var mDTQuantile = mRConnector.DataTable.Copy();
                     mDTQuantile.TableName = "quaNormEset";
                     mRConnector.EvaluateNoReturn("cat(\"Data Quantile Normalized (Only complete data).\n\")");
                     AddDataset2HashTable(mDTQuantile);
@@ -560,14 +547,13 @@ namespace DAnTE.Inferno
 
         private bool DoLowess(string rcmd)
         {
-            DataTable mDTLoess = new DataTable();
-            bool success = true;
+            var success = true;
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("loessData"))
                 {
-                    mDTLoess = mRConnector.DataTable.Copy();
+                    var mDTLoess = mRConnector.DataTable.Copy();
                     mDTLoess.TableName = "loessData";
                     mRConnector.EvaluateNoReturn("cat(\"LOESS normalization done.\n\")");
                     AddDataset2HashTable(mDTLoess);
@@ -586,14 +572,13 @@ namespace DAnTE.Inferno
 
         private bool DoLinReg(string rcmd)
         {
-            DataTable mDTLinReg = new DataTable();
-            bool success = true;
+            var success = true;
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("linregData"))
                 {
-                    mDTLinReg = mRConnector.DataTable.Copy();
+                    var mDTLinReg = mRConnector.DataTable.Copy();
                     mDTLinReg.TableName = "linregData";
                     mRConnector.EvaluateNoReturn("cat(\"Linear Regression done.\n\")");
                     AddDataset2HashTable(mDTLinReg);
@@ -612,14 +597,13 @@ namespace DAnTE.Inferno
 
         private bool DoImpute(string rcmd)
         {
-            DataTable mDTImpute = new DataTable();
-            bool success = true;
+            var success = true;
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("imputedData"))
                 {
-                    mDTImpute = mRConnector.DataTable.Copy();
+                    var mDTImpute = mRConnector.DataTable.Copy();
                     mDTImpute.TableName = "imputedData";
                     mRConnector.EvaluateNoReturn("cat(\"Imputing done.\n\")");
                     AddDataset2HashTable(mDTImpute);
@@ -638,14 +622,13 @@ namespace DAnTE.Inferno
 
         private bool DoMergeColumns(string rcmd)
         {
-            DataTable mDTmerged = new DataTable();
-            bool success = true;
+            var success = true;
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("mergedData"))
                 {
-                    mDTmerged = mRConnector.DataTable.Copy();
+                    var mDTmerged = mRConnector.DataTable.Copy();
                     mDTmerged.TableName = "mergedData";
                     mRConnector.EvaluateNoReturn("cat(\"Merging done.\n\")");
                     AddDataset2HashTable(mDTmerged);

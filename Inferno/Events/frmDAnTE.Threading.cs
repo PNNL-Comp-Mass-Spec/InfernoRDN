@@ -23,7 +23,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -81,7 +81,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -117,7 +117,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -153,7 +153,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -189,7 +189,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -225,7 +225,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -261,7 +261,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -297,7 +297,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -336,7 +336,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -376,7 +376,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -411,7 +411,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -453,7 +453,7 @@ namespace DAnTE.Inferno
             if (e.Error != null)
             {
                 mblFileOpenResult = false;
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -524,7 +524,7 @@ namespace DAnTE.Inferno
             //this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -579,7 +579,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -631,7 +631,7 @@ namespace DAnTE.Inferno
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -669,7 +669,7 @@ namespace DAnTE.Inferno
             //this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -706,7 +706,7 @@ namespace DAnTE.Inferno
             //this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -743,7 +743,7 @@ namespace DAnTE.Inferno
 
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -770,7 +770,7 @@ namespace DAnTE.Inferno
 
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -799,7 +799,7 @@ namespace DAnTE.Inferno
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -864,7 +864,7 @@ namespace DAnTE.Inferno
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -901,7 +901,7 @@ namespace DAnTE.Inferno
 
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -932,7 +932,7 @@ namespace DAnTE.Inferno
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -1025,7 +1025,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {
@@ -1058,7 +1058,7 @@ namespace DAnTE.Inferno
             this.Focus();
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (e.Cancelled)
             {

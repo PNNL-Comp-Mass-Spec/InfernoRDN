@@ -37,7 +37,7 @@ namespace DAnTE.Inferno
         private string[] mstrArrProteins;
         private string[] mstrArrMassTags;
 
-        private string mstrLoadedfileName; //filename of the loaded data
+        private string mstrLoadedfileName;  //filename of the loaded data
 
         private string sessionFile;
 
@@ -174,7 +174,7 @@ namespace DAnTE.Inferno
         {
             if (selectedNode == null)
             {
-                MessageBox.Show("Data not loaded (or data table not selected)", "Nothing to do");
+                MessageBox.Show("Data not loaded (or data table not selected)", "Nothing to do", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
@@ -227,9 +227,29 @@ namespace DAnTE.Inferno
             //    ToolStripManager.RevertMerge(mp.mtoolStripMDI); //toolstrip refere to parent toolstrip
             //    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mtoolStripMDI);
             //}
-            if (sessionFile != null)
+            if (!string.IsNullOrWhiteSpace(sessionFile))
             {
-                OpenSessionThreaded(sessionFile);
+                if (USE_THREADED_LOAD)
+                {
+                    // A session file was specified at the command line; open it after a delay to give the form time to finish loading
+                    OpenSessionThreaded(sessionFile);
+                }
+                else
+                {
+                    //mstrLoadedfileName = sessionFile;
+                    //Settings.Default.SessionFileName = mstrLoadedfileName;
+                    //Settings.Default.Save();
+                    //marrAnalysisObjects.Clear();
+                    //mhtAnalysisObjects.Clear();
+
+                    //mfrmShowProgress.Message = "Loading Saved Session ...";
+                    //mfrmShowProgress.ShowDialog();
+
+                    //var result = OpenSession(mstrLoadedfileName);
+                    ;
+                }
+
+
             }
         }
 

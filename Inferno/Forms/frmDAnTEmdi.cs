@@ -38,9 +38,9 @@ namespace DAnTE.Inferno
 
         private readonly clsRconnect mRConnector;
 
-        public frmDAnTEmdi(string dntfile, string customLogFilePath)
+        public frmDAnTEmdi(string danteFilePath, string customLogFilePath)
         {
-            mSessionFile = dntfile;
+            mSessionFile = danteFilePath;
 
             InitializeComponent();
 
@@ -48,10 +48,14 @@ namespace DAnTE.Inferno
             {
                 mCustomLoggerEnabled = true;
 
-                if (!File.Exists(customLogFilePath))
-                    mCustomLogWriter = new StreamWriter(customLogFilePath);
-                else
+                if (File.Exists(customLogFilePath))
+                {
                     mCustomLogWriter = File.AppendText(customLogFilePath);
+                }
+                else
+                {
+                    mCustomLogWriter = new StreamWriter(customLogFilePath);
+                }
             }
 
             this.Text = "InfernoRDN"; //Application.ProductVersion.ToString();
@@ -498,7 +502,7 @@ namespace DAnTE.Inferno
             return true;
         }
 
-        private void StartMain(string dntfile)
+        private void StartMain(string danteFilePath)
         {
             try
             {
@@ -510,8 +514,8 @@ namespace DAnTE.Inferno
                         if (mf.WindowState == FormWindowState.Minimized)
                             mf.WindowState = FormWindowState.Normal;
                         mf.BringToFront();
-                        if (dntfile != null)
-                            mf.OpenSessionThreaded(dntfile);
+                        if (!string.IsNullOrWhiteSpace(danteFilePath))
+                            mf.OpenSessionThreaded(danteFilePath);
                         return;
                     }
                 }
@@ -519,7 +523,7 @@ namespace DAnTE.Inferno
                 var mfrmDAnTE = frmDAnTE.GetChildInstance();
                 mfrmDAnTE.RTempFilePath = mRTempFilePath;
                 mfrmDAnTE.RConnector = mRConnector;
-                mfrmDAnTE.SessionFile = dntfile;
+                mfrmDAnTE.SessionFile = danteFilePath;
                 mfrmDAnTE.MdiParent = this;
                 mfrmDAnTE.ParentInstance = this;
 

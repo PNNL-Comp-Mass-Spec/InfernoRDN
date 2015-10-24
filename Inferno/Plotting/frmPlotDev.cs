@@ -64,7 +64,7 @@ namespace DAnTE.Inferno
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                MessageBox.Show(ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

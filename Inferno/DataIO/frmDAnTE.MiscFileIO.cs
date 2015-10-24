@@ -440,7 +440,7 @@ namespace DAnTE.Inferno
             var fExt = Path.GetExtension(filename);
             if (string.IsNullOrWhiteSpace(fExt))
             {
-                MessageBox.Show("File does not have an extension (like .csv or .txt); unable to determine file type", "Error!");
+                MessageBox.Show("File does not have an extension (like .csv or .txt); unable to determine file type", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
@@ -580,9 +580,9 @@ namespace DAnTE.Inferno
                     {
                         return false;
                     }
-                    if (mDTFactors.Rows.Count > 20)
+                    if (mDTFactors.Rows.Count > frmDefFactors.MAX_LEVELS)
                     {
-                        MessageBox.Show("Factors file has too many factors; max allowed is 20 factors");
+                        MessageBox.Show("Factors file has too many factors; max allowed is " + frmDefFactors.MAX_LEVELS + " factors", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
                     if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
@@ -784,8 +784,9 @@ namespace DAnTE.Inferno
                     {
                         return false;
                     }
-                    if (mDTFactors.Rows.Count > 20)
+                    if (mDTFactors.Rows.Count > frmDefFactors.MAX_LEVELS)
                     {
+                        MessageBox.Show("Factors file has too many factors; max allowed is " + frmDefFactors.MAX_LEVELS + " factors", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
                     if (mRConnector.SendTable2RmatrixNonNumeric("factors", mDTFactors))
@@ -877,16 +878,20 @@ namespace DAnTE.Inferno
             }
         }
 
-
+        /// <summary>
+        /// Open an Inferno session file
+        /// </summary>
+        /// <param name="mstrFile">File path</param>
         public void OpenSessionThreaded(string mstrFile)
         {
             var doLoad = true;
             if (mtabControlData.Controls.Count != 0)
-            //    if (mblEsetLoaded || mblFactorsLoaded || mblProtInfoLoaded || mblLogEsetOK)
+            
             {
                 doLoad = (MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
                     "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
             }
+
             if (doLoad)
             {
                 #region Threading

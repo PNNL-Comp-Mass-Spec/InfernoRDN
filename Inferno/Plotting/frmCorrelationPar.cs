@@ -13,22 +13,18 @@ namespace DAnTE.Inferno
     public partial class frmCorrelationPar : Form
     {
         private readonly clsCorrelationPar mclsCorrPar;
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
+        private readonly int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
         private List<string> marrDatasets = new List<string>();
-        private string ellipseC = null;
-        private string mstrPaletteName = "Black-Body", customCol = null;
+        private string ellipseC;
+        private string mstrPaletteName = "Black-Body", customCol;
         private int mintPalette;
-        private bool mWarnedTooManyDatasets = false;
-        private bool mPopulating = false;
+        private bool mWarnedTooManyDatasets;
+        private bool mPopulating;
 
         public frmCorrelationPar(clsCorrelationPar clsCorrPar)
         {
             mclsCorrPar = clsCorrPar;
             InitializeComponent();
-        }
-                        
-        private void rangeSelect_event(object sender, EventArgs e)
-        {
         }
 
         private void mbtnOK_Click(object sender, EventArgs e)
@@ -54,7 +50,7 @@ namespace DAnTE.Inferno
 
             if (mrBtnScatter.Checked)
             {
-                N = mlstViewDataSets.Items.Count > MAX ? N = MAX : N = mlstViewDataSets.Items.Count;
+                N = mlstViewDataSets.Items.Count > MAX ? MAX : mlstViewDataSets.Items.Count;
             }
 
             var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
@@ -131,8 +127,8 @@ namespace DAnTE.Inferno
         
         private void mbtnDefaults_Click(object sender, EventArgs e)
         {
-            this.mlblEcolor.ForeColor = System.Drawing.Color.FromKnownColor(KnownColor.Green);
-            this.mlblEcolor.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Green);
+            this.mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
+            this.mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
             ellipseC = clsHexColorUtil.ColorToHex(mlblEcolor.BackColor);
             Settings.Default.ellipseCol = ellipseC;
             Settings.Default.Save();
@@ -176,8 +172,8 @@ namespace DAnTE.Inferno
         
         private void mRangeBar_RangeChanging(object sender, EventArgs e)
         {
-            double min = (double)mRangeBar.RangeMinimum / 20;
-            double max = (double)mRangeBar.RangeMaximum / 20;
+            var min = (double)mRangeBar.RangeMinimum / 20;
+            var max = (double)mRangeBar.RangeMaximum / 20;
 
             mlblMin.Text = min.ToString(CultureInfo.InvariantCulture);
             mlblMax.Text = max.ToString(CultureInfo.InvariantCulture);
@@ -226,8 +222,8 @@ namespace DAnTE.Inferno
             ellipseC = Settings.Default.ellipseCol;
             if (ellipseC == "")
             {
-                this.mlblEcolor.ForeColor = System.Drawing.Color.FromKnownColor(KnownColor.Green);
-                this.mlblEcolor.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Green);
+                this.mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
+                this.mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
                 ellipseC = clsHexColorUtil.ColorToHex(mlblEcolor.BackColor);
                 Settings.Default.ellipseCol = ellipseC;
                 Settings.Default.Save();
@@ -397,7 +393,7 @@ namespace DAnTE.Inferno
                 var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
-                    int k = 0;
+                    var k = 0;
                     foreach (int i in indexes)
                     {
                         if (k == 0)
@@ -514,8 +510,8 @@ namespace DAnTE.Inferno
             {
                 if (mpanelCorr.Enabled)
                 {
-                    double min = (double)mRangeBar.RangeMinimum / 20;
-                    double max = (double)mRangeBar.RangeMaximum / 20;
+                    var min = (double)mRangeBar.RangeMinimum / 20;
+                    var max = (double)mRangeBar.RangeMaximum / 20;
                     return "corRange=c(" + min.ToString(CultureInfo.InvariantCulture) + "," + max.ToString(CultureInfo.InvariantCulture) + ")";
                 }
                 else
@@ -531,11 +527,6 @@ namespace DAnTE.Inferno
             }
         }
                 
-        public frmDAnTE DAnTEinstance
-        {
-            set
-            { }
-        }
         #endregion
                 
         

@@ -44,7 +44,7 @@ namespace DAnTE.Inferno
 
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                MessageBox.Show(errorMessage);
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 

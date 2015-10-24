@@ -25,7 +25,7 @@ namespace DAnTE.Inferno
             if (mstrOriginator.Contains("Expression"))
             {
                 if (mhtDatasets.ContainsKey("Expressions"))
-                    MessageBox.Show("Expressions are already loaded.");
+                    MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 else
                 {
                     dataSetType = enmDataType.ESET;
@@ -53,7 +53,7 @@ namespace DAnTE.Inferno
             else if (mstrOriginator.Contains("Protein"))
             {
                 if (mhtDatasets.ContainsKey("Protein Info"))
-                    MessageBox.Show("Protein information is already loaded.");
+                    MessageBox.Show("Protein information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 else
                 {
                     dataSetType = enmDataType.PROTINFO;
@@ -68,7 +68,7 @@ namespace DAnTE.Inferno
             else if (mstrOriginator.Contains("Factor"))
             {
                 if (mhtDatasets.ContainsKey("Factors"))
-                    MessageBox.Show("Factor information is already loaded.");
+                    MessageBox.Show("Factor information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 else
                 {
                     dataSetType = enmDataType.FACTORS;
@@ -102,7 +102,7 @@ namespace DAnTE.Inferno
         private void menuItemMSMS_Click(object sender, EventArgs e)
         {
             if (mhtDatasets.ContainsKey("Expressions"))
-                MessageBox.Show("Expressions are already loaded.");
+                MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
             {
                 var msmsWizard = new frmMSMSWizard(mRConnector);
@@ -494,7 +494,7 @@ namespace DAnTE.Inferno
 
         private void menuItemDeleteColumns_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This feature is not implemented");
+            MessageBox.Show("This feature is not implemented", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         #endregion

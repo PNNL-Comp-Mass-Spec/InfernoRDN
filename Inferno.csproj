@@ -63,7 +63,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -700,7 +700,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\clsHexColorUtil.cs" />
-    <Compile Include="Tools\clsParseCommandLineArguments.cs" />
+    <Compile Include="Tools\clsParseCommandLine.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tools\clsRCmdLog.cs" />
     <Compile Include="Tools\clsRconnect.cs">
       <SubType>Code</SubType>

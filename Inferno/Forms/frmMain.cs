@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using FileProcessor;
 
 namespace DAnTE.Inferno
 {
@@ -77,6 +79,9 @@ namespace DAnTE.Inferno
         }
         #endregion
 
+        private static string mDanteFilePath;
+        private static string mLogFilePath;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -91,39 +96,137 @@ namespace DAnTE.Inferno
 
             //Splasher.Show(typeof(frmSplash));
 
-            string SelectedDNTFile = null;
-            string logFilename = null;
+            mDanteFilePath = string.Empty;
+            mLogFilePath = string.Empty;
 
             try
             {
-                var pa = new Tools.ProgramArguments(args);
+                var objParseCommandLine = new clsParseCommandLine();
+                var success = false;
 
-                if (args.Length > 0)
+                if (objParseCommandLine.ParseCommandLine())
                 {
-                    SelectedDNTFile = pa.DNTfilename;
-                    logFilename = pa.LOGfilename;
-
-                    if (pa.ShowHelp)
-                    {
-                        var syntaxMessage = "Supported command line switches are /F and /L \n" +
-                                            "Use '/F FilePath.dnt' to load a data file \n" +
-                                            "Use '/L LogFilePath' to specify a custom log file path";
-
-                        MessageBox.Show(syntaxMessage, "Inferno Syntax", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        return;
-                    }
+                    if (SetOptionsUsingCommandLineParameters(objParseCommandLine))
+                        success = true;
                 }
+
+                if (!success ||
+                    objParseCommandLine.NeedToShowHelp ||
+                    objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0)
+                {
+
+                    var syntaxMessage = "Supported command line switches are /F and /L \n" +
+                                        "Use '/F FilePath.dnt' to load a data file \n" +
+                                        "Use '/L LogFilePath' to specify a custom log file path";
+
+                    MessageBox.Show(syntaxMessage, "InfernoRDN Syntax", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    return;
+
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception parsing the command line arguments: " + ex.Message);
+                MessageBox.Show("Exception parsing the command line arguments: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            var mfrmDAnTEmdi = new frmDAnTEmdi(SelectedDNTFile, logFilename);
+            var mfrmDAnTEmdi = new frmDAnTEmdi(mDanteFilePath, mLogFilePath);
             
             if (!mfrmDAnTEmdi.IsDisposed)
                 Application.Run(mfrmDAnTEmdi);
+        }
+
+        private static bool SetOptionsUsingCommandLineParameters(clsParseCommandLine objParseCommandLine)
+        {
+            // Returns True if no problems; otherwise, returns false
+            var lstValidParameters = new List<string> { "F", "L" };
+
+            try
+            {
+                // Make sure no invalid parameters are present
+                if (objParseCommandLine.InvalidParametersPresent(lstValidParameters))
+                {
+                    var badArguments = new List<string>();
+                    foreach (var item in objParseCommandLine.InvalidParameters(lstValidParameters))
+                    {
+                        badArguments.Add("/" + item);
+                    }
+
+                    ShowErrorMessage("Invalid commmand line parameters", badArguments);
+
+                    return false;
+                }
+
+                // Query objParseCommandLine to see if various parameters are present						
+
+                if (objParseCommandLine.NonSwitchParameterCount > 0)
+                    mDanteFilePath = objParseCommandLine.RetrieveNonSwitchParameter(0);
+
+                if (!ParseParameter(objParseCommandLine, "F", "a session file path", ref mDanteFilePath)) return false;
+
+                if (!ParseParameter(objParseCommandLine, "L", "a log file path", ref mLogFilePath)) return false;
+              
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage("Error parsing the command line parameters: " + Environment.NewLine + ex.Message);
+            }
+
+            return false;
+        }
+
+        private static bool ParseParameter(
+            clsParseCommandLine objParseCommandLine,
+            string parameterName,
+            string description,
+            ref string targetVariable)
+        {
+            string value;
+            if (objParseCommandLine.RetrieveValueForParameter(parameterName, out value))
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    ShowErrorMessage("/" + parameterName + " does not have " + description);
+                    return false;
+                }
+                targetVariable = string.Copy(value);
+            }
+            return true;
+        }
+
+        private static void ShowErrorMessage(string strMessage)
+        {
+            const string strSeparator = "------------------------------------------------------------------------------";
+
+            Console.WriteLine();
+            Console.WriteLine(strSeparator);
+            Console.WriteLine(strMessage);
+            Console.WriteLine(strSeparator);
+            Console.WriteLine();
+
+            MessageBox.Show(strMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private static void ShowErrorMessage(string strTitle, IEnumerable<string> items)
+        {
+            const string strSeparator = "------------------------------------------------------------------------------";
+
+            Console.WriteLine();
+            Console.WriteLine(strSeparator);
+            Console.WriteLine(strTitle);
+            var strMessage = strTitle + ":";
+
+            foreach (var item in items)
+            {
+                Console.WriteLine("   " + item);
+                strMessage += " " + item;
+            }
+            Console.WriteLine(strSeparator);
+            Console.WriteLine();
+
+            MessageBox.Show(strMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }

@@ -372,7 +372,7 @@ namespace DAnTE.Inferno
             var tmpfactorInfo = new clsFactorInfo();
 
             if (lstBoxFactors.Items.Count == MAX_LEVELS)
-                MessageBox.Show("Maximum number of factors reached!");
+                MessageBox.Show("Maximum number of factors reached!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else if (txtBoxFactors.Text != "")
             {
                 var strFactor = txtBoxFactors.Text.Replace(" ", "_");
@@ -388,7 +388,7 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("You have already entered this factor!");
+                    MessageBox.Show("You have already entered this factor!", "Existing Factor", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -406,9 +406,9 @@ namespace DAnTE.Inferno
                 lstBoxFactors.SetSelected(0, true);
             nSelected = lstBoxFactors.SelectedIndex;
             if (nSelected < 0)
-                MessageBox.Show("Select a factor first to define their values.");
+                MessageBox.Show("Select a factor first to define their values.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else if (lstBoxValues.Items.Count == MAX_LEVELS)
-                MessageBox.Show("You have reached the maximum number of values allowed.");
+                MessageBox.Show("You have reached the maximum number of values allowed.", "Max Factor Count", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else if (strValue != "")
             {
                 lstBoxValues.SelectedIndex = -1;
@@ -426,7 +426,7 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("You have already entered this value earlier!");
+                    MessageBox.Show("You have already entered this value earlier!", "Duplicate Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -491,7 +491,7 @@ namespace DAnTE.Inferno
 				this.Close() ;
 			}
 			else
-				MessageBox.Show("Error: Each factor should have at least two values.") ;
+				MessageBox.Show("Each factor should have at least two values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 
 		private void btnCancel_Click(object sender, System.EventArgs e)
@@ -505,7 +505,7 @@ namespace DAnTE.Inferno
 			var nSelected = lstBoxFactors.SelectedIndex ;
 
 			if (nSelected < 0)
-				MessageBox.Show("Select a factor to delete.") ;
+				MessageBox.Show("Select a factor to delete.", "Nothing Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			else
 			{
 				lstBoxFactors.Items.Remove(lstBoxFactors.SelectedItem) ;
@@ -523,7 +523,7 @@ namespace DAnTE.Inferno
 			var nSelectedF = lstBoxFactors.SelectedIndex ;
 
 			if (nSelectedV < 0)
-				MessageBox.Show("Select a value to delete.") ;
+				MessageBox.Show("Select a value to delete.", "Nothing Selected", MessageBoxButtons.OK, MessageBoxIcon.Information) ;
 			else
 			{
 				lstBoxValues.Items.Remove(lstBoxValues.SelectedItem) ;

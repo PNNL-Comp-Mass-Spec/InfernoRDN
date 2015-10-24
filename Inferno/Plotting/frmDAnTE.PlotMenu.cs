@@ -386,12 +386,14 @@ namespace DAnTE.Inferno
                
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > 300)
                 {
-                    MessageBox.Show("Copy complete: " + selectedRowCount + " rows");
+                	// The copy operation took over 300 msec
+                	// Show a status dialog to the user
+                    MessageBox.Show("Copy complete: " + selectedRowCount + " rows", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error copying data to the clipboard: " + ex.Message);
+                MessageBox.Show("Error copying data to the clipboard: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
