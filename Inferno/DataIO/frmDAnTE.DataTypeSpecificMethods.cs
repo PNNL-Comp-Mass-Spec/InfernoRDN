@@ -9,7 +9,23 @@ using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
-    public enum enmDataType { ESET, PROTINFO, FACTORS };
+    public enum enmDataType 
+    { 
+        /// <summary>
+        /// Flat file of expression data
+        /// </summary>
+        ESET, 
+
+        /// <summary>
+        /// Protein metadata
+        /// </summary>
+        PROTINFO, 
+
+        /// <summary>
+        /// Dataset factors
+        /// </summary>
+        FACTORS 
+    };
 
     partial class frmDAnTE
     {
@@ -444,12 +460,12 @@ namespace DAnTE.Inferno
         }
 
         /// <summary>
-        /// Opens a previously save session in *.dnt file
+        /// Opens a previously saved session in *.dnt file
         /// There are few special cases (reading a vector, non numeric etc).
         /// But most of the tables are in R matrices (default section in the switch statement).
         /// </summary>
         /// <param name="dataFilePath"></param>
-        /// <returns></returns>
+        /// <returns>True if success, false if an error</returns>
         private bool OpenSession(string dataFilePath)
         {
             object vars;
@@ -478,7 +494,9 @@ namespace DAnTE.Inferno
             catch (Exception ex)
             {
                 LastSessionLoadError = ex.Message;
-                MessageBox.Show("R access failed loading file " + fiDatafile.FullName + ": " + ex.Message, "Error!");
+                if (!LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.CurrentCultureIgnoreCase))
+                    MessageBox.Show("R access failed loading file " + fiDatafile.FullName + ": " + ex.Message, "Error!");
+
                 return false;
             }
 

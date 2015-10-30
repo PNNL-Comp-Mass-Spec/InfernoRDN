@@ -20,6 +20,14 @@ namespace DAnTE.Inferno
             Xlsx = 3
         }
 
+        protected enum DataFileType
+        {
+            Unknown = 0,
+            Expression = 1,
+            Proteins = 2,
+            Factors = 3
+        }
+
         private bool mProgressEventWired;
 
         private bool DeleteTempFile(string tempfile)
@@ -83,7 +91,11 @@ namespace DAnTE.Inferno
             return currImg;
         }
 
-        private void GetOpenFileName(FileTypeExtension preferredFileType)
+        /// <summary>
+        /// Show the open file window to the user
+        /// </summary>
+        /// <param name="preferredFileType">Preferred file extension</param>
+        private void ShowOpenFileWindow(FileTypeExtension preferredFileType)
         {
             var fileTypesUsed = new List<FileTypeExtension>
             {
@@ -103,13 +115,14 @@ namespace DAnTE.Inferno
 
             filter += "All files (*.*)|*.*";
 
-            GetOpenFileName(filter);
+            ShowOpenFileWindow(filter);
         }
 
         /// <summary>
-        /// Fireup a file open dialog and get the file name to open.
+        /// Show the open file window to the user
         /// </summary>
-        private void GetOpenFileName(string filter)
+        /// <param name="filter">Filter spec list, e.g. "CSV files (*.csv)|*.csv|Tab delimited txt files (*.txt)|*.txt|"</param>
+        private void ShowOpenFileWindow(string filter)
         {
             const string WORKING_FOLDER = "Working_Directory";
 
@@ -155,6 +168,7 @@ namespace DAnTE.Inferno
             {
                 fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
+
             fdlg.Filter = filter;
             fdlg.FilterIndex = 1;
             fdlg.RestoreDirectory = false;
@@ -163,18 +177,18 @@ namespace DAnTE.Inferno
                 mstrLoadedfileName = fdlg.FileName;
 
                 var fiDataFile = new FileInfo(mstrLoadedfileName);
-                if (fiDataFile.Exists)
+                if (!fiDataFile.Exists)
                 {
-                    mstrLoadedfileName = fiDataFile.FullName;
-
-                    workingFolder = fiDataFile.Directory.FullName;
-                    Settings.Default.WorkingFolder = workingFolder;
-                    Settings.Default.DataFileName = fiDataFile.Name;
-                    Settings.Default.Save();
-
-                    RegistryAccess.SetStringRegistryValue(WORKING_FOLDER, workingFolder);
-
+                    return;
                 }
+                mstrLoadedfileName = fiDataFile.FullName;
+
+                workingFolder = fiDataFile.Directory.FullName;
+                Settings.Default.WorkingFolder = workingFolder;
+                Settings.Default.DataFileName = fiDataFile.Name;
+                Settings.Default.Save();
+
+                RegistryAccess.SetStringRegistryValue(WORKING_FOLDER, workingFolder);
             }
             else
                 mstrLoadedfileName = null;
@@ -197,7 +211,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void GetSaveFileName(string filter)
+        private void ShowSaveFileWindow(string filter)
         {
             var workingFolder = Settings.Default.WorkingFolder;
 
@@ -363,6 +377,7 @@ namespace DAnTE.Inferno
             return mDTProtInfo;
         }
 
+        [Obsolete("Unused")]
         private DataTable OpenFile_test(string filename)
         {
             //bool success = true;
@@ -424,7 +439,7 @@ namespace DAnTE.Inferno
         /// The main file load routine is in clsDataTable.LoadFile2DataTable(fileName)
         /// Duplicates are handled in C#
         /// </summary>
-        private bool OpenFile(string filename)
+        private bool OpenFile(string filePath)
         {
             string rowID;
             string rcmd;
@@ -432,12 +447,17 @@ namespace DAnTE.Inferno
             bool FactorsValid;
 
             // check that the file exists before opening it
-            if (!File.Exists(mstrLoadedfileName))
+            if (!File.Exists(filePath))
             {
                 return false;
             }
 
-            var fExt = Path.GetExtension(filename);
+            if (!string.Equals(mstrLoadedfileName, filePath))
+            {
+                mstrLoadedfileName = filePath;
+            }
+
+            var fExt = Path.GetExtension(filePath);
             if (string.IsNullOrWhiteSpace(fExt))
             {
                 MessageBox.Show("File does not have an extension (like .csv or .txt); unable to determine file type", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -450,7 +470,7 @@ namespace DAnTE.Inferno
                 return false;
             }
 
-            switch (dataSetType)
+            switch (mDataSetType)
             {
                 case enmDataType.ESET:
 
@@ -633,6 +653,7 @@ namespace DAnTE.Inferno
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
+        [Obsolete("Unused")]
         private bool OpenFile2(string filename)
         {
             var success = true;
@@ -653,7 +674,7 @@ namespace DAnTE.Inferno
             string rowID;
             string rcmd;
             bool FactorsValid;
-            switch (dataSetType)
+            switch (mDataSetType)
             {
                 case enmDataType.ESET:
 
@@ -881,8 +902,9 @@ namespace DAnTE.Inferno
         /// <summary>
         /// Open an Inferno session file
         /// </summary>
-        /// <param name="mstrFile">File path</param>
-        public void OpenSessionThreaded(string mstrFile)
+        /// <param name="sessionFilePath">File path</param>
+        /// <remarks>Warns the user if data is already loaded and will get replaced</remarks>
+        public void OpenSessionCheckExisting(string sessionFilePath, bool useThreadedLoad)
         {
             var doLoad = true;
             if (mtabControlData.Controls.Count != 0)
@@ -892,25 +914,15 @@ namespace DAnTE.Inferno
                     "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
             }
 
-            if (doLoad)
+            if (!doLoad)
             {
-                #region Threading
-                m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
-                m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SessionOpenCompleted;
-                #endregion
-
-                marrAnalysisObjects.Clear();
-                mhtAnalysisObjects.Clear();
-
-                m_BackgroundWorker.RunWorkerAsync(mstrFile);
-                mfrmShowProgress.Message = "Loading Saved Session ...";
-                mfrmShowProgress.ShowDialog();
-
-                #region Threading
-                m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenSession;
-                m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
-                #endregion
+                return;
             }
+
+            if (useThreadedLoad)
+                SessionFileOpenThreaded(sessionFilePath);
+            else
+                SessionFileOpenNonThreaded(sessionFilePath);
         }
 
         private string NumericVars2R()

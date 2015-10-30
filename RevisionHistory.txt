@@ -1,5 +1,11 @@
 InfernoRDN Change Log
 
+Version 1.7.5780; October 29, 2015
+	- Fixed drag/drop of .dnt files to open them
+		- Disabled threaded loading, which often led to error "Value cannot be null" from R.NET
+	- Now supports specifying a file path to open as the first parameter when calling Inferno.exe
+		- Allows double-clicking a .dnt file to open in Inferno provided Inferno is associated with .dnt files
+
 Version 1.7.5774; October 23, 2015
 	- Added right click context menus "Copy selected" and "Copy all" to data grids
 	- Now always including column headers when copy from a data grid

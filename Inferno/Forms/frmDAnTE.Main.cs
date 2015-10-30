@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "October 23, 2015";
+        public const string PROGRAM_DATE = "October 29, 2015";
 
         public const int MAX_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT_CPU_INTENSIVE = 20;
@@ -32,15 +32,22 @@ namespace DAnTE.Inferno
 
         // ReSharper disable once NotAccessedField.Local
         // Used by HandleFileOpenCompleted in Inferno\Events\frmDAnTE.FileIOEvents.cs
-        private List<string> marrDataSetNames = new List<string>();
+        private List<string> mDataSetNames = new List<string>();
 
         private string[] mstrArrProteins;
         private string[] mstrArrMassTags;
 
-        private string mstrLoadedfileName;  //filename of the loaded data
+        // File path of the loaded data, but also used when loading a protein info file or factors file
+        private string mstrLoadedfileName;
 
-        private string sessionFile;
+        // File path of the session (.dnt) file
+        private string mSessionFile;
 
+        private readonly Timer mAutoLoadTimer;
+
+        private bool mAutoLoadSessionFile;
+        private DateTime mAutoLoadScheduledTime;
+        
         // This is a linux-style path that is used by R to save .png files
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
         private string mRTempFilePath = "";
@@ -48,7 +55,7 @@ namespace DAnTE.Inferno
 
         private string mstrFldgTitle;
 
-        private enmDataType dataSetType = enmDataType.ESET;
+        private enmDataType mDataSetType = enmDataType.ESET;
         private static frmDAnTE m_frmDAnTE;
         private readonly BackgroundWorker m_BackgroundWorker;
 
@@ -84,6 +91,13 @@ namespace DAnTE.Inferno
                 //ToolStripManager.Merge(this.mtoolStripDAnTE, "mtoolStripMDI");
                 mtoolStripDAnTE.Visible = false;
             }
+
+            mAutoLoadTimer = new Timer
+            {
+                Interval = 250,
+                Enabled = true
+            };
+            mAutoLoadTimer.Tick += mAutoLoadTimer_Tick;
 
             mfrmShowProgress = new frmShowProgress();
 
@@ -219,38 +233,14 @@ namespace DAnTE.Inferno
 
         private void OnLoad_event(object sender, EventArgs e)
         {
-            //if (IsMdiChild)
-            //{
-            //    mnuStripDAnTE.Visible = false;
-            //    mtoolStripDAnTE.Visible = false;
-            //    frmDAnTEmdi mp = (frmDAnTEmdi)Application.OpenForms["frmDAnTEmdi"];
-            //    ToolStripManager.RevertMerge(mp.mtoolStripMDI); //toolstrip refere to parent toolstrip
-            //    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mtoolStripMDI);
-            //}
-            if (!string.IsNullOrWhiteSpace(sessionFile))
+            if (string.IsNullOrWhiteSpace(mSessionFile))
             {
-                if (USE_THREADED_LOAD)
-                {
-                    // A session file was specified at the command line; open it after a delay to give the form time to finish loading
-                    OpenSessionThreaded(sessionFile);
-                }
-                else
-                {
-                    //mstrLoadedfileName = sessionFile;
-                    //Settings.Default.SessionFileName = mstrLoadedfileName;
-                    //Settings.Default.Save();
-                    //marrAnalysisObjects.Clear();
-                    //mhtAnalysisObjects.Clear();
-
-                    //mfrmShowProgress.Message = "Loading Saved Session ...";
-                    //mfrmShowProgress.ShowDialog();
-
-                    //var result = OpenSession(mstrLoadedfileName);
-                    ;
-                }
-
-
+                return;
             }
+
+            mAutoLoadSessionFile = true;
+            mAutoLoadScheduledTime = DateTime.UtcNow.AddMilliseconds(250);
+
         }
 
         private void OnClosed_event(object sender, EventArgs e)
@@ -281,6 +271,11 @@ namespace DAnTE.Inferno
                 e.Effect = DragDropEffects.None;
         }
 
+        /// <summary>
+        /// User dropped a file into a empty window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_DragDrop(object sender, DragEventArgs e)
         {
             var s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -296,12 +291,15 @@ namespace DAnTE.Inferno
                 if (!fileTypeError)
                 {
                     if (fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
-                        OpenSessionThreaded(s[0]);
+                    {
+                        OpenSessionCheckExisting(s[0], USE_THREADED_LOAD);
+                    }
                     else if (fExt.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        dataSetType = enmDataType.ESET;
-                        mstrLoadedfileName = s[0];
-                        DataFileOpenThreaded(s[0], "Opening data in a flat file...");
+                        mDataSetType = enmDataType.ESET;
+
+                        OpenExpressionFile(s[0]);
+
                     }
                     else
                     {
@@ -311,8 +309,8 @@ namespace DAnTE.Inferno
 
                 if (fileTypeError)
                 {
-                    MessageBox.Show("Wrong file type!", "Use only .dnt or .csv files...",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Only .dnt or .csv files can be opened via drag/drop here", "Unsupported file type",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
 
@@ -372,11 +370,27 @@ namespace DAnTE.Inferno
         {
             set
             {
-                sessionFile = value;
+                mSessionFile = value;
             }
         }
 
         #endregion
+
+        #region Event Handlers
+
+        void mAutoLoadTimer_Tick(object sender, EventArgs e)
+        {
+            if (!mAutoLoadSessionFile || DateTime.UtcNow <= mAutoLoadScheduledTime)
+            {
+                return;
+            }
+
+            mAutoLoadSessionFile = false;
+            mAutoLoadTimer.Enabled = false;
+
+            SessionFileOpenNonThreaded(mSessionFile);
+            
+        }
 
         private void frmDAnTE_Activated(object sender, EventArgs e)
         {
@@ -392,6 +406,7 @@ namespace DAnTE.Inferno
                 }
             }
         }
-        
+
+        #endregion
     }
 }

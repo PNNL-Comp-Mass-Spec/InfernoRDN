@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
     partial class frmDAnTE
     {
         // When this is True, we get intermittent file load errors in OpenSession(), with rConnector reporting error "Value cannot be null"
-        const bool USE_THREADED_LOAD = false;
+        public const bool USE_THREADED_LOAD = false;
 
         #region File Menu items
 
@@ -20,76 +20,120 @@ namespace DAnTE.Inferno
 
         private void menuItemLoad_Click(object sender, EventArgs e)
         {
-            var mstrOriginator = ((ToolStripMenuItem)sender).Text;
+            var originator = ((ToolStripMenuItem)sender).Text;
 
-            if (mstrOriginator.Contains("Expression"))
-            {
-                if (mhtDatasets.ContainsKey("Expressions"))
-                    MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (originator.Contains("Expression"))
+                OpenExpressionFileCheckExisting();
+            else
+                if (originator.Contains("Protein"))
+                    OpenProteinsFile();
                 else
-                {
-                    dataSetType = enmDataType.ESET;
-                    mstrFldgTitle = "Open Expressions";
+                    if (originator.Contains("Factor"))
+                        OpenFactorsFile();
 
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
-
-                        if (USE_THREADED_LOAD)
-                            DataFileOpenThreaded(mstrLoadedfileName, "Loading Expressions ...");
-                        else
-                        {
-                            mfrmShowProgress.Message = "Loading Expressions ...";
-                            mfrmShowProgress.Show();
-                            var success = OpenFile(mstrLoadedfileName);
-
-                            this.HandleFileOpenCompleted(!success, success, string.Empty);
-                        }
-
-                    }
-                }
-            }
-            else if (mstrOriginator.Contains("Protein"))
-            {
-                if (mhtDatasets.ContainsKey("Protein Info"))
-                    MessageBox.Show("Protein information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                else
-                {
-                    dataSetType = enmDataType.PROTINFO;
-                    mstrFldgTitle = "Open Protein information";
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
-                    }
-                }
-            }
-            else if (mstrOriginator.Contains("Factor"))
-            {
-                if (mhtDatasets.ContainsKey("Factors"))
-                    MessageBox.Show("Factor information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                else
-                {
-                    dataSetType = enmDataType.FACTORS;
-                    mstrFldgTitle = "Open Factor information";
-                    GetOpenFileName(mMostRecentFileType);
-                    if (mstrLoadedfileName != null)
-                    {
-                        DataFileOpenThreaded(mstrLoadedfileName, "Loading Factor Information ...");
-                    }
-                }
-            }
         }
 
-        private void DataFileOpenThreaded(string filename, string message)
+        /// <summary>
+        /// Show a file dialog to allow the user to choose an expressions file to load
+        /// </summary>
+        protected void OpenExpressionFileCheckExisting()
+        {
+
+            if (mhtDatasets.ContainsKey("Expressions"))
+            {
+                MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            mDataSetType = enmDataType.ESET;
+            mstrFldgTitle = "Open Expressions";
+
+            ShowOpenFileWindow(mMostRecentFileType);
+
+            if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
+            {
+                return;
+            }
+
+            mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
+
+            OpenExpressionFile(mstrLoadedfileName);
+            
+        }
+
+        private void OpenExpressionFile(string filePath)
+        {
+            mstrLoadedfileName = filePath;
+
+            if (USE_THREADED_LOAD)
+                DataFileOpenThreaded(mstrLoadedfileName, "Loading Expressions ...");
+            else
+            {
+                mfrmShowProgress.Message = "Loading Expressions ...";
+                mfrmShowProgress.Show();
+                var success = OpenFile(mstrLoadedfileName);
+
+                this.HandleFileOpenCompleted(!success, success, string.Empty);
+            }
+        } 
+
+        /// <summary>
+        /// Show a file dialog to allow the user to choose an protein info file to load
+        /// </summary>
+        protected void OpenProteinsFile()
+        {
+
+            if (mhtDatasets.ContainsKey("Protein Info")) 
+            {
+                MessageBox.Show("Protein information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            mDataSetType = enmDataType.PROTINFO;
+            mstrFldgTitle = "Open Protein information";
+            
+            ShowOpenFileWindow(mMostRecentFileType);
+            
+            if (mstrLoadedfileName != null)
+            {
+                DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
+            }
+          
+        }
+
+        /// <summary>
+        /// Show a file dialog to allow the user to choose a factors file to load
+        /// </summary>
+        protected void OpenFactorsFile()
+        {
+
+            if (mhtDatasets.ContainsKey("Factors"))
+            {
+                MessageBox.Show("Factor information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            mDataSetType = enmDataType.FACTORS;
+            mstrFldgTitle = "Open Factor information";
+            
+            ShowOpenFileWindow(mMostRecentFileType);
+            
+            if (mstrLoadedfileName != null)
+            {
+                DataFileOpenThreaded(mstrLoadedfileName, "Loading Factor Information ...");
+            }
+      
+        }
+
+        private void DataFileOpenThreaded(string filePath, string message)
         {
             #region Threading
             m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenFiles;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_FileOpenCompleted;
             #endregion
 
-            m_BackgroundWorker.RunWorkerAsync(filename);
+            m_BackgroundWorker.RunWorkerAsync(filePath);
             mfrmShowProgress.Message = message;
             mfrmShowProgress.ShowDialog();
 
@@ -97,6 +141,111 @@ namespace DAnTE.Inferno
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenFiles;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_FileOpenCompleted;
             #endregion
+        }
+
+        private void SessionFileOpenNonThreaded(string sessionFilePath)
+        {
+            mstrLoadedfileName = sessionFilePath;
+
+            Settings.Default.SessionFileName = sessionFilePath;
+            Settings.Default.Save();
+
+            mfrmShowProgress.Message = "Loading Saved Session ...";
+            mfrmShowProgress.Show();
+
+            var success = false;
+            var cancelled = false;
+            var errorMessage = string.Empty;
+
+            try
+            {
+                success = OpenSession(sessionFilePath);
+            }
+           
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                cancelled = true;
+            }
+
+            SessionFileOpenFinalize(success, cancelled, errorMessage);
+
+        }
+
+        private void SessionFileOpenThreaded(string sessionFilePath)
+        {
+
+            #region Threading
+
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SessionOpenCompleted;
+
+            #endregion
+
+            mstrLoadedfileName = sessionFilePath;
+
+            Settings.Default.SessionFileName = sessionFilePath;
+            Settings.Default.Save();
+
+            marrAnalysisObjects.Clear();
+            mhtAnalysisObjects.Clear();
+
+            m_BackgroundWorker.RunWorkerAsync(sessionFilePath);
+            mfrmShowProgress.Message = "Loading Saved Session ...";
+            mfrmShowProgress.ShowDialog();
+
+            #region Threading
+
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenSession;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
+
+            #endregion
+
+        }
+
+        private void SessionFileOpenFinalize(bool success, bool cancelled, string errorMessage)
+        {
+            mfrmShowProgress.Hide();
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                // Error occured; show the message
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (cancelled)
+            {
+                // User cancelled the operation
+                Console.WriteLine("Cancelled");
+            }
+            else
+            {
+                // Load succeeded (or an exception occurred)
+                if (success)
+                {
+                    ctltreeView.Nodes[0].Nodes.Clear();
+
+                    foreach (var dataset in mhtDatasets)
+                    {
+                        AddDataNode(dataset.Value);
+                    }
+
+                    statusBarPanelMsg.Text = "Session opened successfully.";
+                    if (string.IsNullOrEmpty(mstrLoadedfileName))
+                        this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
+                }
+                else
+                {
+                    var message = "Error loading session file";
+
+                    if (LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        message += ". Try loading the file again -- in many cases the first load attempt fails, but the second load attempt succeeds.";
+                    }
+
+                    MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+
+                }
+            }
         }
 
         private void menuItemMSMS_Click(object sender, EventArgs e)
@@ -131,7 +280,7 @@ namespace DAnTE.Inferno
                 #endregion
 
                 var success = true;
-                
+
                 //SaveFileDialog saveFdlg = new SaveFileDialog();
                 var rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
 
@@ -150,6 +299,7 @@ namespace DAnTE.Inferno
                     Console.WriteLine("R.Net failed: " + ex.Message, "Error!");
                     success = false;
                 }
+
                 if (success)
                 {
                     var rcmd2 = rcmd + ",\"vars\")";
@@ -157,7 +307,7 @@ namespace DAnTE.Inferno
                     if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
                     {
                         mstrFldgTitle = "Select a file to save the session";
-                        GetSaveFileName("DAnTE files (*.dnt)|*.dnt|All files (*.*)|*.*");
+                        ShowSaveFileWindow("Inferno (DAnTE) files (*.dnt)|*.dnt|All files (*.*)|*.*");
                     }
 
                     if (mstrLoadedfileName != null)
@@ -175,8 +325,11 @@ namespace DAnTE.Inferno
                     }
                 }
                 else
+                {
                     MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                    MessageBoxIcon.Error);
+                }
+
                 #region Threading
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;
@@ -217,7 +370,7 @@ namespace DAnTE.Inferno
                     var rcmd2 = rcmd + ",\"vars\")";
 
                     mstrFldgTitle = "Select a file to save the session";
-                    GetSaveFileName("DAnTE files (*.dnt)|*.dnt|All files (*.*)|*.*");
+                    ShowSaveFileWindow("Inferno (DAnTE) files (*.dnt)|*.dnt|All files (*.*)|*.*");
 
                     if (mstrLoadedfileName != null)
                     {
@@ -246,10 +399,6 @@ namespace DAnTE.Inferno
 
         private void mnuOpenSession_Click(object sender, EventArgs e)
         {
-            #region Threading
-            m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
-            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SessionOpenCompleted;
-            #endregion
 
             var doRun = true;
 
@@ -261,25 +410,17 @@ namespace DAnTE.Inferno
                     doRun = false;
             }
 
-            if (doRun)
+            if (!doRun)
             {
-                GetOpenFileName("DAnTE files (*.dnt)|*.dnt|All files (*.*)|*.*");
-
-                if (mstrLoadedfileName != null)
-                {
-                    Settings.Default.SessionFileName = mstrLoadedfileName;
-                    Settings.Default.Save();
-                    marrAnalysisObjects.Clear();
-                    mhtAnalysisObjects.Clear();
-                    m_BackgroundWorker.RunWorkerAsync(mstrLoadedfileName);
-                    mfrmShowProgress.Message = "Loading Saved Session ...";
-                    mfrmShowProgress.ShowDialog();
-                }
+                return;
             }
-            #region Threading
-            m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenSession;
-            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
-            #endregion
+
+            ShowOpenFileWindow("Inferno (DAnTE) files (*.dnt)|*.dnt|All files (*.*)|*.*");
+
+            if (!string.IsNullOrWhiteSpace(mstrLoadedfileName))
+            {
+                SessionFileOpenNonThreaded(mstrLoadedfileName);
+            }
         }
 
         private void menuItemExit_Click(object sender, System.EventArgs e)
@@ -326,7 +467,7 @@ namespace DAnTE.Inferno
 
             if (OK2Exit())
             {
-                sessionFile = null;
+                mSessionFile = null;
                 e.Cancel = false;
             }
             else
@@ -366,7 +507,7 @@ namespace DAnTE.Inferno
             }
 
             mstrFldgTitle = "Select a file to save";
-            GetSaveFileName("CSV files (*.csv)|*.csv|Tab delimited txt files (*.txt)|*.txt|" + "All files (*.*)|*.*");
+            ShowSaveFileWindow("CSV files (*.csv)|*.csv|Tab delimited txt files (*.txt)|*.txt|" + "All files (*.*)|*.*");
             if (string.IsNullOrWhiteSpace(mstrLoadedfileName))
             {
                 return;

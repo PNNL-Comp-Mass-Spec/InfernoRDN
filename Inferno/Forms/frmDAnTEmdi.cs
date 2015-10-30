@@ -17,9 +17,6 @@ namespace DAnTE.Inferno
         // See Inno Setup file inferno_setup.iss
         private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
-        // No longer used (only used on Windows XP and 2000)
-        // private readonly frmRmsg mRmsgForm;
-
         public string mSessionFile;
 
         private readonly StreamWriter mCustomLogWriter;
@@ -502,28 +499,33 @@ namespace DAnTE.Inferno
             return true;
         }
 
-        private void StartMain(string danteFilePath)
+        private void StartMain(string sessionFilePath)
         {
             try
             {
+                // Find a child window in which we can load the specified session file
+
                 foreach (var f in MdiChildren)
                 {
                     var mf = f as frmDAnTE;
-                    if (mf != null)
+                    if (mf == null)
                     {
-                        if (mf.WindowState == FormWindowState.Minimized)
-                            mf.WindowState = FormWindowState.Normal;
-                        mf.BringToFront();
-                        if (!string.IsNullOrWhiteSpace(danteFilePath))
-                            mf.OpenSessionThreaded(danteFilePath);
-                        return;
+                        continue;
                     }
+
+                    if (mf.WindowState == FormWindowState.Minimized)
+                        mf.WindowState = FormWindowState.Normal;
+
+                    mf.BringToFront();
+                    if (!string.IsNullOrWhiteSpace(sessionFilePath))
+                        mf.OpenSessionCheckExisting(sessionFilePath, frmDAnTE.USE_THREADED_LOAD);
+                    return;
                 }
 
                 var mfrmDAnTE = frmDAnTE.GetChildInstance();
                 mfrmDAnTE.RTempFilePath = mRTempFilePath;
                 mfrmDAnTE.RConnector = mRConnector;
-                mfrmDAnTE.SessionFile = danteFilePath;
+                mfrmDAnTE.SessionFile = sessionFilePath;
                 mfrmDAnTE.MdiParent = this;
                 mfrmDAnTE.ParentInstance = this;
 
@@ -630,7 +632,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemNew_Click(object sender, EventArgs e)
         {
-            StartMain(mSessionFile);
+            StartMain(string.Empty);
         }
 
         private void mnuItemExit_Click(object sender, EventArgs e)
@@ -721,6 +723,11 @@ namespace DAnTE.Inferno
                 e.Effect = DragDropEffects.None;
         }
 
+        /// <summary>
+        /// User dropped a file into the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_DragDrop(object sender, DragEventArgs e)
         {
             var s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -733,8 +740,8 @@ namespace DAnTE.Inferno
                 var fExt = Path.GetExtension(s[0]);
                 if (fExt == null || !fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    MessageBox.Show("Wrong file type!", "Use only .dnt files...",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Only .dnt files can be opened via drag/drop here", "Unsupported file type",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 

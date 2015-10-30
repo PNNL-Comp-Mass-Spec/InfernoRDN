@@ -64,27 +64,28 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (mhtDatasets.ContainsKey("Expressions") && (dataSetType == enmDataType.ESET))
+            if (mhtDatasets.ContainsKey("Expressions") && (mDataSetType == enmDataType.ESET))
             {
                 if (mhtDatasets.ContainsKey("Protein Info"))
                 {
                     AddDataNode(mhtDatasets["Protein Info"]);
                 }
+
                 AddDataNode(mhtDatasets["Expressions"]);
-                if (mstrLoadedfileName != null)
+                if (!string.IsNullOrWhiteSpace(mstrLoadedfileName))
                 {
                     this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
                 }
-                marrDataSetNames = clsDataTable.DataTableColumns(
+                mDataSetNames = clsDataTable.DataTableColumns(
                     (mhtDatasets["Expressions"]).mDTable, true);
             }
 
-            if (mhtDatasets.ContainsKey("Protein Info") && (dataSetType == enmDataType.PROTINFO))
+            if (mhtDatasets.ContainsKey("Protein Info") && (mDataSetType == enmDataType.PROTINFO))
             {
                 AddDataNode(mhtDatasets["Protein Info"]);
             }
 
-            if (mhtDatasets.ContainsKey("Factors") && (dataSetType == enmDataType.FACTORS))
+            if (mhtDatasets.ContainsKey("Factors") && (mDataSetType == enmDataType.FACTORS))
             {
                 AddDataNode(mhtDatasets["Factors"]);
             }

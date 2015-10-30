@@ -55,6 +55,7 @@ namespace DAnTE.Tools
             }
             catch (Exception ex)
             {
+                // Note that exception "Value cannot be null" tends to occur if we try to load a session file (.dnt file) using a separate thread
                 clsRCmdLog.LogRComment(string.Format("EvaluateNoReturn ERROR {0} -> {1}", rcmd, ex.Message));
                 throw;
             }

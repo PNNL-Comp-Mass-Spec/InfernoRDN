@@ -1,8 +1,6 @@
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Forms;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
@@ -12,46 +10,15 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_SessionOpenCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
-            //this.Focus();
+            var cancelled = e.Cancelled;
+            var success = (bool)e.Result;
+
+            var errorMessage = string.Empty;
+
             if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else if (e.Cancelled)
-            {
-                // Next, handle the case where the user canceled 
-                // the operation.
-                Console.WriteLine("Canceled");
-            }
-            else
-            {
-                // Finally, handle the case where the operation 
-                // succeeded.
-                if ((bool)e.Result)
-                {
-                    ctltreeView.Nodes[0].Nodes.Clear();
+                errorMessage = e.Error.Message;
 
-                    foreach (var dataset in mhtDatasets)
-                    {
-                        AddDataNode(dataset.Value);
-                    }
-
-
-                    statusBarPanelMsg.Text = "Session opened successfully.";
-                    if (string.IsNullOrEmpty(mstrLoadedfileName))
-                        this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
-                }
-                else
-                {
-                    var errorMessage = "Error loading session file";
-
-                    if (string.Equals(LastSessionLoadError, "Value cannot be null."))
-                        errorMessage += ". Try loading the file again -- in many cases the first load attempt fails, but the second load attempt succeeds.";
-
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            SessionFileOpenFinalize(success, cancelled, errorMessage);
         }
 
         void m_BackgroundWorker_OpenSession(object sender, DoWorkEventArgs e)
@@ -86,7 +53,7 @@ namespace DAnTE.Inferno
                 // the DoWork event handler, the Cancelled
                 // flag may not have been set, even though
                 // CancelAsync was called.
-                Console.WriteLine("Canceled");
+                Console.WriteLine("Cancelled");
             }
             else
             {
