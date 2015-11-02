@@ -109,10 +109,13 @@ namespace DAnTE.Inferno
                     if (SetOptionsUsingCommandLineParameters(objParseCommandLine))
                         success = true;
                 }
+                else
+                {
+                    if (objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0 && !objParseCommandLine.NeedToShowHelp)
+                        success = true;
+                }
 
-                if (!success ||
-                    objParseCommandLine.NeedToShowHelp ||
-                    objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0)
+                if (!success || objParseCommandLine.NeedToShowHelp)
                 {
 
                     var syntaxMessage = "Supported command line switches are /F and /L \n" +

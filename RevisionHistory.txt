@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.7.5784; November 2, 2015
+	- Fixed startup bug that showed the help window when no command line parameters were present
+
 Version 1.7.5780; October 29, 2015
 	- Fixed drag/drop of .dnt files to open them
 		- Disabled threaded loading, which often led to error "Value cannot be null" from R.NET
