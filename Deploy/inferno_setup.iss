@@ -1,3 +1,8 @@
+; This is an Inno Setup configuration file
+; http://www.jrsoftware.org/isinfo.php
+
+#define ApplicationVersion GetFileVersion('..\bin\Debug\Inferno.exe')
+
 [CustomMessages]
 AppName=InfernoRDN
 [Messages]
@@ -63,7 +68,8 @@ Name: {commondesktop}\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: desktopi
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: quicklaunchicon; IconFilename: {app}\inferno.ico; Comment: Inferno for Proteomics; IconIndex: 0
 [Setup]
 AppName=InfernoRDN
-AppVerName=InfernoRDN
+;AppVerName=InfernoRDN
+AppVersion={#ApplicationVersion}
 AppID=InfernoId
 AppPublisher=Pacific Northwest National Laboratory
 AppPublisherURL=http://omics.pnl.gov/software
@@ -75,7 +81,8 @@ AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=InfernoRDNSetup
-VersionInfoVersion=1.1.16
+;VersionInfoVersion=1.1.16
+VersionInfoVersion={#ApplicationVersion}
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
 VersionInfoCopyright=PNNL
