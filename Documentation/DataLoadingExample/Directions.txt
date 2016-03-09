@@ -1,0 +1,21 @@
+Data needs to be formatted as shown in file TestData.txt (empty cells area allowed for missing data)
+Specifically:
+
+Protein	Peptide	ConditionA	ConditionB	ConditionC
+ProtA	PEPTIDE1	4	3	2
+ProtA	PEPTIDE2	5	3	2
+ProtA	PEPTIDE3	7	5	3
+ProtB	PEPTIDE4	4	2	1
+ProtB	PEPTIDE5	 	5	2
+ProtC	PEPTIDE6	5	2	6
+
+
+== Data loading Steps ==
+
+1) Start InferoRDN, then use File, Open, Expression File
+2) Then select your file and click OK
+3) On the Select Columns dialog, click "Peptide" (or PeptideID if you used numbers) then click the >> button next to the "Unique Row ID" textbox.  
+4) Enable the "Protein ID" checkbox then use the 2nd >> button to associate your "Protein" column with the Protein ID textbox
+5) shift+Left click to select all of your data columns (ConditionA, ConditionB, ConditionC, etc.) then click the 3rd >> button to put them in the Data Columns textbox.
+
+Click OK and the data will load.  See also files MappingColumns.png and DataLoaded.png

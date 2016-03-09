@@ -1,0 +1,7 @@
+Protein	Peptide	ConditionA	ConditionB	ConditionC
+ProtA	PEPTIDE1	4	3	2
+ProtA	PEPTIDE2	5	3	2
+ProtA	PEPTIDE3	7	5	3
+ProtB	PEPTIDE4	4	2	1
+ProtB	PEPTIDE5		5	2
+ProtC	PEPTIDE6	5	2	6
