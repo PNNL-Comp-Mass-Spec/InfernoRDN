@@ -1,15 +1,19 @@
 InfernoRDN Change Log
 
-Version 1.7.5784; November 2, 2015
+Version 1.1.5928; March 25, 2016
+	- New RDotNet.dll that supports R version "3.2.4 Revised"
+	- Updated ICSharpCode.SharpZipLib.dll
+
+Version 1.1.5784; November 2, 2015
 	- Fixed startup bug that showed the help window when no command line parameters were present
 
-Version 1.7.5780; October 29, 2015
+Version 1.1.5780; October 29, 2015
 	- Fixed drag/drop of .dnt files to open them
 		- Disabled threaded loading, which often led to error "Value cannot be null" from R.NET
 	- Now supports specifying a file path to open as the first parameter when calling Inferno.exe
 		- Allows double-clicking a .dnt file to open in Inferno provided Inferno is associated with .dnt files
 
-Version 1.7.5774; October 23, 2015
+Version 1.1.5774; October 23, 2015
 	- Added right click context menus "Copy selected" and "Copy all" to data grids
 	- Now always including column headers when copy from a data grid
 	- Switched from ArrayList to List<string> or similar

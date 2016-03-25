@@ -20,6 +20,7 @@ Source: ..\bin\Debug\Interop.IasHelperLib.dll; DestDir: {app}
 Source: ..\bin\Debug\LumenWorks.Framework.IO.dll; DestDir: {app}
 Source: ..\bin\Debug\RDotNet.dll; DestDir: {app}
 Source: ..\bin\Debug\RDotNet.NativeLibrary.dll; DestDir: {app}
+Source: ..\bin\Debug\DynamicInterop.dll; DestDir: {app}
 Source: ..\bin\Debug\ZedGraph.dll; DestDir: {app}
 Source: ..\bin\Debug\Inferno.exe; DestDir: {app}
 Source: ..\bin\Debug\Inferno.pdb; DestDir: {app}
@@ -81,7 +82,6 @@ AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=InfernoRDNSetup
-;VersionInfoVersion=1.1.16
 VersionInfoVersion={#ApplicationVersion}
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
