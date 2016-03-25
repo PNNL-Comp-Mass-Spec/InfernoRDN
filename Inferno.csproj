@@ -103,6 +103,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ExtraControls\InputBox.dll</HintPath>
     </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.9.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>packages\LumenWorksCsvReader.3.9\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
+      <Private>True</Private>
     <Reference Include="RDotNet">
       <HintPath>RDN\RDotNet.dll</HintPath>
     </Reference>
@@ -773,6 +776,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1074,12 +1078,6 @@
     <None Include="Resources\repair.ico" />
     <None Include="Resources\ksysguard.png" />
     <None Include="Resources\open folder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Tools\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
-      <Project>{8EBD24FC-80F8-46F2-B0EF-F2065FE823C0}</Project>
-      <Name>LumenWorks.Framework.IO</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
