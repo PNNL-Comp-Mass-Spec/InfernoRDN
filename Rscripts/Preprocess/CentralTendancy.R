@@ -16,17 +16,27 @@ MeanCenter.Sub <- function(Data, Mean=TRUE, centerZero=TRUE)
 {
     ndata <- Data
 
+    # Compute the mean or median of each column in matrix Data, storing in vector Center
     if (Mean)
         Center <- apply(Data,2,mean,na.rm=TRUE)
     else
         Center <- apply(Data,2,median,na.rm=TRUE)
 
-    centerM <- matrix(Center,nrow=dim(Data)[1],ncol=dim(Data)[2],
-                        byrow=TRUE)
+    # Transform vector Center into a matrix
+    centerM <- matrix(Center,nrow=dim(Data)[1],ncol=dim(Data)[2], byrow=TRUE)
+                        
     if (centerZero)
+    {
+        # For data in each column, subtract the
+        # column mean or median from the values, 
+        # centering at zero
         ndata <- Data - centerM
+    }
     else
     {
+        # For data in each column, subtract the
+        # column mean or median from the values, 
+        # centering at the maximum mean or median
         newAverage <- max(Center,na.rm=TRUE)
         ndata <- Data - centerM + newAverage
     }
@@ -38,19 +48,30 @@ MeanCenter.Div <- function(Data, Mean=TRUE, centerZero=TRUE)
 {
     ndata <- Data
 
+    # Compute the mean or median of each column in matrix Data, storing in vector Center
     if (Mean)
         Center <- apply(Data,2,mean,na.rm=TRUE)
     else
         Center <- apply(Data,2,median,na.rm=TRUE)
 
-    centerM <- matrix(Center,nrow=dim(Data)[1],ncol=dim(Data)[2],
-                        byrow=TRUE)
+    # Transform vector Center into a matrix
+    centerM <- matrix(Center,nrow=dim(Data)[1],ncol=dim(Data)[2], byrow=TRUE)
+    
     if (centerZero)
+    {
+        # For data in each column, divide the
+        # values by the column mean or median, 
+        # centering at zero
         ndata <- Data / centerM
+    }
     else
     {
+        # For data in each column, divide the
+        # values by the column mean or median, 
+        # centering at the maximum mean or median
         newAverage <- max(Center,na.rm=TRUE)
         ndata <- (Data / centerM) * newAverage
     }
+    
     return(ndata)
 }
