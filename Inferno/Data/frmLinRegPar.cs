@@ -122,7 +122,13 @@ namespace DAnTE.Inferno
 
         public string Factor
         {
-            get { return mcmbBoxFactors.SelectedItem.ToString(); }
+            get
+            {
+                if (mcmbBoxFactors.SelectedItem == null)
+                    return string.Empty;
+
+                return mcmbBoxFactors.SelectedItem.ToString(); 
+            }
         }
 
         public int FactorIndex

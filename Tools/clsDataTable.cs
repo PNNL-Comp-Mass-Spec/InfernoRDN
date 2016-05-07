@@ -446,12 +446,14 @@ namespace DAnTE.Tools
 
             for (var row = 0; row < Nrows; row++)
             {
+                var colCount = dt.Rows[row].ItemArray.Length;
+
                 //DataRow workRow = dt.Rows[row] ;
-                var obj = new object[dt.Rows[row].ItemArray.Length];
-                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                var obj = new object[colCount];
+                for (var col = 0; col < colCount; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col].ToString();
-                    var cell = dt.Rows[row].ItemArray[col].ToString();
+                    var cell = obj[col].ToString();
                     if (cell.Equals("999999") || cell.Equals(" 9.999990e+05"))
                     {
                         var s = "";
@@ -472,13 +474,16 @@ namespace DAnTE.Tools
 
             for (var row = 0; row < Nrows; row++)
             {
+                var colCount = dt.Rows[row].ItemArray.Length;
+
                 //DataRow workRow = dt.Rows[row] ;
-                var obj = new object[dt.Rows[row].ItemArray.Length];
-                //obj = new string[dt.Rows[row].ItemArray.Length];
-                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                var obj = new object[colCount];
+                //obj = new string[colCount];
+                
+                for (var col = 0; col < colCount; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
-                    var cell = dt.Rows[row].ItemArray[col].ToString();
+                    var cell = obj[col].ToString();
                     if (cell.Equals("999999") || cell.Equals(" 9.999990e+05"))
                     {
                         obj[col] = DBNull.Value;
@@ -497,9 +502,11 @@ namespace DAnTE.Tools
 
             for (var row = 0; row < Nrows; row++)
             {
+                var colCount = dt.Rows[row].ItemArray.Length;
+
                 //DataRow workRow = dt.Rows[row] ;
-                var obj = new object[dt.Rows[row].ItemArray.Length];
-                for (var col = 0; col < dt.Rows[row].ItemArray.Length; col++)
+                var obj = new object[colCount];
+                for (var col = 0; col < colCount; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
                     if (dt.Rows[row].ItemArray[col] == DBNull.Value)

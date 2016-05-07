@@ -420,8 +420,39 @@ namespace DAnTE.Tools
                 return false;
             }
         }
+        
+        private static void CopyMatrixDataToTable(double[,] matrix, DataTable mdatatable, string[] rowNames)
+        {
+            for (var i = 0; i < matrix.GetLength(0); i++)
+            {
+                var dataRow = mdatatable.NewRow();
+                dataRow[0] = rowNames[i];
+                for (var j = 0; j < matrix.GetLength(1); j++)
+                {
+                    // Note: this functionality was moved from clsDataTable.ReplaceMissing because that function is very slow for large tables
+                    // This procedure of looking for cells with a value of 999999 is due to this R code in MiscCommands.R
+                    // See the comment above
+                    //
+                    // # Send matrix to the App. So, 'NA' should be replaced by '999999'
+                    // sendmatrix <- function(x){
+                    //   x[is.na(x)] <- 999999
+                    //   x <- as.matrix(x)
+                    //   return(x)
+                    // }
 
+                    if (Math.Abs(matrix[i, j] - 999999) < float.Epsilon)
+                    {
+                        dataRow[j + 1] = DBNull.Value;
+                    }
+                    else
+                    {
+                        dataRow[j + 1] = matrix[i, j];
+                    }
+                }
+                mdatatable.Rows.Add(dataRow);
+            }
 
+        }
 
         private DataTable RDoubleArray2DataTable(clsRarray mRary)
         {
@@ -429,35 +460,31 @@ namespace DAnTE.Tools
             var rowNames = mRary.rowNames;
             var colHeaders = mRary.colHeaders;
             var mdatatable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
 
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = clsRarray.rowNamesID;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
+            var dataColumn1 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = clsRarray.rowNamesID
+            };
+            //dataColumn1.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn1);
 
             for (var i = 0; i < colHeaders.Length; i++)
             {
-                mDataColumn = new DataColumn();
-                mDataColumn.DataType = System.Type.GetType("System.Double");
-                mDataColumn.ColumnName = colHeaders[i];
-                //mDataColumn.ReadOnly = true ;
-                mdatatable.Columns.Add(mDataColumn);
-            }
-            for (var i = 0; i < matrix.GetLength(0); i++)
-            {
-                mDataRow = mdatatable.NewRow();
-                mDataRow[0] = rowNames[i];
-                for (var j = 0; j < matrix.GetLength(1); j++)
+                var dataColumn = new DataColumn
                 {
-                    mDataRow[j + 1] = matrix[i, j];
-                }
-                mdatatable.Rows.Add(mDataRow);
+                    DataType = System.Type.GetType("System.Double"),
+                    ColumnName = colHeaders[i]
+                };
+                //dataColumn.ReadOnly = true ;
+                mdatatable.Columns.Add(dataColumn);
             }
-            //return clsDataTable.ClearZeros(mdatatable);
-            return clsDataTable.ReplaceMissing(mdatatable);
+
+            CopyMatrixDataToTable(matrix, mdatatable, rowNames);
+
+            // return clsDataTable.ClearZeros(mdatatable);
+            
+            return mdatatable;
         }
 
         private DataTable RDoubleVector2DataTable(clsRarray mRary)
@@ -466,33 +493,28 @@ namespace DAnTE.Tools
             var rowNames = mRary.rowNames;
             var colHeaders = mRary.colHs;
             var mdatatable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
 
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = clsRarray.rowNamesID;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
-
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.Double");
-            mDataColumn.ColumnName = colHeaders;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
-
-            for (var i = 0; i < matrix.GetLength(0); i++)
+            var dataColumn1 = new DataColumn
             {
-                mDataRow = mdatatable.NewRow();
-                mDataRow[0] = rowNames[i];
-                for (var j = 0; j < matrix.GetLength(1); j++)
-                {
-                    mDataRow[j + 1] = matrix[i, j];
-                }
-                mdatatable.Rows.Add(mDataRow);
-            }
-            //return clsDataTable.ClearZeros(mdatatable);
-            return clsDataTable.ReplaceMissing(mdatatable);
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = clsRarray.rowNamesID
+            };
+            //dataColumn.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn1);
+
+            var dataColumn2 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.Double"),
+                ColumnName = colHeaders
+            };
+            //dataColumn.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn2);
+
+            CopyMatrixDataToTable(matrix, mdatatable, rowNames);
+
+            // return clsDataTable.ClearZeros(mdatatable);
+            
+            return mdatatable;
         }
 
         private DataTable RstrArray2DataTable(clsRarray mRary)
@@ -501,32 +523,36 @@ namespace DAnTE.Tools
             var rowNames = mRary.rowNames;
             var colHeaders = mRary.colHeaders;
             var mdatatable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
 
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = clsRarray.rowNamesID;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
+            var dataColumn1 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = clsRarray.rowNamesID
+            };
+            //dataColumn1.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn1);
 
             for (var i = 0; i < colHeaders.Length; i++)
             {
-                mDataColumn = new DataColumn();
-                mDataColumn.DataType = System.Type.GetType("System.String");
-                mDataColumn.ColumnName = colHeaders[i];
-                //mDataColumn.ReadOnly = true ;
-                mdatatable.Columns.Add(mDataColumn);
+                var dataColumn = new DataColumn
+                {
+                    DataType = System.Type.GetType("System.String"),
+                    ColumnName = colHeaders[i]
+                };
+                //dataColumn.ReadOnly = true ;
+                mdatatable.Columns.Add(dataColumn);
             }
+
             for (var i = 0; i < matrix.GetLength(0); i++)
             {
-                mDataRow = mdatatable.NewRow();
-                mDataRow[0] = rowNames[i];
+                var dataRow = mdatatable.NewRow();
+                dataRow[0] = rowNames[i];
+
                 for (var j = 0; j < matrix.GetLength(1); j++)
                 {
-                    mDataRow[j + 1] = matrix[i, j];
+                    dataRow[j + 1] = matrix[i, j];
                 }
-                mdatatable.Rows.Add(mDataRow);
+                mdatatable.Rows.Add(dataRow);
             }
             //return clsDataTable.ClearZeros(mdatatable);
             return mdatatable;
@@ -539,36 +565,40 @@ namespace DAnTE.Tools
             var rowNames = mRary.rowNames;
             var colHeaders = mRary.colHeaders;
             var mdatatable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
 
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = clsRarray.rowNamesID;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
+            var dataColumn1 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = clsRarray.rowNamesID
+            };
+            //dataColumn1.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn1);
 
             for (var i = 0; i < colHeaders.Length; i++)
             {
-                mDataColumn = new DataColumn();
-                mDataColumn.DataType = System.Type.GetType("System.String");
+                var dataColumn = new DataColumn
+                {
+                    DataType = System.Type.GetType("System.String"),
+                    ColumnName = colHeaders[i]
+                };
+
                 //if (i == 0)
-                //    mDataColumn.DataType = System.Type.GetType("System.Double");
+                //    dataColumn.DataType = System.Type.GetType("System.Double");
                 //else
-                //    mDataColumn.DataType = System.Type.GetType("System.String");
-                mDataColumn.ColumnName = colHeaders[i];
-                //mDataColumn.ReadOnly = true ;
-                mdatatable.Columns.Add(mDataColumn);
+                //    dataColumn.DataType = System.Type.GetType("System.String");
+                //dataColumn.ReadOnly = true ;
+                mdatatable.Columns.Add(dataColumn);
             }
             for (var i = 0; i < matrix.GetLength(0); i++)
             {
-                mDataRow = mdatatable.NewRow();
-                mDataRow[0] = rowNames[i];
+                var dataRow = mdatatable.NewRow();
+                dataRow[0] = rowNames[i];
+
                 for (var j = 0; j < matrix.GetLength(1); j++)
                 {
-                    mDataRow[j + 1] = matrix[i, j];
+                    dataRow[j + 1] = matrix[i, j];
                 }
-                mdatatable.Rows.Add(mDataRow);
+                mdatatable.Rows.Add(dataRow);
             }
             //return clsDataTable.ClearZeros(mdatatable);
             return mdatatable;
@@ -580,36 +610,31 @@ namespace DAnTE.Tools
             var rowNames = mRary.rowNames;
             var colHeaders = mRary.colHeaders;
             var mdatatable = new DataTable();
-            DataColumn mDataColumn;
-            DataRow mDataRow;
 
-            mDataColumn = new DataColumn();
-            mDataColumn.DataType = System.Type.GetType("System.String");
-            mDataColumn.ColumnName = clsRarray.rowNamesID;
-            //mDataColumn.ReadOnly = true ;
-            mdatatable.Columns.Add(mDataColumn);
+            var dataColumn1 = new DataColumn
+            {
+                DataType = System.Type.GetType("System.String"),
+                ColumnName = clsRarray.rowNamesID
+            };
+            //dataColumn1.ReadOnly = true ;
+            mdatatable.Columns.Add(dataColumn1);
 
             for (var i = 0; i < colHeaders.Length; i++)
             {
-                mDataColumn = new DataColumn();
-                mDataColumn.DataType = System.Type.GetType("System.Double");
-                mDataColumn.ColumnName = colHeaders[i];
-                //mDataColumn.ReadOnly = true ;
-                mdatatable.Columns.Add(mDataColumn);
-            }
-            for (var i = 0; i < matrix.GetLength(0); i++)
-            {
-                mDataRow = mdatatable.NewRow();
-                mDataRow[0] = rowNames[i];
-                for (var j = 0; j < matrix.GetLength(1); j++)
+                var dataColumn = new DataColumn
                 {
-                    mDataRow[j + 1] = matrix[i, j];
-                }
-                mdatatable.Rows.Add(mDataRow);
+                    DataType = System.Type.GetType("System.Double"),
+                    ColumnName = colHeaders[i]
+                };
+                //dataColumn.ReadOnly = true ;
+                mdatatable.Columns.Add(dataColumn);
             }
-            //return clsDataTable.ClearZeros(mdatatable);
-            return clsDataTable.ReplaceMissing(mdatatable);
-            //return mdatatable;
+
+            CopyMatrixDataToTable(matrix, mdatatable, rowNames);
+
+            // return clsDataTable.ClearZeros(mdatatable);
+            
+            return mdatatable;
         }
 
         private clsRarray DataTable2Rarray(DataTable mTable)
