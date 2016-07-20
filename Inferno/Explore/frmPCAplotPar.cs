@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Purgatorio;
+using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmPCAplotPar : Form
     {
+        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+
         private readonly clsPCAplotPar mclsPCApar;
         private List<string> marrDatasets = new List<string>();
         private List<string> marrFactorList = new List<string>();
@@ -91,17 +94,7 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
-            {
-                if (mlstViewDataSets.Items[i].Checked)
-                {
-                    mlstViewDataSets.Items[i].Checked = false;
-                }
-                else
-                {
-                    mlstViewDataSets.Items[i].Checked = true;
-                }
-            }
+            clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, MAX, true);
         }
 
         private void frmPCAplotPar_Load(object sender, EventArgs e)
@@ -200,14 +193,14 @@ namespace DAnTE.Inferno
                     };
                     lstVcolln[i] = lstVItem;
 
-                    if (countChecked >= frmDAnTE.MAX_DATASETS_TO_SELECT)
+                    if (countChecked >= MAX)
                     {
                         continue;
                     }
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
-                mlstViewDataSets.Items.AddRange(lstVcolln);
+                mlstViewDataSets.Items.AddRange(lstVcolln);                
             }
         }
 

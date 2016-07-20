@@ -11,7 +11,10 @@ namespace DAnTE.Inferno
     public partial class frmMAplotsPar : Form
     {
         private readonly clsMAplotsPar mclsMApar;
+		
+		private int SUGGESTED_MAX = 20;
         private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
+
         private List<string> marrDatasets = new List<string>();
         string dataColor = "#00FF00", lColor = "#FF0000";
         private bool mWarnedTooManyDatasets = false;
@@ -28,7 +31,7 @@ namespace DAnTE.Inferno
         {
             if (mlstViewDataSets.CheckedIndices.Count < 2)
             {
-                MessageBox.Show("Select atleast two datasets.", "Select datasets");
+                MessageBox.Show("Select at least two datasets.", "Select datasets");
                 this.DialogResult = DialogResult.None;
             }
             else
@@ -43,32 +46,19 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
-            int N = mlstViewDataSets.Items.Count > MAX ? N = MAX : N = mlstViewDataSets.Items.Count; 
-            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+            var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, SUGGESTED_MAX, true);
 
-            for (var i = 0; i < N; i++)
-            {
-                mlstViewDataSets.Items[i].Checked = checkStateNew;
-            }
-
-            if (!checkStateNew)
-            {
-                for (var i = N; i < mlstViewDataSets.Items.Count; i++)
-                {
-                    mlstViewDataSets.Items[i].Checked = false;
-                }
-            }
-
-            if (mlstViewDataSets.Items.Count > MAX && checkStateNew)
+            if (mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating &&
+                (checkStateNew != clsUtilities.eCheckState.checkNone))
             {
                 if (!mWarnedTooManyDatasets)
                 {
                     mWarnedTooManyDatasets = true;
-                    MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                                    Environment.NewLine + "Therefore, total selected set to " + MAX.ToString() + ".",
+                    MessageBox.Show("This will select more datasets than is recommended to be plotted on one page.",
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+
         }
 
         private void mbtnDataC_Click(object sender, EventArgs e)
@@ -101,7 +91,7 @@ namespace DAnTE.Inferno
             {
                 mWarnedTooManyDatasets = true;
                 MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Maximum suggested is " + MAX.ToString() + ".",
+                    Environment.NewLine + "Maximum allowed is " + MAX + ".",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -201,10 +191,10 @@ namespace DAnTE.Inferno
             get
             {
                 string selected = null;
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
+                var indexes = mlstViewDataSets.CheckedIndices;
                 if (indexes.Count != 0)
                 {
-                    int k = 0;
+                    var k = 0;
                     foreach (int i in indexes)
                     {
                         if (k == 0)

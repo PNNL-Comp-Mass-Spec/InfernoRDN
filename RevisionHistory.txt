@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.6044; July 19, 2016
+	- Alter behavior of the Toggle All button on various plot windows to cycle from none selected to default selected, to all selected
+
 Version 1.1.5970; May 6, 2016
 	- Optimized loading large matrices into DataTable objects when scanning for the 999999 flag used by MiscCommands.R to indicate n/a values
 

@@ -13,7 +13,10 @@ namespace DAnTE.Inferno
     public partial class frmCorrelationPar : Form
     {
         private readonly clsCorrelationPar mclsCorrPar;
-        private readonly int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
+		
+        private int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
+        private readonly int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+
         private List<string> marrDatasets = new List<string>();
         private string ellipseC;
         private string mstrPaletteName = "Black-Body", customCol;
@@ -50,35 +53,13 @@ namespace DAnTE.Inferno
 
             if (mrBtnScatter.Checked)
             {
-                N = mlstViewDataSets.Items.Count > MAX ? MAX : mlstViewDataSets.Items.Count;
+                N = Math.Min(mlstViewDataSets.Items.Count, SUGGESTED_MAX);
             }
 
-            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
+            clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, N, true);
 
-            for (var i = 0; i < N; i++)
-            {
-                mlstViewDataSets.Items[i].Checked = checkStateNew;
-            }
+            PossiblyWarnTooManyDatasets();
 
-            if (!checkStateNew)
-            {
-                for (var i = N; i < mlstViewDataSets.Items.Count; i++)
-                {
-                    mlstViewDataSets.Items[i].Checked = false;
-                }
-            }
-
-            if (mrBtnScatter.Checked && (mlstViewDataSets.Items.Count > MAX) && checkStateNew)
-            {
-                if (!mWarnedTooManyDatasets)
-                {
-                    mWarnedTooManyDatasets = true;
-                    MessageBox.Show("This will select too many datasets to be plotted on one page." +
-                                    Environment.NewLine + "Therefore, total selected set to " +
-                                    MAX + ".",
-                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
         }
 
         private void mlstViewDataSets_ItemChecked(object sender, ItemCheckEventArgs e)
@@ -89,8 +70,7 @@ namespace DAnTE.Inferno
                 {
                     mWarnedTooManyDatasets = true;
                     MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                                    Environment.NewLine + "Maximum suggested is " + MAX +
-                                    ".",
+                                    Environment.NewLine + "Maximum allowed is " + MAX + ".",
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -123,8 +103,23 @@ namespace DAnTE.Inferno
             mchkBoxPoints.Enabled = mrBtnScatter.Checked;
             mchkBoxLoess.Enabled = mrBtnScatter.Checked;
             mpanelCorr.Enabled = !mrBtnScatter.Checked;
+
+            PossiblyWarnTooManyDatasets();
         }
-        
+
+        private void PossiblyWarnTooManyDatasets()
+        {
+            if (mrBtnScatter.Checked && mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating && !mWarnedTooManyDatasets)
+            {
+                if (mlstViewDataSets.CheckedIndices.Count > SUGGESTED_MAX)
+                {
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("You have selected more datasets than is recommended to be plotted on one page.",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
         private void mbtnDefaults_Click(object sender, EventArgs e)
         {
             this.mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
@@ -372,7 +367,8 @@ namespace DAnTE.Inferno
                         Tag = i
                     };
                     lstVcolln[i] = lstVItem;
-                    if (countChecked >= MAX)
+
+                    if (countChecked >= SUGGESTED_MAX)
                     {
                         continue;
                     }

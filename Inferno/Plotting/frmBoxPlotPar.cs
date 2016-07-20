@@ -13,7 +13,9 @@ namespace DAnTE.Inferno
         private readonly clsBoxPlotPar mclsBoxPlotPar;
         private List<string> marrDatasets = new List<string>();
         string color;
-        
+        private bool mWarnedTooManyDatasets = false;
+        private bool mPopulating = false;
+
         public frmBoxPlotPar(clsBoxPlotPar clsBoxPlotPar)
         {
             mclsBoxPlotPar = clsBoxPlotPar;
@@ -39,15 +41,21 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, System.EventArgs e)
         {
+			var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, frmDAnTE.MAX_DATASETS_TO_SELECT * 3, true);
 
-            var checkStateNew = mlstViewDataSets.Items.Cast<ListViewItem>().All(item => !item.Checked);
-
-            for (var i = 0; i < mlstViewDataSets.Items.Count; i++)
+            if (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT * 3 && !mPopulating &&
+                (checkStateNew != clsUtilities.eCheckState.checkNone))
             {
-                mlstViewDataSets.Items[i].Checked = checkStateNew;
+                if (!mWarnedTooManyDatasets)
+                {
+                    mWarnedTooManyDatasets = true;
+                    MessageBox.Show("This will select more datasets than is recommended to be plotted on one page.",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
 
         }
+
 
         private void mbtnColor_Click(object sender, EventArgs e)
         {
@@ -145,7 +153,10 @@ namespace DAnTE.Inferno
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
+
+                mPopulating = true;
                 mlstViewDataSets.Items.AddRange(lstVcolln);
+                mPopulating = false;
             }
         }
 
