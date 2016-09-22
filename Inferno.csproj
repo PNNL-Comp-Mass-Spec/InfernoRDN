@@ -714,6 +714,7 @@
     <Compile Include="Tools\clsParseCommandLine.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\clsProteinInfo.cs" />
     <Compile Include="Tools\clsRCmdLog.cs" />
     <Compile Include="Tools\clsRconnect.cs">
       <SubType>Code</SubType>

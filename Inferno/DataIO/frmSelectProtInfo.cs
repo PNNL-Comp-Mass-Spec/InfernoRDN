@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
             if (mlstBoxMT.Items.Count != 1)
                 MessageBox.Show("Select unique row identifier (e.g. Mass Tags)", "Incomplete Selection",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (mlstBoxIPI.Items.Count !=1)
+            else if (mlstBoxProteinInfo.Items.Count < 1)
                 MessageBox.Show("Select protein identifiers", "Incomplete Selection",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
@@ -65,16 +65,13 @@ namespace DAnTE.Inferno
                 mbtnMTUnselect.Enabled = false;
         }
 
-        private void mbtnIPISelect_Click(object sender, EventArgs e)
+        private void mbtnProteinSelect_Click(object sender, EventArgs e)
         {
-            if (mlstBoxIPI.Items.Count == 1)
-                MessageBox.Show("You have already selected protein IDs", "Protein IDs selected",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else if (mlstBoxAllCols.SelectedItems.Count == 1)
+            if (mlstBoxAllCols.SelectedItems.Count == 1)
             {
-                mlstBoxIPI.Items.Add(mlstBoxAllCols.SelectedItem);
+                mlstBoxProteinInfo.Items.Add(mlstBoxAllCols.SelectedItem);
                 mlstBoxAllCols.Items.Remove(mlstBoxAllCols.SelectedItem);
-                mbtnIPIUnselect.Enabled = true;
+                mbtnProteinUnselect.Enabled = true;
             }
             else
             {
@@ -83,18 +80,21 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void mbtnIPIUnselect_Click(object sender, EventArgs e)
+        private void mbtnProteinUnselect_Click(object sender, EventArgs e)
         {
-            if (mlstBoxIPI.SelectedItems.Count == 1)
+            if (mlstBoxProteinInfo.SelectedItems.Count > 0)
             {
-                mlstBoxAllCols.Items.Add(mlstBoxIPI.SelectedItem);
-                mlstBoxIPI.Items.Remove(mlstBoxIPI.SelectedItem);
+                mlstBoxAllCols.Items.Add(mlstBoxProteinInfo.SelectedItem);
+                mlstBoxProteinInfo.Items.Remove(mlstBoxProteinInfo.SelectedItem);
             }
             else
+            {
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-            if (mlstBoxIPI.Items.Count == 0)
-                mbtnIPIUnselect.Enabled = false;
+                                MessageBoxIcon.Exclamation);
+            }
+
+            if (mlstBoxProteinInfo.Items.Count == 0)
+                mbtnProteinUnselect.Enabled = false;
         }
 
         #region Properties
@@ -114,6 +114,7 @@ namespace DAnTE.Inferno
             }
         }
 
+        [Obsolete("Unused", true)]
         public string[] Columns2Remove
         {
             get
@@ -131,6 +132,9 @@ namespace DAnTE.Inferno
         {
             get
             {
+                if (mlstBoxMT.Items.Count == 0)
+                    return string.Empty;
+
                 return mlstBoxMT.Items[0].ToString();
             }
         }
@@ -139,7 +143,28 @@ namespace DAnTE.Inferno
         {
             get
             {
+                if (mlstBoxProteinInfo.Items.Count == 0)
+                    return string.Empty;
+
                 return mlstBoxProteinInfo.Items[0].ToString();
+            }
+        }
+
+        public List<string> ProteinMetadataColumns
+        {
+            get
+            {
+                if (mlstBoxProteinInfo.Items.Count < 1)
+                    return new List<string>();
+
+                var metadataColumns = new List<string>();
+
+                for (var i = 1; i < mlstBoxProteinInfo.Items.Count; i++)
+                {
+                    metadataColumns.Add(mlstBoxProteinInfo.Items[i].ToString());
+                }
+
+                return metadataColumns;
             }
         }
         #endregion

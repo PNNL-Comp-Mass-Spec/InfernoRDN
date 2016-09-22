@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using DAnTE.Paradiso;
 using DAnTE.Properties;
@@ -241,35 +244,47 @@ namespace DAnTE.Inferno
 
         /// <summary>
         /// Creates a new datatable with first column having unique rowIDs and
-        /// multiple columns with data
+        /// multiple columns with data. 
+        /// Checks for and removes any columns with duplicate column names
         /// </summary>
         /// <param name="mDT"></param>
         /// <param name="RowID"></param>
         /// <param name="DataCols"></param>
         /// <returns></returns>
-        private DataTable ArrangeDataTable(DataTable mDT, string RowID, string[] DataCols)
+        private DataTable ArrangeDataTable(DataTable mDT, string RowID, IEnumerable<string> dataCols)
         {
             var dtEset = mDT.Copy();
             var columns = dtEset.Columns;
-            Array.Sort(DataCols);
-            var Cols2Rem = new string[dtEset.Columns.Count - DataCols.Length - 1];
 
-            var z = 0;
+            // Clone dataCols so that we can sort it
+            var sortedColumns = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var item in dataCols)
+            {
+                sortedColumns.Add(item);
+            }
+
+            var columnsToRemove = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);            
+
             foreach (DataColumn column in columns)
             {
-                if (Array.BinarySearch(DataCols, column.ColumnName) < 0 &&
-                    !column.ColumnName.Equals(RowID))
-                    Cols2Rem[z++] = column.ColumnName;
+                if (sortedColumns.Contains(column.ColumnName) || column.ColumnName.Equals(RowID))
+                    continue;
+
+                if (!columnsToRemove.Contains(column.ColumnName))
+                    columnsToRemove.Add(column.ColumnName);
             }
-            foreach (var s in Cols2Rem)
+
+            foreach (var s in columnsToRemove)
             {
                 dtEset.Columns.Remove(s);
             }
+
             return dtEset;
         }
 
         /// <summary>
         /// Overloaded method of the above to create a table with only two columns.
+        /// Checks for and removes any columns with duplicate column names
         /// </summary>
         /// <param name="mDT"></param>
         /// <param name="RowID"></param>
@@ -277,21 +292,8 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private DataTable ArrangeDataTable(DataTable mDT, string RowID, string Cols)
         {
-            var dtEset = mDT.Copy();
-            var columns = dtEset.Columns;
-            var Cols2Rem = new string[dtEset.Columns.Count - 2];
-
-            var z = 0;
-            foreach (DataColumn column in columns)
-            {
-                if (!Cols.Equals(column.ColumnName) && !RowID.Equals(column.ColumnName))
-                    Cols2Rem[z++] = column.ColumnName;
-            }
-            foreach (var s in Cols2Rem)
-            {
-                dtEset.Columns.Remove(s);
-            }
-            return dtEset;
+            var dataCols = new List<string> {Cols};
+            return ArrangeDataTable(mDT, RowID, dataCols);
         }
 
 
@@ -301,42 +303,92 @@ namespace DAnTE.Inferno
         /// Finally get the 'cleaned' data back
         /// </summary>
         /// <param name="mDT"></param>
-        /// <param name="protIPI"></param>
+        /// <param name="proteinIdentifierColumn"></param>
         /// <param name="rowID"></param>
         /// <returns></returns>
-        private DataTable LoadProtColumns(DataTable mDT, string protIPI, string rowID)
+        private DataTable LoadProtColumns(DataTable mDT, string proteinIdentifierColumn, string rowID, List<string> metdataColumns)
         {
             DataTable mDTProts;
 
             try
             {
-                mDTProts = ArrangeDataTable(mDT, rowID, protIPI);
+                if (metdataColumns.Count > 0)
+                {
+                    var allColumns = new List<string> {proteinIdentifierColumn};
+                    allColumns.AddRange(metdataColumns);
+
+                    // Table will have more than two columns: rowID and proteinIdentifierColumn, then metdataColumns
+                    // ProteinID, ProteinMetadata, and rowID (the key column name in the Eset table)
+                    mDTProts = ArrangeDataTable(mDT, rowID, allColumns);
+                }
+                else
+                {
+                    // Table will have two columns: rowID and proteinIdentifierColumn
+                    mDTProts = ArrangeDataTable(mDT, rowID, proteinIdentifierColumn);
+                }
+                
+
                 mDTProts.TableName = "ProtInfo";
+
+                // Rename the first column from Protein Name to Row_ID
                 mDTProts.Columns[0].ColumnName = "Row_ID";
-                mstrArrProteins = clsDataTable.DataColumn2strArray(mDT, protIPI);
+
+                // Generate parallel lists of Protein names and MassTagIDs (aka Eset row identifiers)
+                mstrArrProteins = clsDataTable.DataColumn2strArray(mDT, proteinIdentifierColumn);
                 mstrArrMassTags = clsDataTable.DataColumn2strArray(mDT, rowID);
+
                 try
                 {
-                    mRConnector.SetSymbolCharVector("protIPI", mstrArrProteins);
+                    // Push the data into R, storing as table ProtInfo, with MassTagID in the first column and ProteinIdentifier in the second column
+                    // Currently mDTProts is not used for this, instead mstrArrProteins and mstrArrMassTags are used
+
+                    mRConnector.SetSymbolCharVector("proteinIdentifierColumn", mstrArrProteins);
                     mRConnector.SetSymbolCharVector("MassTags", mstrArrMassTags);
-                    var rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=protIPI)";
+
+                    // Add any protein metadata
+                    var rCmdAddon = new StringBuilder();
+
+                    foreach (var proteinMetadataColName in metdataColumns)
+                    {
+                        var metadataRows = clsDataTable.DataColumn2strArray(mDT, proteinMetadataColName);
+
+                        var genericMetadataColName = GetCleanColumnName(proteinMetadataColName);
+
+                        mRConnector.SetSymbolCharVector(genericMetadataColName, metadataRows);
+
+                        rCmdAddon.Append("," + genericMetadataColName + "=" + genericMetadataColName);
+                    }
+
+                    var rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=proteinIdentifierColumn" + rCmdAddon.ToString() + ")";
                     mRConnector.EvaluateNoReturn(rcmd);
+
                     if (mhtDatasets.ContainsKey("Expressions"))
                         rcmd = "ProtInfo<-remove.emptyProtInfo(ProtInfo, checkEset=TRUE)";
                     else
                         rcmd = "ProtInfo<-remove.emptyProtInfo(ProtInfo)";
+
                     mRConnector.EvaluateNoReturn(rcmd);
 
-                    clsRarray.rowNamesID = "RowID"; // Otherwise this will conflict with 'Row_ID'
+                    // Change .rowNamesID from "Row_ID" to "RowID", otherwise this will conflict with the "Row_ID" used by Eset
+                    clsRarray.rowNamesID = "RowID";
                     if (mRConnector.GetTableFromRProtInfoMatrix("ProtInfo"))
                     {
+                        // Change .rowNamesID from RowID (defined by R) to Row_ID (used in Eset)
                         clsRarray.rowNamesID = "Row_ID";
                         mDTProts = mRConnector.DataTable.Copy();
+
+                        // mDTProts now has columns RowID, Row_ID, ProteinID
                         mDTProts.TableName = "ProtInfo";
                         if (mDTProts.Columns.CanRemove(mDTProts.Columns[0]))
-                        {//remove the line number column which comes from R row names.
+                        {
+                            // remove the line number column that comes from R row names, i.e. the RowID column
                             mDTProts.Columns.Remove(mDTProts.Columns[0]);
-                            mDTProts.Columns[0].ColumnName = "Row_ID";
+
+                            // Make sure the first column is now named Row_ID
+                            if (!string.Equals(mDTProts.Columns[0].ColumnName, "Row_ID"))
+                            {
+                                mDTProts.Columns[0].ColumnName = "Row_ID";
+                            }
                         }
                     }
                 }
@@ -377,7 +429,20 @@ namespace DAnTE.Inferno
             return mDTProtInfo;
         }
 
-        [Obsolete("Unused")]
+        /// <summary>
+        /// Parses columnName to replace any characters that are not letters or numbers with underscores
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        private string GetCleanColumnName(string columnName)
+        {
+            var reNotLetterOrNumber = new Regex("[^A-Z0-9]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            var cleanName = reNotLetterOrNumber.Replace(columnName, "_");
+            return cleanName;
+        }
+
+        [Obsolete("Unused", true)]
         private DataTable OpenFile_test(string filename)
         {
             //bool success = true;
@@ -415,7 +480,7 @@ namespace DAnTE.Inferno
             if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
             {
                 var rowID = mfrmSelectCols.RowIDColumn;
-                var dataCols = mfrmSelectCols.DataColumns;
+                var dataCols = mfrmSelectCols.DataColumns.ToList();
                 try
                 {
                     dTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols); // create the datatable
@@ -500,14 +565,19 @@ namespace DAnTE.Inferno
                     if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
                     {
                         rowID = mfrmSelectCols.RowIDColumn; //mass tags
-                        var dataCols = mfrmSelectCols.DataColumns;
+                        var dataCols = mfrmSelectCols.DataColumns.ToList();
                         try
                         {
                             var mDTselectedEset1 = ArrangeDataTable(mDTloaded, rowID, dataCols);
+
+                            // Rename the first column from MassTagID (or whatever the user-supplied name is) to Row_ID
                             mDTselectedEset1.Columns[0].ColumnName = "Row_ID";
+
+                            // Remove rows with no data or duplicate data
                             mDTselectedEset1 = clsDataTable.RemoveDuplicateRows2(mDTselectedEset1,
                                                                                  mDTselectedEset1.Columns[0].ColumnName);
-                            // handle duplicate rows
+                            
+                            // Copy the data into R
                             mDTselectedEset1.TableName = "Eset";
                             success = mRConnector.SendTable2RmatrixNumeric("Eset", mDTselectedEset1);
                             if (mhtDatasets.ContainsKey("Factors"))
@@ -534,10 +604,10 @@ namespace DAnTE.Inferno
                             return false;
                         }
 
-                        if (mfrmSelectCols.Proteins && success) // Protein info needs to be loaded ?
+                        if (mfrmSelectCols.Proteins && !string.IsNullOrWhiteSpace(mfrmSelectCols.ProteinIDColumn) && success)
                         {
-                            // loads to mDataTableProtInfo and then sends to R
-                            var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
+                            // Load protein info then send to R
+                            var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID, mfrmSelectCols.ProteinMetadataColumns);
                             mdtProts.TableName = "ProtInfo";
                             AddDataset2HashTable(mdtProts);
                         }
@@ -567,8 +637,8 @@ namespace DAnTE.Inferno
                     if (mfrmSelectProts.ShowDialog() == DialogResult.OK)
                     {
                         rowID = mfrmSelectProts.RowIDColumn; //mass tags
-                        var protIPI = mfrmSelectProts.ProteinIDColumn;
-                        var mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
+                        var proteinIdentifierColumn = mfrmSelectProts.ProteinIDColumn;
+                        var mdtProts = LoadProtColumns(mDTtmp, proteinIdentifierColumn, rowID, mfrmSelectProts.ProteinMetadataColumns);
                         mdtProts.TableName = "ProtInfo";
                         AddDataset2HashTable(mdtProts);
                     }
@@ -653,7 +723,7 @@ namespace DAnTE.Inferno
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        [Obsolete("Unused")]
+        [Obsolete("Unused", true)]
         private bool OpenFile2(string filename)
         {
             var success = true;
@@ -698,7 +768,7 @@ namespace DAnTE.Inferno
                     if (mfrmSelectCols.ShowDialog() == DialogResult.OK)
                     {
                         rowID = mfrmSelectCols.RowIDColumn; //mass tags
-                        var dataCols = mfrmSelectCols.DataColumns;
+                        var dataCols = mfrmSelectCols.DataColumns.ToList();
                         DataTable mDTselectedEset1;
                         try
                         {
@@ -749,10 +819,10 @@ namespace DAnTE.Inferno
                         {
                             success = false;
                         }
-                        if (mfrmSelectCols.Proteins && success) // Protein info needs to be loaded ?
+                        if (mfrmSelectCols.Proteins && !string.IsNullOrWhiteSpace(mfrmSelectCols.ProteinIDColumn) && success) // Protein info needs to be loaded ?
                         {
                             // loads to mDataTableProtInfo and then sends to R
-                            var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID);
+                            var mdtProts = LoadProtColumns(mDTloaded, mfrmSelectCols.ProteinIDColumn, rowID, mfrmSelectCols.ProteinMetadataColumns);
                             mdtProts.TableName = "ProtInfo";
                             AddDataset2HashTable(mdtProts);
                         }
@@ -782,8 +852,8 @@ namespace DAnTE.Inferno
                     if (mfrmSelectProts.ShowDialog() == DialogResult.OK)
                     {
                         rowID = mfrmSelectProts.RowIDColumn; //mass tags
-                        var protIPI = mfrmSelectProts.ProteinIDColumn;
-                        var mdtProts = LoadProtColumns(mDTtmp, protIPI, rowID);
+                        var proteinIdentifierColumn = mfrmSelectProts.ProteinIDColumn;
+                        var mdtProts = LoadProtColumns(mDTtmp, proteinIdentifierColumn, rowID, mfrmSelectProts.ProteinMetadataColumns);
                         mdtProts.TableName = "ProtInfo";
                         AddDataset2HashTable(mdtProts);
                     }
