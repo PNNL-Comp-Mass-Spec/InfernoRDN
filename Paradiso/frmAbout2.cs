@@ -100,7 +100,7 @@ namespace DAnTE.Paradiso
         {
 
             var credits = string.Empty +
-                             "Maintained by Matthew Monroe and Gary Kiebel at Pacific Northwest National Laboratory" +
+                             "Maintained by Matthew Monroe at Pacific Northwest National Laboratory" +
                              Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
                              Environment.NewLine +
                              Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
