@@ -139,7 +139,7 @@ namespace DAnTE.Inferno
         {
             get
             {
-                return mlstBoxIPI.Items[0].ToString();
+                return mlstBoxProteinInfo.Items[0].ToString();
             }
         }
         #endregion

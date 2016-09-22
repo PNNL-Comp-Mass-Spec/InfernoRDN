@@ -9,11 +9,11 @@ namespace DAnTE.Inferno
         public frmSelectColumns()
         {
             InitializeComponent();
-            if (!mchkBoxIPI.Checked)
+            if (!mchkBoxProtein.Checked)
             {
-                mlstBoxIPI.Enabled = false;
-                mbtnIPISelect.Enabled = false;
-                mbtnIPIUnselect.Enabled = false;
+                mlstBoxProteinInfo.Enabled = false;
+                mbtnProteinSelect.Enabled = false;
+                mbtnProteinUnselect.Enabled = false;
             }
         }
 
@@ -25,7 +25,7 @@ namespace DAnTE.Inferno
             else if (mlstBoxData.Items.Count < 2)
                 MessageBox.Show("Not enough datasets", "Incomplete Selection",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (mchkBoxIPI.Checked && mlstBoxIPI.Items.Count !=1)
+            else if (mchkBoxProtein.Checked && mlstBoxProteinInfo.Items.Count !=1)
                 MessageBox.Show("Select protein identifiers", "Incomplete Selection",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
@@ -40,18 +40,18 @@ namespace DAnTE.Inferno
 
         private void SelectIPI_event(object sender, EventArgs e)
         {
-            if (mchkBoxIPI.Checked)
+            if (mchkBoxProtein.Checked)
             {
-                mlstBoxIPI.Enabled = true;
-                mbtnIPISelect.Enabled = true;
-                if (mlstBoxIPI.Items.Count > 0)
-                    mbtnIPIUnselect.Enabled = true;
+                mlstBoxProteinInfo.Enabled = true;
+                mbtnProteinSelect.Enabled = true;
+                if (mlstBoxProteinInfo.Items.Count > 0)
+                    mbtnProteinUnselect.Enabled = true;
             }
             else
             {
-                mlstBoxIPI.Enabled = false;
-                mbtnIPISelect.Enabled = false;
-                mbtnIPIUnselect.Enabled = false;
+                mlstBoxProteinInfo.Enabled = false;
+                mbtnProteinSelect.Enabled = false;
+                mbtnProteinUnselect.Enabled = false;
             }
         }
 
@@ -90,6 +90,7 @@ namespace DAnTE.Inferno
                 MessageBox.Show("Select Datasets", "Empty selection", MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
             }
+
             if (mlstBoxData.Items.Count == 0)
                 mbtnDataUnselect.Enabled = false;
         }
@@ -224,14 +225,14 @@ namespace DAnTE.Inferno
         {
             get
             {
-                return mchkBoxIPI.Checked;
+                return mchkBoxProtein.Checked;
             }
             set
             {
                 if (value)
                 {
-                    mchkBoxIPI.Checked = false;
-                    mlstBoxIPI.Enabled = false;
+                    mchkBoxProtein.Checked = false;
+                    mlstBoxProteinInfo.Enabled = false;
                 }
             }
         }

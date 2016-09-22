@@ -31,17 +31,17 @@ namespace DAnTE.Inferno
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectColumns));
             this.mlstBoxAllCols = new System.Windows.Forms.ListBox();
             this.mlstBoxMT = new System.Windows.Forms.ListBox();
-            this.mlstBoxIPI = new System.Windows.Forms.ListBox();
+            this.mlstBoxProteinInfo = new System.Windows.Forms.ListBox();
             this.mbtnOK = new System.Windows.Forms.Button();
             this.mbtnCancel = new System.Windows.Forms.Button();
-            this.mchkBoxIPI = new System.Windows.Forms.CheckBox();
+            this.mchkBoxProtein = new System.Windows.Forms.CheckBox();
             this.mlstBoxData = new System.Windows.Forms.ListBox();
             this.mbtnDataSelect = new System.Windows.Forms.Button();
             this.mbtnDataUnselect = new System.Windows.Forms.Button();
             this.mbtnMTUnselect = new System.Windows.Forms.Button();
             this.mbtnMTSelect = new System.Windows.Forms.Button();
-            this.mbtnIPIUnselect = new System.Windows.Forms.Button();
-            this.mbtnIPISelect = new System.Windows.Forms.Button();
+            this.mbtnProteinUnselect = new System.Windows.Forms.Button();
+            this.mbtnProteinSelect = new System.Windows.Forms.Button();
             this.niceLine6 = new DAnTE.ExtraControls.NiceLine();
             this.niceLine5 = new DAnTE.ExtraControls.NiceLine();
             this.niceLine4 = new DAnTE.ExtraControls.NiceLine();
@@ -69,14 +69,14 @@ namespace DAnTE.Inferno
             this.mlstBoxMT.Size = new System.Drawing.Size(242, 56);
             this.mlstBoxMT.TabIndex = 0;
             // 
-            // mlstBoxIPI
+            // mlstBoxProteinInfo
             // 
-            this.mlstBoxIPI.FormattingEnabled = true;
-            this.mlstBoxIPI.HorizontalScrollbar = true;
-            this.mlstBoxIPI.Location = new System.Drawing.Point(366, 154);
-            this.mlstBoxIPI.Name = "mlstBoxIPI";
-            this.mlstBoxIPI.Size = new System.Drawing.Size(242, 56);
-            this.mlstBoxIPI.TabIndex = 1;
+            this.mlstBoxProteinInfo.FormattingEnabled = true;
+            this.mlstBoxProteinInfo.HorizontalScrollbar = true;
+            this.mlstBoxProteinInfo.Location = new System.Drawing.Point(366, 154);
+            this.mlstBoxProteinInfo.Name = "mlstBoxProteinInfo";
+            this.mlstBoxProteinInfo.Size = new System.Drawing.Size(242, 56);
+            this.mlstBoxProteinInfo.TabIndex = 1;
             // 
             // mbtnOK
             // 
@@ -99,18 +99,18 @@ namespace DAnTE.Inferno
             this.mbtnCancel.UseVisualStyleBackColor = true;
             this.mbtnCancel.Click += new System.EventHandler(this.mbtnCancel_Click);
             // 
-            // mchkBoxIPI
+            // mchkBoxProtein
             // 
-            this.mchkBoxIPI.AutoSize = true;
-            this.mchkBoxIPI.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mchkBoxIPI.Location = new System.Drawing.Point(388, 122);
-            this.mchkBoxIPI.Name = "mchkBoxIPI";
-            this.mchkBoxIPI.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mchkBoxIPI.Size = new System.Drawing.Size(199, 17);
-            this.mchkBoxIPI.TabIndex = 7;
-            this.mchkBoxIPI.Text = "Protein ID (Only for Proteomics Data)";
-            this.mchkBoxIPI.UseVisualStyleBackColor = true;
-            this.mchkBoxIPI.CheckStateChanged += new System.EventHandler(this.SelectIPI_event);
+            this.mchkBoxProtein.AutoSize = true;
+            this.mchkBoxProtein.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mchkBoxProtein.Location = new System.Drawing.Point(388, 122);
+            this.mchkBoxProtein.Name = "mchkBoxProtein";
+            this.mchkBoxProtein.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mchkBoxProtein.Size = new System.Drawing.Size(199, 17);
+            this.mchkBoxProtein.TabIndex = 7;
+            this.mchkBoxProtein.Text = "Protein ID (Only for Proteomics Data)";
+            this.mchkBoxProtein.UseVisualStyleBackColor = true;
+            this.mchkBoxProtein.CheckStateChanged += new System.EventHandler(this.SelectIPI_event);
             // 
             // mlstBoxData
             // 
@@ -164,26 +164,26 @@ namespace DAnTE.Inferno
             this.mbtnMTSelect.UseVisualStyleBackColor = true;
             this.mbtnMTSelect.Click += new System.EventHandler(this.mbtnMTSelect_Click);
             // 
-            // mbtnIPIUnselect
+            // mbtnProteinUnselect
             // 
-            this.mbtnIPIUnselect.Enabled = false;
-            this.mbtnIPIUnselect.Location = new System.Drawing.Point(305, 183);
-            this.mbtnIPIUnselect.Name = "mbtnIPIUnselect";
-            this.mbtnIPIUnselect.Size = new System.Drawing.Size(37, 23);
-            this.mbtnIPIUnselect.TabIndex = 15;
-            this.mbtnIPIUnselect.Text = "<<";
-            this.mbtnIPIUnselect.UseVisualStyleBackColor = true;
-            this.mbtnIPIUnselect.Click += new System.EventHandler(this.mbtnIPIUnselect_Click);
+            this.mbtnProteinUnselect.Enabled = false;
+            this.mbtnProteinUnselect.Location = new System.Drawing.Point(305, 183);
+            this.mbtnProteinUnselect.Name = "mbtnProteinUnselect";
+            this.mbtnProteinUnselect.Size = new System.Drawing.Size(37, 23);
+            this.mbtnProteinUnselect.TabIndex = 15;
+            this.mbtnProteinUnselect.Text = "<<";
+            this.mbtnProteinUnselect.UseVisualStyleBackColor = true;
+            this.mbtnProteinUnselect.Click += new System.EventHandler(this.mbtnProteinUnselect_Click);
             // 
-            // mbtnIPISelect
+            // mbtnProteinSelect
             // 
-            this.mbtnIPISelect.Location = new System.Drawing.Point(305, 158);
-            this.mbtnIPISelect.Name = "mbtnIPISelect";
-            this.mbtnIPISelect.Size = new System.Drawing.Size(37, 23);
-            this.mbtnIPISelect.TabIndex = 14;
-            this.mbtnIPISelect.Text = ">>";
-            this.mbtnIPISelect.UseVisualStyleBackColor = true;
-            this.mbtnIPISelect.Click += new System.EventHandler(this.mbtnIPISelect_Click);
+            this.mbtnProteinSelect.Location = new System.Drawing.Point(305, 158);
+            this.mbtnProteinSelect.Name = "mbtnProteinSelect";
+            this.mbtnProteinSelect.Size = new System.Drawing.Size(37, 23);
+            this.mbtnProteinSelect.TabIndex = 14;
+            this.mbtnProteinSelect.Text = ">>";
+            this.mbtnProteinSelect.UseVisualStyleBackColor = true;
+            this.mbtnProteinSelect.Click += new System.EventHandler(this.mbtnProteinSelect_Click);
             // 
             // niceLine6
             // 
@@ -239,15 +239,15 @@ namespace DAnTE.Inferno
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.mbtnCancel;
             this.ClientSize = new System.Drawing.Size(640, 536);
-            this.Controls.Add(this.mchkBoxIPI);
+            this.Controls.Add(this.mchkBoxProtein);
             this.Controls.Add(this.niceLine6);
             this.Controls.Add(this.niceLine5);
             this.Controls.Add(this.niceLine4);
             this.Controls.Add(this.niceLine3);
             this.Controls.Add(this.niceLine2);
             this.Controls.Add(this.niceLine1);
-            this.Controls.Add(this.mbtnIPIUnselect);
-            this.Controls.Add(this.mbtnIPISelect);
+            this.Controls.Add(this.mbtnProteinUnselect);
+            this.Controls.Add(this.mbtnProteinSelect);
             this.Controls.Add(this.mbtnMTUnselect);
             this.Controls.Add(this.mbtnMTSelect);
             this.Controls.Add(this.mbtnDataUnselect);
@@ -255,7 +255,7 @@ namespace DAnTE.Inferno
             this.Controls.Add(this.mlstBoxData);
             this.Controls.Add(this.mbtnCancel);
             this.Controls.Add(this.mbtnOK);
-            this.Controls.Add(this.mlstBoxIPI);
+            this.Controls.Add(this.mlstBoxProteinInfo);
             this.Controls.Add(this.mlstBoxAllCols);
             this.Controls.Add(this.mlstBoxMT);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -274,17 +274,17 @@ namespace DAnTE.Inferno
 
         private System.Windows.Forms.ListBox mlstBoxAllCols;
         private System.Windows.Forms.ListBox mlstBoxMT;
-        private System.Windows.Forms.ListBox mlstBoxIPI;
+        private System.Windows.Forms.ListBox mlstBoxProteinInfo;
         private System.Windows.Forms.Button mbtnOK;
         private System.Windows.Forms.Button mbtnCancel;
-        private System.Windows.Forms.CheckBox mchkBoxIPI;
+        private System.Windows.Forms.CheckBox mchkBoxProtein;
         private System.Windows.Forms.ListBox mlstBoxData;
         private System.Windows.Forms.Button mbtnDataSelect;
         private System.Windows.Forms.Button mbtnDataUnselect;
         private System.Windows.Forms.Button mbtnMTUnselect;
         private System.Windows.Forms.Button mbtnMTSelect;
-        private System.Windows.Forms.Button mbtnIPIUnselect;
-        private System.Windows.Forms.Button mbtnIPISelect;
+        private System.Windows.Forms.Button mbtnProteinUnselect;
+        private System.Windows.Forms.Button mbtnProteinSelect;
         private ExtraControls.NiceLine niceLine1;
         private ExtraControls.NiceLine niceLine2;
         private ExtraControls.NiceLine niceLine3;
