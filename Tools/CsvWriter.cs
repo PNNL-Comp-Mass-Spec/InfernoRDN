@@ -8,7 +8,7 @@ namespace DAnTE.Tools
 	/// <summary>
 	/// Summary description for CsvWriter.
 	/// </summary>
-	public class CsvWriter
+	public static class CsvWriter
 	{
         public static string WriteToString(DataTable table, bool header, bool quoteAll, bool tab)
 		{
@@ -27,7 +27,7 @@ namespace DAnTE.Tools
 					if (i < table.Columns.Count - 1)
 						stream.Write(',');
 					else
-						stream.Write("\r\n");
+						stream.Write(Environment.NewLine);
 				}
 			}
 			foreach (DataRow row in table.Rows)
@@ -38,7 +38,7 @@ namespace DAnTE.Tools
 					if (i < table.Columns.Count - 1)
 						stream.Write(',');
 					else
-						stream.Write("\r\n");
+						stream.Write(Environment.NewLine);
 				}
 			}
 		}
@@ -66,7 +66,7 @@ namespace DAnTE.Tools
             }
             else
             {
-                stream.Write("\r\n");
+                stream.Write(Environment.NewLine);
             }
 	    }
 
@@ -126,21 +126,21 @@ namespace DAnTE.Tools
             if (mstrHeader.Length > 0)
             {
                 stream.Write("DataFile:" + mstrHeader);
-                stream.Write("\r\n");
+                stream.Write(Environment.NewLine);
             }
             var CurrTime = DateTime.Now;
             stream.Write("Time:" + 
                 CurrTime.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us")));
-            stream.Write("\r\n");
-            stream.Write("\r\n");
+            stream.Write(Environment.NewLine);
+            stream.Write(Environment.NewLine);
 
             foreach (System.Windows.Forms.ListViewGroup lgrp in lstView.Groups)
             {
                 WriteItem(stream, lgrp.Header, quoteAll);
-                stream.Write("\r\n");
+                stream.Write(Environment.NewLine);
                 for (var i = 0; i < lgrp.Header.Length; i++)
                     stream.Write("-");
-                stream.Write("\r\n");
+                stream.Write(Environment.NewLine);
                 foreach (System.Windows.Forms.ListViewItem litem in lgrp.Items)
                 {
                     for (var i = 0; i < lstView.Columns.Count; i++)
@@ -151,10 +151,10 @@ namespace DAnTE.Tools
                             stream.Write(':');
                         }
                         else
-                            stream.Write("\r\n");
+                            stream.Write(Environment.NewLine);
                     }
                 }
-                stream.Write("\r\n");
+                stream.Write(Environment.NewLine);
             }
         }
 

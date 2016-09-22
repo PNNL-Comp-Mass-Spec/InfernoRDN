@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text;
@@ -346,7 +347,7 @@ namespace DAnTE.Paradiso
 			{
                 mSBemail.Append(";    Summary : ");
 				//Uri escapeString = new Uri(mstrShortSummary) ;
-                mSBemail.Append(mstrShortSummary + "\r\n");
+                mSBemail.Append(mstrShortSummary + Environment.NewLine);
 				//optionsSB.Append(System.Uri.EscapeString(mstrShortSummary)) ;
 			}
 
