@@ -251,7 +251,10 @@ namespace DAnTE.Inferno
         private void menuItemMSMS_Click(object sender, EventArgs e)
         {
             if (mhtDatasets.ContainsKey("Expressions"))
-                MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+            }
             else
             {
                 var msmsWizard = new frmMSMSWizard(mRConnector);
@@ -265,7 +268,9 @@ namespace DAnTE.Inferno
                         AddDataNode(mhtDatasets["Expressions"]);
                     }
                     else
+                    {
                         MessageBox.Show("No data matches your parameters", "No Data");
+                    }
                 }
             }
         }
@@ -387,8 +392,11 @@ namespace DAnTE.Inferno
                     }
                 }
                 else
+                {
                     MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                    MessageBoxIcon.Error);
+                }
+
                 #region Threading
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;

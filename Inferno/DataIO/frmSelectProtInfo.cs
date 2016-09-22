@@ -32,8 +32,10 @@ namespace DAnTE.Inferno
         private void mbtnMTSelect_Click(object sender, EventArgs e)
         {
             if (mlstBoxMT.Items.Count == 1)
-                MessageBox.Show("You have already selected the Row IDs","Row IDs selected",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                MessageBox.Show("You have already selected the Row IDs", "Row IDs selected",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             else if (mlstBoxAllCols.SelectedItems.Count == 1)
             {
                 mlstBoxMT.Items.Add(mlstBoxAllCols.SelectedItem);
@@ -41,8 +43,10 @@ namespace DAnTE.Inferno
                 mbtnMTUnselect.Enabled = true;
             }
             else
-                MessageBox.Show("Select One Column as Unique RowID (Mass Tags).", "Empty selection", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                MessageBox.Show("Select One Column as Unique RowID (Mass Tags).", "Empty selection",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void mbtnMTUnselect_Click(object sender, EventArgs e)
@@ -53,8 +57,10 @@ namespace DAnTE.Inferno
                 mlstBoxMT.Items.Remove(mlstBoxMT.SelectedItem);
             }
             else
+            {
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
+            }
             if (mlstBoxMT.Items.Count == 0)
                 mbtnMTUnselect.Enabled = false;
         }
@@ -71,8 +77,10 @@ namespace DAnTE.Inferno
                 mbtnIPIUnselect.Enabled = true;
             }
             else
-                MessageBox.Show("Select one column for Protein IDs.", "Wrong selection", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                MessageBox.Show("Select one column for Protein IDs.", "Wrong selection",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void mbtnIPIUnselect_Click(object sender, EventArgs e)

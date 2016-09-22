@@ -68,8 +68,10 @@ namespace DAnTE.Inferno
                 mbtnDataUnselect.Enabled = true;
             }
             else
+            {
                 MessageBox.Show("Select Multiple Datasets", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
+            }
         }
 
         private void mbtnDataUnselect_Click(object sender, EventArgs e)
@@ -84,8 +86,10 @@ namespace DAnTE.Inferno
                     mlstBoxData.Items.Remove(mlstBoxData.SelectedItem);
             }
             else
+            {
                 MessageBox.Show("Select Datasets", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
+            }
             if (mlstBoxData.Items.Count == 0)
                 mbtnDataUnselect.Enabled = false;
         }
@@ -93,8 +97,10 @@ namespace DAnTE.Inferno
         private void mbtnMTSelect_Click(object sender, EventArgs e)
         {
             if (mlstBoxMT.Items.Count == 1)
-                MessageBox.Show("You have already selected the Row IDs","Row IDs selected",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                MessageBox.Show("You have already selected the Row IDs", "Row IDs selected",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             else if (mlstBoxAllCols.SelectedItems.Count == 1)
             {
                 mlstBoxMT.Items.Add(mlstBoxAllCols.SelectedItem);
@@ -102,8 +108,10 @@ namespace DAnTE.Inferno
                 mbtnMTUnselect.Enabled = true;
             }
             else
-                MessageBox.Show("Select One Column as Unique RowID (Mass Tags).", "Empty selection", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                MessageBox.Show("Select One Column as Unique RowID (Mass Tags).", "Empty selection",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void mbtnMTUnselect_Click(object sender, EventArgs e)
@@ -114,8 +122,11 @@ namespace DAnTE.Inferno
                 mlstBoxMT.Items.Remove(mlstBoxMT.SelectedItem);
             }
             else
+            {
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
+            }
+
             if (mlstBoxMT.Items.Count == 0)
                 mbtnMTUnselect.Enabled = false;
         }
