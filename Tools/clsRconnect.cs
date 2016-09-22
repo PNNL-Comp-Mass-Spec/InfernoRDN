@@ -302,18 +302,38 @@ namespace DAnTE.Tools
             }
         }
 
+        /// <summary>
+        /// Store the data table in R; duplicate rows are removed
+        /// </summary>
+        /// <param name="varName"></param>
+        /// <param name="mDtable"></param>
+        /// <returns>True if success, otherwise false</returns>
         public bool SendTable2RmatrixNumeric(string varName, DataTable mDtable)
         {
-            var mRarrySend = DataTable2Rarray(mDtable);
-            if (mRarrySend.matrix != null)
+            clsRarray rArray;
+
+            try
+            {
+                rArray = DataTable2Rarray(mDtable, varName);
+            }
+            catch (Exception e)
+            {
+                var errmsg = string.Format("Error converting {0} using DataTable2Rarray: {1} ", varName, e.Message);
+                Console.WriteLine(errmsg);
+                Message = e.Message;
+                return false;
+            }
+
+
+            if (rArray.matrix != null)
             {
                 try
                 {
-                    _rdn.SetSymbolNumberMatrix("X", mRarrySend.matrix);
+                    _rdn.SetSymbolNumberMatrix("X", rArray.matrix);
                     _rcmd = varName + "<- getmatrix(X)";
                     _rdn.EvaluateNoReturn(_rcmd);
-                    _rdn.SetSymbolCharVector("colH", mRarrySend.colHeaders);
-                    _rdn.SetSymbolCharVector("rowN", mRarrySend.rowNames);
+                    _rdn.SetSymbolCharVector("colH", rArray.colHeaders);
+                    _rdn.SetSymbolCharVector("rowN", rArray.rowNames);
                     _rcmd = "colnames(" + varName + ") <- colH";
                     _rdn.EvaluateNoReturn(_rcmd);
                     _rcmd = "rownames(" + varName + ") <- rowN";
@@ -331,8 +351,8 @@ namespace DAnTE.Tools
                     return false;
                 }
             }
-            else
-                return false;
+
+            return false;
         }
 
         public bool SendTable2RmatrixNonNumeric(string varName, DataTable mDtable)
@@ -420,7 +440,7 @@ namespace DAnTE.Tools
                 return false;
             }
         }
-        
+
         private static void CopyMatrixDataToTable(double[,] matrix, DataTable mdatatable, string[] rowNames)
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
@@ -483,7 +503,7 @@ namespace DAnTE.Tools
             CopyMatrixDataToTable(matrix, mdatatable, rowNames);
 
             // return clsDataTable.ClearZeros(mdatatable);
-            
+
             return mdatatable;
         }
 
@@ -513,7 +533,7 @@ namespace DAnTE.Tools
             CopyMatrixDataToTable(matrix, mdatatable, rowNames);
 
             // return clsDataTable.ClearZeros(mdatatable);
-            
+
             return mdatatable;
         }
 
@@ -633,11 +653,11 @@ namespace DAnTE.Tools
             CopyMatrixDataToTable(matrix, mdatatable, rowNames);
 
             // return clsDataTable.ClearZeros(mdatatable);
-            
+
             return mdatatable;
         }
 
-        private clsRarray DataTable2Rarray(DataTable mTable)
+        private clsRarray DataTable2Rarray(DataTable mTable, string varName)
         {
             var matrix = new double[mTable.Rows.Count, mTable.Columns.Count - 1];
             var rowNames = new string[mTable.Rows.Count];
@@ -648,37 +668,56 @@ namespace DAnTE.Tools
             //DataColumnCollection columnHeaders = mTable.Columns ;
             for (var col = 0; col < mTable.Columns.Count; col++)
             {
-                if (typerror)
-                    break;
-                if (col > 0) //Start from 2nd column
+                
+                if (col > 0)
+                {
+                    // Populate colHeaders with the user-supplied headers, starting with the second column
+                    // The header for the first column is always Row_ID
                     colHeaders[col - 1] = mTable.Columns[col].ToString();
+                }
+
                 for (var row = 0; row < mTable.Rows.Count; row++)
                 {
-                    if (typerror)
-                        break;
-                    if (col == 0) //Mass Tags
-                        rowNames[row] = mTable.Rows[row].ItemArray[0].ToString();
-                    else // numeric data
+                    if (col == 0)
                     {
+                        // Row identifier, typically the MassTagID (an integer), but can be a peptide sequence or any string
+                        rowNames[row] = mTable.Rows[row].ItemArray[0].ToString();
+                    }
+                    else
+                    {
+                        // numeric data
                         var cellValue = mTable.Rows[row].ItemArray[col].ToString();
-                        if (cellValue.Length > 0) //not an empty cell
+                        if (cellValue.Length > 0)
+                        {
+                            //not an empty cell
                             try
                             {
                                 matrix[row, col - 1] = Convert.ToDouble(cellValue, NumberFormatInfo.InvariantInfo);
                             }
                             catch (FormatException ex)
                             {
-                                MessageBox.Show("Invalid data type. Check for example, " +
-                                    "if you have text strings mixed with numerical data.\n\nError:" +
-                                    ex.Message, "File type error", MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                                var errMsg = string.Format("Invalid data, '{0}' is not numeric in dataset {1}",
+                                                           cellValue, varName);
+                                MessageBox.Show(errMsg, "Loading error", MessageBoxButtons.OK,
+                                                MessageBoxIcon.Error);
                                 typerror = true;
                             }
+                        }
                         else
+                        {
+                            // Empty cell
                             matrix[row, col - 1] = 0;
+                        }
                     }
+
+                    if (typerror)
+                        break;
                 }
+
+                if (typerror)
+                    break;
             }
+
             if (!typerror)
             {
                 mRary.rowNames = rowNames;
@@ -689,6 +728,7 @@ namespace DAnTE.Tools
             {
                 _mRarray = null;
             }
+
             return mRary;
         }
 

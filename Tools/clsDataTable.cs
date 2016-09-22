@@ -558,24 +558,30 @@ namespace DAnTE.Tools
             foreach (DataRow thisRow in dTable.Rows)
             {
                 if (!ValidRow(thisRow))
+                {
+                    // Empty row; flag it for removal by adding to duplicateList
                     duplicateList.Add(thisRow);
+                }
                 else
+                {
+                    // Non-empty row
                     try
                     {
-						if (hTable.ContainsKey(thisRow[colName]))
-						{
-							AddDuplicateRow(hTable, thisRow, duplicateList, colName);
-						}
-	                    else
-	                    {
-							hTable.Add(thisRow[colName], thisRow);    
-	                    }
-                        
+                        if (hTable.ContainsKey(thisRow[colName]))
+                        {
+                            AddDuplicateRow(hTable, thisRow, duplicateList, colName);
+                        }
+                        else
+                        {
+                            hTable.Add(thisRow[colName], thisRow);
+                        }
+
                     }
                     catch (Exception)
                     {
-						AddDuplicateRow(hTable, thisRow, duplicateList, colName);
+                        AddDuplicateRow(hTable, thisRow, duplicateList, colName);
                     }
+                }
 
                 rowCountLoaded += 1;
                 var percentComplete = rowCountLoaded / (float)rowCountTotal * 100;
@@ -586,6 +592,7 @@ namespace DAnTE.Tools
 
             dTable.AcceptChanges();
 
+            // Remove empty rows and duplicate rows
             foreach (var dRow in duplicateList)
                 dTable.Rows.Remove(dRow);
 
@@ -625,19 +632,22 @@ namespace DAnTE.Tools
             return true;
         }
 
-        public static bool ValidRow(DataRow row) // not all empty
+        /// <summary>
+        /// Make sure the row is not empty
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns>True if at least one value in the row, otherwise false</returns>
+        public static bool ValidRow(DataRow row) 
         {
-            var success = false;
             for (var i = 1; i < row.ItemArray.Length; i++)
             {
-                if (!(row.ItemArray[i].Equals("")))
+                if (!string.IsNullOrWhiteSpace(row.ItemArray[i].ToString()))
                 {
-                    success = true;
-                    break;
+                    return true;
                 }
 
             }
-            return success;
+            return false;
         }
 
         public static DataRow addRows(DataRow row1, DataRow row2)

@@ -45,13 +45,20 @@ namespace DAnTE.Inferno
             {
                 mCustomLoggerEnabled = true;
 
-                if (File.Exists(customLogFilePath))
+                try
                 {
-                    mCustomLogWriter = File.AppendText(customLogFilePath);
+                    if (File.Exists(customLogFilePath))
+                    {
+                        mCustomLogWriter = File.AppendText(customLogFilePath);
+                    }
+                    else
+                    {
+                        mCustomLogWriter = new StreamWriter(customLogFilePath);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    mCustomLogWriter = new StreamWriter(customLogFilePath);
+                    MessageBox.Show(string.Format("Error appending to the log file at {0}: {1}", customLogFilePath, ex.Message));
                 }
             }
 
