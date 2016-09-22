@@ -49,7 +49,7 @@ namespace DAnTE.Inferno
 			this.mnuItemBugs = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.mtoolStripMDI = new System.Windows.Forms.ToolStrip();
+			this.mToolStripMDI = new System.Windows.Forms.ToolStrip();
 			this.mtoolBtnNew = new System.Windows.Forms.ToolStripButton();
 			this.mtBtnExit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -57,7 +57,7 @@ namespace DAnTE.Inferno
 			this.mtoolBtnHelp = new System.Windows.Forms.ToolStripButton();
 			this.mhelpProviderDAnTE = new System.Windows.Forms.HelpProvider();
 			this.mmnuStrip.SuspendLayout();
-			this.mtoolStripMDI.SuspendLayout();
+			this.mToolStripMDI.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mmnuStrip
@@ -234,19 +234,19 @@ namespace DAnTE.Inferno
 			this.mnuItemAbout.Text = "&About";
 			this.mnuItemAbout.Click += new System.EventHandler(this.mnuItemAbout_Click);
 			// 
-			// mtoolStripMDI
+			// mToolStripMDI
 			// 
-			this.mtoolStripMDI.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.mToolStripMDI.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mtoolBtnNew,
             this.mtBtnExit,
             this.toolStripSeparator3,
             this.mtoolBtnRlog,
             this.mtoolBtnHelp});
-			this.mtoolStripMDI.Location = new System.Drawing.Point(0, 28);
-			this.mtoolStripMDI.Name = "mtoolStripMDI";
-			this.mtoolStripMDI.Size = new System.Drawing.Size(920, 25);
-			this.mtoolStripMDI.TabIndex = 1;
-			this.mtoolStripMDI.Text = "toolStrip1";
+			this.mToolStripMDI.Location = new System.Drawing.Point(0, 28);
+			this.mToolStripMDI.Name = "mToolStripMDI";
+			this.mToolStripMDI.Size = new System.Drawing.Size(920, 25);
+			this.mToolStripMDI.TabIndex = 1;
+			this.mToolStripMDI.Text = "toolStrip1";
 			// 
 			// mtoolBtnNew
 			// 
@@ -298,7 +298,7 @@ namespace DAnTE.Inferno
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(920, 773);
-			this.Controls.Add(this.mtoolStripMDI);
+			this.Controls.Add(this.mToolStripMDI);
 			this.Controls.Add(this.mmnuStrip);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
@@ -312,8 +312,8 @@ namespace DAnTE.Inferno
 			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form_DragEnter);
 			this.mmnuStrip.ResumeLayout(false);
 			this.mmnuStrip.PerformLayout();
-			this.mtoolStripMDI.ResumeLayout(false);
-			this.mtoolStripMDI.PerformLayout();
+			this.mToolStripMDI.ResumeLayout(false);
+			this.mToolStripMDI.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -322,7 +322,7 @@ namespace DAnTE.Inferno
         #endregion
 
         private System.Windows.Forms.MenuStrip mmnuStrip;
-        public System.Windows.Forms.ToolStrip mtoolStripMDI;
+        public System.Windows.Forms.ToolStrip mToolStripMDI;
         private System.Windows.Forms.ToolStripMenuItem mnuItemFile;
         private System.Windows.Forms.ToolStripMenuItem mnuItemNew;
         private System.Windows.Forms.ToolStripMenuItem mnuItemExit;

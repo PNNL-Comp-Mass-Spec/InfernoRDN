@@ -402,8 +402,8 @@ namespace DAnTE.Inferno
                 var mp = (frmDAnTEmdi)Application.OpenForms["frmDAnTEmdi"];
                 if (mp != null)
                 {
-                    ToolStripManager.RevertMerge(mp.mtoolStripMDI); //toolstrip refere to parent toolstrip
-                    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mtoolStripMDI);
+                    ToolStripManager.RevertMerge(mp.mToolStripMDI); //toolstrip reference to parent toolstrip
+                    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mToolStripMDI);
                 }
             }
         }

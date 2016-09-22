@@ -438,7 +438,7 @@ namespace DAnTE.Inferno
             }
 
         }
-      
+
         private bool UpdateRPackages()
         {
             bool mblresult;
@@ -751,8 +751,8 @@ namespace DAnTE.Inferno
 
         public ToolStrip MainDanteToolBar
         {
-            get { return mtoolStripMDI; }
-            set { mtoolStripMDI = value; }
+            get { return mToolStripMDI; }
+            set { mToolStripMDI = value; }
         }
 
         private void mnuItemUpgradeRPacks_Click(object sender, EventArgs e)

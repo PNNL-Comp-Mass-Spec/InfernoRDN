@@ -31,7 +31,7 @@ namespace DAnTE.Inferno
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlotDisplay));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.mpictureBoxEx = new DAnTE.ExtraControls.PictureBoxEx();
+            this.mPictureBoxEx = new DAnTE.ExtraControls.PictureBoxEx();
             this.mctxtMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.stretchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +71,7 @@ namespace DAnTE.Inferno
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.mpictureBoxEx);
+            this.panel1.Controls.Add(this.mPictureBoxEx);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -80,16 +80,16 @@ namespace DAnTE.Inferno
             // 
             // mpictureBoxEx
             // 
-            this.mpictureBoxEx.AutoScroll = true;
-            this.mpictureBoxEx.BackColor = System.Drawing.Color.White;
-            this.mpictureBoxEx.ContextMenuStrip = this.mctxtMenu;
-            this.mpictureBoxEx.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mpictureBoxEx.Location = new System.Drawing.Point(0, 0);
-            this.mpictureBoxEx.Name = "mpictureBoxEx";
-            this.mpictureBoxEx.Size = new System.Drawing.Size(1016, 722);
-            this.mpictureBoxEx.TabIndex = 0;
-            this.mpictureBoxEx.Text = "pictureBoxEx1";
-            this.mtoolTipPlot.SetToolTip(this.mpictureBoxEx, "Double click on plot to resize to the actual size.");
+            this.mPictureBoxEx.AutoScroll = true;
+            this.mPictureBoxEx.BackColor = System.Drawing.Color.White;
+            this.mPictureBoxEx.ContextMenuStrip = this.mctxtMenu;
+            this.mPictureBoxEx.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mPictureBoxEx.Location = new System.Drawing.Point(0, 0);
+            this.mPictureBoxEx.Name = "mpictureBoxEx";
+            this.mPictureBoxEx.Size = new System.Drawing.Size(1016, 722);
+            this.mPictureBoxEx.TabIndex = 0;
+            this.mPictureBoxEx.Text = "pictureBoxEx1";
+            this.mtoolTipPlot.SetToolTip(this.mPictureBoxEx, "Double click on plot to resize to the actual size.");
             // 
             // mctxtMenu
             // 
@@ -422,7 +422,7 @@ namespace DAnTE.Inferno
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private ExtraControls.PictureBoxEx mpictureBoxEx;
+        private ExtraControls.PictureBoxEx mPictureBoxEx;
         private System.Windows.Forms.ContextMenuStrip mctxtMenu;
         private System.Windows.Forms.ToolStripMenuItem stretchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
