@@ -19,7 +19,7 @@ namespace DAnTE.Inferno
         {
             mcmbBoxFactors.SelectedIndex = 0;
         }
-        
+
         private void mbtnOK_Click(object sender, EventArgs e)
         {
             int k = 10, maxIter = 100, npcs = 5;
@@ -51,7 +51,7 @@ namespace DAnTE.Inferno
             if ((cutoff < 0 || cutoff > 50) && (!mrBtnMean.Checked || !mrBtnMedian.Checked))
             {
                 DialogResult = DialogResult.None;
-                MessageBox.Show("For best results imputation threshold should be around 20%", "Error", 
+                MessageBox.Show("For best results imputation threshold should be around 20%", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -145,7 +145,7 @@ namespace DAnTE.Inferno
                 if (value != null)
                 {
                     if (!(value[0].Equals("<All>")))
-                        value.Insert(0,"<All>");
+                        value.Insert(0, "<All>");
                     mcmbBoxFactors.DataSource = value;
                 }
                 else
@@ -162,7 +162,7 @@ namespace DAnTE.Inferno
                 {
                     if (mcmbBoxFactors.SelectedItem.ToString().Equals("<All>"))
                         return "Factor=1";
-                    if (mtabCImpute.SelectedIndex == 1 && 
+                    if (mtabCImpute.SelectedIndex == 1 &&
                         (mrBtnConst.Checked || mrBtnMean.Checked || mrBtnMedian.Checked))
                         return "Factor=1";
                     idx = mcmbBoxFactors.SelectedIndex;
@@ -207,79 +207,49 @@ namespace DAnTE.Inferno
 
         public bool NoFill
         {
-            get
-            {
-                return mchkBoxNoImpute.Checked;
-            }
+            get { return mchkBoxNoImpute.Checked; }
         }
-        
+
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string CutOff
         {
-            get
-            {
-                return mtxtBoxFthres.Text;
-            }
+            get { return mtxtBoxFthres.Text; }
         }
 
         public string Mode
         {
-            get
-            {
-                return SelectedMode();
-            }
+            get { return SelectedMode(); }
         }
 
         public string K
         {
-            get
-            {
-                return mtxtBoxK.Text;
-            }
+            get { return mtxtBoxK.Text; }
         }
 
         public string nPCs
         {
-            get
-            {
-                return mtxtBoxnPCs.Text;
-            }
+            get { return mtxtBoxnPCs.Text; }
         }
 
         public string SVDthres
         {
-            get
-            {
-                return mtxtBoxSVDthres.Text;
-            }
+            get { return mtxtBoxSVDthres.Text; }
         }
 
         public string MaxSteps
         {
-            get
-            {
-                return mtxtBoxSVDiter.Text;
-            }
+            get { return mtxtBoxSVDiter.Text; }
         }
 
         public string Const
         {
-            get
-            {
-                return mtxtBoxConst.Text;
-            }
+            get { return mtxtBoxConst.Text; }
         }
 
         #endregion
-
-        
-       
     }
 }

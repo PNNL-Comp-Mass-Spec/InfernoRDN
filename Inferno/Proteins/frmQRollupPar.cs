@@ -33,11 +33,11 @@ namespace DAnTE.Inferno
                 success = false;
                 //Console.WriteLine(ex.Message);
                 MessageBox.Show("Invalid parameter. Check again!", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
             }
             if (!success)
                 MessageBox.Show("Invalid parameter. Check again!", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
             else
                 DialogResult = DialogResult.OK;
         }
@@ -63,6 +63,7 @@ namespace DAnTE.Inferno
         }
 
         #region Properties
+
         public Purgatorio.clsQRollupPar clsQRollupPar
         {
             get
@@ -80,34 +81,22 @@ namespace DAnTE.Inferno
 
         public bool ModeMean
         {
-            get
-            {
-                return mrbtnMean.Checked;
-            }
+            get { return mrbtnMean.Checked; }
         }
 
         public string MinPresence
         {
-            get
-            {
-                return mtxtBoxMinPresent.Text;
-            }
+            get { return mtxtBoxMinPresent.Text; }
         }
 
         public string Threshold
         {
-            get
-            {
-                return mtxtBoxThres.Text;
-            }
+            get { return mtxtBoxThres.Text; }
         }
 
         public string TopN
         {
-            get
-            {
-                return mtxtBoxNum.Text;
-            }
+            get { return mtxtBoxNum.Text; }
         }
 
         public bool UseTopN
@@ -123,18 +112,12 @@ namespace DAnTE.Inferno
 
         public bool OneHitWonders
         {
-            get
-            {
-                return mchkBoxOneHit.Checked;
-            }
+            get { return mchkBoxOneHit.Checked; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         #endregion

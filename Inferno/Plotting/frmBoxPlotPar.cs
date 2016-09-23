@@ -20,7 +20,7 @@ namespace DAnTE.Inferno
             mclsBoxPlotPar = clsBoxPlotPar;
             InitializeComponent();
         }
-                
+
         private void mbtnOK_Click(object sender, EventArgs e)
         {
             if (mlstViewDataSets.CheckedIndices.Count == 0)
@@ -40,7 +40,8 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, EventArgs e)
         {
-			var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, frmDAnTE.MAX_DATASETS_TO_SELECT * 3, true);
+            var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets,
+                                                                      frmDAnTE.MAX_DATASETS_TO_SELECT * 3, true);
 
             if (mlstViewDataSets.Items.Count > frmDAnTE.MAX_DATASETS_TO_SELECT * 3 && !mPopulating &&
                 (checkStateNew != clsUtilities.eCheckState.checkNone))
@@ -52,7 +53,6 @@ namespace DAnTE.Inferno
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
         }
 
 
@@ -67,7 +67,7 @@ namespace DAnTE.Inferno
                 Settings.Default.Save();
             }
         }
-                
+
         private void mbtnDefaults_Click(object sender, EventArgs e)
         {
             color = "#CAFF70";
@@ -132,11 +132,10 @@ namespace DAnTE.Inferno
         {
             set
             {
-
                 marrDatasets = value;
                 var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
-                
+
                 for (var i = 0; i < marrDatasets.Count; i++)
                 {
                     var lstVItem = new ListViewItem(marrDatasets[i])
@@ -212,34 +211,22 @@ namespace DAnTE.Inferno
 
         public bool Outliers
         {
-            get
-            {
-                return mchkBoxOutl.Checked;
-            }
+            get { return mchkBoxOutl.Checked; }
         }
 
         public bool ShowCount
         {
-            get
-            {
-                return mchkBoxCount.Checked;
-            }
+            get { return mchkBoxCount.Checked; }
         }
 
         public decimal BoxWidth
         {
-            get
-            {
-                return mNumUDwidth.Value;
-            }
+            get { return mNumUDwidth.Value; }
         }
 
         public decimal FontScale
         {
-            get
-            {
-                return mnumUDFontSc.Value;
-            }
+            get { return mnumUDFontSc.Value; }
         }
 
         public bool Background
@@ -255,10 +242,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public List<string> PopulateFactorComboBox
@@ -292,14 +276,9 @@ namespace DAnTE.Inferno
 
         public int FactorIdx
         {
-            get
-            {
-                return mcmbBoxFactors.SelectedIndex;
-            }
+            get { return mcmbBoxFactors.SelectedIndex; }
         }
 
         #endregion
-
-        
     }
 }

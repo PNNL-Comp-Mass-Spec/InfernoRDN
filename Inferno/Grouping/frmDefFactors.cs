@@ -7,87 +7,87 @@ using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class frmDefFactors : Form
-	{
-		private Panel panel1;
-		private ListBox lstBoxFactors;
-		private ListBox lstBoxValues;
-		private Button btnValues;
-		private Button btnFactors;
-		private Label label1;
-		private Label label2;
-		private Label label3;
-		private Button btnOK;
-		private Button btnCancel;
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class frmDefFactors : Form
+    {
+        private Panel panel1;
+        private ListBox lstBoxFactors;
+        private ListBox lstBoxValues;
+        private Button btnValues;
+        private Button btnFactors;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Button btnOK;
+        private Button btnCancel;
 
-		//private static int delta = 5 ;
+        //private static int delta = 5 ;
         //private int itemSelected = -1;
         private IContainer components;
 
-		public const int MAX_LEVELS = 100 ;
-		private List<clsFactorInfo> marrFactors;
+        public const int MAX_LEVELS = 100;
+        private List<clsFactorInfo> marrFactors;
         //private ArrayList marrFactorsCopy;
-		private readonly string [] strarrFactors = new string [MAX_LEVELS] ;
-		private int numFactors;
-		private bool restoreFactors;
+        private readonly string[] strarrFactors = new string[MAX_LEVELS];
+        private int numFactors;
+        private bool restoreFactors;
 
-		private Button btnFactorDelete;
-		private Button btnValueDelete;
-		private TextBox txtBoxFactors;
+        private Button btnFactorDelete;
+        private Button btnValueDelete;
+        private TextBox txtBoxFactors;
         private ExtraControls.NiceLine niceLine1;
         private Label label4;
         private Panel panel2;
         private Label label5;
         private ToolTip mtltipHelp;
-		private TextBox txtBoxValues;
-		
-		
+        private TextBox txtBoxValues;
 
-		public frmDefFactors()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
+
+        public frmDefFactors()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
             marrFactors = new List<clsFactorInfo>();
-			restoreFactors = false;
-		}
+            restoreFactors = false;
+        }
 
         public frmDefFactors(List<clsFactorInfo> factorInfoArr)
-		{
-			marrFactors = factorInfoArr;
-			InitializeComponent();
-			restoreFactors = true;
-		}
+        {
+            marrFactors = factorInfoArr;
+            InitializeComponent();
+            restoreFactors = true;
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-			    components?.Dispose() ;
-			}
-		    base.Dispose( disposing ) ;
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
+        #region Windows Form Designer generated code
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDefFactors));
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(frmDefFactors));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -158,7 +158,8 @@ namespace DAnTE.Inferno
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold,
+                                                       System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(14, 21);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 18);
@@ -204,7 +205,9 @@ namespace DAnTE.Inferno
             // 
             // txtBoxValues
             // 
-            this.txtBoxValues.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxValues.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F,
+                                                             System.Drawing.FontStyle.Regular,
+                                                             System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxValues.Location = new System.Drawing.Point(302, 92);
             this.txtBoxValues.Name = "txtBoxValues";
             this.txtBoxValues.Size = new System.Drawing.Size(135, 24);
@@ -215,7 +218,9 @@ namespace DAnTE.Inferno
             // 
             // txtBoxFactors
             // 
-            this.txtBoxFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F,
+                                                              System.Drawing.FontStyle.Regular,
+                                                              System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxFactors.Location = new System.Drawing.Point(23, 92);
             this.txtBoxFactors.Name = "txtBoxFactors";
             this.txtBoxFactors.Size = new System.Drawing.Size(134, 24);
@@ -263,7 +268,8 @@ namespace DAnTE.Inferno
             // 
             // label1
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold,
+                                                       System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(241, 180);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 37);
@@ -329,26 +335,25 @@ namespace DAnTE.Inferno
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
-
-		}
-		#endregion
-        				
-		private void frmDefFactors_Load(object sender, EventArgs e)
-		{
-			if (restoreFactors)
-				updateFactorForm() ;
         }
 
-		private void updateFactorForm()
-		{
-			
-			fillFactorArray() ;
+        #endregion
 
-		    var factorNames = new List<string>();
-		    foreach (var item in marrFactors)
-		    {
-		        factorNames.Add(item.mstrFactor);
-		    }
+        private void frmDefFactors_Load(object sender, EventArgs e)
+        {
+            if (restoreFactors)
+                updateFactorForm();
+        }
+
+        private void updateFactorForm()
+        {
+            fillFactorArray();
+
+            var factorNames = new List<string>();
+            foreach (var item in marrFactors)
+            {
+                factorNames.Add(item.mstrFactor);
+            }
 
             // Note: cannot use .DataSource = Value because we .Remove items from the listbox
 
@@ -356,25 +361,27 @@ namespace DAnTE.Inferno
             foreach (var item in factorNames)
             {
                 lstBoxFactors.Items.Add(item);
-            }                
+            }
 
-            txtBoxFactors.Text = "" ;
-			txtBoxValues.Text = "" ;
-		}
+            txtBoxFactors.Text = "";
+            txtBoxValues.Text = "";
+        }
 
-		#region Code for Form buttons
+        #region Code for Form buttons
 
         private void Add_Factor()
         {
             var tmpfactorInfo = new clsFactorInfo();
 
             if (lstBoxFactors.Items.Count == MAX_LEVELS)
-                MessageBox.Show("Maximum number of factors reached!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Maximum number of factors reached!", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             else if (txtBoxFactors.Text != "")
             {
                 var strFactor = txtBoxFactors.Text.Replace(" ", "_");
                 if (Array.IndexOf(strarrFactors, strFactor) < 0)
-                { // no duplicates
+                {
+                    // no duplicates
                     txtBoxFactors.Text = "";
                     tmpfactorInfo.mstrFactor = strFactor;
                     marrFactors.Add(tmpfactorInfo);
@@ -385,7 +392,8 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("You have already entered this factor!", "Existing Factor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("You have already entered this factor!", "Existing Factor", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                 }
             }
         }
@@ -398,9 +406,11 @@ namespace DAnTE.Inferno
                 lstBoxFactors.SetSelected(0, true);
             var nSelected = lstBoxFactors.SelectedIndex;
             if (nSelected < 0)
-                MessageBox.Show("Select a factor first to define their values.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Select a factor first to define their values.", "No Selection", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             else if (lstBoxValues.Items.Count == MAX_LEVELS)
-                MessageBox.Show("You have reached the maximum number of values allowed.", "Max Factor Count", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("You have reached the maximum number of values allowed.", "Max Factor Count",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else if (strValue != "")
             {
                 lstBoxValues.SelectedIndex = -1;
@@ -418,20 +428,21 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("You have already entered this value earlier!", "Duplicate Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("You have already entered this value earlier!", "Duplicate Value",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-		private void btnAddFactors_Click(object sender, EventArgs e)
-		{
+        private void btnAddFactors_Click(object sender, EventArgs e)
+        {
             Add_Factor();
-		}
+        }
 
-		private void btnAddValues_Click(object sender, EventArgs e)
-		{
+        private void btnAddValues_Click(object sender, EventArgs e)
+        {
             Add_Value();
-		}
+        }
 
         private void txtBoxFactors_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -444,157 +455,160 @@ namespace DAnTE.Inferno
             if (e.KeyChar == (char)Keys.Return)
                 Add_Value();
         }
-		
-		private void lstBoxFactors_SelectedIndexChanged(object sender, EventArgs e)
-		{
-		    if (lstBoxFactors.SelectedIndex > -1)
-			{
-				var nSelected = lstBoxFactors.SelectedIndex;
-				txtBoxFactors.Text = lstBoxFactors.SelectedItem.ToString() ;
-				lstBoxValues.Items.Clear() ;
 
-				var selectedF = marrFactors[nSelected];
-				if ( selectedF.vCount > 0 )
-				{
-					for (var i = 0; i < selectedF.vCount; i++)
-					{
-						lstBoxValues.Items.Add(selectedF.marrValues[i]);
-					}
-					txtBoxValues.Text = "" ;
-					lstBoxValues.SelectedIndex = -1 ;
-				}
-				else
-					txtBoxValues.Text = "Value1" ;
-			}
-		}
+        private void lstBoxFactors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstBoxFactors.SelectedIndex > -1)
+            {
+                var nSelected = lstBoxFactors.SelectedIndex;
+                txtBoxFactors.Text = lstBoxFactors.SelectedItem.ToString();
+                lstBoxValues.Items.Clear();
 
-		private void lstBoxValues_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (lstBoxValues.SelectedIndex != -1)
-				txtBoxValues.Text = lstBoxValues.SelectedItem.ToString() ;
-		}
+                var selectedF = marrFactors[nSelected];
+                if (selectedF.vCount > 0)
+                {
+                    for (var i = 0; i < selectedF.vCount; i++)
+                    {
+                        lstBoxValues.Items.Add(selectedF.marrValues[i]);
+                    }
+                    txtBoxValues.Text = "";
+                    lstBoxValues.SelectedIndex = -1;
+                }
+                else
+                    txtBoxValues.Text = "Value1";
+            }
+        }
 
-		private void btnOK_Click(object sender, EventArgs e)
-		{
-			var correctFactors = FactorCheck() ;
-			if (correctFactors)
-			{
-				DialogResult = DialogResult.OK ;
-				Close() ;
-			}
-			else
-				MessageBox.Show("Each factor should have at least two values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-		}
+        private void lstBoxValues_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstBoxValues.SelectedIndex != -1)
+                txtBoxValues.Text = lstBoxValues.SelectedItem.ToString();
+        }
 
-		private void btnCancel_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel ;
-			Close() ;
-		}
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            var correctFactors = FactorCheck();
+            if (correctFactors)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+                MessageBox.Show("Each factor should have at least two values.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+        }
 
-		private void btnFactorDelete_Click(object sender, EventArgs e)
-		{
-			var nSelected = lstBoxFactors.SelectedIndex ;
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
 
-			if (nSelected < 0)
-				MessageBox.Show("Select a factor to delete.", "Nothing Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			else
-			{
-				lstBoxFactors.Items.Remove(lstBoxFactors.SelectedItem) ;
-				lstBoxFactors.SelectedIndex = -1 ;
-				txtBoxFactors.Text = "" ;
-				lstBoxValues.Items.Clear() ;
-				marrFactors.RemoveAt(nSelected) ;
-				fillFactorArray() ;
-			}
-		}
+        private void btnFactorDelete_Click(object sender, EventArgs e)
+        {
+            var nSelected = lstBoxFactors.SelectedIndex;
 
-		private void btnValueDelete_Click(object sender, EventArgs e)
-		{
-			var nSelectedV = lstBoxValues.SelectedIndex ;
-			var nSelectedF = lstBoxFactors.SelectedIndex ;
+            if (nSelected < 0)
+                MessageBox.Show("Select a factor to delete.", "Nothing Selected", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            else
+            {
+                lstBoxFactors.Items.Remove(lstBoxFactors.SelectedItem);
+                lstBoxFactors.SelectedIndex = -1;
+                txtBoxFactors.Text = "";
+                lstBoxValues.Items.Clear();
+                marrFactors.RemoveAt(nSelected);
+                fillFactorArray();
+            }
+        }
 
-			if (nSelectedV < 0)
-				MessageBox.Show("Select a value to delete.", "Nothing Selected", MessageBoxButtons.OK, MessageBoxIcon.Information) ;
-			else
-			{
-				lstBoxValues.Items.Remove(lstBoxValues.SelectedItem) ;
-				lstBoxValues.SelectedIndex = -1 ;
-				txtBoxValues.Text = "" ;
-				marrFactors[nSelectedF].marrValues.RemoveAt(nSelectedV) ;
-			}
-		}
-		#endregion
+        private void btnValueDelete_Click(object sender, EventArgs e)
+        {
+            var nSelectedV = lstBoxValues.SelectedIndex;
+            var nSelectedF = lstBoxFactors.SelectedIndex;
 
+            if (nSelectedV < 0)
+                MessageBox.Show("Select a value to delete.", "Nothing Selected", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            else
+            {
+                lstBoxValues.Items.Remove(lstBoxValues.SelectedItem);
+                lstBoxValues.SelectedIndex = -1;
+                txtBoxValues.Text = "";
+                marrFactors[nSelectedF].marrValues.RemoveAt(nSelectedV);
+            }
+        }
 
-		private bool FactorCheck()
-		{
+        #endregion
+
+        private bool FactorCheck()
+        {
             // check if each factor has at least two distinct values.
-			var factorCountOK = marrFactors.Count(factor => factor.marrValues.Count > 1);
+            var factorCountOK = marrFactors.Count(factor => factor.marrValues.Count > 1);
 
-		    return factorCountOK == marrFactors.Count;
-		}
+            return factorCountOK == marrFactors.Count;
+        }
 
 
-		private void fillFactorArray()
-		{
-			for (var num = 0; num < marrFactors.Count; num++)
-				strarrFactors[num] = marrFactors[num].mstrFactor ;
+        private void fillFactorArray()
+        {
+            for (var num = 0; num < marrFactors.Count; num++)
+                strarrFactors[num] = marrFactors[num].mstrFactor;
 
-			numFactors = marrFactors.Count ;
-		}
+            numFactors = marrFactors.Count;
+        }
 
-		private bool foundDuplicates(string strValue)
-		{
-			var found = false ;
-		    for (var num = 0; num < numFactors; num++)
-			{
-			    if (marrFactors[num].vCount <= 0)
-			    {
-			        continue;
-			    }
+        private bool foundDuplicates(string strValue)
+        {
+            var found = false;
+            for (var num = 0; num < numFactors; num++)
+            {
+                if (marrFactors[num].vCount <= 0)
+                {
+                    continue;
+                }
 
-			    var strarrValues = marrFactors[num].FactorValues;
-			    if (Array.IndexOf(strarrValues, strValue) > -1)
-			        found = true;
-			}
+                var strarrValues = marrFactors[num].FactorValues;
+                if (Array.IndexOf(strarrValues, strValue) > -1)
+                    found = true;
+            }
 
-			return found;
-		}
+            return found;
+        }
 
-		private void txtBoxFactors_textCh(object sender, EventArgs e)
-		{
-			if (txtBoxFactors.Text.Length == 0)
-				btnFactors.Enabled = false ;
-			else
-				btnFactors.Enabled = true ;
-		}
+        private void txtBoxFactors_textCh(object sender, EventArgs e)
+        {
+            if (txtBoxFactors.Text.Length == 0)
+                btnFactors.Enabled = false;
+            else
+                btnFactors.Enabled = true;
+        }
 
-		private void txtBoxValues_txtCh(object sender, EventArgs e)
-		{
-			if (txtBoxValues.Text.Length == 0)
-				btnValues.Enabled = false ;
-			else
-				btnValues.Enabled = true ;
-		}
+        private void txtBoxValues_txtCh(object sender, EventArgs e)
+        {
+            if (txtBoxValues.Text.Length == 0)
+                btnValues.Enabled = false;
+            else
+                btnValues.Enabled = true;
+        }
 
-		#region Accessors
-		public int NumFactors
-		{
-			get	{return numFactors ;}
-		}
+        #region Accessors
+
+        public int NumFactors
+        {
+            get { return numFactors; }
+        }
 
         public List<clsFactorInfo> FactorInfoArray
-		{
-			get {return marrFactors ;}
-			set 
-			{
-				marrFactors = value ;
-				restoreFactors = true;
-			}
-		}
-		#endregion
+        {
+            get { return marrFactors; }
+            set
+            {
+                marrFactors = value;
+                restoreFactors = true;
+            }
+        }
 
-        
-	}
+        #endregion
+    }
 }

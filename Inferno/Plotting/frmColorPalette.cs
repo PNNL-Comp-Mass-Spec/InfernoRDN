@@ -40,7 +40,6 @@ namespace DAnTE.Inferno
 
         private void mbtnLow_Click(object sender, EventArgs e)
         {
-
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
                 lowC = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
@@ -119,6 +118,7 @@ namespace DAnTE.Inferno
                 mbtnHigh.Enabled = false;
             }
         }
+
         private void mrbtnCustom_CheckedChanged(object sender, EventArgs e)
         {
             mbtnLow.Enabled = mrbtnCustom.Checked;
@@ -159,9 +159,9 @@ namespace DAnTE.Inferno
             {
                 int cMap = 5;
                 if (mrbtnRedGreen.Checked)
-                    cMap =1;
+                    cMap = 1;
                 if (mrbtnHeat.Checked)
-                    cMap =2;
+                    cMap = 2;
                 if (mrbtnCustom.Checked)
                     cMap = 3;
                 if (mrBtnBlackBody.Checked)
@@ -196,7 +196,7 @@ namespace DAnTE.Inferno
             get
             {
                 return @"customColors=c(""" + lowC + @""",""" + midC +
-                                    @""",""" + highC + @""")";
+                       @""",""" + highC + @""")";
             }
         }
 
@@ -230,7 +230,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-       
     }
 }

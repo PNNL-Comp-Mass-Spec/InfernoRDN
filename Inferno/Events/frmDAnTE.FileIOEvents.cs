@@ -33,7 +33,6 @@ namespace DAnTE.Inferno
             }
 
             HandleFileOpenCompleted(openCancelled, openSuccess, errorMessage);
-
         }
 
         public void HandleFileOpenCompleted(bool openCancelled, bool openSuccess, string errorMessage)
@@ -92,7 +91,6 @@ namespace DAnTE.Inferno
 
             Settings.Default.SessionFileName = null;
             Settings.Default.Save();
-
         }
 
         void m_BackgroundWorker_OpenFiles(object sender, DoWorkEventArgs e)
@@ -108,6 +106,7 @@ namespace DAnTE.Inferno
                 e.Cancel = true;
             }
         }
+
         #endregion
     }
 }

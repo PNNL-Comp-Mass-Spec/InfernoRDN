@@ -25,7 +25,6 @@ namespace DAnTE.Inferno
             mtxtBoxAnFolder.Text = foldername;
             mtxtBoxAnFolder.Enabled = !mblUseSEQOut;
             mBtnBrowse.Enabled = !mblUseSEQOut;
-
         }
 
         private void mBtnBrowse_Click(object sender, EventArgs e)
@@ -43,20 +42,15 @@ namespace DAnTE.Inferno
         }
 
         #region Properties
+
         public int MaxRank
         {
-            get
-            {
-                return decimal.ToInt16(mNumUDXcorRank.Value);
-            }
+            get { return decimal.ToInt16(mNumUDXcorRank.Value); }
         }
 
         public string AnalysisFolder
         {
-            get
-            {
-                return mtxtBoxAnFolder.Text;
-            }
+            get { return mtxtBoxAnFolder.Text; }
             set
             {
                 foldername = value;
@@ -105,7 +99,7 @@ namespace DAnTE.Inferno
             get
             {
                 double delcn2 = 0.1;
-                
+
                 try
                 {
                     delcn2 = Convert.ToDouble(mtxtBoxDCn2Th.Text, NumberFormatInfo.InvariantInfo);
@@ -163,19 +157,18 @@ namespace DAnTE.Inferno
                     Console.WriteLine(ex.Message);
                     xcOth = 1.5;
                 }
-                return "XCorr1Th=" + xc1th.ToString(CultureInfo.InvariantCulture) + ",XCorr2Th=" + xc2th.ToString(CultureInfo.InvariantCulture) +
-                    ",XCorr3Th=" + xc3th.ToString(CultureInfo.InvariantCulture) + ",XCorrOTh=" + xcOth.ToString(CultureInfo.InvariantCulture);
+                return "XCorr1Th=" + xc1th.ToString(CultureInfo.InvariantCulture) + ",XCorr2Th=" +
+                       xc2th.ToString(CultureInfo.InvariantCulture) +
+                       ",XCorr3Th=" + xc3th.ToString(CultureInfo.InvariantCulture) + ",XCorrOTh=" +
+                       xcOth.ToString(CultureInfo.InvariantCulture);
             }
         }
 
         public bool UseSeqOUTFiles
         {
-            set
-            {
-                mblUseSEQOut = value;
-            }
+            set { mblUseSEQOut = value; }
         }
-        #endregion
 
+        #endregion
     }
 }

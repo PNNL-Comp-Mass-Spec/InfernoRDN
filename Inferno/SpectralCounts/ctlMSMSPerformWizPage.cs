@@ -29,28 +29,20 @@ namespace DAnTE.Inferno
         }
 
         #region Properties
+
         public int ProgressVal
         {
-            set
-            {
-                this.mprogBar.Value = value;
-            }
+            set { this.mprogBar.Value = value; }
         }
 
         public bool EnableNextBtn
         {
-            set
-            {
-                this.EnableNextButton(value);
-            }
+            set { this.EnableNextButton(value); }
         }
 
         public string ShowMessege
         {
-            set
-            {
-                mlstBoxMessages.Items.Add(value);
-            }
+            set { mlstBoxMessages.Items.Add(value); }
         }
 
         #endregion
@@ -70,6 +62,5 @@ namespace DAnTE.Inferno
         //    this.ResumeLayout(false);
 
         //}
-
     }
 }

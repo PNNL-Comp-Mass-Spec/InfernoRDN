@@ -64,6 +64,7 @@ namespace DAnTE.Inferno
         }
 
         #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -74,6 +75,7 @@ namespace DAnTE.Inferno
             this.Size = new System.Drawing.Size(300, 300);
             this.Text = "frmMain";
         }
+
         #endregion
 
         private static string mDanteFilePath;
@@ -108,13 +110,13 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    if (objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0 && !objParseCommandLine.NeedToShowHelp)
+                    if (objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0 &&
+                        !objParseCommandLine.NeedToShowHelp)
                         success = true;
                 }
 
                 if (!success || objParseCommandLine.NeedToShowHelp)
                 {
-
                     var syntaxMessage = "Supported command line switches are /F and /L \n" +
                                         "Use '/F FilePath.dnt' to load a data file \n" +
                                         "Use '/L LogFilePath' to specify a custom log file path";
@@ -122,17 +124,16 @@ namespace DAnTE.Inferno
                     MessageBox.Show(syntaxMessage, "InfernoRDN Syntax", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     return;
-
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception parsing the command line arguments: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Exception parsing the command line arguments: " + ex.Message, "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             var danteMDI = new frmDAnTEmdi(mDanteFilePath, mLogFilePath);
-            
+
             if (!danteMDI.IsDisposed)
                 Application.Run(danteMDI);
         }
@@ -140,7 +141,7 @@ namespace DAnTE.Inferno
         private static bool SetOptionsUsingCommandLineParameters(clsParseCommandLine objParseCommandLine)
         {
             // Returns True if no problems; otherwise, returns false
-            var lstValidParameters = new List<string> { "F", "L" };
+            var lstValidParameters = new List<string> {"F", "L"};
 
             try
             {
@@ -166,7 +167,7 @@ namespace DAnTE.Inferno
                 if (!ParseParameter(objParseCommandLine, "F", "a session file path", ref mDanteFilePath)) return false;
 
                 if (!ParseParameter(objParseCommandLine, "L", "a log file path", ref mLogFilePath)) return false;
-              
+
                 return true;
             }
             catch (Exception ex)

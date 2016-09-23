@@ -93,8 +93,8 @@ namespace DAnTE.Inferno
             base.Dispose(disposing);
         }
 
-
         #region Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -156,7 +156,9 @@ namespace DAnTE.Inferno
             // 
             // mbtnDefaults
             // 
-            this.mbtnDefaults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mbtnDefaults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F,
+                                                             System.Drawing.FontStyle.Regular,
+                                                             System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mbtnDefaults.Location = new System.Drawing.Point(642, 9);
             this.mbtnDefaults.Name = "mbtnDefaults";
             this.mbtnDefaults.Size = new System.Drawing.Size(66, 24);
@@ -166,7 +168,9 @@ namespace DAnTE.Inferno
             // 
             // mlblSelected
             // 
-            this.mlblSelected.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mlblSelected.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F,
+                                                             System.Drawing.FontStyle.Regular,
+                                                             System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mlblSelected.Location = new System.Drawing.Point(639, 51);
             this.mlblSelected.Name = "mlblSelected";
             this.mlblSelected.Size = new System.Drawing.Size(127, 22);
@@ -185,7 +189,9 @@ namespace DAnTE.Inferno
             // mtxtBoxURL
             // 
             this.mtxtBoxURL.AcceptsReturn = true;
-            this.mtxtBoxURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mtxtBoxURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F,
+                                                           System.Drawing.FontStyle.Regular,
+                                                           System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mtxtBoxURL.Location = new System.Drawing.Point(119, 12);
             this.mtxtBoxURL.Name = "mtxtBoxURL";
             this.mtxtBoxURL.Size = new System.Drawing.Size(243, 20);
@@ -204,7 +210,9 @@ namespace DAnTE.Inferno
             // buttonClearAll
             // 
             this.buttonClearAll.Enabled = false;
-            this.buttonClearAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClearAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F,
+                                                               System.Drawing.FontStyle.Regular,
+                                                               System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonClearAll.Location = new System.Drawing.Point(536, 49);
             this.buttonClearAll.Name = "buttonClearAll";
             this.buttonClearAll.Size = new System.Drawing.Size(75, 24);
@@ -215,7 +223,9 @@ namespace DAnTE.Inferno
             // buttonToggleAll
             // 
             this.buttonToggleAll.Enabled = false;
-            this.buttonToggleAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonToggleAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F,
+                                                                System.Drawing.FontStyle.Regular,
+                                                                System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonToggleAll.Location = new System.Drawing.Point(446, 49);
             this.buttonToggleAll.Name = "buttonToggleAll";
             this.buttonToggleAll.Size = new System.Drawing.Size(66, 24);
@@ -235,7 +245,9 @@ namespace DAnTE.Inferno
             // mtxtBoxfilter
             // 
             this.mtxtBoxfilter.AcceptsReturn = true;
-            this.mtxtBoxfilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mtxtBoxfilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F,
+                                                              System.Drawing.FontStyle.Regular,
+                                                              System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mtxtBoxfilter.Location = new System.Drawing.Point(119, 51);
             this.mtxtBoxfilter.Name = "mtxtBoxfilter";
             this.mtxtBoxfilter.Size = new System.Drawing.Size(243, 20);
@@ -266,9 +278,11 @@ namespace DAnTE.Inferno
             // 
             this.mlstViewJobs.AllowDrop = true;
             this.mlstViewJobs.CheckBoxes = true;
-            this.mlstViewJobs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.datasetName,
-            this.numPeptides});
+            this.mlstViewJobs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {
+                this.datasetName,
+                this.numPeptides
+            });
             this.mlstViewJobs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mlstViewJobs.FullRowSelect = true;
             this.mlstViewJobs.GridLines = true;
@@ -279,8 +293,10 @@ namespace DAnTE.Inferno
             this.mlstViewJobs.TabIndex = 0;
             this.mlstViewJobs.UseCompatibleStateImageBehavior = false;
             this.mlstViewJobs.View = System.Windows.Forms.View.Details;
-            this.mlstViewJobs.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.joblistView_ItemChecked);
-            this.mlstViewJobs.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.joblistView_ColumnClick);
+            this.mlstViewJobs.ItemChecked +=
+                new System.Windows.Forms.ItemCheckedEventHandler(this.joblistView_ItemChecked);
+            this.mlstViewJobs.ColumnClick +=
+                new System.Windows.Forms.ColumnClickEventHandler(this.joblistView_ColumnClick);
             // 
             // datasetName
             // 
@@ -306,11 +322,12 @@ namespace DAnTE.Inferno
             this.panelStep.PerformLayout();
             this.panelFileNames.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
-        private void ctlSelectFilesFromDBFilterWizardPage_SetActive(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ctlSelectFilesFromDBFilterWizardPage_SetActive(object sender,
+                                                                    System.ComponentModel.CancelEventArgs e)
         {
             SetWizardButtons(Wizard.UI.WizardButtons.Back | Wizard.UI.WizardButtons.Next);
             if (mlstViewJobs.Items.Count > 0)
@@ -331,7 +348,6 @@ namespace DAnTE.Inferno
 
         private void joblistView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
-
             // Determine if clicked column is already the column that is being sorted.
             if (e.Column == _lvwItemComparer.SortColumn)
             {
@@ -360,8 +376,8 @@ namespace DAnTE.Inferno
         {
             if (!FetchMatchingData())
                 MessageBox.Show("No data returned. Check your inputs again.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }// method
+                                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        } // method
 
         private bool FetchMatchingData()
         {
@@ -374,8 +390,9 @@ namespace DAnTE.Inferno
 
             var selectedProject = (string)mcmbBoxProjects.SelectedItem;
 
-            if (!mtxtBoxfilter.Text.Equals(wildcardFilter) || !mtxtBoxURL.Text.Equals(mstrUrl) || !selectedProject.Equals(mstrFolder))
-            //check if filter string has changed
+            if (!mtxtBoxfilter.Text.Equals(wildcardFilter) || !mtxtBoxURL.Text.Equals(mstrUrl) ||
+                !selectedProject.Equals(mstrFolder))
+                //check if filter string has changed
             {
                 wildcardFilter = mtxtBoxfilter.Text;
                 mstrFolder = (string)mcmbBoxProjects.SelectedItem;
@@ -454,7 +471,8 @@ namespace DAnTE.Inferno
         private bool GetJobs2Table(string datasetname, string mstrURL, string mstrPath)
         {
             var success = true;
-            var rcmd = @"fileNames <- LabkeyFetch(""" + datasetname + @""",""" + mstrURL + @""",""/" + mstrPath + @"/"",""ms2"",""DatasetNames"")";
+            var rcmd = @"fileNames <- LabkeyFetch(""" + datasetname + @""",""" + mstrURL + @""",""/" + mstrPath +
+                       @"/"",""ms2"",""DatasetNames"")";
 
             try
             {
@@ -493,7 +511,6 @@ namespace DAnTE.Inferno
             return fileName;
         }
 
-
         #endregion
 
         private void filterBox_TextChanged(object sender, System.EventArgs e)
@@ -506,7 +523,6 @@ namespace DAnTE.Inferno
 
         private void SelectCheckedItems()
         {
-
             marrDatasetInfo.Clear();
             var indexes = mlstViewJobs.CheckedIndices;
 
@@ -604,28 +620,19 @@ namespace DAnTE.Inferno
 
                 return marrDatasetInfo;
             }
-            set
-            {
-                marrDatasetInfo = value;
-            }
+            set { marrDatasetInfo = value; }
         }
 
         public string ProjectFolder
         {
-            get
-            {
-                return mcmbBoxProjects.SelectedItem.ToString();
-            }
+            get { return mcmbBoxProjects.SelectedItem.ToString(); }
         }
 
         #endregion
-
-
-
     }
 
-
     #region Class that Implements the manual sorting of items by columns.
+
     // Implements the manual sorting of items by columns.
     public class ListViewItemComparer : IComparer
     {
@@ -679,13 +686,13 @@ namespace DAnTE.Inferno
                 // Ascending sort is selected, return normal result of compare operation
                 return compareResult;
             }
-            
+
             if (OrderOfSort == SortOrder.Descending)
             {
                 // Descending sort is selected, return negative result of compare operation
                 return (-compareResult);
             }
-            
+
             // Return '0' to indicate they are equal
             return 0;
         }
@@ -694,30 +701,18 @@ namespace DAnTE.Inferno
         // apply the sorting operation (Defaults to '0').
         public int SortColumn
         {
-            set
-            {
-                ColumnToSort = value;
-            }
-            get
-            {
-                return ColumnToSort;
-            }
+            set { ColumnToSort = value; }
+            get { return ColumnToSort; }
         }
 
         // Gets or sets the order of sorting to apply
         // (for example, 'Ascending' or 'Descending').
         public SortOrder Order
         {
-            set
-            {
-                OrderOfSort = value;
-            }
-            get
-            {
-                return OrderOfSort;
-            }
+            set { OrderOfSort = value; }
+            get { return OrderOfSort; }
         }
     }
-    #endregion
 
+    #endregion
 }

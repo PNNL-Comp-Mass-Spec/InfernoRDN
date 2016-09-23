@@ -40,8 +40,8 @@ namespace DAnTE.Inferno
                 if (minPresence < 0 || minPresence > 100 || gpvalue > 1 || gpvalue < 0)
                 {
                     fieldsOK = false;
-                    MessageBox.Show("Out of allowed range.","Error",MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    MessageBox.Show("Out of allowed range.", "Error", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                 }
             }
             if (fieldsOK)
@@ -104,7 +104,8 @@ namespace DAnTE.Inferno
             }
             if (grubbsMinP < 3)
             {
-                MessageBox.Show("Setting the minimum number of peptides for Grubb's test too low may not be a good idea.",
+                MessageBox.Show(
+                    "Setting the minimum number of peptides for Grubb's test too low may not be a good idea.",
                     "Peptides for Grubb's too low", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 mtxtBoxGminP.Text = "5";
             }
@@ -136,81 +137,50 @@ namespace DAnTE.Inferno
 
         public string MinPresence
         {
-            get
-            {
-                return mtxtBoxMinPresent.Text;
-            }
+            get { return mtxtBoxMinPresent.Text; }
         }
 
         public bool OneHitWonders
         {
-            get
-            {
-                return mchkBoxOneHit.Checked;
-            }
+            get { return mchkBoxOneHit.Checked; }
         }
 
         public string Gp_value
         {
-            get
-            {
-                return mtxtBoxGpval.Text;
-            }
+            get { return mtxtBoxGpval.Text; }
         }
 
         public string gminPCount
         {
-            get
-            {
-                return mtxtBoxGminP.Text;
-            }
+            get { return mtxtBoxGminP.Text; }
         }
 
         public string OutFolder
         {
-            get
-            {
-                return mtxtBoxFolder.Text;
-            }
-            set
-            {
-                mtxtBoxFolder.Text = value;
-            }
+            get { return mtxtBoxFolder.Text; }
+            set { mtxtBoxFolder.Text = value; }
         }
 
         public bool DoPlotting
         {
-            get
-            {
-                return mchkBoxPlot.Checked;
-            }
+            get { return mchkBoxPlot.Checked; }
         }
 
         public bool PlotFlag
         {
-            get
-            {
-                return DoPlotting;
-            }
+            get { return DoPlotting; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public bool ModeMean
         {
-            get
-            {
-                return mchkBoxMode.Checked;
-            }
+            get { return mchkBoxMode.Checked; }
         }
 
         #endregion
-
     }
 }

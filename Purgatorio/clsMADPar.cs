@@ -9,8 +9,7 @@ namespace DAnTE.Purgatorio
         //[Tools.clsAnalysisAttribute("Dataset(R)", "MedianAbsoluteDeviation_Adjustment")]
         public string Rdataset;
 
-        [Tools.clsAnalysisAttribute("Set_Zero_Mean", "MedianAbsoluteDeviation_Adjustment")]
-        public bool mblMeanAdj;
+        [Tools.clsAnalysisAttribute("Set_Zero_Mean", "MedianAbsoluteDeviation_Adjustment")] public bool mblMeanAdj;
 
         public int mintFactorIndex;
 
@@ -38,7 +37,7 @@ namespace DAnTE.Purgatorio
 
         private string Factor
         {
-            get 
+            get
             {
                 if (mintFactorIndex > -1)
                     return "Factor=factors[" + mintFactorIndex.ToString() + ",]";

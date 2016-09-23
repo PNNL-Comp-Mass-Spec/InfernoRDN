@@ -15,14 +15,8 @@ namespace DAnTE.Paradiso
 
         public string LogFilePath
         {
-            get
-            {
-                return mLogFilePath;
-            }
-            set
-            {
-                ShowLogFile(value);
-            }
+            get { return mLogFilePath; }
+            set { ShowLogFile(value); }
         }
 
         public void ShowLogFile(string logFilePath)
@@ -34,11 +28,14 @@ namespace DAnTE.Paradiso
             {
                 txtRCmdLog.Text = string.Empty;
                 txtLogFilePath.Text = "File not found: " + logFilePath;
-            }            
+            }
             else
             {
                 txtLogFilePath.Text = fiLogFile.FullName;
-                using (var reader = new StreamReader(new FileStream(fiLogFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                using (
+                    var reader =
+                        new StreamReader(new FileStream(fiLogFile.FullName, FileMode.Open, FileAccess.Read,
+                                                        FileShare.ReadWrite)))
                 {
                     txtRCmdLog.Text = reader.ReadToEnd();
                 }

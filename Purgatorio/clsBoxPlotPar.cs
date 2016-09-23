@@ -52,7 +52,7 @@ namespace DAnTE.Purgatorio
             {
                 rcmd = "dataBoxPlots(" + Rdataset + "[," + datasubset + "]," + this.FontScale + ",";
                 rcmd = rcmd + @"color=""" + color + @"""," + this.BoxWidth + "," + this.Background +
-                        ",Factor=" + factor + "," + this.ShowCount + "," + this.Stamp + ",";
+                       ",Factor=" + factor + "," + this.ShowCount + "," + this.Stamp + ",";
                 if (!outliers)
                     rcmd = rcmd + "outliers=FALSE,";
                 rcmd = rcmd + @"file=""" + tempFile + @""")";
@@ -62,18 +62,12 @@ namespace DAnTE.Purgatorio
 
         public string FontScale
         {
-            get
-            {
-                return ("labelscale=" + fontScale.ToString(CultureInfo.InvariantCulture));
-            }
+            get { return ("labelscale=" + fontScale.ToString(CultureInfo.InvariantCulture)); }
         }
 
         public string BoxWidth
         {
-            get
-            {
-                return ("boxwidth=" + boxWidth.ToString(CultureInfo.InvariantCulture));
-            }
+            get { return ("boxwidth=" + boxWidth.ToString(CultureInfo.InvariantCulture)); }
         }
 
         public string Background

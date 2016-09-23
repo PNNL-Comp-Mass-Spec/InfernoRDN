@@ -44,36 +44,22 @@ namespace DAnTE.ExtraControls
                 dAnTEdatagridview1.DataSource = null;
                 dAnTEdatagridview1.DataSource = value;
             }
-            get
-            {
-                return ((DataTable)dAnTEdatagridview1.DataSource);
-            }
+            get { return ((DataTable)dAnTEdatagridview1.DataSource); }
         }
 
         public DataGridViewSelectedRowCollection SelectedRows
         {
-            get
-            {
-                return dAnTEdatagridview1.SelectedRows;
-            }
+            get { return dAnTEdatagridview1.SelectedRows; }
         }
 
         public ContextMenuStrip CxMenu
         {
-            set
-            {
-                dAnTEdatagridview1.ContextMenuStrip = value;
-            }
+            set { dAnTEdatagridview1.ContextMenuStrip = value; }
         }
 
         public DataGridView TableGrid
         {
-            get
-            {
-                return dAnTEdatagridview1;
-            }
+            get { return dAnTEdatagridview1; }
         }
-
-        
     }
 }

@@ -36,8 +36,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_Log2;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_Log2Completed;
+
             #endregion
 
             mclsLogPar = new Purgatorio.clsLogTransformPar
@@ -60,9 +62,12 @@ namespace DAnTE.Inferno
                 mfrmShowProgress.Message = "Calculating Log Expressions ...";
                 mfrmShowProgress.ShowDialog();
             }
+
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_Log2;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_Log2Completed;
+
             #endregion
         }
 
@@ -222,8 +227,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_MeanC;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MeanCCompleted;
+
             #endregion
 
             mclsMeanCPar = new Purgatorio.clsCentralTendencyPar
@@ -243,7 +250,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsMeanCPar, "CentralTendency");
 
-                var rcmd = mclsMeanCPar.Rcmd;                
+                var rcmd = mclsMeanCPar.Rcmd;
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
 
                 if (mclsMeanCPar.mblUseMeanTend)
@@ -255,10 +262,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_MeanC;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MeanCCompleted;
-            #endregion
 
+            #endregion
         }
 
         private void menuItemMAD_Click(object sender, EventArgs e) // MAD Adjustment
@@ -281,8 +289,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_MAD;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MADCompleted;
+
             #endregion
 
             mclsMADPar = new Purgatorio.clsMADPar
@@ -318,10 +328,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_MAD;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MADCompleted;
-            #endregion
 
+            #endregion
         }
 
         private void menuItemLinReg_Click(object sender, EventArgs e)
@@ -384,7 +395,6 @@ namespace DAnTE.Inferno
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_LinRegCompleted;
 
             #endregion
-
         }
 
         private void menuItemImpute_Click(object sender, EventArgs e)
@@ -407,8 +417,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_Impute;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ImputeCompleted;
+
             #endregion
 
             mclsImputePar = new Purgatorio.clsImputePar
@@ -443,16 +455,19 @@ namespace DAnTE.Inferno
                 mfrmShowProgress.Message = "Imputing Data ...";
                 mfrmShowProgress.ShowDialog();
             }
+
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_Impute;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ImputeCompleted;
-            #endregion
 
+            #endregion
         }
 
         #endregion
 
         #region Private Methods
+
         private bool DoMADAdjustment(string rcmd)
         {
             var success = true;
@@ -644,6 +659,7 @@ namespace DAnTE.Inferno
 
             return success;
         }
+
         #endregion
     }
 }

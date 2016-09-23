@@ -30,7 +30,6 @@ namespace DAnTE.Inferno
             }
 
             return newList;
-           
         }
 
         private List<clsDatasetInfo> MakeDeepCopy(IEnumerable<clsDatasetInfo> sourceList)
@@ -43,9 +42,8 @@ namespace DAnTE.Inferno
             }
 
             return newList;
-           
         }
-        
+
         private void frmFactorInformation_Load(object sender, EventArgs e)
         {
             FillListView();
@@ -123,7 +121,7 @@ namespace DAnTE.Inferno
 
                 NumFactors--;
             }
-            
+
             currDataset = marrDatasetInfo[0];
             foreach (var currFactor in marrFactorInfo)
             {
@@ -187,7 +185,7 @@ namespace DAnTE.Inferno
                     mlstViewDataSets.Columns.Add(col);
                 }
                 for (var row = 0; row < marrDatasetInfo.Count; row++)
-                {   
+                {
                     // Start filling the rows
                     currDataset = marrDatasetInfo[row];
                     var dataItem = new ListViewItem(currDataset.mstrDataSetName);
@@ -205,14 +203,15 @@ namespace DAnTE.Inferno
                         //Fill factor columns with values
                         dataItem.SubItems.Add(currDataset.marrFactorAssnmnts[k].Value);
                     }
-                    
+
                     // Store the row number (integer) as the tag
                     dataItem.Tag = row;
                     mlstViewDataSets.Items.Add(dataItem);
                 }
             }
             else
-            {   // Fill only the dataset names
+            {
+                // Fill only the dataset names
                 for (var row = 0; row < marrDatasetInfo.Count; row++)
                 {
                     currDataset = marrDatasetInfo[row];
@@ -297,7 +296,6 @@ namespace DAnTE.Inferno
             }
         }
 
-
         #region editing the listview ---------------------
 
         private void updateDatasetFactorInfo()
@@ -375,10 +373,10 @@ namespace DAnTE.Inferno
             {
                 return;
             }
-            
+
             // Factor columns
             cmbBox.Items.Clear();
-            var colFactor = mlstViewDataSets.Columns[subItemSelected].Text;// factor name
+            var colFactor = mlstViewDataSets.Columns[subItemSelected].Text; // factor name
             for (var i = 0; i < marrFactorInfo.Count; i++)
             {
                 if (marrFactorInfo[i].mstrFactor.Equals(colFactor))
@@ -392,7 +390,7 @@ namespace DAnTE.Inferno
             foreach (var item in marrFactorInfo[factorIdx].marrValues)
             {
                 cmbBox.Items.Add(item);
-            }                
+            }
 
             cmbBox.Size = new System.Drawing.Size(epos - spos, li.Bounds.Bottom - li.Bounds.Top);
             cmbBox.Location = new System.Drawing.Point(sposX + spos + 2, sposY + li.Bounds.Y);
@@ -448,11 +446,13 @@ namespace DAnTE.Inferno
         #endregion
 
         #region Context menu items
+
         private void menuItemFillBelow_Click(object sender, System.EventArgs e)
         {
             if (subItemSelected < NUM_COLUMNS || li == null)
             {
-                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors",
+                                "Invalid selection", MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
                 return;
             }
@@ -472,17 +472,17 @@ namespace DAnTE.Inferno
                 mlstViewDataSets.Items[num].SubItems[subItemSelected].Text = factorVal;
                 marrDatasetInfo[num].marrFactorAssnmnts[subItemSelected - NUM_COLUMNS].Value = factorVal;
             }
-
         }
 
         private void menuItemFillNBelow_Click(object sender, System.EventArgs e)
         {
             if (subItemSelected < NUM_COLUMNS || li == null)
             {
-                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors",
+                                "Invalid selection", MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
                 return;
-            }          
+            }
 
             var idx = 0;
             var nBlock = 1;
@@ -511,7 +511,6 @@ namespace DAnTE.Inferno
                     mlstViewDataSets.Items[num].SubItems[subItemSelected].Text = factorVal;
                     marrDatasetInfo[num].marrFactorAssnmnts[subItemSelected - NUM_COLUMNS].Value = factorVal;
                 }
-
             }
         }
 
@@ -519,7 +518,8 @@ namespace DAnTE.Inferno
         {
             if (subItemSelected < NUM_COLUMNS || li == null)
             {
-                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors",
+                                "Invalid selection", MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
                 return;
             }
@@ -540,7 +540,8 @@ namespace DAnTE.Inferno
         {
             if (subItemSelected < NUM_COLUMNS || li == null)
             {
-                MessageBox.Show("Add one or more factors, then select a cell in a column with factors", "Invalid selection", MessageBoxButtons.OK,
+                MessageBox.Show("Add one or more factors, then select a cell in a column with factors",
+                                "Invalid selection", MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
                 return;
             }
@@ -569,7 +570,7 @@ namespace DAnTE.Inferno
             var numVals = marrFactorInfo[subItemSelected - NUM_COLUMNS].vCount; //number of values in this factor
 
             var fvals = marrFactorInfo[subItemSelected - NUM_COLUMNS].FactorValues;
-            
+
             int startIdxVal; //start with this value and its index is...
             for (startIdxVal = 0; startIdxVal < numVals; startIdxVal++)
                 if (fvals[startIdxVal].Equals(factorVal))
@@ -577,13 +578,14 @@ namespace DAnTE.Inferno
 
             var start = idx;
             var cycle = 0;
-            while (start < mlstViewDataSets.Items.Count)//all cycles
+            while (start < mlstViewDataSets.Items.Count) //all cycles
             {
-                for (var num = start; num < (start + nBlock); num++)//set values in one block
+                for (var num = start; num < (start + nBlock); num++) //set values in one block
                 {
                     if (num < mlstViewDataSets.Items.Count)
                     {
-                        factorVal = fvals[(startIdxVal + cycle) % numVals]; // index should go in a cycle, hence the mod operator.
+                        factorVal = fvals[(startIdxVal + cycle) % numVals];
+                            // index should go in a cycle, hence the mod operator.
                         mlstViewDataSets.Items[num].SubItems[subItemSelected].Text = factorVal; // update in the view
                         // update in the datasaet info
                         marrDatasetInfo[num].marrFactorAssnmnts[subItemSelected - NUM_COLUMNS].Value = factorVal;
@@ -595,16 +597,14 @@ namespace DAnTE.Inferno
                 cycle++; //i.e. the next cycle
             }
         }
+
         #endregion
 
         #region Properties
 
         public List<clsDatasetInfo> DatasetInfo
         {
-            set
-            {
-                marrDatasetInfo = value;
-            }
+            set { marrDatasetInfo = value; }
             get
             {
                 ArrangeDatasets();
@@ -614,22 +614,13 @@ namespace DAnTE.Inferno
 
         public List<clsFactorInfo> FactorInfo
         {
-            set
-            {
-                marrFactorInfo = value;
-            }
-            get
-            {
-                return marrFactorInfo;
-            }
+            set { marrFactorInfo = value; }
+            get { return marrFactorInfo; }
         }
 
         public bool FactorsLoaded
         {
-            set
-            {
-                mblfactorsLoaded = value;
-            }
+            set { mblfactorsLoaded = value; }
         }
 
         public List<int> NewDatasetOrder
@@ -657,45 +648,29 @@ namespace DAnTE.Inferno
 
         public bool OrderChanged
         {
-            get
-            {
-                return mblOrderChanged;
-            }
+            get { return mblOrderChanged; }
         }
 
         public string Title
         {
-            set
-            {
-                mlblTitle.Text = value;
-            }
+            set { mlblTitle.Text = value; }
         }
 
         public string SubTitle
         {
-            set
-            {
-                txtDirections.Text = value;
-            }
+            set { txtDirections.Text = value; }
         }
 
         public string WinTitle
         {
-            set
-            {
-                this.Text = value;
-            }
+            set { this.Text = value; }
         }
 
         public bool OrderChangeOnly
         {
-            set
-            {
-                mblOrderChangeOnly = value;
-            }
+            set { mblOrderChangeOnly = value; }
         }
 
         #endregion
-        
     }
 }

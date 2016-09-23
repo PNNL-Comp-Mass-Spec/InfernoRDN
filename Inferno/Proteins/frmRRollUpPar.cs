@@ -44,21 +44,21 @@ namespace DAnTE.Inferno
                 {
                     DialogResult = DialogResult.None;
                     MessageBox.Show("Minimum presence value is out of allowed range.", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                    MessageBoxIcon.Error);
                     return;
                 }
                 if (minOverlap < 1)
                 {
                     DialogResult = DialogResult.None;
                     MessageBox.Show("Overlap value chosen is not allowed.", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                    MessageBoxIcon.Error);
                     return;
                 }
             }
             if (!Directory.Exists(mtxtBoxFolder.Text))
             {
                 MessageBox.Show("Invalid folder.", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
                 DialogResult = DialogResult.None;
                 return;
             }
@@ -123,7 +123,8 @@ namespace DAnTE.Inferno
             }
             if (grubbsMinP < 3)
             {
-                MessageBox.Show("Setting the minimum number of peptides for Grubb's test too low may not be a good idea.",
+                MessageBox.Show(
+                    "Setting the minimum number of peptides for Grubb's test too low may not be a good idea.",
                     "Peptides for Grubb's too low", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 mtxtBoxGminP.Text = "5";
             }
@@ -157,98 +158,60 @@ namespace DAnTE.Inferno
 
         public string MinPresence
         {
-            get
-            {
-                return mtxtBoxMinPresent.Text;
-            }
+            get { return mtxtBoxMinPresent.Text; }
         }
 
         public bool OneHitWonders
         {
-            get
-            {
-                return mchkBoxOneHit.Checked;
-            }
+            get { return mchkBoxOneHit.Checked; }
         }
 
         public string Gp_value
         {
-            get
-            {
-                return mtxtBoxGpval.Text;
-            }
+            get { return mtxtBoxGpval.Text; }
         }
 
         public string gminPCount
         {
-            get
-            {
-                return mtxtBoxGminP.Text;
-            }
+            get { return mtxtBoxGminP.Text; }
         }
 
         public string MinOverlap
         {
-            get
-            {
-                return mtxtBoxMinOlap.Text;
-            }
+            get { return mtxtBoxMinOlap.Text; }
         }
 
         public string OutFolder
         {
-            get
-            {
-                return mtxtBoxFolder.Text;
-            }
-            set
-            {
-                mtxtBoxFolder.Text = value;
-            }
+            get { return mtxtBoxFolder.Text; }
+            set { mtxtBoxFolder.Text = value; }
         }
 
         public bool DoPlotting
         {
-            get
-            {
-                return mchkBoxPlot.Checked;
-            }
+            get { return mchkBoxPlot.Checked; }
         }
 
         public bool PlotFlag
         {
-            get
-            {
-                return DoPlotting;
-            }
+            get { return DoPlotting; }
         }
-                
+
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
-        
+
         public bool ModeMean
         {
-            get
-            {
-                return mchkBoxMode.Checked;
-            }
+            get { return mchkBoxMode.Checked; }
         }
 
         public bool Center
         {
-            get
-            {
-                return mchkBoxCenter.Checked;
-            }
+            get { return mchkBoxCenter.Checked; }
         }
 
         #endregion
-
-        
     }
 }

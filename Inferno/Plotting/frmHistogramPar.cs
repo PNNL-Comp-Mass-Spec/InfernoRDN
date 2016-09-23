@@ -68,7 +68,6 @@ namespace DAnTE.Inferno
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
         }
 
         private void mbtnForeC_Click(object sender, EventArgs e)
@@ -258,7 +257,7 @@ namespace DAnTE.Inferno
                     {
                         if (k == 0)
                             selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.
-                                Items[i].Tag) + 1);
+                                                                            Items[i].Tag) + 1);
                         else
                             selected = selected + "," + Convert.ToString(Convert.ToInt16(
                                 mlstViewDataSets.Items[i].Tag) + 1);
@@ -323,10 +322,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string strBins
@@ -346,21 +342,14 @@ namespace DAnTE.Inferno
 
         public int numBins
         {
-            get
-            {
-                return bins;
-            }
+            get { return bins; }
         }
 
         public bool Stamp
         {
-            get
-            {
-                return mchkBoxStamp.Checked;
-            }
+            get { return mchkBoxStamp.Checked; }
         }
+
         #endregion
-
-
     }
 }

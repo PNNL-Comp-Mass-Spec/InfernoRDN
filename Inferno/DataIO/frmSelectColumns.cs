@@ -21,16 +21,15 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxMT.Items.Count != 1)
                 MessageBox.Show("Select unique row identifier (e.g. Mass Tags)", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (mlstBoxData.Items.Count < 2)
                 MessageBox.Show("Not enough datasets", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (mchkBoxProtein.Checked && mlstBoxProteinInfo.Items.Count < 1)
                 MessageBox.Show("Select protein identifiers", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
                 this.DialogResult = DialogResult.OK;
-
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -176,8 +175,7 @@ namespace DAnTE.Inferno
                 foreach (var item in value)
                 {
                     mlstBoxAllCols.Items.Add(item);
-                }                
-
+                }
             }
         }
 
@@ -206,13 +204,10 @@ namespace DAnTE.Inferno
                 return strarrDataCols;
             }
         }
-        
+
         public string RowIDColumn
         {
-            get
-            {
-                return mlstBoxMT.Items[0].ToString();
-            }
+            get { return mlstBoxMT.Items[0].ToString(); }
         }
 
         /// <summary>
@@ -249,10 +244,7 @@ namespace DAnTE.Inferno
 
         public bool Proteins
         {
-            get
-            {
-                return mchkBoxProtein.Checked;
-            }
+            get { return mchkBoxProtein.Checked; }
             set
             {
                 if (value)
@@ -262,7 +254,7 @@ namespace DAnTE.Inferno
                 }
             }
         }
-                
+
         #endregion
     }
 }

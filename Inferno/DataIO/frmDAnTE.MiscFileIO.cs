@@ -62,7 +62,6 @@ namespace DAnTE.Inferno
                     var enumValue = (FileTypeExtension)Enum.Parse(typeof(FileTypeExtension), enumName);
                     return enumValue;
                 }
-
             }
 
             return defaultValue;
@@ -75,7 +74,7 @@ namespace DAnTE.Inferno
         {
             Image currImg;
             using (var fs = new FileStream(tempFile, FileMode.Open,
-                                FileAccess.Read, FileShare.ReadWrite))
+                                           FileAccess.Read, FileShare.ReadWrite))
             {
                 var img = Image.FromStream(fs);
                 fs.Close();
@@ -254,7 +253,7 @@ namespace DAnTE.Inferno
                 sortedColumns.Add(item);
             }
 
-            var columnsToRemove = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);            
+            var columnsToRemove = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
             foreach (DataColumn column in columns)
             {
@@ -297,7 +296,8 @@ namespace DAnTE.Inferno
         /// <param name="proteinIdentifierColumn"></param>
         /// <param name="rowID"></param>
         /// <returns></returns>
-        private DataTable LoadProtColumns(DataTable sourceDataTable, string proteinIdentifierColumn, string rowID, List<string> metdataColumns)
+        private DataTable LoadProtColumns(DataTable sourceDataTable, string proteinIdentifierColumn, string rowID,
+                                          List<string> metdataColumns)
         {
             DataTable proteinDataTable;
 
@@ -317,7 +317,7 @@ namespace DAnTE.Inferno
                     // Table will have two columns: rowID and proteinIdentifierColumn
                     proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, proteinIdentifierColumn);
                 }
-                
+
 
                 proteinDataTable.TableName = "ProtInfo";
 
@@ -350,7 +350,8 @@ namespace DAnTE.Inferno
                         rCmdAddon.Append("," + genericMetadataColName + "=" + genericMetadataColName);
                     }
 
-                    var rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=proteinIdentifierColumn" + rCmdAddon + ")";
+                    var rcmd = "ProtInfo<-data.frame(Row_ID=MassTags,ProteinID=proteinIdentifierColumn" + rCmdAddon +
+                               ")";
                     mRConnector.EvaluateNoReturn(rcmd);
 
                     if (mhtDatasets.ContainsKey("Expressions"))
@@ -388,12 +389,11 @@ namespace DAnTE.Inferno
                     MessageBox.Show("Error: " + ex.Message, "Exception while talking to R");
                     proteinDataTable = null;
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message,
-                    "Exception while extracting data columns");
+                                "Exception while extracting data columns");
                 proteinDataTable = null;
             }
             return proteinDataTable;
@@ -520,7 +520,8 @@ namespace DAnTE.Inferno
             var fExt = Path.GetExtension(filePath);
             if (string.IsNullOrWhiteSpace(fExt))
             {
-                MessageBox.Show("File does not have an extension (like .csv or .txt); unable to determine file type", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("File does not have an extension (like .csv or .txt); unable to determine file type",
+                                "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
@@ -571,8 +572,9 @@ namespace DAnTE.Inferno
 
                             // Remove rows with no data or duplicate data
                             filteredDataTable = clsDataTable.RemoveDuplicateRows2(filteredDataTable,
-                                                                                 filteredDataTable.Columns[0].ColumnName);
-                            
+                                                                                  filteredDataTable.Columns[0]
+                                                                                      .ColumnName);
+
                             // Copy the data into R
                             filteredDataTable.TableName = "Eset";
                             success = mRConnector.SendTable2RmatrixNumeric("Eset", filteredDataTable);
@@ -602,10 +604,12 @@ namespace DAnTE.Inferno
                             return false;
                         }
 
-                        if (columnSelectionForm.Proteins && !string.IsNullOrWhiteSpace(columnSelectionForm.ProteinIDColumn) && success)
+                        if (columnSelectionForm.Proteins &&
+                            !string.IsNullOrWhiteSpace(columnSelectionForm.ProteinIDColumn) && success)
                         {
                             // Load protein info then send to R
-                            var proteinDataTable = LoadProtColumns(esetTable, columnSelectionForm.ProteinIDColumn, rowID, columnSelectionForm.ProteinMetadataColumns);
+                            var proteinDataTable = LoadProtColumns(esetTable, columnSelectionForm.ProteinIDColumn, rowID,
+                                                                   columnSelectionForm.ProteinMetadataColumns);
                             proteinDataTable.TableName = "ProtInfo";
                             AddDataset2HashTable(proteinDataTable);
                         }
@@ -636,7 +640,8 @@ namespace DAnTE.Inferno
                     {
                         rowID = proteinSelectionForm.RowIDColumn; //mass tags
                         var proteinIdentifierColumn = proteinSelectionForm.ProteinIDColumn;
-                        var proteinDataTable = LoadProtColumns(proteinInfoTable, proteinIdentifierColumn, rowID, proteinSelectionForm.ProteinMetadataColumns);
+                        var proteinDataTable = LoadProtColumns(proteinInfoTable, proteinIdentifierColumn, rowID,
+                                                               proteinSelectionForm.ProteinMetadataColumns);
                         proteinDataTable.TableName = "ProtInfo";
                         AddDataset2HashTable(proteinDataTable);
                     }
@@ -670,7 +675,9 @@ namespace DAnTE.Inferno
                     }
                     if (factorTable.Rows.Count > frmDefFactors.MAX_LEVELS)
                     {
-                        MessageBox.Show("Factors file has too many factors; max allowed is " + frmDefFactors.MAX_LEVELS + " factors", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            "Factors file has too many factors; max allowed is " + frmDefFactors.MAX_LEVELS + " factors",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
                     if (mRConnector.SendTable2RmatrixNonNumeric("factors", factorTable))
@@ -729,7 +736,7 @@ namespace DAnTE.Inferno
                 {
                     factorValues.Clear();
                     mRConnector.EvaluateNoReturn("fVals <- unique(factors[" +
-                        Convert.ToString(numF + 1) + ",])");
+                                                 Convert.ToString(numF + 1) + ",])");
                     mRConnector.EvaluateNoReturn("nfVals <- length(fVals)");
 
                     var factorValuesFromR = mRConnector.GetSymbolAsStrings("fVals");
@@ -769,10 +776,11 @@ namespace DAnTE.Inferno
         {
             var doLoad = true;
             if (mtabControlData.Controls.Count != 0)
-            
+
             {
                 doLoad = (MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
-                    "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
+                                          "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                          DialogResult.Yes);
             }
 
             if (!doLoad)

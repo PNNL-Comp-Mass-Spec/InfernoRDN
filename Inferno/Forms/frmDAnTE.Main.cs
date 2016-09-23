@@ -28,7 +28,7 @@ namespace DAnTE.Inferno
 
         // Tab controls for Expressions
         private TabPage ctltabPage;
-        
+
         private readonly frmShowProgress mfrmShowProgress;
 
         // ReSharper disable once NotAccessedField.Local
@@ -48,7 +48,7 @@ namespace DAnTE.Inferno
 
         private bool mAutoLoadSessionFile;
         private DateTime mAutoLoadScheduledTime;
-        
+
         // This is a linux-style path that is used by R to save .png files
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
         private string mRTempFilePath = "";
@@ -66,7 +66,9 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem ctxtMnuItemFilter;
         private ToolStripSeparator toolStripSeparator13;
 
-        private readonly Dictionary<string, clsDatasetTreeNode> mhtDatasets = new Dictionary<string, clsDatasetTreeNode>();
+        private readonly Dictionary<string, clsDatasetTreeNode> mhtDatasets =
+            new Dictionary<string, clsDatasetTreeNode>();
+
         private readonly Dictionary<string, string> mhtAnalysisObjects = new Dictionary<string, string>();
         private readonly List<clsAnalysisObject> marrAnalysisObjects = new List<clsAnalysisObject>();
         private ToolStripMenuItem mnuItemVenn;
@@ -113,7 +115,7 @@ namespace DAnTE.Inferno
         public static frmDAnTE GetChildInstance()
         {
             //if not created yet, Create an instance
-            if (m_frmDAnTE == null || m_frmDAnTE.IsDisposed) 
+            if (m_frmDAnTE == null || m_frmDAnTE.IsDisposed)
                 m_frmDAnTE = new frmDAnTE();
 
             // Return the instance
@@ -135,7 +137,6 @@ namespace DAnTE.Inferno
                         continue;
 
                     rowIndicesAdded.Add(selectedCell.RowIndex);
-
                 }
 
                 // Auto select the rows
@@ -165,7 +166,9 @@ namespace DAnTE.Inferno
         {
             if (!mhtDatasets.ContainsKey("Factors"))
             {
-                MessageBox.Show("Factors must be defined in order to " + currentTask + ".  See Define Factors in the Grouping menu.", "Factors not defined");
+                MessageBox.Show(
+                    "Factors must be defined in order to " + currentTask + ".  See Define Factors in the Grouping menu.",
+                    "Factors not defined");
                 return false;
             }
 
@@ -176,13 +179,18 @@ namespace DAnTE.Inferno
         {
             if (!mclsSelected.mblIsPlottable)
             {
-                MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' does not contain data that can be plotted.  Please select a different table from the list", "Invalid table");
+                MessageBox.Show(
+                    "Table '" + mclsSelected.mstrDataText +
+                    "' does not contain data that can be plotted.  Please select a different table from the list",
+                    "Invalid table");
                 return false;
             }
 
             if (minimumColCount > 1 && mclsSelected.mDTable.Columns.Count < minimumColCount)
             {
-                MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' cannot be plotted; it must have at least " + minimumColCount + " columns of data", "Not enough columns");
+                MessageBox.Show(
+                    "Table '" + mclsSelected.mstrDataText + "' cannot be plotted; it must have at least " +
+                    minimumColCount + " columns of data", "Not enough columns");
                 return false;
             }
             return true;
@@ -192,7 +200,8 @@ namespace DAnTE.Inferno
         {
             if (selectedNode == null)
             {
-                MessageBox.Show("Data not loaded (or data table not selected)", "Nothing to do", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Data not loaded (or data table not selected)", "Nothing to do", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 return false;
             }
 
@@ -215,7 +224,10 @@ namespace DAnTE.Inferno
 
             if (!mclsSelected.mblIsNumeric)
             {
-                MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' does not contain a matrix of numeric data.  Please select a different table from the list", "Invalid table");
+                MessageBox.Show(
+                    "Table '" + mclsSelected.mstrDataText +
+                    "' does not contain a matrix of numeric data.  Please select a different table from the list",
+                    "Invalid table");
                 return false;
             }
 
@@ -224,7 +236,8 @@ namespace DAnTE.Inferno
                 var numCols = mclsSelected.mDTable.Columns.Count - 1;
                 if (numCols <= 0)
                 {
-                    MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' must have at least 2 columns of data", "Invalid table");
+                    MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' must have at least 2 columns of data",
+                                    "Invalid table");
                     return false;
                 }
             }
@@ -244,7 +257,6 @@ namespace DAnTE.Inferno
 
             mAutoLoadSessionFile = true;
             mAutoLoadScheduledTime = DateTime.UtcNow.AddMilliseconds(250);
-
         }
 
         private void OnClosed_event(object sender, EventArgs e)
@@ -286,7 +298,7 @@ namespace DAnTE.Inferno
 
             if (s.Length > 1)
                 MessageBox.Show("Only one file at a time!", "One file please...",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
                 var fExt = Path.GetExtension(s[0]);
@@ -303,7 +315,6 @@ namespace DAnTE.Inferno
                         mDataSetType = enmDataType.ESET;
 
                         OpenExpressionFile(s[0]);
-
                     }
                     else
                     {
@@ -317,7 +328,6 @@ namespace DAnTE.Inferno
                                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -331,10 +341,7 @@ namespace DAnTE.Inferno
 
         public clsRconnect RConnector
         {
-            set
-            {
-                mRConnector = value;
-            }
+            set { mRConnector = value; }
         }
 
         public string RTempFilePath
@@ -344,38 +351,23 @@ namespace DAnTE.Inferno
 
         public frmDAnTEmdi ParentInstance
         {
-            set
-            {
-                m_frmDAnTEmdi = value;
-            }
+            set { m_frmDAnTEmdi = value; }
         }
 
         public ToolStrip ToolStripDAnTE
         {
-            get
-            {
-                return mtoolStripDAnTE;
-            }
+            get { return mtoolStripDAnTE; }
         }
 
         public string Title
         {
-            get
-            {
-                return Text;
-            }
-            set
-            {
-                Text = value;
-            }
+            get { return Text; }
+            set { Text = value; }
         }
 
         public string SessionFile
         {
-            set
-            {
-                mSessionFile = value;
-            }
+            set { mSessionFile = value; }
         }
 
         #endregion
@@ -393,7 +385,6 @@ namespace DAnTE.Inferno
             mAutoLoadTimer.Enabled = false;
 
             SessionFileOpenNonThreaded(mSessionFile);
-            
         }
 
         private void frmDAnTE_Activated(object sender, EventArgs e)

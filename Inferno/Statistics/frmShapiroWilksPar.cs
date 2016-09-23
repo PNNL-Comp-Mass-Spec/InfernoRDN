@@ -24,7 +24,7 @@ namespace DAnTE.Inferno
             this.DialogResult = DialogResult.Cancel;
         }
 
-        
+
         private void frmShapiroWilkspar_Load(object sender, EventArgs e)
         {
             mlblDataName.Text = mclsShapiroWilksPar.mstrDatasetName;
@@ -41,7 +41,7 @@ namespace DAnTE.Inferno
                 return mclsShapiroWilksPar;
             }
         }
-        
+
         public int NumDataThresh
         {
             get
@@ -52,7 +52,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-        
     }
 }

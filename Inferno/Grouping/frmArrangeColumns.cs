@@ -35,7 +35,6 @@ namespace DAnTE.Inferno
                 };
                 mlistViewDatasets.Items.Add(dataItem);
             }
-
         }
 
         private void frmArrangeColumns_Load(object sender, EventArgs e)
@@ -107,14 +106,8 @@ namespace DAnTE.Inferno
 
         public List<clsDatasetInfo> DatasetInfo
         {
-            set
-            {
-                marrDatasetInfo = value;
-            }
-            get
-            {
-                return marrDatasetInfo;
-            }
+            set { marrDatasetInfo = value; }
+            get { return marrDatasetInfo; }
         }
 
         public List<int> NewDatasetOrder
@@ -132,9 +125,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-        
-
-        
     }
 }

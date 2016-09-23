@@ -17,6 +17,7 @@ namespace DAnTE.ExtraControls
     public class PictureBoxEx : ScrollableControl
     {
         public delegate void menuclicked();
+
         //public event menuclicked meventmenuclicked;
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace DAnTE.ExtraControls
             _minimumZoom = 0.10F;
 
             // Init drag window fields
-            dashPattern = new Single[] { 5, 2, 5, 2 };
+            dashPattern = new Single[] {5, 2, 5, 2};
 
             dragWindow = Rectangle.Empty;
             dragStart = Point.Empty;
@@ -83,9 +84,11 @@ namespace DAnTE.ExtraControls
             //
             // cmnuPrompt
             //
-            cmnuPrompt.Items.AddRange(new ToolStripItem[] {
-            CopyToolStripMenuItem,
-            ZoomToolStripMenuItem, StretchToolStripMenuItem});
+            cmnuPrompt.Items.AddRange(new ToolStripItem[]
+            {
+                CopyToolStripMenuItem,
+                ZoomToolStripMenuItem, StretchToolStripMenuItem
+            });
             cmnuPrompt.Name = "mctxtMenu";
 
             CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
@@ -112,23 +115,24 @@ namespace DAnTE.ExtraControls
             ResumeLayout(false);
         }
 
-
         #region Fields and Properties
 
         private ContextMenuStrip cmnuPrompt;
-        private ToolStripMenuItem CopyToolStripMenuItem, ZoomToolStripMenuItem,
-            StretchToolStripMenuItem;
 
-        private Image backup;  // Holds the original image that is used whenever the image is resized
+        private ToolStripMenuItem CopyToolStripMenuItem,
+                                  ZoomToolStripMenuItem,
+                                  StretchToolStripMenuItem;
+
+        private Image backup; // Holds the original image that is used whenever the image is resized
         private Image resized; // Holds the entire image resized to the current zoom
 
         // Fields used by the drag window
-        private Rectangle dragWindow;     // Holds the size and location of the drag window
+        private Rectangle dragWindow; // Holds the size and location of the drag window
         private Rectangle dragWindowSave; // Holds the drag window until the prompt has been completed
-        private readonly Pen dragPen;     // The drag pen is used to draw the dragwindow
-        private Point dragStart;          // The coords where the drag started
-        private Point dragEnd;            // The coords where the drag ended
-        private bool lmbDown;             // True if the left mouse button is down
+        private readonly Pen dragPen; // The drag pen is used to draw the dragwindow
+        private Point dragStart; // The coords where the drag started
+        private Point dragEnd; // The coords where the drag ended
+        private bool lmbDown; // True if the left mouse button is down
 
         /// <summary>
         /// Gets picturebox's collection of annotations
@@ -142,23 +146,20 @@ namespace DAnTE.ExtraControls
         private Annotation selectedAnnote; // Holds the currently selected annotation
 
         // Fields used for diagnostics
-        readonly long generateTime;            // Time in milliseconds taken to generate resized image
-        long drawTime;                // Time in milliseconds taken to draw the controls elements
-        long setTime;                 // Time in milliseconds taken to set the image (Inclides generate time)
+        readonly long generateTime; // Time in milliseconds taken to generate resized image
+        long drawTime; // Time in milliseconds taken to draw the controls elements
+        long setTime; // Time in milliseconds taken to set the image (Inclides generate time)
 
         /// <summary>
         /// Gets or sets true if the user should be allowed to drag to copy or zoom
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(true),
-        Description("Indicates whether or not the user should be allowed to drag and copy or zoom"),
-        Browsable(true)]
+         DefaultValue(true),
+         Description("Indicates whether or not the user should be allowed to drag and copy or zoom"),
+         Browsable(true)]
         public bool AllowDrag
         {
-            get
-            {
-                return _allowDrag;
-            }
+            get { return _allowDrag; }
             set
             {
                 if (_allowDrag != value)
@@ -169,7 +170,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private bool _allowDrag = true;
+
         /// <summary>
         /// Fires when the allow drag property is changed
         /// </summary>
@@ -179,15 +182,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets what type of border the PictureBox should have
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(BorderStyle.None),
-        Description("Controls what type of border the PictureBox should have."),
-        Browsable(true)]
+         DefaultValue(BorderStyle.None),
+         Description("Controls what type of border the PictureBox should have."),
+         Browsable(true)]
         public BorderStyle BorderStyle
         {
-            get
-            {
-                return _borderStyle;
-            }
+            get { return _borderStyle; }
             set
             {
                 if (_borderStyle != value)
@@ -200,7 +200,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private BorderStyle _borderStyle;
+
         /// <summary>
         /// Fires when the BorderStyle property has been changed
         /// </summary>
@@ -211,33 +213,31 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the picturebox's current zoom
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(1F),
-        Description("Controls the PictureBox's current zoom."),
-        Browsable(true)]
+         DefaultValue(1F),
+         Description("Controls the PictureBox's current zoom."),
+         Browsable(true)]
         public float CurrentZoom
         {
-            get
-            {
-                return _currentZoom;
-            }
+            get { return _currentZoom; }
             set
             {
                 if (Math.Abs(_currentZoom - value) < float.Epsilon)
                     return;
 
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value), "The current zoom cannot be set equal to or less than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value),
+                                                          "The current zoom cannot be set equal to or less than 0");
 
-                if ((value > _maximumZoom && Math.Abs(_currentZoom - _maximumZoom) < float.Epsilon) || 
+                if ((value > _maximumZoom && Math.Abs(_currentZoom - _maximumZoom) < float.Epsilon) ||
                     (value < _minimumZoom && Math.Abs(_currentZoom - _minimumZoom) < float.Epsilon))
-                    return;                      // No change
+                    return; // No change
 
                 if (value > _maximumZoom)
                     _currentZoom = _maximumZoom; // Value exceeds max (set as max)
                 else if (value < _minimumZoom)
                     _currentZoom = _minimumZoom; // Value exceeds min (set as min)
                 else
-                    _currentZoom = value;        // Set as specified
+                    _currentZoom = value; // Set as specified
 
                 if (backup != null)
                 {
@@ -250,7 +250,9 @@ namespace DAnTE.ExtraControls
                 CurrentZoomChanged?.Invoke(this, new EventArgs());
             }
         }
+
         private float _currentZoom;
+
         /// <summary>
         /// Fires when the CurrentZoom property has been changed
         /// </summary>
@@ -261,38 +263,38 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the picturebox's default zoom
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(1F),
-        Description("Controls the PictureBox's default zoom."),
-        Browsable(true)]
+         DefaultValue(1F),
+         Description("Controls the PictureBox's default zoom."),
+         Browsable(true)]
         public float DefaultZoom
         {
-            get
-            {
-                return _defaultZoom;
-            }
+            get { return _defaultZoom; }
             set
             {
                 if (Math.Abs(_defaultZoom - value) < float.Epsilon)
                     return;
 
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value), "The default zoom cannot be set equal to or less the 0");
+                    throw new ArgumentOutOfRangeException(nameof(value),
+                                                          "The default zoom cannot be set equal to or less the 0");
 
-                if ((value > _maximumZoom && Math.Abs(_defaultZoom - _maximumZoom) < float.Epsilon) || 
+                if ((value > _maximumZoom && Math.Abs(_defaultZoom - _maximumZoom) < float.Epsilon) ||
                     (value < _minimumZoom && Math.Abs(_defaultZoom - _minimumZoom) < float.Epsilon))
-                    return;                      // No change
+                    return; // No change
 
                 if (value > _maximumZoom)
                     _defaultZoom = _maximumZoom; // Value exceeds max (set as max)
                 else if (value < _minimumZoom)
                     _defaultZoom = _minimumZoom; // Value exceeds min (set as min)
                 else
-                    _defaultZoom = value;        // Set as specified
+                    _defaultZoom = value; // Set as specified
 
                 DefaultZoomChanged?.Invoke(this, new EventArgs());
             }
         }
+
         private float _defaultZoom;
+
         /// <summary>
         /// Fires when the DefaultZoom property has been changed
         /// </summary>
@@ -303,15 +305,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets true if the picturebox should be placed in diagnostic mode
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(false),
-        Description("Set to true to display diagnostics information."),
-        Browsable(true)]
+         DefaultValue(false),
+         Description("Set to true to display diagnostics information."),
+         Browsable(true)]
         public bool DiagnosticMode
         {
-            get
-            {
-                return _diagnosticMode;
-            }
+            get { return _diagnosticMode; }
             set
             {
                 if (_diagnosticMode != value)
@@ -322,21 +321,19 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private bool _diagnosticMode;
 
         /// <summary>
         /// Gets or sets the picturebox's ability to restore the image to the default zoom on double-click
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(true),
-        Description("Controls the picturebox's ability to restore the image to the default zoom on double-click."),
-        Browsable(true)]
+         DefaultValue(true),
+         Description("Controls the picturebox's ability to restore the image to the default zoom on double-click."),
+         Browsable(true)]
         public bool DoubleClickRestore
         {
-            get
-            {
-                return _doubleClickRestore;
-            }
+            get { return _doubleClickRestore; }
             set
             {
                 if (_doubleClickRestore != value)
@@ -347,7 +344,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private bool _doubleClickRestore;
+
         /// <summary>
         /// Fires when the DoubleClickRestore property has been changed
         /// </summary>
@@ -358,15 +357,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the picturebox's drag options
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(DragOptions.Prompt),
-        Description("Controls the PictureBox's drag options. (Copy, Zoom, or Prompt)"),
-        Browsable(true)]
+         DefaultValue(DragOptions.Prompt),
+         Description("Controls the PictureBox's drag options. (Copy, Zoom, or Prompt)"),
+         Browsable(true)]
         public DragOptions DragOptions
         {
-            get
-            {
-                return _dragOptions;
-            }
+            get { return _dragOptions; }
             set
             {
                 if (_dragOptions != value)
@@ -377,7 +373,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private DragOptions _dragOptions;
+
         /// <summary>
         /// Fires when the DragOptions property has been changed
         /// </summary>
@@ -388,15 +386,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the picturebox's drag window color
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(typeof(Color), "Black"),
-        Description("Controls the picturebox's drag window color."),
-        Browsable(true)]
+         DefaultValue(typeof(Color), "Black"),
+         Description("Controls the picturebox's drag window color."),
+         Browsable(true)]
         public Color DragWindowColor
         {
-            get
-            {
-                return dragPen.Color;
-            }
+            get { return dragPen.Color; }
             set
             {
                 if (!dragPen.Color.Equals(value))
@@ -409,6 +404,7 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         /// <summary>
         /// Fires when the DragWindowColor property has been changed
         /// </summary>
@@ -419,15 +415,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the picturebox's minimum invokable drag window size
         /// </summary>
         [Category("Behavior"),
-        DefaultValue(typeof(Size), "4, 4"),
-        Description("Controls the picturebox's minimum invokable drag window size."),
-        Browsable(true)]
+         DefaultValue(typeof(Size), "4, 4"),
+         Description("Controls the picturebox's minimum invokable drag window size."),
+         Browsable(true)]
         public Size DragWindowMinimum
         {
-            get
-            {
-                return _dragWindowMinimum;
-            }
+            get { return _dragWindowMinimum; }
             set
             {
                 if (_dragWindowMinimum != value)
@@ -438,7 +431,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private Size _dragWindowMinimum;
+
         /// <summary>
         /// Fires when the DragWindowMinimum property has been changed
         /// </summary>
@@ -449,9 +444,9 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the dash pattern that is used by the control when drawing the drag window
         /// </summary>
         [Category("Appearance"),
-        DefaultValue("5,2,5,2"),
-        Description("The dash pattern that is used by the control when drawing the drag window."),
-        Browsable(true)]
+         DefaultValue("5,2,5,2"),
+         Description("The dash pattern that is used by the control when drawing the drag window."),
+         Browsable(true)]
         public string DragWindowPattern
         {
             get
@@ -485,11 +480,13 @@ namespace DAnTE.ExtraControls
                 }
                 catch
                 {
-                    dashPattern = new Single[] { 5, 2, 5, 2 };
+                    dashPattern = new Single[] {5, 2, 5, 2};
                 }
             }
         }
+
         private Single[] dashPattern;
+
         /// <summary>
         /// Fires when the DragWindowPattern property has been changed
         /// </summary>
@@ -500,15 +497,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets imaging filter that will be applied to the image if it is resized
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(InterpolationMode.Default),
-        Description("Controls the imaging filter that will be applied to the image if it is resized."),
-        Browsable(true)]
+         DefaultValue(InterpolationMode.Default),
+         Description("Controls the imaging filter that will be applied to the image if it is resized."),
+         Browsable(true)]
         public InterpolationMode DrawMode
         {
-            get
-            {
-                return _drawMode;
-            }
+            get { return _drawMode; }
             set
             {
                 if (_drawMode != value)
@@ -524,7 +518,9 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         private InterpolationMode _drawMode;
+
         /// <summary>
         /// Fires when the DrawMode property has been changed
         /// </summary>
@@ -535,9 +531,9 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the Image for the PictureBox (Returns a resized and annotated image if applicable)
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(null),
-        Description("The Image for the PictureBox."),
-        Browsable(true)]
+         DefaultValue(null),
+         Description("The Image for the PictureBox."),
+         Browsable(true)]
         public Image Image
         {
             get { return resized; }
@@ -563,7 +559,7 @@ namespace DAnTE.ExtraControls
                             // Causes image to be resized and repainted
                             CurrentZoom = _defaultZoom;
                         else
-                            // Resize and repaint the image manually
+                        // Resize and repaint the image manually
                             GenerateResizedImage();
 
                         AutoScrollMinSize = resized.Size;
@@ -595,6 +591,7 @@ namespace DAnTE.ExtraControls
         /// </summary>
         [Description("Fires when the Image has been changed.")]
         public event EventHandler ImageChanged;
+
         /// <summary>
         /// Fires when a portion of the image has been copied
         /// </summary>
@@ -605,15 +602,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets minimum allowed zoom
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(3.0F),
-        Description("Controls the maximum allowed zoom."),
-        Browsable(true)]
+         DefaultValue(3.0F),
+         Description("Controls the maximum allowed zoom."),
+         Browsable(true)]
         public float MaximumZoom
         {
-            get
-            {
-                return _maximumZoom;
-            }
+            get { return _maximumZoom; }
             set
             {
                 if (Math.Abs(_maximumZoom - value) < float.Epsilon)
@@ -627,7 +621,9 @@ namespace DAnTE.ExtraControls
                     CurrentZoom = _maximumZoom;
             }
         }
+
         private float _maximumZoom;
+
         /// <summary>
         /// Fires when the MaximumZoom property has been changed
         /// </summary>
@@ -638,15 +634,12 @@ namespace DAnTE.ExtraControls
         /// Gets or sets maximum allowed zoom
         /// </summary>
         [Category("Appearance"),
-        DefaultValue(0.10F),
-        Description("Controls the minimum allowed zoom."),
-        Browsable(true)]
+         DefaultValue(0.10F),
+         Description("Controls the minimum allowed zoom."),
+         Browsable(true)]
         public float MinimumZoom
         {
-            get
-            {
-                return _minimumZoom;
-            }
+            get { return _minimumZoom; }
             set
             {
                 if (Math.Abs(_minimumZoom - value) < float.Epsilon)
@@ -660,7 +653,9 @@ namespace DAnTE.ExtraControls
                     CurrentZoom = _minimumZoom;
             }
         }
+
         private float _minimumZoom;
+
         /// <summary>
         /// Fires when the MinimumZoom property has been changed
         /// </summary>
@@ -671,7 +666,7 @@ namespace DAnTE.ExtraControls
         /// Fires when the ScrollPosition property has been changed
         /// </summary>
         [Description("Fires when the ScrollPosition property has been changed."),
-        Browsable(false)]
+         Browsable(false)]
         public event EventHandler ScrollPositionChanged;
 
         /// <summary>
@@ -683,7 +678,6 @@ namespace DAnTE.ExtraControls
             get { return true; }
             set { }
         }
-
 
         #region Constant Windwos Message Codes
 
@@ -735,7 +729,6 @@ namespace DAnTE.ExtraControls
             Invalidate();
         }
 
-
         #region Draw Methods
 
         private void PictureBoxEx_Paint(object sender, PaintEventArgs e)
@@ -749,7 +742,7 @@ namespace DAnTE.ExtraControls
             if (backup != null && resized != null)
             {
                 e.Graphics.DrawImageUnscaled(resized,
-                    AutoScrollPosition.X, AutoScrollPosition.Y, resized.Width, resized.Height);
+                                             AutoScrollPosition.X, AutoScrollPosition.Y, resized.Width, resized.Height);
 
                 DrawSelectedAnnotation(e.Graphics);
 
@@ -763,6 +756,7 @@ namespace DAnTE.ExtraControls
                     DrawDiagnostic(e.Graphics);
             }
         }
+
         private void DrawSelectedAnnotation(Graphics g)
         {
             if (selectedAnnote != null)
@@ -770,7 +764,7 @@ namespace DAnTE.ExtraControls
                 var fontSize = selectedAnnote.Font.Size * _currentZoom;
 
                 var font = new Font(selectedAnnote.Font.FontFamily,
-                    fontSize, selectedAnnote.Font.Style, GraphicsUnit.Pixel);
+                                    fontSize, selectedAnnote.Font.Style, GraphicsUnit.Pixel);
 
                 Brush brush = new SolidBrush(selectedAnnote.Color);
 
@@ -779,14 +773,16 @@ namespace DAnTE.ExtraControls
                 g.DrawString(selectedAnnote.Text, font, brush, selectedAnnote.Location);
 
                 g.DrawRectangle(dragPen, selectedAnnote.Location.X, selectedAnnote.Location.Y,
-                    (int)sizeF.Width, (int)sizeF.Height);
+                                (int)sizeF.Width, (int)sizeF.Height);
             }
         }
+
         private void DrawDragWindow(Graphics g)
         {
             if (dragWindow != Rectangle.Empty)
                 g.DrawRectangle(dragPen, dragWindow);
         }
+
         private void DrawBorder(Graphics g)
         {
             var hScrollHeight = (VScroll) ? 17 : 0;
@@ -805,24 +801,25 @@ namespace DAnTE.ExtraControls
 
                     var outsideLowerRight = new Pen(Color.FromArgb(255, 255, 255), 1);
                     g.DrawLine(outsideLowerRight, new Point(0, Height - 1 - hScrollHeight),
-                        new Point(Width - 1, Height - 1 - hScrollHeight));
+                               new Point(Width - 1, Height - 1 - hScrollHeight));
                     g.DrawLine(outsideLowerRight, new Point(Width - 1 - vScrollWidth,
-                        Height - 1), new Point(Width - 1 - vScrollWidth, 0));
+                                                            Height - 1), new Point(Width - 1 - vScrollWidth, 0));
 
                     var insideLowerRight = new Pen(Color.FromArgb(241, 239, 226), 1);
                     g.DrawLine(insideLowerRight, new Point(1, Height - 2 - hScrollHeight),
-                        new Point(Width - 2, Height - 2 - hScrollHeight));
+                               new Point(Width - 2, Height - 2 - hScrollHeight));
                     g.DrawLine(insideLowerRight, new Point(Width - 2 - vScrollWidth,
-                        Height - 2), new Point(Width - 2 - vScrollWidth, 2));
+                                                           Height - 2), new Point(Width - 2 - vScrollWidth, 2));
 
                     break;
                 case BorderStyle.FixedSingle:
                     var fixedSingle = new Pen(Color.FromArgb(127, 157, 185), 1);
                     g.DrawRectangle(fixedSingle, 0, 0, Width - 1 - vScrollWidth,
-                        Height - 1 - hScrollHeight);
+                                    Height - 1 - hScrollHeight);
                     break;
             }
         }
+
         private void DrawDiagnostic(Graphics g)
         {
             var message = string.Format(
@@ -833,7 +830,7 @@ namespace DAnTE.ExtraControls
                 "Auto Scroll Pos: {3}", generateTime, drawTime, setTime, AutoScrollPosition);
 
             g.DrawString(message, new Font("Arial", 16F, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Red), 10, 10);
+                         new SolidBrush(Color.Red), 10, 10);
         }
 
         private void DrawAnnotations(Graphics g)
@@ -842,15 +839,15 @@ namespace DAnTE.ExtraControls
             {
                 // float size = (float)annote.Font.Size * (1 / _currentZoom);
                 var location = new Point(Convert.ToInt32(annote.X * _currentZoom),
-                    Convert.ToInt32(annote.Y * _currentZoom));
+                                         Convert.ToInt32(annote.Y * _currentZoom));
 
                 var fontSize = annote.Font.Size * _currentZoom;
 
                 g.DrawString(annote.Text, new Font(annote.Font.FontFamily, fontSize,
-                    annote.Font.Style, GraphicsUnit.Pixel), new SolidBrush(annote.Color), location);
+                                                   annote.Font.Style, GraphicsUnit.Pixel), new SolidBrush(annote.Color),
+                             location);
             }
         }
-
 
         #endregion
 
@@ -881,6 +878,7 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         /// <summary>
         /// Used to control dragging options
         /// </summary>
@@ -906,6 +904,7 @@ namespace DAnTE.ExtraControls
                 }
             }
         }
+
         /// <summary>
         /// Used to control dragging options
         /// </summary>
@@ -963,7 +962,8 @@ namespace DAnTE.ExtraControls
         {
             var dragWindowRect = GenerateRectangle(dragStart, dragCurrent);
 
-            return dragWindowRect.Width >= _dragWindowMinimum.Width && dragWindowRect.Height >= _dragWindowMinimum.Height;
+            return dragWindowRect.Width >= _dragWindowMinimum.Width &&
+                   dragWindowRect.Height >= _dragWindowMinimum.Height;
         }
 
         private Rectangle GenerateRectangle(Point a, Point b)
@@ -972,27 +972,33 @@ namespace DAnTE.ExtraControls
             var bottomRight = new Point(0, 0);
 
             if (a.X < b.X)
-            {   // Dragging to the right.
+            {
+                // Dragging to the right.
                 if (a.Y < b.Y)
-                {   // Right & Down
+                {
+                    // Right & Down
                     topLeft = a;
                     bottomRight = b;
                 }
                 else
-                {   // Right & Up
+                {
+                    // Right & Up
                     topLeft = new Point(a.X, b.Y);
                     bottomRight = new Point(b.X, a.Y);
                 }
             }
             else if (b.X < a.X)
-            {   // Dragging to the left.
+            {
+                // Dragging to the left.
                 if (a.Y < b.Y)
-                {   // Left & Down
+                {
+                    // Left & Down
                     topLeft = new Point(b.X, a.Y);
                     bottomRight = new Point(a.X, b.Y);
                 }
                 else
-                {   // Left & Up
+                {
+                    // Left & Up
                     topLeft = b;
                     bottomRight = a;
                 }
@@ -1052,6 +1058,7 @@ namespace DAnTE.ExtraControls
 
             Invalidate();
         }
+
         private void Zoom()
         {
             // This version of the picturebox control no longer needs an autoscroll parent
@@ -1085,8 +1092,10 @@ namespace DAnTE.ExtraControls
             xAdjust = Convert.ToInt32(
                 (Width - dragWindowSave.Width * largerRatio) / 2F);
 
-            var xScrollPos = Math.Max(Convert.ToInt32((-AutoScrollPosition.X + (float)dragWindowSave.X) * largerRatio) - xAdjust, 0);
-            var yScrollPos = Math.Max(Convert.ToInt32((-AutoScrollPosition.Y + (float)dragWindowSave.Y) * largerRatio) - yAdjust, 0);
+            var xScrollPos =
+                Math.Max(Convert.ToInt32((-AutoScrollPosition.X + (float)dragWindowSave.X) * largerRatio) - xAdjust, 0);
+            var yScrollPos =
+                Math.Max(Convert.ToInt32((-AutoScrollPosition.Y + (float)dragWindowSave.Y) * largerRatio) - yAdjust, 0);
 
             CurrentZoom *= largerRatio;
 
@@ -1124,6 +1133,7 @@ namespace DAnTE.ExtraControls
 
             return null;
         }
+
         /// <summary>
         /// Gets the annotation at the specified coordinates
         /// </summary>
@@ -1139,7 +1149,6 @@ namespace DAnTE.ExtraControls
 
             Invalidate(); // Redraw the image
         }
-
 
         #endregion
 
@@ -1157,8 +1166,7 @@ namespace DAnTE.ExtraControls
                     y = y - change;
                 else
                     x = x - change;
-            else
-                if (direction == ScrollDirection.Down)
+            else if (direction == ScrollDirection.Down)
                 y = y + change;
             else
                 x = x + change;
@@ -1256,7 +1264,6 @@ namespace DAnTE.ExtraControls
             }
         }
 
-
         #endregion
 
         protected override void OnClick(EventArgs e)
@@ -1273,7 +1280,6 @@ namespace DAnTE.ExtraControls
             base.OnSizeChanged(e);
 
             Invalidate(); // Force a redraw
-
         }
 
         protected override void OnDoubleClick(EventArgs e)
@@ -1297,6 +1303,7 @@ namespace DAnTE.ExtraControls
 
             Invalidate();
         }
+
         /// <summary>
         /// Will automatically shrink or enlarge the image to match the height of the control
         /// </summary>
@@ -1312,6 +1319,7 @@ namespace DAnTE.ExtraControls
 
             CurrentZoom = fitHeightZoom;
         }
+
         /// <summary>
         /// Will automatically shrink or enlarge the image to match the width of the control
         /// </summary>
@@ -1350,7 +1358,6 @@ namespace DAnTE.ExtraControls
             }
         }
 
-
         #region Nested Classes
 
         /// <summary>
@@ -1366,6 +1373,7 @@ namespace DAnTE.ExtraControls
             {
                 AnnotationsChanged += OnAnnotationCollection_AnnotationsChanged;
             }
+
             /// <summary>
             /// Creates a new annotation collection
             /// </summary>
@@ -1375,6 +1383,7 @@ namespace DAnTE.ExtraControls
 
                 AnnotationsChanged += OnAnnotationCollection_AnnotationsChanged;
             }
+
             /// <summary>
             /// Creates a new annotation collection
             /// </summary>
@@ -1385,6 +1394,7 @@ namespace DAnTE.ExtraControls
                 foreach (var annote in annotations)
                     Add(annote, false);
             }
+
             /// <summary>
             /// Creates a new annotation collection
             /// </summary>
@@ -1432,6 +1442,7 @@ namespace DAnTE.ExtraControls
 
                 return index;
             }
+
             /// <summary>
             /// Add an annotation to the collection
             /// </summary>
@@ -1449,6 +1460,7 @@ namespace DAnTE.ExtraControls
 
                 return Add(newAnnote, adjustLocation);
             }
+
             /// <summary>
             /// Adds one or more annotations to the collection w/o adjustment
             /// </summary>
@@ -1508,14 +1520,8 @@ namespace DAnTE.ExtraControls
             /// </summary>
             public Annotation this[int index]
             {
-                get
-                {
-                    return (Annotation)InnerList[index];
-                }
-                set
-                {
-                    InnerList[index] = value;
-                }
+                get { return (Annotation)InnerList[index]; }
+                set { InnerList[index] = value; }
             }
 
             /// <summary>
@@ -1559,8 +1565,10 @@ namespace DAnTE.ExtraControls
             {
                 try
                 {
-
-                    using (var sw = new StreamWriter(new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read)))
+                    using (
+                        var sw =
+                            new StreamWriter(new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read))
+                        )
                     {
                         var type = typeof(Annotation[]);
 
@@ -1586,7 +1594,6 @@ namespace DAnTE.ExtraControls
 
             private void OnAnnotationCollection_AnnotationsChanged(object sender, EventArgs e)
             {
-
             }
         }
 
@@ -1602,14 +1609,17 @@ namespace DAnTE.ExtraControls
         /// Scroll Left
         /// </summary>
         Left = 37,
+
         /// <summary>
         /// Scroll Up
         /// </summary>
         Up = 38,
+
         /// <summary>
         /// Scroll Right
         /// </summary>
         Right = 39,
+
         /// <summary>
         /// Scroll Down
         /// </summary>
@@ -1625,10 +1635,12 @@ namespace DAnTE.ExtraControls
         /// Prompt the user to choose to drag or copy
         /// </summary>
         Prompt = 0,
+
         /// <summary>
         /// Zoom in on the image
         /// </summary>
         Zoom,
+
         /// <summary>
         /// Copy the selected portion of the image
         /// </summary>
@@ -1639,6 +1651,7 @@ namespace DAnTE.ExtraControls
     /// Facilitates the copy drag window event
     /// </summary>
     public delegate void ImagePortionCopiedEventHandler(object sender, ImagePortionCopiedEventArgs e);
+
     /// <summary>
     /// Event argumets that pass the copied portions of the image.
     /// </summary>

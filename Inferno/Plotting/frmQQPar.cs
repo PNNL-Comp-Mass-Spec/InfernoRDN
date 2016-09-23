@@ -59,7 +59,6 @@ namespace DAnTE.Inferno
 
         private void buttonToggleAll_Click(object sender, EventArgs e)
         {
-
             var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, SUGGESTED_MAX, true);
 
             if (mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating &&
@@ -350,10 +349,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         private int ReferenceDist
@@ -392,9 +388,7 @@ namespace DAnTE.Inferno
                 return 0;
             }
         }
+
         #endregion
-
-
-
     }
 }

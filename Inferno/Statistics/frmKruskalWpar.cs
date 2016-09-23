@@ -20,10 +20,9 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFactors.SelectedIndex < 0)
                 MessageBox.Show("Select a Factor to Perform Kruskal-Wallis Test", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
                 this.DialogResult = DialogResult.OK;
-
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -63,20 +62,14 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateListBox
         {
-            set
-            {
-                mlstBoxFactors.DataSource = value;
-            }
+            set { mlstBoxFactors.DataSource = value; }
         }
-                
+
         public string SelectedFactor
         {
-            get
-            {
-                return sfactor;
-            }
+            get { return sfactor; }
         }
-                
+
         public int NumDataThresh
         {
             get
@@ -87,7 +80,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-        
     }
 }

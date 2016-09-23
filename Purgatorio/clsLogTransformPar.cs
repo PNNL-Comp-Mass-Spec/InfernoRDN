@@ -25,7 +25,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "logEset <- logTransform(" + Rdataset + "," + this.LogBase_R + "," + this.Bias_R +
-                                    "," + this.BiasOp_R + ")";
+                       "," + this.BiasOp_R + ")";
                 return rcmd;
             }
         }
@@ -45,10 +45,7 @@ namespace DAnTE.Purgatorio
 
         private string Bias_R
         {
-            get
-            {
-                return "bias=" + mdblBias.ToString(CultureInfo.InvariantCulture);
-            }
+            get { return "bias=" + mdblBias.ToString(CultureInfo.InvariantCulture); }
         }
 
         private string BiasOp_R
@@ -71,7 +68,7 @@ namespace DAnTE.Purgatorio
             get { return mstrLogBase; }
             set { mstrLogBase = value; }
         }
-        
+
         [Tools.clsAnalysisAttribute("Bias", "Log")]
         public double LogBias
         {
@@ -85,6 +82,5 @@ namespace DAnTE.Purgatorio
             get { return mstrBiasOp; }
             set { mstrBiasOp = value; }
         }
-
     }
 }

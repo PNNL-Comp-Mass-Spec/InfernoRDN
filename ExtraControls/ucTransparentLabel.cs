@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace DAnTE.ExtraControls
 {
     public partial class ucTransparentLabel : UserControl
-    // A Label that can be translucent to the background
+        // A Label that can be translucent to the background
     {
         #region Local Variables
 
@@ -23,7 +23,7 @@ namespace DAnTE.ExtraControls
         private int _radius = 20;
         private int _opacity = 125;
         private string _text = "ucTransparentLabel";
-        
+
         //  Local Variables for text
         public enum TextAlignment
         {
@@ -52,16 +52,17 @@ namespace DAnTE.ExtraControls
         protected Rectangle iRect = new Rectangle();
         protected Rectangle txtRect = new Rectangle();
 
-
         #endregion
 
         #region Constructor
-        
+
         public ucTransparentLabel()
         {
             InitializeComponent();
             base.BackColor = Color.Transparent;
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
+            SetStyle(
+                ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.Opaque, false);
             UpdateStyles();
             this.components = new System.ComponentModel.Container();
@@ -80,22 +81,30 @@ namespace DAnTE.ExtraControls
 
         [DefaultValue(typeof(Color), "Black")]
         public new Color BackColor
-        // Gets or sets the background color of the control.
+            // Gets or sets the background color of the control.
         {
             get { return _backColor; }
-            set { _backColor = value; Invalidate();}
+            set
+            {
+                _backColor = value;
+                Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Appearance"),
-        DefaultValue(ShapeBorderStyles.ShapeBSNone),
-        Description("Style of border to be drawn around control")
+            Bindable(true),
+            Category("Appearance"),
+            DefaultValue(ShapeBorderStyles.ShapeBSNone),
+            Description("Style of border to be drawn around control")
         ]
         public ShapeBorderStyles ShapeBorderStyle
         {
             get { return _borderStyle; }
-            set { _borderStyle = value; this.Invalidate(); }
+            set
+            {
+                _borderStyle = value;
+                this.Invalidate();
+            }
         }
 
         [DefaultValue(typeof(Color), "White"), Category("Appearance"), Description("The border color of the control.")]
@@ -103,98 +112,134 @@ namespace DAnTE.ExtraControls
         public Color BorderColor
         {
             get { return _borderColor; }
-            set {_borderColor = value; Invalidate();}
+            set
+            {
+                _borderColor = value;
+                Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Appearance"),
-        DefaultValue(125),
-        Description("The alpha value used to blend the control's background. Valid values are 0 through 255.")
+            Bindable(true),
+            Category("Appearance"),
+            DefaultValue(125),
+            Description("The alpha value used to blend the control's background. Valid values are 0 through 255.")
         ]
-        public int Opacity 
+        public int Opacity
         {
             get { return _opacity; }
-            set { _opacity = value; this.Invalidate(); }
+            set
+            {
+                _opacity = value;
+                this.Invalidate();
+            }
         }
 
 
         [
-        Bindable(true),
-        Category("Layout"),
-        DefaultValue(20),
-        Description("Radius of rounded borders")
+            Bindable(true),
+            Category("Layout"),
+            DefaultValue(20),
+            Description("Radius of rounded borders")
         ]
         public int Radius
         {
             get { return _radius; }
-            set { _radius = value; this.Invalidate(); }
+            set
+            {
+                _radius = value;
+                this.Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Appearance"),
-        DefaultValue("ucTransparentLabel"),
-        Description("Text in the ucTransparentLabel")
+            Bindable(true),
+            Category("Appearance"),
+            DefaultValue("ucTransparentLabel"),
+            Description("Text in the ucTransparentLabel")
         ]
         public string Caption
         {
             get { return _text; }
-            set { _text = value; this.Invalidate(); }
+            set
+            {
+                _text = value;
+                this.Invalidate();
+            }
         }
 
         public override Font Font
         {
             get { return base.Font; }
-            set { base.Font = value; this.Invalidate(); }
+            set
+            {
+                base.Font = value;
+                this.Invalidate();
+            }
         }
 
         public override Color ForeColor
         {
             get { return base.ForeColor; }
-            set { base.ForeColor = value; this.Invalidate(); }
+            set
+            {
+                base.ForeColor = value;
+                this.Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Appearance"),
-        Description("Dimmed Color"),
+            Bindable(true),
+            Category("Appearance"),
+            Description("Dimmed Color"),
         ]
         public Color DimmedColor
         {
             get { return _dimmedColor; }
-            set { _dimmedColor = value; this.Invalidate(); }
+            set
+            {
+                _dimmedColor = value;
+                this.Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Behavior"),
-        Description("Text movement"),
-        DefaultValue(MoveType.None)
+            Bindable(true),
+            Category("Behavior"),
+            Description("Text movement"),
+            DefaultValue(MoveType.None)
         ]
         public MoveType Moving
         {
             get { return _moving; }
-            set { _moving = value; this.Invalidate(); }
+            set
+            {
+                _moving = value;
+                this.Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Appearance"),
-        Description("Text alignment (Left, Right or Center), only with Moving None"),
-        DefaultValue(TextAlignment.Center)
+            Bindable(true),
+            Category("Appearance"),
+            Description("Text alignment (Left, Right or Center), only with Moving None"),
+            DefaultValue(TextAlignment.Center)
         ]
         public TextAlignment TextAlign
         {
             get { return _textAlign; }
-            set { _textAlign = value; this.Invalidate(); }
+            set
+            {
+                _textAlign = value;
+                this.Invalidate();
+            }
         }
 
         [
-        Bindable(true),
-        Category("Behavior"),
-        Description("Active the text movement"),
-        DefaultValue(false)
+            Bindable(true),
+            Category("Behavior"),
+            Description("Active the text movement"),
+            DefaultValue(false)
         ]
         public bool MovingActive
         {
@@ -236,7 +281,7 @@ namespace DAnTE.ExtraControls
             }
         }
 
-        private void DrawLabelBackground(Graphics g)   
+        private void DrawLabelBackground(Graphics g)
         {
             Rectangle rect = this.ClientRectangle;
             iRect = rect;
@@ -254,22 +299,30 @@ namespace DAnTE.ExtraControls
         }
 
         protected GraphicsPath GetPath(Rectangle rc, int r)
-        //  Build the path with the round corners in the rectangle
-        //  r is the radious of rounded corner.
+            //  Build the path with the round corners in the rectangle
+            //  r is the radious of rounded corner.
         {
             int x = rc.X, y = rc.Y, w = rc.Width, h = rc.Height;
             r = r << 1;
             GraphicsPath path = new GraphicsPath();
             if (r > 0)
-            //  If the radious of rounded corner is greater than one side then
-            //  do the side rounded
+                //  If the radious of rounded corner is greater than one side then
+                //  do the side rounded
             {
-                if (r > h) { r = h; };                              //Rounded
-                if (r > w) { r = w; };                              //Rounded
-                path.AddArc(x, y, r, r, 180, 90);				    //Upper left corner
-                path.AddArc(x + w - r, y, r, r, 270, 90);			//Upper right corner
-                path.AddArc(x + w - r, y + h - r, r, r, 0, 90);		//Lower right corner
-                path.AddArc(x, y + h - r, r, r, 90, 90);			//Lower left corner
+                if (r > h)
+                {
+                    r = h;
+                }
+                ; //Rounded
+                if (r > w)
+                {
+                    r = w;
+                }
+                ; //Rounded
+                path.AddArc(x, y, r, r, 180, 90); //Upper left corner
+                path.AddArc(x + w - r, y, r, r, 270, 90); //Upper right corner
+                path.AddArc(x + w - r, y + h - r, r, r, 0, 90); //Lower right corner
+                path.AddArc(x, y + h - r, r, r, 90, 90); //Lower left corner
                 path.CloseFigure();
             }
             else
@@ -315,14 +368,14 @@ namespace DAnTE.ExtraControls
             Brush brTextDimmed = new SolidBrush(_dimmedColor);
             if (_isSelected)
                 pe.Graphics.DrawString(_text,
-                    base.Font,
-                    brTextDimmed,
-                    txtRect);
+                                       base.Font,
+                                       brTextDimmed,
+                                       txtRect);
             else
                 pe.Graphics.DrawString(_text,
-                    base.Font,
-                    brText,
-                    txtRect);
+                                       base.Font,
+                                       brText,
+                                       txtRect);
         }
 
         protected void NoMove()
@@ -346,9 +399,13 @@ namespace DAnTE.ExtraControls
         protected void MoveRightToLeft()
         {
             if (pointX < -this.txtRect.Width)
-            { pointX = this.iRect.X + this.iRect.Width; }
+            {
+                pointX = this.iRect.X + this.iRect.Width;
+            }
             else
-            { pointX -= 2; }
+            {
+                pointX -= 2;
+            }
             pointY = (this.iRect.Height - this.txtRect.Height) / 2;
         }
 
@@ -356,17 +413,25 @@ namespace DAnTE.ExtraControls
         {
             pointX = (this.iRect.Width - this.txtRect.Width) / 2;
             if (pointY < -this.txtRect.Height)
-            { pointY = (int)this.iRect.Y + this.iRect.Height; }
+            {
+                pointY = (int)this.iRect.Y + this.iRect.Height;
+            }
             else
-            { pointY -= 2; }
+            {
+                pointY -= 2;
+            }
         }
 
         protected void MoveLeftToRight()
         {
             if (pointX > this.iRect.X + this.iRect.Width)
-            { pointX = this.iRect.X - this.txtRect.Width; }
+            {
+                pointX = this.iRect.X - this.txtRect.Width;
+            }
             else
-            { pointX += 2; }
+            {
+                pointX += 2;
+            }
             pointY = (this.iRect.Height - this.txtRect.Height) / 2;
         }
 
@@ -374,9 +439,13 @@ namespace DAnTE.ExtraControls
         {
             pointX = (this.iRect.Width - this.txtRect.Width) / 2;
             if (pointY > this.iRect.Y + this.iRect.Height)
-            { pointY = (int)this.iRect.Y - this.iRect.Height; }
+            {
+                pointY = (int)this.iRect.Y - this.iRect.Height;
+            }
             else
-            { pointY += 2; }
+            {
+                pointY += 2;
+            }
         }
 
         protected override void OnMouseEnter(EventArgs e)
@@ -400,5 +469,5 @@ namespace DAnTE.ExtraControls
         }
     }
 
-        #endregion
+    #endregion
 }

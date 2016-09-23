@@ -24,21 +24,12 @@ namespace DAnTE.Inferno
 
         public clsHistogramPar clsHistPar
         {
-            get
-            {
-                return mclsHistPar;
-            }
+            get { return mclsHistPar; }
         }
 
         public new frmDAnTE DAnTEinstance
         {
-            set
-            {
-                mfrmDante = value;
-            }
+            set { mfrmDante = value; }
         }
-
-                
     }
 }
-

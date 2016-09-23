@@ -13,8 +13,7 @@ namespace DAnTE.Purgatorio
         public bool mblPlot;
         public int mintFactorIndex;
 
-        [Tools.clsAnalysisAttribute("Reference_Criteria", "LinearRegression")]
-        private string mstrReference;
+        [Tools.clsAnalysisAttribute("Reference_Criteria", "LinearRegression")] private string mstrReference;
         public List<string> marrFactors;
 
         public clsLinRegrnPar()
@@ -32,17 +31,14 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "linregData <- LinReg_normalize(" + Rdataset + "," + this.Factors +
-                            "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
+                       "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
                 return rcmd;
             }
         }
 
         private string OutFolder
         {
-            get
-            {
-                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
-            }
+            get { return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
         }
 
         private string PlotFlag
@@ -92,14 +88,8 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LinearRegression")]
         public string OutFolder_pub
         {
-            get
-            {
-                return mstrOutFolder;
-            }
-            set
-            {
-                mstrOutFolder = value;
-            }
+            get { return mstrOutFolder; }
+            set { mstrOutFolder = value; }
         }
 
         [Tools.clsAnalysisAttribute("Save_Plots", "LinearRegression")]

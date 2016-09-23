@@ -20,7 +20,7 @@ namespace DAnTE.Purgatorio
                 return rcmd;
             }
         }
-        
+
         [Tools.clsAnalysisAttribute("Source_DataTable", "Quantile_Normalization")]
         public string DataSetName { get; set; }
     }

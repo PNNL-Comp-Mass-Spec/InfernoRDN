@@ -6,6 +6,7 @@ namespace DAnTE.Inferno
     public partial class frmShowProgress : Form
     {
         public delegate void ButtonClicked();
+
         //public event ButtonClicked meventCancelButtonClicked;
 
         public frmShowProgress()
@@ -29,18 +30,12 @@ namespace DAnTE.Inferno
 
         public string Message
         {
-            set
-            {
-                mlblProgressMsg.Text = value;
-            }
+            set { mlblProgressMsg.Text = value; }
         }
 
         public int PercentComplete
         {
-            get
-            {
-                return mprgrsBar.Value;
-            }
+            get { return mprgrsBar.Value; }
             set
             {
                 if (value < mprgrsBar.Minimum)

@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
             parametersToolStripMenuItem.Click += mnuItemPara_Click;
             mtBtnParam.Click += mnuItemPara_Click;
         }
-        
+
         private void mnuItemPara_Click(object sender, EventArgs e)
         {
             mfrmDante.PlotPCA(mclsPCAPlotPar);
@@ -24,19 +24,12 @@ namespace DAnTE.Inferno
 
         public clsPCAplotPar clsPCAPlotPar
         {
-            get
-            {
-                return mclsPCAPlotPar;
-            }
+            get { return mclsPCAPlotPar; }
         }
 
         public new frmDAnTE DAnTEinstance
         {
-            set
-            {
-                mfrmDante = value;
-            }
+            set { mfrmDante = value; }
         }
     }
 }
-

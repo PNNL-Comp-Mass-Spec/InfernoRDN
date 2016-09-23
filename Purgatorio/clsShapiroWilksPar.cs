@@ -4,10 +4,8 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "Shapiro-Wilks_Test")]
-        public string mstrDatasetName;
-        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Shapiro-Wilks_Test")]
-        public int numDatapts;
+        [Tools.clsAnalysisAttribute("Source_DataTable", "Shapiro-Wilks_Test")] public string mstrDatasetName;
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Shapiro-Wilks_Test")] public int numDatapts;
 
         public clsShapiroWilksPar()
         {

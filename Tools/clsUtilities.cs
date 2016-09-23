@@ -8,7 +8,6 @@ namespace DAnTE.Tools
 {
     static class clsUtilities
     {
-
         public enum eCheckState
         {
             checkNone = 0,
@@ -16,7 +15,8 @@ namespace DAnTE.Tools
             checkAll = 2,
         }
 
-        public static eCheckState ToggleListViewCheckboxes(ListView lstViewDataSets, int defaultMaxChecked, bool allowCheckAll)
+        public static eCheckState ToggleListViewCheckboxes(ListView lstViewDataSets, int defaultMaxChecked,
+                                                           bool allowCheckAll)
         {
             var N = Math.Min(lstViewDataSets.Items.Count, defaultMaxChecked);
 

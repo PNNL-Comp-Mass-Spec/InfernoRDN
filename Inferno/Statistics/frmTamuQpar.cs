@@ -19,11 +19,10 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFixed.Items.Count == 0)
                 MessageBox.Show("Select at least one Fixed Factor", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             else
                 this.DialogResult = DialogResult.OK;
-
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -45,7 +44,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Select Fixed Effect Factors.", "Empty selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void mbtnFixedUnselect_Click(object sender, EventArgs e)
@@ -61,7 +60,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
             if (mlstBoxFixed.Items.Count == 0)
                 mbtnFixedUnselect.Enabled = false;
         }
@@ -110,7 +109,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-        
     }
 }

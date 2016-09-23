@@ -33,7 +33,7 @@ namespace DAnTE.Purgatorio
 
         public clsCorrelationPar()
         {
-            rcmd = ""; 
+            rcmd = "";
             datasubset = null;
             Rdataset = "";
             mstrDatasetName = "";
@@ -53,7 +53,7 @@ namespace DAnTE.Purgatorio
             palettename = Settings.Default.colorMap;
             if (palettename == "")
                 palettename = "Black-Body";
-            
+
             eColor = Settings.Default.ellipseCol;
             if (eColor == "")
                 eColor = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Green));
@@ -88,11 +88,20 @@ namespace DAnTE.Purgatorio
                 var func = "plotScatterCorr";
                 switch (RplotType)
                 {
-                    case 1: func = "plotScatterCorr"; break;
-                    case 2: func = "plotHeatmapCorr"; break;
-                    case 3: func = "plotEllipseCorr"; break;
-                    case 4: func = "plot2Dmat"; break;
-                    default: break;
+                    case 1:
+                        func = "plotScatterCorr";
+                        break;
+                    case 2:
+                        func = "plotHeatmapCorr";
+                        break;
+                    case 3:
+                        func = "plotEllipseCorr";
+                        break;
+                    case 4:
+                        func = "plot2Dmat";
+                        break;
+                    default:
+                        break;
                 }
                 return func;
             }
@@ -129,7 +138,6 @@ namespace DAnTE.Purgatorio
                         break;
                 }
                 return cMap;
-
             }
         }
 
@@ -139,7 +147,7 @@ namespace DAnTE.Purgatorio
             {
                 if (plotHist)
                     return "dHIST = TRUE";
-                else 
+                else
                     return "dHIST = FALSE";
             }
         }
@@ -157,18 +165,12 @@ namespace DAnTE.Purgatorio
 
         public string EColor
         {
-            get
-            {
-                return @"color=""" + eColor + "\"";
-            }
+            get { return @"color=""" + eColor + "\""; }
         }
 
         public string FontScale
         {
-            get
-            {
-                return ("labelscale=" + fontScale);
-            }
+            get { return ("labelscale=" + fontScale); }
         }
 
         public string Background
@@ -237,16 +239,15 @@ namespace DAnTE.Purgatorio
                     rcmd = rcmd + "," + ShowCorr + "," + Palette + "," + customCol + "," + corrRange + @")";
                 }
                 else if (showYXLine)
-                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," + 
-                        PlotHist + ",regL=TRUE" + @")";
+                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," +
+                           PlotHist + ",regL=TRUE" + @")";
                 else
-                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," + 
-                        PlotHist + @")";
-                
+                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," +
+                           PlotHist + @")";
+
                 return rcmd;
             }
         }
-        
 
         #endregion
     }

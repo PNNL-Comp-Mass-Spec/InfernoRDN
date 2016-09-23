@@ -25,10 +25,7 @@ namespace DAnTE.Tools
 
         public static string CurrentLogFilePath
         {
-            get 
-            { 
-                return LogFilePath; 
-            }
+            get { return LogFilePath; }
         }
 
         public static int TraceFramesToShow
@@ -84,7 +81,6 @@ namespace DAnTE.Tools
             {
                 Console.WriteLine("# Error in CreateNewLogFile: {0}", ex.Message);
             }
-
         }
 
         private static void EstablishLogWriter()
@@ -203,6 +199,5 @@ namespace DAnTE.Tools
             }
             return sb.ToString();
         }
-
     }
 }

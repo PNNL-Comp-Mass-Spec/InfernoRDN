@@ -44,227 +44,254 @@ using System.Text;
 
 namespace DAnTE.Tools
 {
-  #region Enumerated Types
 
-  /// <summary>
-  /// The ParameterType enum is defined to describe
-  /// the type of a Parameter. Parameters belong to one
-  /// of two categories:
-  /// REQUIRED Parameters:	these parameters should be
-  ///						included in the cfg files read;
-  /// OPTIONAL Parameters:	these parameters may or may not be
-  ///						found in the cfg file read.
-  /// </summary>
-  public enum ParameterType
-  {
-	OPTIONAL,
-	REQUIRED
-  }
+    #region Enumerated Types
 
-  #endregion
+    /// <summary>
+    /// The ParameterType enum is defined to describe
+    /// the type of a Parameter. Parameters belong to one
+    /// of two categories:
+    /// REQUIRED Parameters:	these parameters should be
+    ///						included in the cfg files read;
+    /// OPTIONAL Parameters:	these parameters may or may not be
+    ///						found in the cfg file read.
+    /// </summary>
+    public enum ParameterType
+    {
+        OPTIONAL,
+        REQUIRED
+    }
 
-  /// <summary>
-  /// The Parameter class is used in the CFGLite project to represent
-  /// parameters to be recognized while reading a cfg file.
-  /// </summary>
-  public class Parameter
-  {
-	#region Static Methods
+    #endregion
 
-	/// <summary>
-	/// The ParameterType method returns a human-readable
-	/// form of the ParameterType received as parameter.
-	/// </summary>
-	/// <param name="x">The ParameterType to be transformed to human-readable form.</param>
-	/// <returns>A human-readable string form of the ParameterType received as parameter.</returns>
-	public static string ParameterTypeName(ParameterType x)
-	{
-	  switch(x)
-	  {
-		case ParameterType.OPTIONAL:	return "Optional";
-		case ParameterType.REQUIRED:	return "Required";
-		default:  return "Unrecognized Parameter Type: "+x.ToString();
-	  }
-	}
-	/// <summary>
-	/// The ParameterTypeShortName method returns a brief version of the
-	/// ParameterType received as parameter, suitable for reference in a human-readable
-	/// message.
-	/// </summary>
-	/// <param name="x">The ParameterType whose short name should be returned.</param>
-	/// <returns>The short name of the ParameterType x, in the form of a string.</returns>
-	public static string ParameterTypeShortName(ParameterType x)
-	{
-	  switch(x)
-	  {
-		case ParameterType.OPTIONAL:	return "[O]";
-		case ParameterType.REQUIRED:	return "[R]";
-		default:  return "[?]";
-	  }
-	}
+    /// <summary>
+    /// The Parameter class is used in the CFGLite project to represent
+    /// parameters to be recognized while reading a cfg file.
+    /// </summary>
+    public class Parameter
+    {
+        #region Static Methods
 
-	#endregion
+        /// <summary>
+        /// The ParameterType method returns a human-readable
+        /// form of the ParameterType received as parameter.
+        /// </summary>
+        /// <param name="x">The ParameterType to be transformed to human-readable form.</param>
+        /// <returns>A human-readable string form of the ParameterType received as parameter.</returns>
+        public static string ParameterTypeName(ParameterType x)
+        {
+            switch (x)
+            {
+                case ParameterType.OPTIONAL:
+                    return "Optional";
+                case ParameterType.REQUIRED:
+                    return "Required";
+                default:
+                    return "Unrecognized Parameter Type: " + x.ToString();
+            }
+        }
 
-	#region Static Fields
+        /// <summary>
+        /// The ParameterTypeShortName method returns a brief version of the
+        /// ParameterType received as parameter, suitable for reference in a human-readable
+        /// message.
+        /// </summary>
+        /// <param name="x">The ParameterType whose short name should be returned.</param>
+        /// <returns>The short name of the ParameterType x, in the form of a string.</returns>
+        public static string ParameterTypeShortName(ParameterType x)
+        {
+            switch (x)
+            {
+                case ParameterType.OPTIONAL:
+                    return "[O]";
+                case ParameterType.REQUIRED:
+                    return "[R]";
+                default:
+                    return "[?]";
+            }
+        }
 
-	/// <summary>
-	/// The NEW_PARAMETER string is used as name of a Parameter instance
-	/// for which no name was provided. If this name collides with the
-	/// name of a Parameter you need to represent, you may incur in problems.
-	/// </summary>
-	public static string  NEW_PARAMETER	= "[New Parameter]";
+        #endregion
 
-	#endregion
+        #region Static Fields
 
-	#region Private Fields
+        /// <summary>
+        /// The NEW_PARAMETER string is used as name of a Parameter instance
+        /// for which no name was provided. If this name collides with the
+        /// name of a Parameter you need to represent, you may incur in problems.
+        /// </summary>
+        public static string NEW_PARAMETER = "[New Parameter]";
 
-	/// <summary>
-	/// The type of the parameter.
-	/// </summary>
-	private readonly ParameterType type	  = ParameterType.OPTIONAL;
-	/// <summary>
-	/// The name of the parameter.
-	/// </summary>
-	private readonly string		  name;
-	/// <summary>
-	/// The value of the parameter.
-	/// </summary>
-	private string		  val	  = "";
+        #endregion
 
-	#endregion
+        #region Private Fields
 
-	#region Public Attributes
+        /// <summary>
+        /// The type of the parameter.
+        /// </summary>
+        private readonly ParameterType type = ParameterType.OPTIONAL;
 
-	/// <summary>
-	/// Gets the type of the parameter.
-	/// </summary>
-	public ParameterType  Type	{ get { return type;  } }
-	/// <summary>
-	/// Gets the name of the parameter.
-	/// </summary>
-	public string		  Name	{ get { return name;  } }
-	/// <summary>
-	/// Gets or Sets the value of the parameter.
-	/// </summary>
-	public string		  Val
-	{
-	  get { return val;  }
-	  set { val = value; }
-	}
+        /// <summary>
+        /// The name of the parameter.
+        /// </summary>
+        private readonly string name;
 
-	#endregion
+        /// <summary>
+        /// The value of the parameter.
+        /// </summary>
+        private string val = "";
 
-	#region Constructors
+        #endregion
 
-	/// <summary>
-	/// Creates a new instance of the Parameter class. The NEW_PARAMETER
-	/// field is used for the new Parameter's name.
-	/// </summary>
-	public Parameter()
-	{
-	  name = NEW_PARAMETER;
-	}
-	/// <summary>
-	/// Creates a new instance of the Parameter class, with the
-	/// specified name. The Parameter is, by default, Optional.
-	/// </summary>
-	/// <param name="inName">The name for the new Parameter.</param>
-	public Parameter(string inName)
-	{
-	  name	=inName;
-	}
-	/// <summary>
-	/// Creates a new instance of the Parameter class, with the
-	/// specified name and type.
-	/// </summary>
-	/// <param name="inName">The name for the new Parameter.</param>
-	/// <param name="inType">The type of the new Parameter.</param>
-	public Parameter(string inName, ParameterType inType)
-	{
-	  name	= inName;
-	  type	= inType;
-	}
-	/// <summary>
-	/// Creates a new instance of the Parameter class, with the
-	/// specified name and value. The Parameter is, by default, Optional.
-	/// Use this constructor if you wish to define a default
-	/// value for an Optional Parameter.
-	/// </summary>
-	/// <param name="inName">The name of the new Parameter.</param>
-	/// <param name="inVal">The value of the new Parameter.</param>
-	public Parameter(string inName, string inVal)
-	{
-	  name	= inName;
-	  val	= inVal;
-	}
-	/// <summary>
-	/// Creates a new instance of the Parameter class, with the
-	/// specified name, type, and value.
-	/// </summary>
-	/// <param name="inName">The name of the new Parameter.</param>
-	/// <param name="inType">The type of the new Parameter.</param>
-	/// <param name="inVal">The value of the new Parameter.</param>
-	public Parameter(string inName, ParameterType inType, string inVal)
-	{
-	  name	= inName;
-	  type	= inType;
-	  val	= inVal;
-	}
-	/// <summary>
-	/// Copy-Constructor: creates a new instance of the Parameter
-	/// class, as a deep copy of the Parameter passed as parameter.
-	/// </summary>
-	/// <param name="rhs">The Parameter to be copied.</param>
-	public Parameter(Parameter rhs)
-	{
-	  name	  = rhs.name;
-	  type	  = rhs.type;
-	  val	  = rhs.val;
-	}
+        #region Public Attributes
 
-	#endregion
+        /// <summary>
+        /// Gets the type of the parameter.
+        /// </summary>
+        public ParameterType Type
+        {
+            get { return type; }
+        }
 
-	#region Public Methods
+        /// <summary>
+        /// Gets the name of the parameter.
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
 
-	/// <summary>
-	/// Creates a deep copy of this Parameter.
-	/// </summary>
-	/// <returns>A deep copy of this Parameter as a new Parameter instance.</returns>
-	public Parameter Clone()
-	{ return new Parameter(this); }
+        /// <summary>
+        /// Gets or Sets the value of the parameter.
+        /// </summary>
+        public string Val
+        {
+            get { return val; }
+            set { val = value; }
+        }
 
-	/// <summary>
-	/// Overrides the inherited GetHashCode() method.
-	/// </summary>
-	/// <returns></returns>
-	public override int GetHashCode()
-	{ return this.ToString().GetHashCode(); }
-	/// <summary>
-	/// Overrides the inherited ToString() method.
-	/// Produces a human-readable form of the Parameter instance.
-	/// The format of the string produced is as follows:
-	/// parameter_name type_short_code [{parameter_value}]
-	/// The parameter_value is included only if one is defined
-	/// for the instance.
-	/// The type_short_code is the short code produced by
-	/// the ParameterTypeShortCode method.
-	/// </summary>
-	/// <returns>A human readable string describing the Parameter.</returns>
-	public override string ToString()
-	{
-	  var sb = new StringBuilder(name);
-	  sb.Append(" ");
-	  sb.Append(ParameterTypeShortName(type));
-	  if(!string.IsNullOrEmpty(val))
-	  {
-		sb.Append(" {");
-		sb.Append(val);
-		sb.Append("}");
-	  }
-	  return sb.ToString();
-	}
+        #endregion
 
-	#endregion
+        #region Constructors
 
-  }
+        /// <summary>
+        /// Creates a new instance of the Parameter class. The NEW_PARAMETER
+        /// field is used for the new Parameter's name.
+        /// </summary>
+        public Parameter()
+        {
+            name = NEW_PARAMETER;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the Parameter class, with the
+        /// specified name. The Parameter is, by default, Optional.
+        /// </summary>
+        /// <param name="inName">The name for the new Parameter.</param>
+        public Parameter(string inName)
+        {
+            name = inName;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the Parameter class, with the
+        /// specified name and type.
+        /// </summary>
+        /// <param name="inName">The name for the new Parameter.</param>
+        /// <param name="inType">The type of the new Parameter.</param>
+        public Parameter(string inName, ParameterType inType)
+        {
+            name = inName;
+            type = inType;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the Parameter class, with the
+        /// specified name and value. The Parameter is, by default, Optional.
+        /// Use this constructor if you wish to define a default
+        /// value for an Optional Parameter.
+        /// </summary>
+        /// <param name="inName">The name of the new Parameter.</param>
+        /// <param name="inVal">The value of the new Parameter.</param>
+        public Parameter(string inName, string inVal)
+        {
+            name = inName;
+            val = inVal;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the Parameter class, with the
+        /// specified name, type, and value.
+        /// </summary>
+        /// <param name="inName">The name of the new Parameter.</param>
+        /// <param name="inType">The type of the new Parameter.</param>
+        /// <param name="inVal">The value of the new Parameter.</param>
+        public Parameter(string inName, ParameterType inType, string inVal)
+        {
+            name = inName;
+            type = inType;
+            val = inVal;
+        }
+
+        /// <summary>
+        /// Copy-Constructor: creates a new instance of the Parameter
+        /// class, as a deep copy of the Parameter passed as parameter.
+        /// </summary>
+        /// <param name="rhs">The Parameter to be copied.</param>
+        public Parameter(Parameter rhs)
+        {
+            name = rhs.name;
+            type = rhs.type;
+            val = rhs.val;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Creates a deep copy of this Parameter.
+        /// </summary>
+        /// <returns>A deep copy of this Parameter as a new Parameter instance.</returns>
+        public Parameter Clone()
+        {
+            return new Parameter(this);
+        }
+
+        /// <summary>
+        /// Overrides the inherited GetHashCode() method.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
+
+        /// <summary>
+        /// Overrides the inherited ToString() method.
+        /// Produces a human-readable form of the Parameter instance.
+        /// The format of the string produced is as follows:
+        /// parameter_name type_short_code [{parameter_value}]
+        /// The parameter_value is included only if one is defined
+        /// for the instance.
+        /// The type_short_code is the short code produced by
+        /// the ParameterTypeShortCode method.
+        /// </summary>
+        /// <returns>A human readable string describing the Parameter.</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder(name);
+            sb.Append(" ");
+            sb.Append(ParameterTypeShortName(type));
+            if (!string.IsNullOrEmpty(val))
+            {
+                sb.Append(" {");
+                sb.Append(val);
+                sb.Append("}");
+            }
+            return sb.ToString();
+        }
+
+        #endregion
+    }
 }

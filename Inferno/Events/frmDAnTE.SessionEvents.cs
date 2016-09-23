@@ -71,7 +71,6 @@ namespace DAnTE.Inferno
 
             try
             {
-
                 mRConnector.EvaluateNoReturn(arg);
                 e.Result = true;
             }

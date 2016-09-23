@@ -11,7 +11,12 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace DAnTE.Inferno
 {
-    public enum enmMSMSreadType { SEQOUT, SYNOUT, LABKEY };
+    public enum enmMSMSreadType
+    {
+        SEQOUT,
+        SYNOUT,
+        LABKEY
+    };
 
     public partial class frmMSMSWizard : Wizard.UI.WizardSheet
     {
@@ -228,12 +233,12 @@ namespace DAnTE.Inferno
                 fileList += @""")";
 
                 rcmd += fileList + @",""" + dataFolder + @""",XcRank=" + XcRank +
-                    "," + XCorrTh + "," + DelCn2Th + "," + TrypState + ")";
+                        "," + XCorrTh + "," + DelCn2Th + "," + TrypState + ")";
 
                 try
                 {
                     backgroundWorker1.ReportProgress(70,
-                        "Creating peptide count table ... may take a while for large datasets ...");
+                                                     "Creating peptide count table ... may take a while for large datasets ...");
                     rConnector.EvaluateNoReturn(rcmd);
                     rConnector.EvaluateNoReturn("Eset <- X$eset");
                     rConnector.EvaluateNoReturn("EsetRows <- X$rows");
@@ -491,7 +496,6 @@ namespace DAnTE.Inferno
 
         void mctlCompletedPage_WizardFinish(object sender, CancelEventArgs e)
         {
-
         }
 
         void mctlparaPage_WizardBack(object sender, Wizard.UI.WizardPageEventArgs e)
@@ -550,7 +554,7 @@ namespace DAnTE.Inferno
             if (marrFilePaths.Count < 2)
             {
                 MessageBox.Show("Select at leaset two files.", "File selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                                MessageBoxIcon.Warning);
                 e.NewPage = mctlSelectHDDPage.Name;
             }
             else
@@ -573,7 +577,7 @@ namespace DAnTE.Inferno
             if (marrLabKeyPathNames.Count < 2)
             {
                 MessageBox.Show("Select at least two datasets", "File selection ?", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                                MessageBoxIcon.Warning);
                 e.NewPage = mctlSelectFromLabKeyPage.Name;
             }
             else if (datasource == enmMSMSreadType.LABKEY)
@@ -608,12 +612,7 @@ namespace DAnTE.Inferno
 
         public DataTable SpectralDT
         {
-            get
-            {
-                return mDTEset;
-            }
+            get { return mDTEset; }
         }
-
     }
 }
-

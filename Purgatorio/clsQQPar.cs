@@ -32,10 +32,10 @@ namespace DAnTE.Purgatorio
             Bcol = Settings.Default.qqBkCol;
             if (Fcol == "")
                 Fcol = "#C0C0C0";
-            if (Bcol == "") 
+            if (Bcol == "")
                 Bcol = "#000000";
             if (Lcol == "")
-                Lcol = "#FF0000"; 
+                Lcol = "#FF0000";
             bkground = "bkground=\"white\"";
             Rdataset = "";
             mstrDatasetName = "";
@@ -52,10 +52,10 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "plot_qq(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
-                rcmd = rcmd + RefDistr(reference) + ",wshape=" + wshape + ",wscale=" + wscale + ",degfree=" + 
-                    df + ",exprate=" + exprate + ",";
-                rcmd = rcmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @"""," 
-                    + @"colL=""" + Lcol + @""",";
+                rcmd = rcmd + RefDistr(reference) + ",wshape=" + wshape + ",wscale=" + wscale + ",degfree=" +
+                       df + ",exprate=" + exprate + ",";
+                rcmd = rcmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @""","
+                       + @"colL=""" + Lcol + @""",";
                 rcmd = rcmd + bkground + @",file=""" + tempFile + @""")";
                 return rcmd;
             }

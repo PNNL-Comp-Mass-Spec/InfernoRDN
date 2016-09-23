@@ -42,18 +42,19 @@ namespace DAnTE.Inferno
             mclsQQPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotQQ(mclsQQPar);
-
         }
 
         public void PlotQQ(clsQQPar clsQQPar)
-        // this will be called from the plot forms.
-        // thus the reason to be public
+            // this will be called from the plot forms.
+            // thus the reason to be public
         {
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QQPlotCompleted;
+
                 #endregion
 
                 var qqParams = new frmQQPar(clsQQPar);
@@ -70,8 +71,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QQPlotCompleted;
+
                 #endregion
             }
         }
@@ -104,18 +107,19 @@ namespace DAnTE.Inferno
             mclsHistPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotHistograms(mclsHistPar);
-
         }
 
         public void PlotHistograms(clsHistogramPar clsHistPar)
-        // this will be called from the plot forms.
-        // thus the reason to be public
+            // this will be called from the plot forms.
+            // thus the reason to be public
         {
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_HistPlotCompleted;
+
                 #endregion
 
                 var histogramParams = new frmHistogramPar(clsHistPar);
@@ -132,8 +136,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_HistPlotCompleted;
+
                 #endregion
             }
         }
@@ -161,18 +167,19 @@ namespace DAnTE.Inferno
             mclsCorrPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotCorrelation(mclsCorrPar);
-
         }
 
         public void PlotCorrelation(clsCorrelationPar clsCorrPar)
-        // this will be called from the plot forms.
-        // thus the reason to be public
+            // this will be called from the plot forms.
+            // thus the reason to be public
         {
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_CorrPlotCompleted;
+
                 #endregion
 
                 var correlationParams = new frmCorrelationPar(clsCorrPar);
@@ -189,8 +196,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_CorrPlotCompleted;
+
                 #endregion
             }
         }
@@ -225,18 +234,19 @@ namespace DAnTE.Inferno
                 mclsBoxPlotPar.Factors = null;
 
             PlotBoxPlots(mclsBoxPlotPar);
-
         }
 
         public void PlotBoxPlots(clsBoxPlotPar clsBoxPlotPar)
-        // this will be called from the plot forms.
-        // thus the reason to be public
+            // this will be called from the plot forms.
+            // thus the reason to be public
         {
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_BoxPlotCompleted;
+
                 #endregion
 
                 var boxPlotParams = new frmBoxPlotPar(clsBoxPlotPar);
@@ -253,8 +263,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_BoxPlotCompleted;
+
                 #endregion
             }
         }
@@ -326,18 +338,19 @@ namespace DAnTE.Inferno
             mclsMApar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotMA(mclsMApar);
-
         }
 
         public void PlotMA(clsMAplotsPar clsMApar)
-        // this will be called from the plot forms.
-        // thus the reason to be public
+            // this will be called from the plot forms.
+            // thus the reason to be public
         {
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MAplotCompleted;
+
                 #endregion
 
                 var maPlotParams = new frmMAplotsPar(clsMApar);
@@ -354,8 +367,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MAplotCompleted;
+
                 #endregion
             }
         }
@@ -383,17 +398,19 @@ namespace DAnTE.Inferno
                 var dataToCopy = currGrid.GetClipboardContent();
                 if (dataToCopy != null)
                     Clipboard.SetDataObject(dataToCopy);
-               
+
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > 300)
                 {
-                	// The copy operation took over 300 msec
-                	// Show a status dialog to the user
-                    MessageBox.Show("Copy complete: " + selectedRowCount + " rows", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // The copy operation took over 300 msec
+                    // Show a status dialog to the user
+                    MessageBox.Show("Copy complete: " + selectedRowCount + " rows", "Done", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error copying data to the clipboard: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error copying data to the clipboard: " + ex.Message, "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             }
         }
 
@@ -402,7 +419,7 @@ namespace DAnTE.Inferno
             const bool copyAll = true;
             CopyDataGridRowsToClipboard(copyAll);
         }
-     
+
         private void ctxtMnuItemCopySelected_Click(object sender, EventArgs e)
         {
             const bool copyAll = false;
@@ -470,7 +487,6 @@ namespace DAnTE.Inferno
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         private void mnuItemVenn_Click(object sender, EventArgs e)
@@ -502,7 +518,6 @@ namespace DAnTE.Inferno
             }
 
             PlotVenn(mclsVennPar);
-
         }
 
         public void PlotVenn(clsVennPar vennParameters)
@@ -510,8 +525,10 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_VennCompleted;
+
                 #endregion
 
                 var vennDiagramParams = new frmVennDiagramPar(vennParameters);
@@ -527,8 +544,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_VennCompleted;
+
                 #endregion
             }
         }

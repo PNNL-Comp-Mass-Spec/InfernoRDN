@@ -83,11 +83,13 @@ namespace DAnTE.Tools
             var i = sym.AsLogical();
             return i[0];
         }
+
         public string[] GetSymbolAsStrings(string name)
         {
             var sym = GetSym(name);
             return sym.AsVector().AsCharacter().ToArray();
         }
+
         public string[,] GetSymbolAsStringMatrix(string name)
         {
             var sym = GetSym(name);
@@ -129,7 +131,6 @@ namespace DAnTE.Tools
 
         public void SetSymbol(string name, object value)
         {
-
         }
 
         /* //-//
@@ -138,6 +139,7 @@ namespace DAnTE.Tools
               Console.WriteLine(string.Format("RdnConnectorClass.SetCharacterOutputDevice:{0}", dev.ToString()));
             }
         */
+
         public void Close()
         {
             clsRCmdLog.LogRComment("Close");
@@ -168,6 +170,5 @@ namespace DAnTE.Tools
         }
 
         #endregion
-
     }
 }

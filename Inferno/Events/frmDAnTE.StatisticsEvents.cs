@@ -35,8 +35,9 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("ANOVA or Kruskal-Wallis failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.  Also consider using a smaller value for 'Minimum Number of Data Points per Factor Level'", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.  Also consider using a smaller value for 'Minimum Number of Data Points per Factor Level'",
+                                    "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -129,8 +130,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("TamuQ failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -138,6 +139,7 @@ namespace DAnTE.Inferno
         {
             e.Result = DoTamuQ((string)e.Argument);
         }
+
         #endregion
     }
 }

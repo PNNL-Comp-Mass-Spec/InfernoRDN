@@ -48,7 +48,7 @@ namespace DAnTE.Purgatorio
                 return rcmd;
             }
         }
-        
+
         public string Background
         {
             get

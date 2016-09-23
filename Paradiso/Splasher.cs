@@ -36,7 +36,6 @@ namespace DAnTE.Paradiso
         }
 
 
-
         /// <summary>
         /// set the loading Status
         /// </summary>
@@ -50,11 +49,10 @@ namespace DAnTE.Paradiso
                     return;
                 }
                 m_SplashForm.Invoke(
-                        new SplashStatusChangedHandle(delegate(string str) { m_SplashInterface.SetStatusInfo(str); }),
-                        new object[] { value }
+                    new SplashStatusChangedHandle(delegate(string str) { m_SplashInterface.SetStatusInfo(str); }),
+                    new object[] {value}
                     );
             }
-
         }
 
         /// <summary>
@@ -77,11 +75,10 @@ namespace DAnTE.Paradiso
 
         private static void CreateInstance(Type FormType)
         {
-
             object obj = FormType.InvokeMember(null,
-                                BindingFlags.DeclaredOnly |
-                                BindingFlags.Public | BindingFlags.NonPublic |
-                                BindingFlags.Instance | BindingFlags.CreateInstance, null, null, null);
+                                               BindingFlags.DeclaredOnly |
+                                               BindingFlags.Public | BindingFlags.NonPublic |
+                                               BindingFlags.Instance | BindingFlags.CreateInstance, null, null, null);
             m_SplashForm = obj as Form;
             m_SplashInterface = obj as ISplashForm;
             if (m_SplashForm == null)
@@ -99,6 +96,5 @@ namespace DAnTE.Paradiso
 
 
         private delegate void SplashStatusChangedHandle(string NewStatusInfo);
-
     }
 }

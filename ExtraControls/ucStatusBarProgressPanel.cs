@@ -3,35 +3,36 @@ using System.Windows.Forms;
 
 namespace DAnTE.ExtraControls
 {
-	public class ucStatusBarProgressPanel : StatusBarPanel
-	{
-		private bool isAdded = false;
+    public class ucStatusBarProgressPanel : StatusBarPanel
+    {
+        private bool isAdded = false;
 
-		private ProgressBar progressBar = new ProgressBar();
-		[Category("Progress")]
-		public ProgressBar ProgressBar
-		{
-			get { return progressBar; }
-		}
+        private ProgressBar progressBar = new ProgressBar();
 
-		public ucStatusBarProgressPanel() : base()
-		{
-			// Just to be safe
-			this.Style = System.Windows.Forms.StatusBarPanelStyle.OwnerDraw;
-		}
+        [Category("Progress")]
+        public ProgressBar ProgressBar
+        {
+            get { return progressBar; }
+        }
 
-		public void ParentDrawItemHandler(object sender, StatusBarDrawItemEventArgs sbdevent)
-		{
-			// Only add this once to the parent's control container
-			if (isAdded == false)
-			{
-				this.Parent.Controls.Add(this.progressBar);
-				this.isAdded = true;
-			}
+        public ucStatusBarProgressPanel() : base()
+        {
+            // Just to be safe
+            this.Style = System.Windows.Forms.StatusBarPanelStyle.OwnerDraw;
+        }
 
-			// Get the bounds of this panel and copy to the progress bar's bounds
-			if (sbdevent.Panel == this)
-				progressBar.Bounds = sbdevent.Bounds;
-		}
-	}
+        public void ParentDrawItemHandler(object sender, StatusBarDrawItemEventArgs sbdevent)
+        {
+            // Only add this once to the parent's control container
+            if (isAdded == false)
+            {
+                this.Parent.Controls.Add(this.progressBar);
+                this.isAdded = true;
+            }
+
+            // Get the bounds of this panel and copy to the progress bar's bounds
+            if (sbdevent.Panel == this)
+                progressBar.Bounds = sbdevent.Bounds;
+        }
+    }
 }

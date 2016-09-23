@@ -15,13 +15,12 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxMT.Items.Count != 1)
                 MessageBox.Show("Select unique row identifier (e.g. Mass Tags)", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (mlstBoxProteinInfo.Items.Count < 1)
                 MessageBox.Show("Select protein identifiers", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
                 this.DialogResult = DialogResult.OK;
-
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -109,8 +108,7 @@ namespace DAnTE.Inferno
                 foreach (var item in value)
                 {
                     mlstBoxAllCols.Items.Add(item);
-                }                
-
+                }
             }
         }
 
@@ -167,6 +165,7 @@ namespace DAnTE.Inferno
                 return metadataColumns;
             }
         }
+
         #endregion
     }
 }

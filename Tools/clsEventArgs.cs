@@ -2,7 +2,6 @@
 
 namespace DAnTE.Tools
 {
-
     /// <summary>
     /// Message event args
     /// </summary>
@@ -62,5 +61,4 @@ namespace DAnTE.Tools
 
         #endregion
     }
-
 }

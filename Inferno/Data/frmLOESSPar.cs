@@ -22,10 +22,10 @@ namespace DAnTE.Inferno
             var outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
             if (mchkBoxPlot.Checked && !outfolderOK)
                 MessageBox.Show("Invalid Folder name", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
             else if (Convert.ToDouble(mlblSpan.Text, NumberFormatInfo.InvariantInfo) < 0.1)
                 MessageBox.Show("Span value too small.", "Warning!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                                MessageBoxIcon.Warning);
             else
                 DialogResult = DialogResult.OK;
         }
@@ -42,7 +42,7 @@ namespace DAnTE.Inferno
             {
                 mtxtBoxFolder.Enabled = true;
                 mbtnSelectFolder.Enabled = true;
-                mtxtBoxFolder.Text = Settings.Default.WorkingFolder; 
+                mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
             }
             else
             {
@@ -93,22 +93,13 @@ namespace DAnTE.Inferno
 
         public string OutFolder
         {
-            get
-            {
-                return mtxtBoxFolder.Text;
-            }
-            set
-            {
-                mtxtBoxFolder.Text = value;
-            }
+            get { return mtxtBoxFolder.Text; }
+            set { mtxtBoxFolder.Text = value; }
         }
 
         public bool DoPlotting
         {
-            get
-            {
-                return mchkBoxPlot.Checked;
-            }
+            get { return mchkBoxPlot.Checked; }
         }
 
         public bool PlotFlag
@@ -118,26 +109,17 @@ namespace DAnTE.Inferno
 
         public string Span
         {
-            get
-            {
-                return mlblSpan.Text;
-            }
+            get { return mlblSpan.Text; }
         }
 
         public List<string> PopulateFactorComboBox
         {
-            set
-            {
-                mcmbBoxFactors.DataSource = value;
-            }
+            set { mcmbBoxFactors.DataSource = value; }
         }
-                        
+
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string Factor

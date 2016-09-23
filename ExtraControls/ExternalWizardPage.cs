@@ -2,42 +2,44 @@ using System.Windows.Forms;
 
 namespace Wizard.UI
 {
-	public class ExternalWizardPage : Wizard.UI.WizardPage
+    public class ExternalWizardPage : Wizard.UI.WizardPage
     {
         private Panel panel1;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
-		public ExternalWizardPage()
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public ExternalWizardPage()
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExternalWizardPage));
+        #region Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(ExternalWizardPage));
             this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
@@ -57,9 +59,8 @@ namespace Wizard.UI
             this.Name = "ExternalWizardPage";
             this.Size = new System.Drawing.Size(513, 293);
             this.ResumeLayout(false);
+        }
 
-		}
-		#endregion
-	}
+        #endregion
+    }
 }
-

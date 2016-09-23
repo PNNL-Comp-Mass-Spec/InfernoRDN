@@ -5,7 +5,6 @@ namespace DAnTE.Inferno
 {
     public partial class ctlMSMSLabKeyParaWizPage : Wizard.UI.InternalWizardPage
     {
-        
         public ctlMSMSLabKeyParaWizPage()
         {
             InitializeComponent();
@@ -16,17 +15,13 @@ namespace DAnTE.Inferno
             SetWizardButtons(WizardButtons.Back | WizardButtons.Next);
         }
 
-        
-
         #region Properties
+
         public string PepProphMin
         {
-            get
-            {
-                return mtxtBoxPepProph.Text;
-            }
+            get { return mtxtBoxPepProph.Text; }
         }
-        #endregion
 
+        #endregion
     }
 }

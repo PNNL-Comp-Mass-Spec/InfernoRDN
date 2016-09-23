@@ -7,13 +7,14 @@ namespace DAnTE.ExtraControls
         Scrollable,
         RatioStretch
     }
+
     /// <summary>
     /// Summary description for Viewer.
     /// </summary>
     public partial class ucPicViewer : System.Windows.Forms.UserControl
     {
         private System.Windows.Forms.PictureBox pictureBox1;
-        
+
         private SizeMode sizeMode;
 
         public ucPicViewer()
@@ -33,6 +34,7 @@ namespace DAnTE.ExtraControls
                 //this.ChangeSize();
             }
         }
+
         public SizeMode ImageSizeMode
         {
             get { return this.sizeMode; }
@@ -97,12 +99,14 @@ namespace DAnTE.ExtraControls
             }
             this.CenterImage();
         }
+
         private void Scrollable()
         {
             this.pictureBox1.Width = this.pictureBox1.Image.Width;
             this.pictureBox1.Height = this.pictureBox1.Image.Height;
             this.CenterImage();
         }
+
         internal void SetLayout()
         {
             if (this.pictureBox1.Image == null)
@@ -114,9 +118,9 @@ namespace DAnTE.ExtraControls
                 this.AutoScroll = false;
                 this.Scrollable();
                 this.AutoScroll = true;
-
             }
         }
+
         private void CenterImage()
         {
             int top = (int)((this.Height - this.pictureBox1.Height) / 2.0);
@@ -128,7 +132,7 @@ namespace DAnTE.ExtraControls
             this.pictureBox1.Top = top;
             this.pictureBox1.Left = left;
         }
-        
+
         private void Viewer_Load(object sender, System.EventArgs e)
         {
             this.pictureBox1.Width = 0;
@@ -140,6 +144,5 @@ namespace DAnTE.ExtraControls
         {
             this.SetLayout();
         }
-                
     }
 }

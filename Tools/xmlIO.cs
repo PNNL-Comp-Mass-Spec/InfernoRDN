@@ -8,12 +8,10 @@ using System.Globalization;
 
 namespace DAnTE.Tools
 {
-
     /// <summary>
     /// Summary description for xmlIO.
     /// </summary>
     /// 
-
     public class MetaNode
     {
         protected XmlNode root;
@@ -128,7 +126,6 @@ namespace DAnTE.Tools
         }
 
 
-
         private void SetValue(string id, string val, string type, int index)
         {
             try
@@ -149,6 +146,7 @@ namespace DAnTE.Tools
          * 		By: Tin Lam (tin@netismtoday.com)
          * 		http://www.netismtoday.com
         */
+
         /// <summary>
         ///		This method will extract a value from the XML node. It first select the first
         ///		xml element that match the xmlName specified in the first parameter. If there's
@@ -210,7 +208,7 @@ namespace DAnTE.Tools
                             return false;
                     }
                 }
-                
+
                 // 
                 // Attempt to create an enumeration
                 // 
@@ -231,7 +229,6 @@ namespace DAnTE.Tools
                     // 
                 }
                 return null;
-
             }
             catch (Exception e)
             {
@@ -281,7 +278,7 @@ namespace DAnTE.Tools
 
             if (node == null)
                 return ("");
-            
+
             if (node.Attributes.Count != 0)
             {
                 if (node.Attributes[0].Name == "type")
@@ -315,6 +312,7 @@ namespace DAnTE.Tools
             m_name = "MetaData";
             Init(m_name);
         }
+
         public MetaData(string name)
         {
             m_name = name;
@@ -331,9 +329,11 @@ namespace DAnTE.Tools
                 sr.Close();
 
                 root = doc;
-                root = OpenXmlNode(m_name, "root", -1, true);//doc.LastChild;
+                root = OpenXmlNode(m_name, "root", -1, true); //doc.LastChild;
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         public void WriteFile(string fName)
@@ -344,7 +344,9 @@ namespace DAnTE.Tools
                 sw.Write(doc.InnerXml);
                 sw.Close();
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private void Init(string rootName)
@@ -358,7 +360,9 @@ namespace DAnTE.Tools
                 root = doc.CreateNode(XmlNodeType.Element, rootName, "");
                 doc.InsertAfter(root, dec);
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }

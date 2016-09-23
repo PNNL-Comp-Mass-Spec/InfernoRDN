@@ -180,7 +180,6 @@ namespace DAnTE.Inferno
         {
             set
             {
-
                 marrDatasets = value;
                 var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
@@ -200,7 +199,7 @@ namespace DAnTE.Inferno
                     lstVcolln[i].Checked = true;
                     countChecked++;
                 }
-                mlstViewDataSets.Items.AddRange(lstVcolln);                
+                mlstViewDataSets.Items.AddRange(lstVcolln);
             }
         }
 
@@ -218,7 +217,8 @@ namespace DAnTE.Inferno
                         if (k == 0)
                             selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
                         else
-                            selected = selected + "," + Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
+                            selected = selected + "," +
+                                       Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
                         k++;
                     }
                 }
@@ -256,13 +256,13 @@ namespace DAnTE.Inferno
             {
                 if (mcmbBoxFactors.SelectedItem.ToString().Equals("<One Color>"))
                     return "1";
-                
+
                 var idx = mcmbBoxFactors.SelectedIndex + 1;
                 return "factors[" + idx.ToString() + ",]";
             }
         }
 
-        
+
         public string PrincipalComps
         {
             get
@@ -270,7 +270,7 @@ namespace DAnTE.Inferno
                 var PCs = "PCs=c(";
 
                 PCs = PCs + Convert.ToString(mcmbBoxX.SelectedIndex + 1) + "," +
-                    Convert.ToString(mcmbBoxY.SelectedIndex + 1);
+                      Convert.ToString(mcmbBoxY.SelectedIndex + 1);
                 if (mrbtn3D.Checked)
                     PCs = PCs + "," + Convert.ToString(mcmbBoxZ.SelectedIndex + 1);
                 PCs = PCs + ")";
@@ -280,118 +280,74 @@ namespace DAnTE.Inferno
 
         public bool DropLines
         {
-            get
-            {
-                return mchkBoxDropLines.Checked;
-            }
+            get { return mchkBoxDropLines.Checked; }
         }
 
         public bool ShowLabels
         {
-            get
-            {
-                return mchkBoxLabels.Checked;
-            }
+            get { return mchkBoxLabels.Checked; }
         }
 
         public bool Perspective
         {
-            get
-            {
-                return mchkBoxPersp.Checked;
-            }
+            get { return mchkBoxPersp.Checked; }
         }
 
         public bool BiPlot
         {
-            get
-            {
-                return mchkBoxBiPlot.Checked;
-            }
+            get { return mchkBoxBiPlot.Checked; }
         }
 
         public bool Screeplot
         {
-            get
-            {
-                return mchkBoxScree.Checked;
-            }
+            get { return mchkBoxScree.Checked; }
         }
 
         public bool BiArrows
         {
-            get
-            {
-                return mchkBoxBiLines.Checked;
-            }
+            get { return mchkBoxBiLines.Checked; }
         }
 
         public bool BiLabels
         {
-            get
-            {
-                return mchkBoxBiLabels.Checked;
-            }
+            get { return mchkBoxBiLabels.Checked; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public int FactorIdx
         {
-            get
-            {
-                return mcmbBoxFactors.SelectedIndex;
-            }
+            get { return mcmbBoxFactors.SelectedIndex; }
         }
 
         public int PCx
         {
-            get
-            {
-                return mcmbBoxX.SelectedIndex;
-            }
+            get { return mcmbBoxX.SelectedIndex; }
         }
 
         public int PCy
         {
-            get
-            {
-                return mcmbBoxY.SelectedIndex;
-            }
+            get { return mcmbBoxY.SelectedIndex; }
         }
 
         public int PCz
         {
-            get
-            {
-                return mcmbBoxZ.SelectedIndex;
-            }
+            get { return mcmbBoxZ.SelectedIndex; }
         }
 
         public bool ThreeD
         {
-            get
-            {
-                return mrbtn3D.Checked;
-            }
+            get { return mrbtn3D.Checked; }
         }
 
         public bool PCA
         {
-            get
-            {
-                return mrBtnPCA.Checked;
-            }
+            get { return mrBtnPCA.Checked; }
         }
 
         #endregion
-
-        
     }
 }

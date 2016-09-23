@@ -8,20 +8,15 @@ namespace DAnTE.Purgatorio
         //[Tools.clsAnalysisAttribute("Dataset(R)", "QRollup")]
         public string Rdataset;
 
-        [Tools.clsAnalysisAttribute("Minimum_Presence", "QRollup")]
-        public string mstrMinPresence;
-        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "QRollup")]
-        public bool mblOneHits;
-        
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "QRollup")] public string mstrMinPresence;
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "QRollup")] public bool mblOneHits;
+
         public bool mblModeMean;
-        [Tools.clsAnalysisAttribute("Top_percentage", "QRollup")]
-        public string mstrTop;
+        [Tools.clsAnalysisAttribute("Top_percentage", "QRollup")] public string mstrTop;
 
-        [Tools.clsAnalysisAttribute("Top_Number_of_peptides", "QRollup")]
-        public string mstrTopN;
+        [Tools.clsAnalysisAttribute("Top_Number_of_peptides", "QRollup")] public string mstrTopN;
 
-        [Tools.clsAnalysisAttribute("Use_Top_Number_of_peptides", "QRollup")]
-        public bool mblUseTopN;
+        [Tools.clsAnalysisAttribute("Use_Top_Number_of_peptides", "QRollup")] public bool mblUseTopN;
 
         public clsQRollupPar()
         {
@@ -33,7 +28,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "qrollupP <- QRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence + "," +
-                                    TopPercn + "," + TopN + "," + Mode + "," + OneHitWonders + ")";
+                       TopPercn + "," + TopN + "," + Mode + "," + OneHitWonders + ")";
                 return rcmd;
             }
         }
@@ -57,7 +52,7 @@ namespace DAnTE.Purgatorio
                 return "topN=" + mstrTopN;
             }
         }
-        
+
         private string Mode
         {
             get
@@ -94,10 +89,7 @@ namespace DAnTE.Purgatorio
 
         private string OutFolder
         {
-            get
-            {
-                return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
-            }
+            get { return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
         }
 
         [Tools.clsAnalysisAttribute("Source_DataTable", "QRollup")]

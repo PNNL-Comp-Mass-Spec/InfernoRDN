@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace DAnTE.Tools
 {
-	/// <summary>
-	/// Summary description for clsFactorInfo.
-	/// </summary>
-	public class clsFactorInfo : ICloneable
-	{
-		public string mstrFactor;
-		public List<string> marrValues;
+    /// <summary>
+    /// Summary description for clsFactorInfo.
+    /// </summary>
+    public class clsFactorInfo : ICloneable
+    {
+        public string mstrFactor;
+        public List<string> marrValues;
 
 
-		public clsFactorInfo()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-			mstrFactor = null;
+        public clsFactorInfo()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+            mstrFactor = null;
             marrValues = new List<string>();
-		}
+        }
 
         public clsFactorInfo(string factor)
         {
@@ -53,32 +53,30 @@ namespace DAnTE.Tools
         #endregion
 
         #region Properties
-        public string[] FactorValues
-		{
-			get
-			{
-				var values = new string[marrValues.Count];
-				if (marrValues.Count == 0)
-					return null;
-			    
-                for (var i = 0; i < marrValues.Count; i++)
-			        values[i] = marrValues[i];
-			    
-                return values;
-			}
-		}
 
-		public int vCount
-		{
-			get {return marrValues.Count;}
+        public string[] FactorValues
+        {
+            get
+            {
+                var values = new string[marrValues.Count];
+                if (marrValues.Count == 0)
+                    return null;
+
+                for (var i = 0; i < marrValues.Count; i++)
+                    values[i] = marrValues[i];
+
+                return values;
+            }
+        }
+
+        public int vCount
+        {
+            get { return marrValues.Count; }
         }
 
         public List<string> SetFvals
         {
-            set
-            {
-                marrValues = MakeDeepCopy(value);
-            }
+            set { marrValues = MakeDeepCopy(value); }
         }
 
         #endregion

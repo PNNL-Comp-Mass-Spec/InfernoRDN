@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
     public partial class frmCorrelationPar : Form
     {
         private readonly clsCorrelationPar mclsCorrPar;
-		
+
         private const int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
         private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
@@ -45,7 +45,7 @@ namespace DAnTE.Inferno
             DialogResult = DialogResult.Cancel;
             Close();
         }
-                
+
         private void buttonToggleAll_Click(object sender, EventArgs e)
         {
             var N = mlstViewDataSets.Items.Count;
@@ -58,7 +58,6 @@ namespace DAnTE.Inferno
             clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, N, true);
 
             PossiblyWarnTooManyDatasets();
-
         }
 
         private void mlstViewDataSets_ItemChecked(object sender, ItemCheckEventArgs e)
@@ -108,7 +107,8 @@ namespace DAnTE.Inferno
 
         private void PossiblyWarnTooManyDatasets()
         {
-            if (mrBtnScatter.Checked && mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating && !mWarnedTooManyDatasets)
+            if (mrBtnScatter.Checked && mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating &&
+                !mWarnedTooManyDatasets)
             {
                 if (mlstViewDataSets.CheckedIndices.Count > SUGGESTED_MAX)
                 {
@@ -163,7 +163,7 @@ namespace DAnTE.Inferno
                 Settings.Default.Save();
             }
         }
-        
+
         private void mRangeBar_RangeChanging(object sender, EventArgs e)
         {
             var min = (double)mRangeBar.RangeMinimum / 20;
@@ -258,21 +258,27 @@ namespace DAnTE.Inferno
 
             switch (mclsCorrPar.RplotType)
             {
-                case 1: mrBtnScatter.Checked = true; break;
+                case 1:
+                    mrBtnScatter.Checked = true;
+                    break;
                 case 2:
                     mrbtnHeatmap.Checked = true;
                     mintPalette = mclsCorrPar.paletteType;
                     mstrPaletteName = mclsCorrPar.palettename;
                     mlblHeatPalette.Text = mstrPaletteName;
                     break;
-                case 3: mrbtnEllipse.Checked = true; break;
+                case 3:
+                    mrbtnEllipse.Checked = true;
+                    break;
                 case 4:
                     mrbtn2Dmat.Checked = true;
                     mintPalette = mclsCorrPar.paletteType;
                     mstrPaletteName = mclsCorrPar.palettename;
                     mlbl2DPalette.Text = mstrPaletteName;
                     break;
-                default: mrbtnHeatmap.Checked = true; break;
+                default:
+                    mrbtnHeatmap.Checked = true;
+                    break;
             }
 
             mchkBoxStamp.Checked = mclsCorrPar.stamp;
@@ -329,36 +335,29 @@ namespace DAnTE.Inferno
             {
                 if (mrBtnScatter.Checked && mchkBoxdHist.Checked)
                     return true;
-                else 
+                else
                     return false;
             }
         }
 
         public bool Scatter
         {
-            get
-            {
-                return (mrBtnScatter.Checked);
-            }
+            get { return (mrBtnScatter.Checked); }
         }
 
         public bool ShowYXLine
         {
-            get
-            {
-                return mchkboxYXLine.Checked;
-            }
+            get { return mchkboxYXLine.Checked; }
         }
 
         public List<string> PopulateListView
         {
             set
             {
-
                 marrDatasets = value;
                 var lstVcolln = new ListViewItem[marrDatasets.Count];
                 var countChecked = 0;
-                
+
                 for (var i = 0; i < marrDatasets.Count; i++)
                 {
                     var lstVItem = new ListViewItem(marrDatasets[i])
@@ -379,7 +378,7 @@ namespace DAnTE.Inferno
                 mPopulating = false;
             }
         }
-        
+
         public string Selected
         {
             get
@@ -393,7 +392,7 @@ namespace DAnTE.Inferno
                     {
                         if (k == 0)
                             selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.
-                                Items[i].Tag) + 1);
+                                                                            Items[i].Tag) + 1);
                         else
                             selected = selected + "," + Convert.ToString(Convert.ToInt16(
                                 mlstViewDataSets.Items[i].Tag) + 1);
@@ -405,6 +404,7 @@ namespace DAnTE.Inferno
                 return "c(" + selected + ")";
             }
         }
+
         public List<string> SelectedDatasets
         {
             get
@@ -431,13 +431,10 @@ namespace DAnTE.Inferno
                     }
             }
         }
-        
+
         public int ColorPalette
         {
-            get
-            {
-                return mintPalette;
-            }
+            get { return mintPalette; }
         }
 
         public string ColorPaletteName
@@ -445,7 +442,7 @@ namespace DAnTE.Inferno
             get
             {
                 string cMap = null;
-                if (mintPalette== 1)
+                if (mintPalette == 1)
                     cMap = "Green-Red"; //1
                 if (mintPalette == 2)
                     cMap = "Heat-Palette"; //2
@@ -461,42 +458,27 @@ namespace DAnTE.Inferno
 
         public string CustomColors
         {
-            get
-            {
-                return customCol;
-            }
+            get { return customCol; }
         }
 
         public string EColor
         {
-            get
-            {
-                return ellipseC;
-            }
+            get { return ellipseC; }
         }
 
         public decimal FontScale
         {
-            get
-            {
-                return mnumUDFontSc.Value;
-            }
+            get { return mnumUDFontSc.Value; }
         }
 
         public bool Background
         {
-            get
-            {
-                return mchkBoxTransparent.Checked;
-            }
+            get { return mchkBoxTransparent.Checked; }
         }
 
         public bool ShowCorrVals
         {
-            get
-            {
-                return mchkBoxShowCorr.Checked;
-            }
+            get { return mchkBoxShowCorr.Checked; }
         }
 
         public string CorrRange
@@ -507,7 +489,8 @@ namespace DAnTE.Inferno
                 {
                     var min = (double)mRangeBar.RangeMinimum / 20;
                     var max = (double)mRangeBar.RangeMaximum / 20;
-                    return "corRange=c(" + min.ToString(CultureInfo.InvariantCulture) + "," + max.ToString(CultureInfo.InvariantCulture) + ")";
+                    return "corRange=c(" + min.ToString(CultureInfo.InvariantCulture) + "," +
+                           max.ToString(CultureInfo.InvariantCulture) + ")";
                 }
 
                 return "corRange=c(0,1)";
@@ -516,14 +499,9 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
-                
+
         #endregion
-                
-        
     }
 }

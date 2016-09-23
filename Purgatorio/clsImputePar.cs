@@ -9,17 +9,15 @@ namespace DAnTE.Purgatorio
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Imputation")]
         public string Rdataset;
 
-        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")]
-        public string mstrFiltCutoff;
+        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")] public string mstrFiltCutoff;
         public string mstrmode;
         public string mstrK;
         public string mstrNPCs;
         public string mstrSVDth;
         public string mstrMaxIter;
         public string mstrSubConst;
-        [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")]
-        public bool mblNoFill;
-                
+        [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")] public bool mblNoFill;
+
         private string mstrFactor;
         public int mintFactorIndex;
 
@@ -45,8 +43,8 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "imputedData <- imputeData(" + Rdataset + "," + mstrFiltCutoff + @",""" + mstrmode + @"""," +
-                            mstrK + "," + mstrNPCs + "," + mstrSVDth + "," + mstrMaxIter + "," + mstrSubConst +
-                            "," + this.Factor + "," + this.NoFill + ")";
+                       mstrK + "," + mstrNPCs + "," + mstrSVDth + "," + mstrMaxIter + "," + mstrSubConst +
+                       "," + this.Factor + "," + this.NoFill + ")";
                 return rcmd;
             }
         }
@@ -151,7 +149,7 @@ namespace DAnTE.Purgatorio
 
         private string Factor
         {
-            get 
+            get
             {
                 if (mintFactorIndex > -1)
                     return "Factor=factors[" + mintFactorIndex.ToString() + ",]";
@@ -159,7 +157,7 @@ namespace DAnTE.Purgatorio
                     return "Factor=1";
             }
         }
-        
+
         public string FactorSelected
         {
             set { mstrFactor = value; }
@@ -169,7 +167,7 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Selected_Factor", "Imputation")]
         public string FactorSelectedAttr
         {
-            get 
+            get
             {
                 if ((mstrmode.Contains("svd")) || (mstrmode.Contains("knn")) || (mstrmode.Contains("rowmean")))
                     return mstrFactor;

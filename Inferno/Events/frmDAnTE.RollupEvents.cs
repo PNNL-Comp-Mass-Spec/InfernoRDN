@@ -22,7 +22,7 @@ namespace DAnTE.Inferno
                 // Next, handle the case where the user canceled 
                 // the operation.
                 Console.WriteLine("Ref. Scaling Operation Cancelled", "Error!", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                                  MessageBoxIcon.Warning);
             }
             else
             {
@@ -39,7 +39,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Ref. Scaling/Rolling up failed." + Environment.NewLine +
-                        "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
             }
         }
 
@@ -62,7 +63,7 @@ namespace DAnTE.Inferno
                 // Next, handle the case where the user canceled 
                 // the operation.
                 Console.WriteLine("Scaling Operation Cancelled", "Error!", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                                  MessageBoxIcon.Warning);
             }
             else
             {
@@ -75,7 +76,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Scaling/Rolling up failed." + Environment.NewLine +
-                        "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
             }
         }
 
@@ -97,7 +99,7 @@ namespace DAnTE.Inferno
                 // Next, handle the case where the user canceled 
                 // the operation.
                 Console.WriteLine("QRollup Operation Cancelled", "Error!", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                                  MessageBoxIcon.Warning);
             }
             else
             {
@@ -110,7 +112,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("QRollup failed." + Environment.NewLine +
-                        "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements.", "Error!", MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
             }
         }
 

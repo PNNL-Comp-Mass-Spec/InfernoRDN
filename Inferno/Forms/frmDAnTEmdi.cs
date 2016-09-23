@@ -27,7 +27,7 @@ namespace DAnTE.Inferno
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
         private readonly string mRTempFilePath;
 
-        private string mRepository;  // = @"http://lib.stat.cmu.edu/R/CRAN";
+        private string mRepository; // = @"http://lib.stat.cmu.edu/R/CRAN";
         private string mRpackList;
 
         private bool mInstallRpacks;
@@ -58,7 +58,8 @@ namespace DAnTE.Inferno
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(string.Format("Error appending to the log file at {0}: {1}", customLogFilePath, ex.Message));
+                    MessageBox.Show(string.Format("Error appending to the log file at {0}: {1}", customLogFilePath,
+                                                  ex.Message));
                 }
             }
 
@@ -106,7 +107,8 @@ namespace DAnTE.Inferno
             mRConnector = new clsRconnect();
             if (!mRConnector.initR())
             {
-                startupErrString.Append(string.Format("* R failed to initialize: {0}", mRConnector.Message)).AppendLine();
+                startupErrString.Append(string.Format("* R failed to initialize: {0}", mRConnector.Message))
+                    .AppendLine();
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Try again. R failed to initialize for some unknown reason.",
                 //    "R connection failed.", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -200,7 +202,7 @@ namespace DAnTE.Inferno
                 Log(mCustomLoggerEnabled, "Error: Cleaning temp files failed.", mCustomLogWriter);
             }
             System.Threading.Thread.Sleep(10);
-            
+
             this.Activate();
             SplashScreen.CloseForm();
 
@@ -329,7 +331,6 @@ namespace DAnTE.Inferno
 
         private static double GetVersionDifferenceHours(IList<string> oldVersion, IList<string> newVersion)
         {
-
             int daysOld;
             int daysNew;
 
@@ -341,9 +342,9 @@ namespace DAnTE.Inferno
                 if (int.TryParse(oldVersion[3], out secondsOld) &&
                     int.TryParse(newVersion[3], out secondsNew))
                 {
-                    var versionDifferenceHours = (daysNew + secondsNew / 86400.0) * 24 - (daysOld + secondsOld / 86400.0) * 24;
+                    var versionDifferenceHours = (daysNew + secondsNew / 86400.0) * 24 -
+                                                 (daysOld + secondsOld / 86400.0) * 24;
                     return versionDifferenceHours;
-
                 }
             }
 
@@ -366,7 +367,8 @@ namespace DAnTE.Inferno
 
                     // Also confirm that we have the Bioconductor qvalue package
                     // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
-                    var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
+                    var appVersionBioconductorCheck =
+                        RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
                     var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
                     var updateRequired = !string.Equals(appVersionBioconductorCheck, appVersionCurrent);
@@ -386,12 +388,10 @@ namespace DAnTE.Inferno
                                 mUpdateRpacks = false;
                             }
                         }
-
                     }
 
                     if (updateRequired)
                     {
-
                         currentTask = "installing Bioconductor from http://bioconductor.org/biocLite.R";
                         rcommand = @"source(""http://bioconductor.org/biocLite.R"")";
                         mRConnector.EvaluateNoReturn(rcommand);
@@ -415,10 +415,10 @@ namespace DAnTE.Inferno
             }
             catch (Exception ex)
             {
-                Log(mCustomLoggerEnabled, "Exception in InstallRequiredRPackages while " + currentTask + ": " + ex.Message, mCustomLogWriter);
+                Log(mCustomLoggerEnabled,
+                    "Exception in InstallRequiredRPackages while " + currentTask + ": " + ex.Message, mCustomLogWriter);
                 return false;
             }
-
         }
 
         private bool UpdateRPackages()
@@ -521,6 +521,7 @@ namespace DAnTE.Inferno
         }
 
         #region Check the platform for 32/64bit
+
         private enum Platform
         {
             X86,
@@ -634,7 +635,7 @@ namespace DAnTE.Inferno
         {
             if (!LoadRfunctions("Inferno.RData"))
                 MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             //else
             //    statusBarPanelMsg.Text = "R functions re-sourced.";
         }
@@ -643,7 +644,7 @@ namespace DAnTE.Inferno
         {
             if (!LoadRfunctions("Inferno_ggplots.RData"))
                 MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Settings.Default.useGG = true;
         }
@@ -652,7 +653,7 @@ namespace DAnTE.Inferno
         {
             if (!LoadRfunctions("Inferno_stdplots.RData"))
                 MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Settings.Default.useGG = false;
         }
@@ -670,7 +671,6 @@ namespace DAnTE.Inferno
 
         private void mnuItemAbout_Click(object sender, EventArgs e)
         {
-
             var aboutForm = new frmAbout2();
             aboutForm.ShowDialog();
         }
@@ -710,7 +710,7 @@ namespace DAnTE.Inferno
 
             if (s.Length > 1)
                 MessageBox.Show("Only one file at a time!", "One file please...",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
                 var fExt = Path.GetExtension(s[0]);
@@ -736,13 +736,10 @@ namespace DAnTE.Inferno
             if (!UpdateRPackages())
             {
                 MessageBox.Show("Error updating R packages", "Error loading R packs",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             MessageBox.Show("R packages are now up-to-date", "Done",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
     }
 }

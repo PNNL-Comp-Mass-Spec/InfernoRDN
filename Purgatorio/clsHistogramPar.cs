@@ -36,7 +36,7 @@ namespace DAnTE.Purgatorio
             autoBins = true;
             rcmd = "";
             datasubset = null;
-            
+
             // When true, add tick marks
             addrug = "addRug=TRUE";
 
@@ -44,8 +44,8 @@ namespace DAnTE.Purgatorio
             Bcol = Settings.Default.histBrdr;
             if (Fcol == "")
                 Fcol = "#FFC38A";
-            if (Bcol == "") 
-                Bcol = "#5FAE27"; 
+            if (Bcol == "")
+                Bcol = "#5FAE27";
             bkground = "bkground=\"white\"";
             Rdataset = "";
             mstrDatasetName = "";
@@ -79,7 +79,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (stamp)
-                    return @"stamp=""" + Settings.Default.DataFileName.Replace("\\","\\\\") + @"""";
+                    return @"stamp=""" + Settings.Default.DataFileName.Replace("\\", "\\\\") + @"""";
                 else
                     return "stamp=NULL";
             }

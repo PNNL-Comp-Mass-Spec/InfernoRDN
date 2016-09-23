@@ -9,22 +9,22 @@ using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
-    public enum enmDataType 
-    { 
+    public enum enmDataType
+    {
         /// <summary>
         /// Flat file of expression data
         /// </summary>
-        ESET, 
+        ESET,
 
         /// <summary>
         /// Protein metadata
         /// </summary>
-        PROTINFO, 
+        PROTINFO,
 
         /// <summary>
         /// Dataset factors
         /// </summary>
-        FACTORS 
+        FACTORS
     };
 
     partial class frmDAnTE
@@ -42,7 +42,9 @@ namespace DAnTE.Inferno
             switch (dataTableNameInR)
             {
                 case "Eset":
+
                     #region Eset
+
                     datasetNode.mTNode = new TreeNode("Expressions", 1, 2);
                     datasetNode.mstrDataText = "Expressions";
                     datasetNode.mstrMessage = "Expression values selected.";
@@ -57,9 +59,13 @@ namespace DAnTE.Inferno
                     if (!mhtDatasets.ContainsKey("Factors"))
                         DatasetFactorInfo(mDT, false);
                     break;
+
                     #endregion
+
                 case "ProtInfo":
+
                     #region ProtInfo
+
                     datasetNode.mTNode = new TreeNode("Protein Info", 3, 4);
                     datasetNode.mstrDataText = "Protein Info";
                     datasetNode.mstrMessage = "Protein Info selected.";
@@ -74,9 +80,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Protein Info", datasetNode);
                     break;
+
                     #endregion
+
                 case "factors":
+
                     #region Factors
+
                     datasetNode.mTNode = new TreeNode("Factors", 3, 4);
                     datasetNode.mstrDataText = "Factors";
                     datasetNode.mstrMessage = "Factors selected.";
@@ -93,9 +103,13 @@ namespace DAnTE.Inferno
                     marrDatasetInfo.Clear();
                     DatasetFactorInfo(mDT, true);
                     break;
+
                     #endregion
+
                 case "logEset":
+
                     #region logEset
+
                     datasetNode.mTNode = new TreeNode("Log Expressions", 1, 2);
                     datasetNode.mstrDataText = "Log Expressions";
                     datasetNode.mstrMessage = "Log Expressions selected.";
@@ -107,9 +121,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Log Expressions", datasetNode);
                     break;
+
                     #endregion
+
                 case "loessData":
+
                     #region loessData
+
                     datasetNode.mTNode = new TreeNode("LOESS Data", 1, 2);
                     datasetNode.mstrDataText = "LOESS Data";
                     datasetNode.mstrMessage = "LOESS Data selected.";
@@ -121,9 +139,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("LOESS Data", datasetNode);
                     break;
+
                     #endregion
+
                 case "quaNormEset":
+
                     #region quaNormEset
+
                     datasetNode.mTNode = new TreeNode("Quantile Normalized", 1, 2);
                     datasetNode.mstrDataText = "Quantile Normalized";
                     datasetNode.mstrMessage = "Quantile normalized data selected.";
@@ -135,9 +157,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Quantile Normalized", datasetNode);
                     break;
+
                     #endregion
+
                 case "meanCEset":
+
                     #region MeanCEset
+
                     datasetNode.mTNode = new TreeNode("Mean Centered", 1, 2);
                     datasetNode.mstrDataText = "Mean Centered";
                     datasetNode.mstrMessage = "Mean centered data selected.";
@@ -149,9 +175,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Mean Centered", datasetNode);
                     break;
+
                     #endregion
+
                 case "medianCEset":
+
                     #region MedianCEset
+
                     datasetNode.mTNode = new TreeNode("Median Centered", 1, 2);
                     datasetNode.mstrDataText = "Median Centered";
                     datasetNode.mstrMessage = "Median centered data selected.";
@@ -163,9 +193,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Median Centered", datasetNode);
                     break;
+
                     #endregion
+
                 case "madEset":
+
                     #region madEset
+
                     datasetNode.mTNode = new TreeNode("MAD Adjusted", 1, 2);
                     datasetNode.mstrDataText = "MAD Adjusted";
                     datasetNode.mstrMessage = "MAD Adjusted data selected.";
@@ -177,9 +211,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("MAD Adjusted", datasetNode);
                     break;
+
                     #endregion
+
                 case "linregData":
+
                     #region linregData
+
                     datasetNode.mTNode = new TreeNode("Linear Regressed", 1, 2);
                     datasetNode.mstrDataText = "Linear Regressed";
                     datasetNode.mstrMessage = "Linear Regressed Data selected.";
@@ -191,9 +229,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Linear Regressed", datasetNode);
                     break;
+
                     #endregion
+
                 case "imputedData":
+
                     #region imputedData
+
                     datasetNode.mTNode = new TreeNode("Imputed Data", 1, 2);
                     datasetNode.mstrDataText = "Imputed Data";
                     datasetNode.mstrMessage = "Imputed Data selected.";
@@ -205,9 +247,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Imputed Data", datasetNode);
                     break;
+
                     #endregion
+
                 case "mergedData":
+
                     #region mergedData
+
                     datasetNode.mTNode = new TreeNode("Merged Data", 1, 2);
                     datasetNode.mstrDataText = "Merged Data";
                     datasetNode.mstrMessage = "Merged Data selected.";
@@ -221,9 +267,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Merged Data", datasetNode);
                     break;
+
                     #endregion
+
                 case "pData11":
+
                     #region pData11 (RRollup)
+
                     datasetNode.mTNode = new TreeNode("RRollup", 1, 2);
                     datasetNode.mstrDataText = "RRollup";
                     datasetNode.mstrMessage = "RRollup selected.";
@@ -237,9 +287,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("RRollup", datasetNode);
                     break;
+
                     #endregion
+
                 case "sData1":
+
                     #region sData1 (RRollup)
+
                     datasetNode.mTNode = new TreeNode("ScaledData", 1, 2);
                     datasetNode.mstrDataText = "ScaledData";
                     datasetNode.mstrMessage = "Scaled data selected.";
@@ -252,9 +306,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("ScaledData", datasetNode);
                     break;
+
                     #endregion
+
                 case "orData1":
+
                     #region orData1 (RRollup)
+
                     datasetNode.mTNode = new TreeNode("OutliersRemoved", 1, 2);
                     datasetNode.mstrDataText = "OutliersRemoved";
                     datasetNode.mstrMessage = "Outliers removed data selected.";
@@ -267,9 +325,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("OutliersRemoved", datasetNode);
                     break;
+
                     #endregion
+
                 case "pData22":
+
                     #region pData2 (ZRollup)
+
                     datasetNode.mTNode = new TreeNode("ZRollup", 1, 2);
                     datasetNode.mstrDataText = "ZRollup";
                     datasetNode.mstrMessage = "ZRollup selected.";
@@ -283,9 +345,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("ZRollup", datasetNode);
                     break;
+
                     #endregion
+
                 case "qrollupP1":
+
                     #region QRollupP1
+
                     datasetNode.mTNode = new TreeNode("QRollup", 1, 2);
                     datasetNode.mstrDataText = "QRollup";
                     datasetNode.mstrMessage = "QRollup selected.";
@@ -299,9 +365,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("QRollup", datasetNode);
                     break;
+
                     #endregion
+
                 case "PCAweights":
+
                     #region PCA weights
+
                     datasetNode.mTNode = new TreeNode("PCA Weights", 3, 4);
                     datasetNode.mstrDataText = "PCA Weights";
                     datasetNode.mstrMessage = "PCA Weights selected.";
@@ -316,9 +386,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("PCA Weights", datasetNode);
                     break;
+
                     #endregion
+
                 case "PLSweights":
+
                     #region PCA weights
+
                     datasetNode.mTNode = new TreeNode("PLS Weights", 3, 4);
                     datasetNode.mstrDataText = "PLS Weights";
                     datasetNode.mstrMessage = "PLS Weights selected.";
@@ -333,9 +407,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("PLS Weights", datasetNode);
                     break;
+
                     #endregion
+
                 case "clusterResults":
+
                     #region PCA weights
+
                     datasetNode.mTNode = new TreeNode("Heatmap Clusters", 3, 4);
                     datasetNode.mstrDataText = "Heatmap Clusters";
                     datasetNode.mstrMessage = "Heatmap Clusters selected.";
@@ -350,9 +428,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Heatmap Clusters", datasetNode);
                     break;
+
                     #endregion
+
                 case "pvalues":
+
                     #region p-values
+
                     datasetNode.mTNode = new TreeNode("p-Values", 3, 4);
                     datasetNode.mstrDataText = "p-Values";
                     datasetNode.mstrMessage = "p-Values selected.";
@@ -367,9 +449,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("p-Values", datasetNode);
                     break;
+
                     #endregion
+
                 case "yimputed":
+
                     #region yimputed
+
                     datasetNode.mTNode = new TreeNode("Imputed Values", 1, 2);
                     datasetNode.mstrDataText = "Imputed Values";
                     datasetNode.mstrMessage = "Imputed Values selected.";
@@ -384,9 +470,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Imputed Values", datasetNode);
                     break;
+
                     #endregion
+
                 case "notused":
+
                     #region Unused data for ANOVA
+
                     datasetNode.mTNode = new TreeNode("Unused Data", 3, 4);
                     datasetNode.mstrDataText = "Unused Data";
                     datasetNode.mstrMessage = "Unused Data selected.";
@@ -402,9 +492,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Unused Data", datasetNode);
                     break;
+
                     #endregion
+
                 case "foldChanges":
+
                     #region Fold Changes
+
                     datasetNode.mTNode = new TreeNode("Fold Changes", 3, 4);
                     datasetNode.mstrDataText = "Fold Changes";
                     datasetNode.mstrMessage = "Fold Changes selected.";
@@ -419,9 +513,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Fold Changes", datasetNode);
                     break;
+
                     #endregion
+
                 case "patternData":
+
                     #region Pattern Search
+
                     datasetNode.mTNode = new TreeNode("Pattern Corr", 3, 4);
                     datasetNode.mstrDataText = "Pattern Corr";
                     datasetNode.mstrMessage = "Pattern Correlations selected.";
@@ -436,9 +534,13 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Pattern Corr", datasetNode);
                     break;
+
                     #endregion
+
                 default:
+
                     #region All other tables (filteredData)
+
                     if (dataTableNameInR.Contains("filteredData"))
                     {
                         var setNum = dataTableNameInR.Substring(12);
@@ -455,6 +557,7 @@ namespace DAnTE.Inferno
                             mhtDatasets.Add(nodeTxt, datasetNode);
                     }
                     break;
+
                     #endregion
             }
         }
@@ -512,15 +615,21 @@ namespace DAnTE.Inferno
                     switch (variables[i])
                     {
                         case ("ProtInfo"):
+
                             #region ProtInfo
+
                             if ((dataToAdd = GetProtInfoMatrix()) != null)
                                 dataToAdd.TableName = "ProtInfo";
                             else
                                 success = false;
                             break;
+
                             #endregion
+
                         case ("factors"):
+
                             #region Factors
+
                             if (mRConnector.GetTableFromRmatrixNonNumeric("factors"))
                             {
                                 dataToAdd = mRConnector.DataTable.Copy();
@@ -532,9 +641,13 @@ namespace DAnTE.Inferno
                             else
                                 success = false;
                             break;
+
                             #endregion
+
                         case ("pData1"):
+
                             #region RRollup
+
                             mRConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
                             if (mRConnector.GetTableFromRproteinMatrix("pData1"))
                             {
@@ -545,10 +658,14 @@ namespace DAnTE.Inferno
                             }
                             else
                                 success = false;
+
                             #endregion
+
                             break;
                         case ("pData2"):
+
                             #region ZRollup
+
                             mRConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
                             if (mRConnector.GetTableFromRproteinMatrix("pData2"))
                             {
@@ -557,10 +674,14 @@ namespace DAnTE.Inferno
                                 mRConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
                                 dataToAdd.TableName = "pData22";
                             }
+
                             #endregion
+
                             break;
                         case ("qrollupP"):
+
                             #region Qrollup
+
                             if (mRConnector.GetTableFromRproteinMatrix("qrollupP"))
                             {
                                 dataToAdd = mRConnector.DataTable.Copy();
@@ -570,10 +691,14 @@ namespace DAnTE.Inferno
                             }
                             else
                                 success = false;
+
                             #endregion
+
                             break;
                         case ("clusterResults"):
+
                             #region Cluster results
+
                             if (mRConnector.GetTableFromRvector("clusterResults"))
                             {
                                 dataToAdd = mRConnector.DataTable.Copy();
@@ -581,7 +706,9 @@ namespace DAnTE.Inferno
                             }
                             else
                                 success = false;
+
                             #endregion
+
                             break;
                         case "pScaled1": // R list variable that holds RRollup information
                             dataToAdd = null;
@@ -590,7 +717,9 @@ namespace DAnTE.Inferno
                             dataToAdd = null;
                             break;
                         default:
+
                             #region Everything else
+
                             if (mRConnector.GetTableFromRmatrix(variables[i]))
                             {
                                 dataToAdd = mRConnector.DataTable.Copy();
@@ -598,7 +727,9 @@ namespace DAnTE.Inferno
                             }
                             else
                                 success = false;
+
                             #endregion
+
                             break;
                     }
                     if (dataToAdd != null)
@@ -626,17 +757,19 @@ namespace DAnTE.Inferno
         {
             TreeNode tn;
             if ((mtabControlData.Controls.Count == 0) &&
-                (mhtDatasets.ContainsKey("Expressions") || 
+                (mhtDatasets.ContainsKey("Expressions") ||
                  mhtDatasets.ContainsKey("Protein Info") ||
                  mhtDatasets.ContainsKey("Factors")))
             {
                 #region Add Controls on tab page
+
                 var dataGridTab = new ucDataGridView();
                 ctltabPage = new TabPage();
                 mtabControlData.Controls.Add(ctltabPage);
                 ctltabPage.Name = "ctltabPageData";
                 ctltabPage.Controls.Add(dataGridTab);
                 dataGridTab.Dock = DockStyle.Fill;
+
                 #endregion
             }
 
@@ -668,7 +801,7 @@ namespace DAnTE.Inferno
                 ctltreeView.SelectedNode = dataNodeToAdd.mTNode;
                 statusBarPanelMsg.Text = dataNodeToAdd.mstrMessage;
                 statusBarPanelRowNum.Text = dataNodeToAdd.mDTable.Rows.Count + " Rows/" +
-                                                 dataNodeToAdd.mDTable.Columns.Count + " Columns.";
+                                            dataNodeToAdd.mDTable.Columns.Count + " Columns.";
                 dataNodeToAdd.mTNode.Tag = dataNodeToAdd;
             }
             else
@@ -704,7 +837,7 @@ namespace DAnTE.Inferno
                 tn.ContextMenuStrip = mContextMenuTreeV;
             statusBarPanelMsg.Text = selectedNodeTag.mstrMessage;
             statusBarPanelRowNum.Text = selectedNodeTag.mDTable.Rows.Count.ToString() + " Rows/" +
-                                             selectedNodeTag.mDTable.Columns.Count.ToString() + " Columns.";
+                                        selectedNodeTag.mDTable.Columns.Count.ToString() + " Columns.";
             //mDTselected = mdataNode.mDTable;
         }
 
@@ -738,7 +871,7 @@ namespace DAnTE.Inferno
         {
             if (mhtDatasets.ContainsKey(selected))
                 return (mhtDatasets[selected]).mstrRdatasetName;
-            
+
             return "Eset";
         }
 
@@ -748,7 +881,6 @@ namespace DAnTE.Inferno
         /// protein profile plotting.
         /// </summary>
         /// <returns></returns>
-
         private string Vars2Save()
         {
             string rcmd = null;
@@ -828,8 +960,8 @@ namespace DAnTE.Inferno
             if (mhtDatasets.Count > 0)
             {
                 var res = MessageBox.Show("This will delete the current table." +
-                    Environment.NewLine + "Are you sure?", "Delete table?",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                          Environment.NewLine + "Are you sure?", "Delete table?",
+                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                     DeleteCurrentNode();
             }

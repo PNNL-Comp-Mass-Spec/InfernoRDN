@@ -24,19 +24,12 @@ namespace DAnTE.Inferno
 
         public clsQQPar clsQQPar
         {
-            get
-            {
-                return mclsQQPar;
-            }
+            get { return mclsQQPar; }
         }
 
         public new frmDAnTE DAnTEinstance
         {
-            set
-            {
-                mfrmDante = value;
-            }
+            set { mfrmDante = value; }
         }
     }
 }
-

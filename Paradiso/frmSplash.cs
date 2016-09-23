@@ -2,7 +2,7 @@ using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
 {
-    public partial class frmSplash : Form,ISplashForm
+    public partial class frmSplash : Form, ISplashForm
     {
         public frmSplash()
         {
@@ -18,7 +18,5 @@ namespace DAnTE.Paradiso
         }
 
         #endregion
-
-        
     }
 }

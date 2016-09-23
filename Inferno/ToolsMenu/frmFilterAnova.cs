@@ -21,7 +21,7 @@ namespace DAnTE.Inferno
             if (mlstBoxpvals.SelectedIndex < 0)
             {
                 MessageBox.Show("Select an ANOVA Column", "Error", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
                 success = false;
             }
             try
@@ -30,8 +30,8 @@ namespace DAnTE.Inferno
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Invalid Cutoff" + Environment.NewLine + ex.Message, 
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid Cutoff" + Environment.NewLine + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 success = false;
             }
             if (success)
@@ -47,18 +47,12 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateDataComboBox
         {
-            set
-            {
-                mcmbBoxData.DataSource = value;
-            }
+            set { mcmbBoxData.DataSource = value; }
         }
 
         public string Dataset
         {
-            get
-            {
-                return mcmbBoxData.SelectedItem.ToString();
-            }
+            get { return mcmbBoxData.SelectedItem.ToString(); }
         }
 
         public List<string> PopulateListBox
@@ -72,30 +66,19 @@ namespace DAnTE.Inferno
 
         public int SelectedColumn
         {
-            get
-            {
-                return mlstBoxpvals.SelectedIndex;
-            }
+            get { return mlstBoxpvals.SelectedIndex; }
         }
 
         public Double Thres
         {
-            get
-            {
-                return cutoff;
-            }
+            get { return cutoff; }
         }
 
         public bool LessThan
         {
-            get
-            {
-                return mrBtnLT.Checked;
-            }
+            get { return mrBtnLT.Checked; }
         }
 
         #endregion
-
-        
     }
 }

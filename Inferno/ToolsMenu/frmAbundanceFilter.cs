@@ -12,18 +12,12 @@ namespace DAnTE.Inferno
 
         public string CutOff
         {
-            get
-            {
-                return "cutoff=" + mtxtBoxFthres.Text;
-            }
+            get { return "cutoff=" + mtxtBoxFthres.Text; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         private void mbtnOK_Click(object sender, EventArgs e)

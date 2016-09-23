@@ -68,18 +68,22 @@ namespace DAnTE.Tools
         {
             return _rdn.GetSymbolAsBool(name);
         }
+
         public string[] GetSymbolAsStrings(string name)
         {
             return _rdn.GetSymbolAsStrings(name);
         }
+
         public string[,] GetSymbolAsStringMatrix(string name)
         {
             return _rdn.GetSymbolAsStringMatrix(name);
         }
+
         public double[] GetSymbolAsNumbers(string name)
         {
             return _rdn.GetSymbolAsNumbers(name);
         }
+
         public double[,] GetSymbolAsNumberMatrix(string name)
         {
             return _rdn.GetSymbolAsNumberMatrix(name);
@@ -92,8 +96,8 @@ namespace DAnTE.Tools
             try
             {
                 _rcmd = table + "<-loadfile('" + filename +
-                  "',stripwhite=" + stripwhite.ToString().ToUpper() + ",header=" +
-                  header.ToString().ToUpper() + ",separator='" + separator + "')";
+                        "',stripwhite=" + stripwhite.ToString().ToUpper() + ",header=" +
+                        header.ToString().ToUpper() + ",separator='" + separator + "')";
                 _rdn.EvaluateNoReturn(_rcmd);
                 return true;
             }
@@ -463,7 +467,6 @@ namespace DAnTE.Tools
                 }
                 dataTable.Rows.Add(dataRow);
             }
-
         }
 
         private DataTable RDoubleArray2DataTable(clsRarray rArray)
@@ -645,7 +648,6 @@ namespace DAnTE.Tools
             //DataColumnCollection columnHeaders = mTable.Columns ;
             for (var col = 0; col < mTable.Columns.Count; col++)
             {
-                
                 if (col > 0)
                 {
                     // Populate colHeaders with the user-supplied headers, starting with the second column
@@ -714,7 +716,7 @@ namespace DAnTE.Tools
 
             //DataColumnCollection columnHeaders = mTable.Columns ;
             for (var col = 0; col < mTable.Columns.Count; col++)
-            {                
+            {
                 if (col > 0) //Start from 2nd column
                     colHeaders[col - 1] = mTable.Columns[col].ToString();
                 for (var row = 0; row < mTable.Rows.Count; row++)
@@ -724,7 +726,7 @@ namespace DAnTE.Tools
                         //Mass Tags
                         rowNames[row] = mTable.Rows[row].ItemArray[0].ToString();
                     }
-                    else 
+                    else
                     {
                         // string data
                         var cellValue = mTable.Rows[row].ItemArray[col].ToString();
@@ -742,7 +744,6 @@ namespace DAnTE.Tools
 
             return rArray;
         }
-
     }
 
     /// <summary>

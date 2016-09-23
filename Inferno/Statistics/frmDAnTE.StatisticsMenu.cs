@@ -11,7 +11,6 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-
         private List<clsDatasetInfo> marrDatasetInfo = new List<clsDatasetInfo>();
         private List<clsFactorInfo> marrFactorInfo = new List<clsFactorInfo>();
         private clsAnovaPar mclsAnovaPar;
@@ -42,7 +41,6 @@ namespace DAnTE.Inferno
                 var dsetItem = new clsDatasetInfo(factorNames[i]);
                 if (factorsLoaded)
                 {
-
                     for (var k = 0; k < dt.Rows.Count; k++) // go thru each row
                     {
                         var dataRow = dt.Rows[k];
@@ -275,7 +273,7 @@ namespace DAnTE.Inferno
                     }
                 }
             }
-            else 
+            else
             {
                 //User cancelled the factor changes, so revert to previous.
                 marrDatasetInfo = tmpDatasets; //Should we do a DeepCopy here?
@@ -298,8 +296,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_ANOVA;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
+
             #endregion
 
             mclsAnovaPar = new clsAnovaPar();
@@ -332,12 +332,12 @@ namespace DAnTE.Inferno
                 }
             }
 
-
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_ANOVA;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
-            #endregion
 
+            #endregion
         }
 
         private void menuItemTamuQ_Click(object sender, EventArgs e)
@@ -355,8 +355,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_TamuQ;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_TamuQCompleted;
+
             #endregion
 
             mclsTamuQPar = new clsTamuQPar();
@@ -390,10 +392,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_TamuQ;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_TamuQCompleted;
-            #endregion
 
+            #endregion
         }
 
         private void menuItemKW_Click(object sender, EventArgs e)
@@ -411,8 +414,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_KW;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
+
             #endregion
 
             mclsKWpar = new clsKruskalWPar();
@@ -446,10 +451,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_KW;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
-            #endregion
 
+            #endregion
         }
 
         private void menuItemWilcox_Click(object sender, EventArgs e)
@@ -508,14 +514,12 @@ namespace DAnTE.Inferno
                 }
             }
 
-
             #region Unhook Threading Events
 
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_Wilcox;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
 
             #endregion
-
         }
 
         private void menuItemShapiroWilks_Click(object sender, EventArgs e)
@@ -528,8 +532,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_ShapiroWilks;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
+
             #endregion
 
             mclsShapiroWilksPar = new clsShapiroWilksPar();
@@ -556,10 +562,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_ShapiroWilks;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
-            #endregion
 
+            #endregion
         }
 
         private void mnuItemFC_Click(object sender, EventArgs e)
@@ -624,8 +631,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_Ttest;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ANOVACompleted;
+
             #endregion
 
             mclsOneSampleTtestPar = new clsOneSampleTtestPar();
@@ -652,14 +661,15 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_Ttest;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ANOVACompleted;
+
             #endregion
         }
 
         private void ctxtMnuItemFilter_Click(object sender, EventArgs e)
         {
-
             var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
             if (ctltabPage == null || selectedNodeTag?.mDTable == null)
@@ -676,7 +686,8 @@ namespace DAnTE.Inferno
 
             if (selectedRows.Count < 2)
             {
-                MessageBox.Show("At least two rows of data must be selected in order to filter using Row IDs", "Not enough rows");
+                MessageBox.Show("At least two rows of data must be selected in order to filter using Row IDs",
+                                "Not enough rows");
                 return;
             }
 
@@ -769,7 +780,6 @@ namespace DAnTE.Inferno
 
         private bool DoTamuQ(string rcmd)
         {
-
             /*bool anovaUsedAllData = false;*/
 
             //rConnector.EvaluateNoReturn("a <- DoAnova");
@@ -993,6 +1003,7 @@ namespace DAnTE.Inferno
 
             return true;
         }
+
         #endregion
     }
 }

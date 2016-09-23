@@ -25,10 +25,7 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateFactorComboBox
         {
-            set
-            {
-                mcmbBoxFactors.DataSource = value;
-            }
+            set { mcmbBoxFactors.DataSource = value; }
         }
 
         public string SelectedFactor
@@ -42,10 +39,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string pMode

@@ -49,10 +49,10 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_HistPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var histogramPlotOptions = new frmHistDisplay(mclsHistPar);
-            
+
             mfrmShowProgress.Hide();
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
-            
+
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -88,7 +88,7 @@ namespace DAnTE.Inferno
             var correlationPlotOptions = new frmCorrDisplay(mclsCorrPar);
             mfrmShowProgress.Hide();
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
-            
+
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -216,7 +216,6 @@ namespace DAnTE.Inferno
 
             try
             {
-
                 mRConnector.EvaluateNoReturn(rcmd);
                 var plotResult = new clsPlotResult(LoadImage(mRTempFilePath), plotname);
                 e.Result = plotResult;
@@ -234,6 +233,7 @@ namespace DAnTE.Inferno
     }
 
     #region Class for Plotting results
+
     class clsPlotResult
     {
         public readonly Image mImage;
@@ -267,5 +267,6 @@ namespace DAnTE.Inferno
             mstrPlotName = plotname;
         }
     }
+
     #endregion
 }

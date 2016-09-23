@@ -7,15 +7,15 @@ using DAnTE.Properties;
 
 namespace DAnTE.Inferno
 {
-	public class ctlMSMSSelectFromHDDWizPage : Wizard.UI.InternalWizardPage
-	{
-		private System.Windows.Forms.Panel panelStep;
-		private System.Windows.Forms.Label labelSelect;
-		private System.Windows.Forms.Button mbtnSelectFiles;
-		private System.Windows.Forms.Panel panelFileNames;
-		private System.ComponentModel.IContainer components = null;
+    public class ctlMSMSSelectFromHDDWizPage : Wizard.UI.InternalWizardPage
+    {
+        private System.Windows.Forms.Panel panelStep;
+        private System.Windows.Forms.Label labelSelect;
+        private System.Windows.Forms.Button mbtnSelectFiles;
+        private System.Windows.Forms.Panel panelFileNames;
+        private System.ComponentModel.IContainer components = null;
 
-		private string [] strarrFilePaths;
+        private string[] strarrFilePaths;
         private List<string> marrDatasetFilePaths = new List<string>();
 
         private System.Windows.Forms.ListView joblistView;
@@ -24,36 +24,37 @@ namespace DAnTE.Inferno
         private readonly OpenFileDialog openFileDialog1;
 
         public ctlMSMSSelectFromHDDWizPage()
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
+            // TODO: Add any initialization after the InitializeComponent call
             openFileDialog1 = new OpenFileDialog();
-		}
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.panelStep = new System.Windows.Forms.Panel();
             this.mbtnClear = new System.Windows.Forms.Button();
             this.mbtnSelectFiles = new System.Windows.Forms.Button();
@@ -122,8 +123,10 @@ namespace DAnTE.Inferno
             // joblistView
             // 
             this.joblistView.AllowDrop = true;
-            this.joblistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.mFileNameColumnHeader});
+            this.joblistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {
+                this.mFileNameColumnHeader
+            });
             this.joblistView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.joblistView.FullRowSelect = true;
             this.joblistView.GridLines = true;
@@ -153,9 +156,9 @@ namespace DAnTE.Inferno
             this.panelStep.ResumeLayout(false);
             this.panelFileNames.ResumeLayout(false);
             this.ResumeLayout(false);
+        }
 
-		}
-		#endregion
+        #endregion
 
         private void AddToList(string fileName)
         {
@@ -166,40 +169,41 @@ namespace DAnTE.Inferno
             joblistView.Items.Add(dataItem);
         }
 
-	    private void mbtnSelectFiles_Click(object sender, System.EventArgs e)
-		{
+        private void mbtnSelectFiles_Click(object sender, System.EventArgs e)
+        {
             var msmsFolder = Settings.Default.msmsFolder;
-			openFileDialog1.Multiselect = true ; 
-			openFileDialog1.Filter = "*_out.txt files (*_out.txt)|*_out.txt|*_syn.txt files (*_syn.txt)|*_syn.txt|All files (*.*)|*.*" ;
-			openFileDialog1.FilterIndex = 1 ;
+            openFileDialog1.Multiselect = true;
+            openFileDialog1.Filter =
+                "*_out.txt files (*_out.txt)|*_out.txt|*_syn.txt files (*_syn.txt)|*_syn.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
             if (msmsFolder != "")
                 openFileDialog1.InitialDirectory = msmsFolder;
             else
                 openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             openFileDialog1.RestoreDirectory = false;
 
-	        if (openFileDialog1.ShowDialog() != DialogResult.OK)
-	        {
-	            return;
-	        }
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
 
-	        strarrFilePaths = openFileDialog1.FileNames;
+            strarrFilePaths = openFileDialog1.FileNames;
 
-	        msmsFolder = Path.GetDirectoryName(strarrFilePaths[0]);
-	        Settings.Default.msmsFolder = msmsFolder;
-	        Settings.Default.Save();
+            msmsFolder = Path.GetDirectoryName(strarrFilePaths[0]);
+            Settings.Default.msmsFolder = msmsFolder;
+            Settings.Default.Save();
 
-	        foreach (var filePath in strarrFilePaths)
-	        {
-	            var newFileName = Path.GetFileName(filePath);
+            foreach (var filePath in strarrFilePaths)
+            {
+                var newFileName = Path.GetFileName(filePath);
                 if (marrDatasetFilePaths.Contains(filePath))
-	            {
-	                continue;
-	            }
-	            marrDatasetFilePaths.Add(filePath);
-	            AddToList(newFileName);
-	        }
-		}
+                {
+                    continue;
+                }
+                marrDatasetFilePaths.Add(filePath);
+                AddToList(newFileName);
+            }
+        }
 
         private void mbtnClear_Click(object sender, EventArgs e)
         {
@@ -212,18 +216,10 @@ namespace DAnTE.Inferno
             SetWizardButtons(Wizard.UI.WizardButtons.Back | Wizard.UI.WizardButtons.Next);
         }
 
-		public List<string> DatasetNames
-		{
-			get
-			{
-				return marrDatasetFilePaths ;
-			}
-			set
-			{
-				marrDatasetFilePaths = value ;
-			}
-		}
-        
-	}
+        public List<string> DatasetNames
+        {
+            get { return marrDatasetFilePaths; }
+            set { marrDatasetFilePaths = value; }
+        }
+    }
 }
-

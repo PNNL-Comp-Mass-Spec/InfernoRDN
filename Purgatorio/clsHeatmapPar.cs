@@ -10,19 +10,14 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")]
-        public string mstrDatasetName;
+        [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")] public string mstrDatasetName;
         public string mstrFactor;
         public int mintFactorIndex; // 1,2,3,...
         public string tempFile;
-        [clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")]
-        public bool rowClust;
-        [clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")]
-        public bool colClust;
-        [clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")]
-        public bool hclust;
-        [clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")]
-        public bool rowScale;
+        [clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")] public bool rowClust;
+        [clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")] public bool colClust;
+        [clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")] public bool hclust;
+        [clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")] public bool rowScale;
         public int agglomeration;
         public int distance;
         public int k;
@@ -76,7 +71,7 @@ namespace DAnTE.Purgatorio
             hclust = true;
             agglomeration = 1; //0:single, 1:Complete, 2:Average, 3:McQuitty, 4:Ward 5:Median, 6:Centroid
             distance = 0; //0:Euclidean, 1:Maximum, 2:Manhattan, 3:Canberra, 4:Binary, 5:Pearson, 6:Correlation, 
-                          //7:Spearman, 8:Kendall
+            //7:Spearman, 8:Kendall
             k = 5;
             fixSeed = false;
             noxlab = false;
@@ -92,10 +87,10 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                rcmd = "clusterResults <- plotHeatmap(" + Rdataset + "[" + this.DataSubset + @",], file=""" + 
-                    tempFile + @"""," + this.rDendrogram + "," + this.cDendrogram + "," + this.Kmeans +
-                    "," + Agglom + "," + Dist + "," + this.RowScale + "," + this.Seed + "," + this.Palette + "," + 
-                    customCol + "," + this.ColorRange + "," + this.Factor + "," + RowLab + ")";
+                rcmd = "clusterResults <- plotHeatmap(" + Rdataset + "[" + this.DataSubset + @",], file=""" +
+                       tempFile + @"""," + this.rDendrogram + "," + this.cDendrogram + "," + this.Kmeans +
+                       "," + Agglom + "," + Dist + "," + this.RowScale + "," + this.Seed + "," + this.Palette + "," +
+                       customCol + "," + this.ColorRange + "," + this.Factor + "," + RowLab + ")";
                 return rcmd;
             }
         }
@@ -106,7 +101,8 @@ namespace DAnTE.Purgatorio
             {
                 var colRange = "colRange=c(";
                 if (mblsetColRng)
-                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + ")";
+                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," +
+                               mdblMaxCol.ToString(CultureInfo.InvariantCulture) + ")";
                 else
                     colRange = "colRange=NULL";
                 return colRange;
@@ -120,7 +116,8 @@ namespace DAnTE.Purgatorio
             {
                 var colRange = "[";
                 if (mblsetColRng)
-                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," + mdblMaxCol.ToString(CultureInfo.InvariantCulture) + "]";
+                    colRange = colRange + mdblMinCol.ToString(CultureInfo.InvariantCulture) + "," +
+                               mdblMaxCol.ToString(CultureInfo.InvariantCulture) + "]";
                 else
                     colRange = "NA";
                 return colRange;
@@ -200,7 +197,7 @@ namespace DAnTE.Purgatorio
                     return "rowscale=FALSE";
             }
         }
-                
+
         private string rDendrogram
         {
             get
@@ -214,10 +211,7 @@ namespace DAnTE.Purgatorio
 
         private string Agglom
         {
-            get
-            {
-                return "agglomeration=" + agglomeration;
-            }
+            get { return "agglomeration=" + agglomeration; }
         }
 
         [clsAnalysisAttribute("Agglomeration", "Heatmap_Clustering")]
@@ -249,10 +243,7 @@ namespace DAnTE.Purgatorio
 
         private string Dist
         {
-            get
-            {
-                return "distance=" + distance;
-            }
+            get { return "distance=" + distance; }
         }
 
         [clsAnalysisAttribute("Distance_Metric", "Heatmap_Clustering")]
@@ -385,7 +376,6 @@ namespace DAnTE.Purgatorio
                         break;
                 }
                 return cMap;
-
             }
         }
 

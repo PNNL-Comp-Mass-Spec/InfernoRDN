@@ -24,11 +24,7 @@ namespace DAnTE.Inferno
 
         public new frmDAnTE DAnTEinstance
         {
-            set
-            {
-                mfrmDante = value;
-            }
+            set { mfrmDante = value; }
         }
     }
 }
-

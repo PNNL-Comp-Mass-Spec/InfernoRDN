@@ -19,7 +19,6 @@ namespace DAnTE.Inferno
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void menuItemRRollup_Click(object sender, EventArgs e)
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
@@ -30,10 +29,12 @@ namespace DAnTE.Inferno
             }
 
             var dataset = selectedNodeTag.mstrRdatasetName;
-            
+
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_RRollup;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_RRollupCompleted;
+
             #endregion
 
             mclsRRollupPar = new Purgatorio.clsRRollupPar
@@ -50,7 +51,7 @@ namespace DAnTE.Inferno
                 MessageBox.Show("RRollup is already done.", "Nothing to do");
                 return;
             }
-            
+
             if (rRollupParams.ShowDialog() == DialogResult.OK)
             {
                 mclsRRollupPar = rRollupParams.clsRRollupPar;
@@ -67,8 +68,10 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_RRollup;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_RRollupCompleted;
+
             #endregion
         }
 
@@ -82,11 +85,13 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;            
+            var dataset = selectedNodeTag.mstrRdatasetName;
 
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_ZRollup;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ZRollupCompleted;
+
             #endregion
 
             mclsZRollupPar = new Purgatorio.clsZRollupPar
@@ -103,7 +108,7 @@ namespace DAnTE.Inferno
                 MessageBox.Show("ZRollup is already done.", "Nothing to do");
                 return;
             }
-                
+
             if (zRollupParams.ShowDialog() == DialogResult.OK)
             {
                 mclsZRollupPar = zRollupParams.clsZRollupPar;
@@ -120,8 +125,10 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_ZRollup;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ZRollupCompleted;
+
             #endregion
         }
 
@@ -135,10 +142,12 @@ namespace DAnTE.Inferno
             }
 
             var dataset = selectedNodeTag.mstrRdatasetName;
-            
+
             #region Hook Threading events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_QRollup;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QRollupCompleted;
+
             #endregion
 
             mclsQRollupPar = new Purgatorio.clsQRollupPar
@@ -151,10 +160,11 @@ namespace DAnTE.Inferno
 
             if (mhtDatasets.ContainsKey("Protein (Q)rollup"))
             {
-                MessageBox.Show("Protein (Q)rollup is already done.", "Nothing to do", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Protein (Q)rollup is already done.", "Nothing to do", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 return;
             }
-                
+
             if (qRollupParams.ShowDialog() == DialogResult.OK)
             {
                 mclsQRollupPar = qRollupParams.clsQRollupPar;
@@ -171,14 +181,17 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_QRollup;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QRollupCompleted;
+
             #endregion
         }
 
         #endregion
 
         #region Private Methods
+
         private bool DoQRollup(string rcmd)
         {
             var success = true;
@@ -302,13 +315,15 @@ namespace DAnTE.Inferno
 
             if (!mhtDatasets.ContainsKey("Protein Info"))
             {
-                MessageBox.Show("'Protein Info' table not found; cannot rollup peptide data to the protein level", "Error");
+                MessageBox.Show("'Protein Info' table not found; cannot rollup peptide data to the protein level",
+                                "Error");
                 return false;
             }
 
             if (!mclsSelected.mblRollupPossible)
             {
-                MessageBox.Show("Selected table does not have peptide data that can be rolled up to the protein level", "Error");
+                MessageBox.Show("Selected table does not have peptide data that can be rolled up to the protein level",
+                                "Error");
                 return false;
             }
 

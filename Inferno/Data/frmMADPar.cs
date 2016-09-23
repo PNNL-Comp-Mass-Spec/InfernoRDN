@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-           DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -24,7 +24,6 @@ namespace DAnTE.Inferno
             DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
 
         #region Properties
 
@@ -42,10 +41,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public List<string> PopulateFactorComboBox
@@ -82,7 +78,7 @@ namespace DAnTE.Inferno
                     return "AllData";
             }
         }
-                
+
         public int FactorIndex
         {
             get
@@ -102,14 +98,9 @@ namespace DAnTE.Inferno
 
         public bool MeanAdj
         {
-            get
-            {
-                return mchkBoxMeanAdj.Checked;
-            }
+            get { return mchkBoxMeanAdj.Checked; }
         }
 
         #endregion
-
-        
     }
 }

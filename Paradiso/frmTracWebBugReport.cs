@@ -4,74 +4,77 @@ using DAnTE.Properties;
 
 namespace DAnTE.Paradiso
 {
-	/// <summary>
-	/// Summary description for frmTracWebBugReport.
-	/// </summary>
-	public class frmTracWebBugReport : Form
+    /// <summary>
+    /// Summary description for frmTracWebBugReport.
+    /// </summary>
+    public class frmTracWebBugReport : Form
     {
-		private GroupBox grpBoxUserInfo;
-		private Label lblEmail;
-		private Label lblRqstType;
-		private Label label1;
-		private GroupBox grpBoxFullDes;
-		private TextBox mtxtBoxSummary;
-		private TextBox mtxtBoxEmail;
-		private ComboBox mcmbBoxRequest;
-		private Label mlblDisclaimer;
-		private RichTextBox mrichTxtBoxFull;
-		private Label mlblbtns;
-		private Button mbtnSend;
-		private Button mbtnCancel;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+        private GroupBox grpBoxUserInfo;
+        private Label lblEmail;
+        private Label lblRqstType;
+        private Label label1;
+        private GroupBox grpBoxFullDes;
+        private TextBox mtxtBoxSummary;
+        private TextBox mtxtBoxEmail;
+        private ComboBox mcmbBoxRequest;
+        private Label mlblDisclaimer;
+        private RichTextBox mrichTxtBoxFull;
+        private Label mlblbtns;
+        private Button mbtnSend;
+        private Button mbtnCancel;
 
-		private string DAnTEsite = @"http://prismtrac.pnl.gov/dante/" ;
-		private string mstrUserEmail ;
-		private string mstrShortSummary ;
-		private string mstrDescription ;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
+
+        private string DAnTEsite = @"http://prismtrac.pnl.gov/dante/";
+        private string mstrUserEmail;
+        private string mstrShortSummary;
+        private string mstrDescription;
         private DAnTE.ExtraControls.NiceLine niceLine4;
         private Label label2;
         private DAnTE.ExtraControls.NiceLine niceLine1;
         private PictureBox pictureBox1;
-		private string version = "0.20" ;
+        private string version = "0.20";
 
-		public frmTracWebBugReport()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        public frmTracWebBugReport()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-		}
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTracWebBugReport));
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(frmTracWebBugReport));
             this.grpBoxFullDes = new System.Windows.Forms.GroupBox();
             mrichTxtBoxFull = new System.Windows.Forms.RichTextBox();
             this.grpBoxUserInfo = new System.Windows.Forms.GroupBox();
@@ -130,21 +133,25 @@ namespace DAnTE.Paradiso
             // 
             // mlblDisclaimer
             // 
-            mlblDisclaimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            mlblDisclaimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F,
+                                                          System.Drawing.FontStyle.Regular,
+                                                          System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             mlblDisclaimer.Location = new System.Drawing.Point(8, 104);
             mlblDisclaimer.Name = "mlblDisclaimer";
             mlblDisclaimer.Size = new System.Drawing.Size(536, 37);
             mlblDisclaimer.TabIndex = 6;
             mlblDisclaimer.Text = "Your personal information will be used only for the purpose of providing an ident" +
-                "ifier for your bug report, as well as providing a contact address for the develo" +
-                "per in case of further questions.";
+                                  "ifier for your bug report, as well as providing a contact address for the develo" +
+                                  "per in case of further questions.";
             mlblDisclaimer.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // mcmbBoxRequest
             // 
-            mcmbBoxRequest.Items.AddRange(new object[] {
-            "Bug Report",
-            "Feature Request"});
+            mcmbBoxRequest.Items.AddRange(new object[]
+            {
+                "Bug Report",
+                "Feature Request"
+            });
             mcmbBoxRequest.Location = new System.Drawing.Point(288, 32);
             mcmbBoxRequest.Name = "mcmbBoxRequest";
             mcmbBoxRequest.Size = new System.Drawing.Size(256, 21);
@@ -176,8 +183,10 @@ namespace DAnTE.Paradiso
             // 
             // mtxtBoxSummary
             // 
-            mtxtBoxSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            mtxtBoxSummary.Anchor =
+                ((System.Windows.Forms.AnchorStyles)
+                 (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                   | System.Windows.Forms.AnchorStyles.Right)));
             mtxtBoxSummary.Location = new System.Drawing.Point(8, 72);
             mtxtBoxSummary.Name = "mtxtBoxSummary";
             mtxtBoxSummary.Size = new System.Drawing.Size(536, 20);
@@ -210,19 +219,21 @@ namespace DAnTE.Paradiso
             // 
             // mlblbtns
             // 
-            mlblbtns.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            mlblbtns.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+                                                    System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             mlblbtns.Location = new System.Drawing.Point(21, 491);
             mlblbtns.Name = "mlblbtns";
             mlblbtns.Size = new System.Drawing.Size(320, 40);
             mlblbtns.TabIndex = 0;
             mlblbtns.Text = "Clicking \'Send Report\' will open a new web browser window to the DAnTE Website <h" +
-                "ttps://prismtrac.pnl.gov/dante> and fill in a request ticket for you to submit.";
+                            "ttps://prismtrac.pnl.gov/dante> and fill in a request ticket for you to submit.";
             mlblbtns.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold,
+                                                       System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 13);
@@ -281,149 +292,147 @@ namespace DAnTE.Paradiso
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+        }
 
-		}
-		#endregion
+        #endregion
 
-		private void frmTracWebBugReport_Load(object sender, System.EventArgs e)
-		{
+        private void frmTracWebBugReport_Load(object sender, System.EventArgs e)
+        {
             mstrUserEmail = Settings.Default.email;
-			mcmbBoxRequest.Text = "Bug Report";
-			mcmbBoxRequest.SelectedIndex = 0 ;
-			if (!string.IsNullOrEmpty(mstrUserEmail))
-				mtxtBoxEmail.Text = mstrUserEmail ;
-		}
+            mcmbBoxRequest.Text = "Bug Report";
+            mcmbBoxRequest.SelectedIndex = 0;
+            if (!string.IsNullOrEmpty(mstrUserEmail))
+                mtxtBoxEmail.Text = mstrUserEmail;
+        }
 
-		private void mbtnSend_Click(object sender, EventArgs e)
-		{
-			var summary = mtxtBoxSummary.Text ;
-			if (string.IsNullOrEmpty(summary))
-				MessageBox.Show("Specify your problem first!","Problem summary ?") ;
-			else
-			{
-				var tracLink = BuildTracLink();
-				if (WebSiteIsAvailable(DAnTEsite)) 
-				{
-					System.Diagnostics.Process.Start(tracLink);
-				}
-				else 
-				{
-					MessageBox.Show("Unable to connection to\r\n" + DAnTEsite +  "\r\n(Are you able to access the PNNL Network?", 
-						"No Response from Bug Tracking Site", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
-				this.DialogResult = DialogResult.OK;
-				this.Close();
-			}
-		}
+        private void mbtnSend_Click(object sender, EventArgs e)
+        {
+            var summary = mtxtBoxSummary.Text;
+            if (string.IsNullOrEmpty(summary))
+                MessageBox.Show("Specify your problem first!", "Problem summary ?");
+            else
+            {
+                var tracLink = BuildTracLink();
+                if (WebSiteIsAvailable(DAnTEsite))
+                {
+                    System.Diagnostics.Process.Start(tracLink);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Unable to connection to\r\n" + DAnTEsite + "\r\n(Are you able to access the PNNL Network?",
+                        "No Response from Bug Tracking Site", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
 
-		private void mbtnCancel_Click(object sender, EventArgs e)
-		{
+        private void mbtnCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
-		}
+        }
 
-		private bool WebSiteIsAvailable(string linkText) 
-		{
-			// ----------------------------------------------------
-			//  Attempt to get a response from the passed URL
-			//  Pass:       linkText    URL to site being checked
-			//  Return:     True        The site responded
-			//              False       The site did not respond
-			// ----------------------------------------------------
-			//      Date    Developer            Code Change
-			//   ---------- -------------------- ------------------
-			//   12/11/2005 G Gilbert            Original code
-			// ----------------------------------------------------
-			// ----------------------------------------------------
-			//  Local Constant/Variable Declarations
-			// ----------------------------------------------------
-			var URL_Object = new Uri(linkText);
-		    bool Response_Result;
-			// ----------------------------------------------------
-			//  Attempt to get a response from the URL
-			// ----------------------------------------------------
-			try 
-			{
-				var URL_WebRequest = System.Net.WebRequest.Create(URL_Object);
-				URL_WebRequest.GetResponse();
-				Response_Result = true;
-			}
-			catch (Exception Any_Error) 
-			{
-				Console.WriteLine(Any_Error.ToString()) ;
-				Response_Result = false;
-			}
-		    return Response_Result;
-		}
+        private bool WebSiteIsAvailable(string linkText)
+        {
+            // ----------------------------------------------------
+            //  Attempt to get a response from the passed URL
+            //  Pass:       linkText    URL to site being checked
+            //  Return:     True        The site responded
+            //              False       The site did not respond
+            // ----------------------------------------------------
+            //      Date    Developer            Code Change
+            //   ---------- -------------------- ------------------
+            //   12/11/2005 G Gilbert            Original code
+            // ----------------------------------------------------
+            // ----------------------------------------------------
+            //  Local Constant/Variable Declarations
+            // ----------------------------------------------------
+            var URL_Object = new Uri(linkText);
+            bool Response_Result;
+            // ----------------------------------------------------
+            //  Attempt to get a response from the URL
+            // ----------------------------------------------------
+            try
+            {
+                var URL_WebRequest = System.Net.WebRequest.Create(URL_Object);
+                URL_WebRequest.GetResponse();
+                Response_Result = true;
+            }
+            catch (Exception Any_Error)
+            {
+                Console.WriteLine(Any_Error.ToString());
+                Response_Result = false;
+            }
+            return Response_Result;
+        }
 
 
-		private string BuildTracLink() 
-		{
-			var addressSB = new System.Text.StringBuilder();
-			var optionsSB = new System.Text.StringBuilder();
-			mstrUserEmail = mtxtBoxEmail.Text;
-			mstrShortSummary = mtxtBoxSummary.Text;
-			mstrDescription = mrichTxtBoxFull.Text;
+        private string BuildTracLink()
+        {
+            var addressSB = new System.Text.StringBuilder();
+            var optionsSB = new System.Text.StringBuilder();
+            mstrUserEmail = mtxtBoxEmail.Text;
+            mstrShortSummary = mtxtBoxSummary.Text;
+            mstrDescription = mrichTxtBoxFull.Text;
             //mstrDescription = mtxtBoxDesc.Text;
             Settings.Default.email = mstrUserEmail;
             Settings.Default.Save();
 
-			addressSB.Append(System.Web.HttpUtility.HtmlEncode(DAnTEsite)) ;
-			if (!addressSB.ToString().EndsWith("/")) 
-			{
-				addressSB.Append("/") ;
-			}
-			addressSB.Append("simpleticket") ;
+            addressSB.Append(System.Web.HttpUtility.HtmlEncode(DAnTEsite));
+            if (!addressSB.ToString().EndsWith("/"))
+            {
+                addressSB.Append("/");
+            }
+            addressSB.Append("simpleticket");
 
-			optionsSB.Append("type=") ;
-			switch (mcmbBoxRequest.Text) 
-			{
-				case "Bug Report":
-					optionsSB.Append("defect") ;
-					break;
-				case "Feature Request":
-					optionsSB.Append("enhancement") ;
-					break;
-			}
+            optionsSB.Append("type=");
+            switch (mcmbBoxRequest.Text)
+            {
+                case "Bug Report":
+                    optionsSB.Append("defect");
+                    break;
+                case "Feature Request":
+                    optionsSB.Append("enhancement");
+                    break;
+            }
 
             optionsSB.Append("&version=" + System.Web.HttpUtility.UrlEncode(version));
 
-			if (mstrUserEmail.Length > 0)
-			{
-				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
-				{
-					optionsSB.Append("&");
-				}
-				optionsSB.Append("reporter=") ;
+            if (mstrUserEmail.Length > 0)
+            {
+                if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
+                {
+                    optionsSB.Append("&");
+                }
+                optionsSB.Append("reporter=");
                 optionsSB.Append(mstrUserEmail);
-			}
+            }
 
-			if (mstrShortSummary.Length > 0)
-			{
-				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
-				{
-					optionsSB.Append("&");
-				}
-				optionsSB.Append("summary=") ;
-                optionsSB.Append(System.Web.HttpUtility.UrlEncode(mstrShortSummary)) ;
+            if (mstrShortSummary.Length > 0)
+            {
+                if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
+                {
+                    optionsSB.Append("&");
+                }
+                optionsSB.Append("summary=");
+                optionsSB.Append(System.Web.HttpUtility.UrlEncode(mstrShortSummary));
                 //optionsSB.Append(mstrShortSummary);
-			}
+            }
 
-			if (mstrDescription.Length > 0) 
-			{
-				if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
-				{
-					optionsSB.Append("&");
-				}
-				optionsSB.Append("description=") ;
-				//optionsSB.Append(mstrDescription) ;
+            if (mstrDescription.Length > 0)
+            {
+                if ((optionsSB.Length > 0) && !optionsSB.ToString().EndsWith("&"))
+                {
+                    optionsSB.Append("&");
+                }
+                optionsSB.Append("description=");
+                //optionsSB.Append(mstrDescription) ;
                 optionsSB.Append(System.Web.HttpUtility.UrlEncode(mstrDescription));
-			}
-			var tracLink = addressSB + "?" + optionsSB;
+            }
+            var tracLink = addressSB + "?" + optionsSB;
             //MessageBox.Show(tracLink);
             return tracLink;
-		}
-		
-
-		
-	}
+        }
+    }
 }

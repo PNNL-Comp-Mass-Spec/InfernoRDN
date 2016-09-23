@@ -11,7 +11,8 @@ namespace DAnTE.ExtraControls
         } //end default constructor
 
         protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
-        { //this method overrides the DataGridView's RowPostPaint event 
+        {
+            //this method overrides the DataGridView's RowPostPaint event 
             //in order to automatically draw numbers on the row header cells
             //and to automatically adjust the width of the column containing
             //the row header cells so that it can accommodate the new row
@@ -40,7 +41,8 @@ namespace DAnTE.ExtraControls
 
             //draw the row number string on the current row header cell using
             //the brush defined above and the DataGridView's default font
-            e.Graphics.DrawString(strRowNumber, this.Font, b, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2));
+            e.Graphics.DrawString(strRowNumber, this.Font, b, e.RowBounds.Location.X + 15,
+                                  e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2));
 
             //call the base object's OnRowPostPaint method
             base.OnRowPostPaint(e);

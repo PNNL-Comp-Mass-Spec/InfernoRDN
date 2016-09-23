@@ -5,20 +5,15 @@ namespace DAnTE.Purgatorio
     public class clsAnovaPar
     {
         private string rcmd;
-        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")]
-        public bool unbalanced;
+        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")] public bool unbalanced;
         public bool randomE;
-        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")]
-        public bool useREML;
-        [Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")]
-        public bool interactions;
+        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")] public bool useREML;
+        [Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")] public bool interactions;
         //[Tools.clsAnalysisAttribute("Dataset(R)", "ANOVA")]
         public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")]
-        public string mstrDatasetName;
+        [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")] public string mstrDatasetName;
         public string tempFile;
-        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")]
-        public int numDatapts;
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")] public int numDatapts;
         public List<string> fixedEff;
         public List<string> randomEff;
         public List<string> marrFactors;
@@ -41,8 +36,8 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "anovaR <- DoAnova(" + Rdataset + ",FixedEffects=" + FixedEffects +
-                    ",RandomEffects=" + RandomEffects + ",thres=" + numDatapts + "," +
-                    Interactions + "," + Unbalanced + "," + UseREML +")";
+                       ",RandomEffects=" + RandomEffects + ",thres=" + numDatapts + "," +
+                       Interactions + "," + Unbalanced + "," + UseREML + ")";
                 return rcmd;
             }
         }
@@ -81,7 +76,7 @@ namespace DAnTE.Purgatorio
 
                 for (var i = 1; i < fixedEff.Count; i++)
                 {
-                    fEff = fEff +  @",""" + fixedEff[i] + @"""";
+                    fEff = fEff + @",""" + fixedEff[i] + @"""";
                 }
                 fEff = fEff + ")";
 

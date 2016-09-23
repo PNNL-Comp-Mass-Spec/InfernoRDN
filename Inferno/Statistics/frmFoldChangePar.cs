@@ -36,7 +36,7 @@ namespace DAnTE.Inferno
                 DialogResult = DialogResult.OK;
             else
                 MessageBox.Show("Select two distinct factor values.", "Need more information",
-                    MessageBoxButtons.OK, MessageBoxIcon.Question);
+                                MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -86,7 +86,7 @@ namespace DAnTE.Inferno
             UpdateFactorForm();
             this.mcmbBoxFactors.SelectedItem = 0;
         }
-        
+
         public clsFoldChangePar clsFoldChangePar
         {
             get
@@ -98,13 +98,10 @@ namespace DAnTE.Inferno
                 return mclsFCPar;
             }
         }
-                
+
         private string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string FactorName
@@ -122,11 +119,7 @@ namespace DAnTE.Inferno
 
         public List<clsFactorInfo> FactorInfoArray
         {
-            set
-            {
-                marrFactors = value;
-            }
+            set { marrFactors = value; }
         }
-        
     }
 }

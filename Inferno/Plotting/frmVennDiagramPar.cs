@@ -14,30 +14,29 @@ namespace DAnTE.Inferno
         private bool mblPlotFactors = false;
 
 
-
         public frmVennDiagramPar(Purgatorio.clsVennPar mclsVPar)
         {
             InitializeComponent();
             mclsVennPar = mclsVPar;
         }
-        
+
         private void mbtnOK_Click(object sender, EventArgs e)
         {
             bool mblLists = false;
             bool mblFactors = false;
 
             mblLists = (!mtxtBoxA.Text.Equals("") &&
-                !mtxtBoxB.Text.Equals("") &&
-                !mtxtBoxA.Text.Equals(mtxtBoxB.Text) &&
-                !mtxtBoxLA.Text.Equals(mtxtBoxLB.Text) &&
-                !mtxtBoxLA.Text.Equals(mtxtBoxLC.Text) &&
-                !mtxtBoxLC.Text.Equals(mtxtBoxLB.Text));
+                        !mtxtBoxB.Text.Equals("") &&
+                        !mtxtBoxA.Text.Equals(mtxtBoxB.Text) &&
+                        !mtxtBoxLA.Text.Equals(mtxtBoxLB.Text) &&
+                        !mtxtBoxLA.Text.Equals(mtxtBoxLC.Text) &&
+                        !mtxtBoxLC.Text.Equals(mtxtBoxLB.Text));
             mblFactors = (!mtxtBoxflA.Text.Equals("") &&
-                !mtxtBoxflB.Text.Equals("") &&
-                !mtxtBoxflA.Text.Equals(mtxtBoxflB.Text) &&
-                !mtxtBoxfA.Text.Equals(mtxtBoxfB.Text) &&
-                !mtxtBoxfA.Text.Equals(mtxtBoxfC.Text) &&
-                !mtxtBoxfC.Text.Equals(mtxtBoxfB.Text));
+                          !mtxtBoxflB.Text.Equals("") &&
+                          !mtxtBoxflA.Text.Equals(mtxtBoxflB.Text) &&
+                          !mtxtBoxfA.Text.Equals(mtxtBoxfB.Text) &&
+                          !mtxtBoxfA.Text.Equals(mtxtBoxfC.Text) &&
+                          !mtxtBoxfC.Text.Equals(mtxtBoxfB.Text));
 
             if (mblLists || mblFactors)
             {
@@ -47,7 +46,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Error in selection.", "Try again",
-                    MessageBoxButtons.OK, MessageBoxIcon.Question);
+                                MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -212,26 +211,17 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public string ListA
         {
-            get
-            {
-                return mtxtBoxA.Text;
-            }
+            get { return mtxtBoxA.Text; }
         }
 
         public string ListB
         {
-            get
-            {
-                return mtxtBoxB.Text;
-            }
+            get { return mtxtBoxB.Text; }
         }
 
         public string ListC
@@ -247,26 +237,17 @@ namespace DAnTE.Inferno
 
         public string LabelA
         {
-            get
-            {
-                return mtxtBoxLA.Text;
-            }
+            get { return mtxtBoxLA.Text; }
         }
-        
+
         public string LabelB
         {
-            get
-            {
-                return mtxtBoxLB.Text;
-            }
+            get { return mtxtBoxLB.Text; }
         }
-        
+
         public string LabelC
         {
-            get
-            {
-                return mtxtBoxLB.Text;
-            }
+            get { return mtxtBoxLB.Text; }
         }
 
         public List<string> PopulateFactorComboBox
@@ -293,7 +274,7 @@ namespace DAnTE.Inferno
             {
                 if (mcmbBoxFactors.SelectedItem.ToString().Equals("<One Color>"))
                     return "1";
-                
+
                 var idx = mcmbBoxFactors.SelectedIndex + 1;
                 if (idx < 1)
                     idx = 1;
@@ -304,31 +285,19 @@ namespace DAnTE.Inferno
 
         public int FactorIdx
         {
-            get
-            {
-                return mcmbBoxFactors.SelectedIndex;
-            }
+            get { return mcmbBoxFactors.SelectedIndex; }
         }
 
         public List<clsFactorInfo> FactorInfoArray
         {
-            set
-            {
-                marrFactors = value;
-            }
+            set { marrFactors = value; }
         }
 
         public bool IsFactorPlot
         {
-            get
-            {
-                return mblPlotFactors;
-            }
+            get { return mblPlotFactors; }
         }
 
         #endregion
-
-                
-        
     }
 }

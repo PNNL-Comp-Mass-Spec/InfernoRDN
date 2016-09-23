@@ -31,7 +31,6 @@ namespace DAnTE.Inferno
                 else if (originator.Contains("Factor"))
                     OpenFactorsFile();
             }
-
         }
 
         /// <summary>
@@ -39,7 +38,6 @@ namespace DAnTE.Inferno
         /// </summary>
         protected void OpenExpressionFileCheckExisting()
         {
-
             if (mhtDatasets.ContainsKey("Expressions"))
             {
                 MessageBox.Show("Expressions are already loaded.", "Error", MessageBoxButtons.OK,
@@ -60,7 +58,6 @@ namespace DAnTE.Inferno
             mMostRecentFileType = GetFileType(mstrLoadedfileName, mMostRecentFileType);
 
             OpenExpressionFile(mstrLoadedfileName);
-
         }
 
         private void OpenExpressionFile(string filePath)
@@ -84,10 +81,10 @@ namespace DAnTE.Inferno
         /// </summary>
         protected void OpenProteinsFile()
         {
-
             if (mhtDatasets.ContainsKey("Protein Info"))
             {
-                MessageBox.Show("Protein information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Protein information is already loaded.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -100,7 +97,6 @@ namespace DAnTE.Inferno
             {
                 DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
             }
-
         }
 
         /// <summary>
@@ -108,10 +104,10 @@ namespace DAnTE.Inferno
         /// </summary>
         protected void OpenFactorsFile()
         {
-
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                MessageBox.Show("Factor information is already loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Factor information is already loaded.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -124,14 +120,15 @@ namespace DAnTE.Inferno
             {
                 DataFileOpenThreaded(mstrLoadedfileName, "Loading Factor Information ...");
             }
-
         }
 
         private void DataFileOpenThreaded(string filePath, string message)
         {
             #region Threading
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenFiles;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_FileOpenCompleted;
+
             #endregion
 
             m_BackgroundWorker.RunWorkerAsync(filePath);
@@ -139,8 +136,10 @@ namespace DAnTE.Inferno
             mfrmShowProgress.ShowDialog();
 
             #region Threading
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_OpenFiles;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_FileOpenCompleted;
+
             #endregion
         }
 
@@ -170,12 +169,10 @@ namespace DAnTE.Inferno
             }
 
             SessionFileOpenFinalize(success, cancelled, errorMessage);
-
         }
 
         private void SessionFileOpenThreaded(string sessionFilePath)
         {
-
             #region Threading
 
             m_BackgroundWorker.DoWork += m_BackgroundWorker_OpenSession;
@@ -201,7 +198,6 @@ namespace DAnTE.Inferno
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SessionOpenCompleted;
 
             #endregion
-
         }
 
         private void SessionFileOpenFinalize(bool success, bool cancelled, string errorMessage)
@@ -238,13 +234,14 @@ namespace DAnTE.Inferno
                 {
                     var message = "Error loading session file";
 
-                    if (LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.CurrentCultureIgnoreCase))
+                    if (LastSessionLoadError.StartsWith("Value cannot be null",
+                                                        StringComparison.CurrentCultureIgnoreCase))
                     {
-                        message += ". Try loading the file again -- in some cases the first load attempt fails, but the second load attempt succeeds.";
+                        message +=
+                            ". Try loading the file again -- in some cases the first load attempt fails, but the second load attempt succeeds.";
                     }
 
                     MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 }
             }
         }
@@ -281,8 +278,10 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Threading
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SaveSessionCompleted;
+
                 #endregion
 
                 var success = true;
@@ -337,8 +336,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Threading
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;
+
                 #endregion
             }
         }
@@ -348,8 +349,10 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Threading
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_SaveSessionCompleted;
+
                 #endregion
 
                 var success = true;
@@ -399,8 +402,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Threading
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_SaveSession;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_SaveSessionCompleted;
+
                 #endregion
             }
         }
@@ -408,13 +413,12 @@ namespace DAnTE.Inferno
 
         private void mnuOpenSession_Click(object sender, EventArgs e)
         {
-
             var doRun = true;
 
             if (mtabControlData.Controls.Count != 0)
             {
                 var res = MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
-                    "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                          "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.No)
                     doRun = false;
             }
@@ -441,7 +445,6 @@ namespace DAnTE.Inferno
         {
             try
             {
-
                 var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
                 if (mtabControlData.Controls.Count != 0)
@@ -460,7 +463,10 @@ namespace DAnTE.Inferno
 
                     var outputFile = new FileInfo(saveFdlg.FileName);
 
-                    using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
+                    using (
+                        var writer =
+                            new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write,
+                                                            FileShare.Read)))
                     {
                         CsvWriter.WriteToStream(writer, selectedNodeTag.mDTable, true, false,
                                                 outputFile.Extension.ToLower().Equals(".txt"));
@@ -491,7 +497,6 @@ namespace DAnTE.Inferno
             {
                 e.Cancel = true;
             }
-
         }
 
         public bool OK2Exit()
@@ -499,7 +504,8 @@ namespace DAnTE.Inferno
             if (mhtDatasets.Count > 0)
             {
                 var exitOK = MessageBox.Show("Are you sure you want to exit?", "Confirm Close",
-                                                      MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
+                                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+                                             MessageBoxDefaultButton.Button3);
                 if (exitOK == DialogResult.Yes)
                 {
                     mstrLoadedfileName = null;
@@ -519,7 +525,8 @@ namespace DAnTE.Inferno
 
             if (!mhtDatasets.ContainsKey("Protein Info"))
             {
-                MessageBox.Show("No protein information found!", "Insufficient data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No protein information found!", "Insufficient data", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return;
             }
 
@@ -539,7 +546,8 @@ namespace DAnTE.Inferno
             else
             {
                 // Match not found; this is unexpected; export the data using R
-                var rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" + mstrLoadedfileName.Replace("\\", "/") + "\")";
+                var rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" +
+                           mstrLoadedfileName.Replace("\\", "/") + "\")";
                 try
                 {
                     mRConnector.EvaluateNoReturn(rcmd);
@@ -549,8 +557,6 @@ namespace DAnTE.Inferno
                     MessageBox.Show("R.Net failed: " + ex.Message, "Error!");
                 }
             }
-
-
         }
 
         private void SaveTableWithProteinIDs(clsDatasetTreeNode selectedTable, FileInfo outputFile)
@@ -602,9 +608,11 @@ namespace DAnTE.Inferno
                 const bool quoteAll = false;
                 var tabDelimited = outputFile.Extension.ToLower() == ".txt";
 
-                using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
+                using (
+                    var writer =
+                        new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write,
+                                                        FileShare.Read)))
                 {
-
                     var dataTableColCount = currentDataset.mDTable.Columns.Count;
                     var rowData = new List<string>(dataTableColCount + proteinTableColCount);
 
@@ -632,9 +640,10 @@ namespace DAnTE.Inferno
                         List<clsProteinInfo> proteinsForRow;
                         if (!proteinList.TryGetValue(rowID, out proteinsForRow))
                         {
-                            proteinsForRow = new List<clsProteinInfo> {
-                            new clsProteinInfo("Undefined")
-                        };
+                            proteinsForRow = new List<clsProteinInfo>
+                            {
+                                new clsProteinInfo("Undefined")
+                            };
                         }
 
                         foreach (var proteinItem in proteinsForRow)
@@ -662,18 +671,15 @@ namespace DAnTE.Inferno
 
                             CsvWriter.WriteRow(writer, rowData, quoteAll, tabDelimited);
                         }
-
                     }
 
                     statusBarPanelMsg.Text = "File saved successfully.";
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error saving the data: " + ex.Message);
             }
-
         }
 
         private void menuItemDeleteColumns_Click(object sender, EventArgs e)
@@ -682,7 +688,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
     }
 }
-

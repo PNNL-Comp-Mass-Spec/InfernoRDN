@@ -5,45 +5,46 @@ using System.IO;
 
 namespace DAnTE.Tools
 {
-	/// <summary>
-	/// Summary description for CsvWriter.
-	/// </summary>
-	public static class CsvWriter
-	{
+    /// <summary>
+    /// Summary description for CsvWriter.
+    /// </summary>
+    public static class CsvWriter
+    {
         public static string WriteToString(DataTable table, bool header, bool quoteAll, bool tab)
-		{
-			var writer = new StringWriter();
-			WriteToStream(writer, table, header, quoteAll, tab);
-			return writer.ToString();
-		}
+        {
+            var writer = new StringWriter();
+            WriteToStream(writer, table, header, quoteAll, tab);
+            return writer.ToString();
+        }
 
-		public static void WriteToStream1(TextWriter stream, DataTable table, bool header, bool quoteAll)
-		{
-			if (header)
-			{
-				for (var i = 0; i < table.Columns.Count; i++)
-				{
-					WriteItem(stream, table.Columns[i].Caption, quoteAll);
-					if (i < table.Columns.Count - 1)
-						stream.Write(',');
-					else
-						stream.Write(Environment.NewLine);
-				}
-			}
-			foreach (DataRow row in table.Rows)
-			{
-				for (var i = 0; i < table.Columns.Count; i++)
-				{
-					WriteItem(stream, row[i], quoteAll);
-					if (i < table.Columns.Count - 1)
-						stream.Write(',');
-					else
-						stream.Write(Environment.NewLine);
-				}
-			}
-		}
+        public static void WriteToStream1(TextWriter stream, DataTable table, bool header, bool quoteAll)
+        {
+            if (header)
+            {
+                for (var i = 0; i < table.Columns.Count; i++)
+                {
+                    WriteItem(stream, table.Columns[i].Caption, quoteAll);
+                    if (i < table.Columns.Count - 1)
+                        stream.Write(',');
+                    else
+                        stream.Write(Environment.NewLine);
+                }
+            }
+            foreach (DataRow row in table.Rows)
+            {
+                for (var i = 0; i < table.Columns.Count; i++)
+                {
+                    WriteItem(stream, row[i], quoteAll);
+                    if (i < table.Columns.Count - 1)
+                        stream.Write(',');
+                    else
+                        stream.Write(Environment.NewLine);
+                }
+            }
+        }
 
-        public static void WriteToStream(TextWriter stream, DataTable table, bool includeHeaderRow, bool quoteAll, bool tabDelimited)
+        public static void WriteToStream(TextWriter stream, DataTable table, bool includeHeaderRow, bool quoteAll,
+                                         bool tabDelimited)
         {
             if (includeHeaderRow)
             {
@@ -56,7 +57,7 @@ namespace DAnTE.Tools
         }
 
         private static void WriteDelimiterOrLineFeed(TextWriter stream, int i, int columnCount, bool tabDelimited)
-	    {
+        {
             if (i < columnCount - 1)
             {
                 if (tabDelimited)
@@ -68,23 +69,23 @@ namespace DAnTE.Tools
             {
                 stream.Write(Environment.NewLine);
             }
-	    }
+        }
 
-	    public static void WriteHeaderRow(TextWriter stream, DataTable table, bool quoteAll, bool tabDelimited)
-	    {
-	        var columnCount = table.Columns.Count;
+        public static void WriteHeaderRow(TextWriter stream, DataTable table, bool quoteAll, bool tabDelimited)
+        {
+            var columnCount = table.Columns.Count;
             var rowData = new List<string>(columnCount);
 
             for (var i = 0; i < columnCount; i++)
-            {               
+            {
                 rowData.Add(table.Columns[i].Caption);
             }
 
-	        WriteRow(stream, rowData, quoteAll, tabDelimited);
-	    }
+            WriteRow(stream, rowData, quoteAll, tabDelimited);
+        }
 
-	    public static void WriteRow(TextWriter stream, int columnCount, DataRow row, bool quoteAll, bool tabDelimited)
-	    {
+        public static void WriteRow(TextWriter stream, int columnCount, DataRow row, bool quoteAll, bool tabDelimited)
+        {
             var rowData = new List<string>(columnCount);
 
             for (var i = 0; i < columnCount; i++)
@@ -97,16 +98,15 @@ namespace DAnTE.Tools
                 }
 
                 rowData.Add(itemText);
-	        }
+            }
 
-	        WriteRow(stream, rowData, quoteAll, tabDelimited);
-	    }
+            WriteRow(stream, rowData, quoteAll, tabDelimited);
+        }
 
         public static void WriteRow(TextWriter stream, List<string> rowData, bool quoteAll, bool tabDelimited)
-	    {
+        {
             for (var i = 0; i < rowData.Count; i++)
             {
-
                 if (tabDelimited && !quoteAll)
                 {
                     if (!string.IsNullOrWhiteSpace(rowData[i]))
@@ -119,9 +119,10 @@ namespace DAnTE.Tools
 
                 WriteDelimiterOrLineFeed(stream, i, rowData.Count, tabDelimited);
             }
-	    }
+        }
 
-	    public static void WriteListViewToStream(TextWriter stream, System.Windows.Forms.ListView lstView, string mstrHeader, bool quoteAll)
+        public static void WriteListViewToStream(TextWriter stream, System.Windows.Forms.ListView lstView,
+                                                 string mstrHeader, bool quoteAll)
         {
             if (mstrHeader.Length > 0)
             {
@@ -129,8 +130,8 @@ namespace DAnTE.Tools
                 stream.Write(Environment.NewLine);
             }
             var CurrTime = DateTime.Now;
-            stream.Write("Time:" + 
-                CurrTime.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us")));
+            stream.Write("Time:" +
+                         CurrTime.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us")));
             stream.Write(Environment.NewLine);
             stream.Write(Environment.NewLine);
 
@@ -158,13 +159,13 @@ namespace DAnTE.Tools
             }
         }
 
-		private static void WriteItem(TextWriter stream, object item, bool quoteAll)
-		{
+        private static void WriteItem(TextWriter stream, object item, bool quoteAll)
+        {
             if (item == null)
                 return;
 
-		    WriteItem(stream, item.ToString(), quoteAll);
-		}
+            WriteItem(stream, item.ToString(), quoteAll);
+        }
 
         public static void WriteItem(TextWriter stream, string itemText, bool quoteAll)
         {
@@ -176,5 +177,5 @@ namespace DAnTE.Tools
             else
                 stream.Write(itemText);
         }
-	}
+    }
 }

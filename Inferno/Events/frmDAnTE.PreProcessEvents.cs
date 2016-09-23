@@ -33,7 +33,7 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Unknown error in data. Check if your file matches the format required",
-                        "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -88,8 +88,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Loess failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -123,8 +123,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Linear Regression failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -160,8 +160,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Mean/Median Centering failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -195,8 +195,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Quantile Normalization failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -230,8 +230,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("MAD Adjustment failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -265,8 +265,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Imputation failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -300,8 +300,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Imputation failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -309,6 +309,7 @@ namespace DAnTE.Inferno
         {
             e.Result = DoMergeColumns((string)e.Argument);
         }
+
         #endregion
     }
 }

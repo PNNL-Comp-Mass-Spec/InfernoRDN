@@ -46,7 +46,7 @@ namespace DAnTE.Inferno
         /// This will be called from the plot forms. thus the reason to be public
         /// </summary>
         /// <param name="mclsPCA"></param>
-        public void PlotPCA(clsPCAplotPar mclsPCA)      
+        public void PlotPCA(clsPCAplotPar mclsPCA)
         {
             if (mtabControlData.Controls.Count == 0)
             {
@@ -54,8 +54,10 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_GeneratePlots;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_PCAPlotCompleted;
+
             #endregion
 
             var frmPCA = new frmPCAplotPar(mclsPCA);
@@ -81,8 +83,10 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_PCAPlotCompleted;
+
             #endregion
         }
 
@@ -136,7 +140,6 @@ namespace DAnTE.Inferno
                 mclsHeatmapPar.Factors = null;
 
             PlotHeatmap(mclsHeatmapPar);
-
         }
 
         public void PlotHeatmap(clsHeatmapPar mclsHmapPar)
@@ -144,8 +147,10 @@ namespace DAnTE.Inferno
             if (mtabControlData.Controls.Count != 0)
             {
                 #region Hook Threading Events
+
                 m_BackgroundWorker.DoWork += m_BackgroundWorker_GenerateHeatmap;
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_HeatMapCompleted;
+
                 #endregion
 
                 var frmHmapParams = new frmHeatMapPar(mclsHmapPar)
@@ -168,8 +173,10 @@ namespace DAnTE.Inferno
                 }
 
                 #region Unhook Threading Events
+
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GenerateHeatmap;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_HeatMapCompleted;
+
                 #endregion
             }
         }
@@ -189,12 +196,14 @@ namespace DAnTE.Inferno
             }
 
             #region Hook Threading Events
+
             m_BackgroundWorker.DoWork += m_BackgroundWorker_SearchPatterns;
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_PatternSearchCompleted;
+
             #endregion
 
             mclsPatternPar = new clsPatternSearchPar();
-            
+
             var datasetNameInR = selectedNodeTag.mstrRdatasetName;
             mclsPatternPar.Rdataset = datasetNameInR;
             mclsPatternPar.mstrDatasetName = selectedNodeTag.mstrDataText;
@@ -232,10 +241,11 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading Events
+
             m_BackgroundWorker.DoWork -= m_BackgroundWorker_SearchPatterns;
             m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_PatternSearchCompleted;
-            #endregion
 
+            #endregion
         }
 
         private bool SearchPatterns()

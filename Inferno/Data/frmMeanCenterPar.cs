@@ -26,10 +26,11 @@ namespace DAnTE.Inferno
         private void frmMeanCenterPar_Load(object sender, EventArgs e)
         {
             mlblDesc.Text = "The Central Tendancy of the selected data will be adjusted in terms of Mean or Median." +
-                Environment.NewLine + Environment.NewLine + "You can choose to center all values around zero or otherwise " + 
-                "it will select the maximum Mean/Median value in the datasets as the new Mean/Meadian." +
-                Environment.NewLine + Environment.NewLine + 
-                "Subtracting is suggested for log transformed data.";
+                            Environment.NewLine + Environment.NewLine +
+                            "You can choose to center all values around zero or otherwise " +
+                            "it will select the maximum Mean/Median value in the datasets as the new Mean/Meadian." +
+                            Environment.NewLine + Environment.NewLine +
+                            "Subtracting is suggested for log transformed data.";
         }
 
         #region Properties
@@ -48,18 +49,12 @@ namespace DAnTE.Inferno
 
         public bool Mean
         {
-            get
-            {
-                return mrbtnMean.Checked;
-            }
+            get { return mrbtnMean.Checked; }
         }
 
         public bool CenterZero
         {
-            get
-            {
-                return mchkboxCenterZ.Checked;
-            }
+            get { return mchkboxCenterZ.Checked; }
         }
 
         public string Method
@@ -75,11 +70,9 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
+
         #endregion
     }
 }

@@ -7,17 +7,12 @@ namespace DAnTE.Purgatorio
     {
         private string rcmd;
         public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")]
-        public string mstrDatasetName;
+        [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")] public string mstrDatasetName;
         public string tempFile;
-        [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")]
-        public string selectedFactor;
-        [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")]
-        public string selectedfVal1;
-        [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")]
-        public string selectedfVal2;
-        [Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")]
-        public bool mbllogScale;
+        [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")] public string selectedFactor;
+        [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")] public string selectedfVal1;
+        [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")] public string selectedfVal2;
+        [Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")] public bool mbllogScale;
         public List<clsFactorInfo> marrFactors;
 
         public clsFoldChangePar()
@@ -33,7 +28,7 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "foldChanges <- calcFoldChanges(" + Rdataset + "," + this.Factor + "," +
-                        this.FactorValue1 + "," + this.FactorValue2 + "," + this.DataScale + ")";
+                       this.FactorValue1 + "," + this.FactorValue2 + "," + this.DataScale + ")";
                 return rcmd;
             }
         }
@@ -64,18 +59,12 @@ namespace DAnTE.Purgatorio
 
         private string FactorValue1
         {
-            get
-            {
-                return @"fVal1=""" + selectedfVal1 + @"""";
-            }
+            get { return @"fVal1=""" + selectedfVal1 + @""""; }
         }
 
         private string FactorValue2
         {
-            get
-            {
-                return @"fVal2=""" + selectedfVal2 + @"""";
-            }
+            get { return @"fVal2=""" + selectedfVal2 + @""""; }
         }
     }
 }

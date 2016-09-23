@@ -10,8 +10,8 @@ namespace DAnTE.Inferno
     public partial class frmMAplotsPar : Form
     {
         private readonly clsMAplotsPar mclsMApar;
-		
-		private const int SUGGESTED_MAX = 20;
+
+        private const int SUGGESTED_MAX = 20;
         private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
 
         private List<string> marrDatasets = new List<string>();
@@ -57,7 +57,6 @@ namespace DAnTE.Inferno
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
         }
 
         private void mbtnDataC_Click(object sender, EventArgs e)
@@ -90,8 +89,8 @@ namespace DAnTE.Inferno
             {
                 mWarnedTooManyDatasets = true;
                 MessageBox.Show("You are selecting too many datasets to be plotted on one page." +
-                    Environment.NewLine + "Maximum allowed is " + MAX + ".",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                Environment.NewLine + "Maximum allowed is " + MAX + ".",
+                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -198,7 +197,7 @@ namespace DAnTE.Inferno
                     {
                         if (k == 0)
                             selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.
-                                Items[i].Tag) + 1);
+                                                                            Items[i].Tag) + 1);
                         else
                             selected = selected + "," + Convert.ToString(Convert.ToInt16(
                                 mlstViewDataSets.Items[i].Tag) + 1);
@@ -240,19 +239,14 @@ namespace DAnTE.Inferno
 
         public bool Background
         {
-            get
-            {
-                return mchkBoxTransparent.Checked;
-            }
+            get { return mchkBoxTransparent.Checked; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
+
         #endregion
     }
 }

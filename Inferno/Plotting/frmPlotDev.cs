@@ -22,7 +22,7 @@ namespace DAnTE.Inferno
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-                
+
         private void mbtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
@@ -44,7 +44,8 @@ namespace DAnTE.Inferno
 
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-                saveFileDialog1.Filter = "JPEG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|TIFF files (*.tif)|*.tif|Bitmaps (*.bmp)|*.bmp";
+                saveFileDialog1.Filter =
+                    "JPEG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|TIFF files (*.tif)|*.tif|Bitmaps (*.bmp)|*.bmp";
                 saveFileDialog1.FilterIndex = 1;
                 saveFileDialog1.RestoreDirectory = true;
                 saveFileDialog1.InitialDirectory = Settings.Default.WorkingFolder;
@@ -80,10 +81,7 @@ namespace DAnTE.Inferno
 
         public Image Image
         {
-            get 
-            {
-                return this.mucPicVwrRPlot.Image; 
-            }
+            get { return this.mucPicVwrRPlot.Image; }
             set
             {
                 this.mucPicVwrRPlot.Image = value;
@@ -91,12 +89,10 @@ namespace DAnTE.Inferno
                 //this.ChangeSize();
             }
         }
+
         public SizeMode ImageSizeMode
         {
-            get 
-            { 
-                return this.mucPicVwrRPlot.ImageSizeMode; 
-            }
+            get { return this.mucPicVwrRPlot.ImageSizeMode; }
             set
             {
                 this.mucPicVwrRPlot.ImageSizeMode = value;

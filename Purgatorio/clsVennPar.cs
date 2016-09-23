@@ -32,8 +32,8 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (mblPlotFac)
-                    rcmd = "PlotVenn(" + this.FactorLevels + "," + this.ListNames + @",file=""" + 
-                        tempFile + @"""," + factor + @",Data=" + Rdataset + @")";
+                    rcmd = "PlotVenn(" + this.FactorLevels + "," + this.ListNames + @",file=""" +
+                           tempFile + @"""," + factor + @",Data=" + Rdataset + @")";
                 else
                     rcmd = "PlotVenn(" + DataLists + "," + ListNames + @",file=""" + tempFile + @""")";
                 return rcmd;
@@ -57,14 +57,14 @@ namespace DAnTE.Purgatorio
             {
                 if (x3 != "")
                     return "x1=" + mhtDatasets[x1].mstrRdatasetName +
-                        ", x2=" + mhtDatasets[x2].mstrRdatasetName +
-                        ", x3=" + mhtDatasets[x3].mstrRdatasetName;
+                           ", x2=" + mhtDatasets[x2].mstrRdatasetName +
+                           ", x3=" + mhtDatasets[x3].mstrRdatasetName;
                 else
                     return "x1=" + mhtDatasets[x1].mstrRdatasetName +
-                        ", x2=" + mhtDatasets[x2].mstrRdatasetName;
+                           ", x2=" + mhtDatasets[x2].mstrRdatasetName;
             }
         }
-                
+
         private string ListNames
         {
             get

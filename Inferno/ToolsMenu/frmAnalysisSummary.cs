@@ -10,8 +10,8 @@ namespace DAnTE.Inferno
     {
         private List<clsAnalysisObject> marrAnalyses = new List<clsAnalysisObject>();
         private string mstrFileName;
-        
-        private readonly string mstrTime; 
+
+        private readonly string mstrTime;
 
         public frmAnalysisSummary()
         {
@@ -46,7 +46,7 @@ namespace DAnTE.Inferno
 
                         var attr = customAttributes[0] as clsAnalysisAttribute;
                         var objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
-                                                           null, null, null);
+                                                        null, null, null);
                         if (objectValue == null || attr == null)
                         {
                             continue;
@@ -100,7 +100,7 @@ namespace DAnTE.Inferno
                 var strKey = analysis.Operation;
 
                 var metaNode = metaData.OpenChild(strKey);
-                
+
                 var props = o.GetType().GetProperties();
                 foreach (var prop in props)
                 {
@@ -114,7 +114,7 @@ namespace DAnTE.Inferno
 
                         var attr = customAttributes[0] as clsAnalysisAttribute;
                         var objectValue = prop.GetValue(o, System.Reflection.BindingFlags.GetProperty,
-                                                           null, null, null);
+                                                        null, null, null);
                         if (objectValue != null && attr != null)
                         {
                             metaNode.SetValue(attr.Description, objectValue.ToString());
@@ -160,14 +160,13 @@ namespace DAnTE.Inferno
             mlblDataFile.Text = mstrFileName;
         }
 
-        
 
         private void mBtnSave_Click(object sender, EventArgs e)
         {
             var fileName = GetSaveFileName("Select a file to save summary",
-                "XML files (*.xml)|*.xml|Tab delimited txt files (*.txt)|*.txt");
+                                           "XML files (*.xml)|*.xml|Tab delimited txt files (*.txt)|*.txt");
             var fExt = System.IO.Path.GetExtension(fileName);
-            
+
             if (fileName == null || fExt == null)
             {
                 return;
@@ -183,8 +182,8 @@ namespace DAnTE.Inferno
             {
                 using (System.IO.TextWriter streamWriter = new System.IO.StreamWriter(fileName))
                 {
-                    CsvWriter.WriteListViewToStream(streamWriter, mlstViewSummary, 
-                                                                mstrFileName, false);
+                    CsvWriter.WriteListViewToStream(streamWriter, mlstViewSummary,
+                                                    mstrFileName, false);
                 }
             }
         }
@@ -221,18 +220,12 @@ namespace DAnTE.Inferno
 
         public List<clsAnalysisObject> SummaryArrayList
         {
-            set
-            {
-                marrAnalyses = value;
-            }
+            set { marrAnalyses = value; }
         }
 
         public string DataFileName
         {
-            set
-            {
-                mstrFileName = value;
-            }
+            set { mstrFileName = value; }
         }
 
         #endregion

@@ -6,7 +6,7 @@ namespace DAnTE.Tools
     public class clsDatasetInfo : ICloneable
     {
         public string mstrDataSetName;
-        public List<Factor> marrFactorAssnmnts; 
+        public List<Factor> marrFactorAssnmnts;
         public bool factorsSET = false;
 
         public clsDatasetInfo()
@@ -31,14 +31,14 @@ namespace DAnTE.Tools
             {
                 dataset.marrFactorAssnmnts.Add(new Factor(string.Copy(item.Name), string.Copy(item.Value)));
             }
-            
+
             return dataset;
         }
 
         #endregion
     }
-    
-    
+
+
     /// <summary>
     /// Factor class
     /// </summary>
@@ -49,7 +49,7 @@ namespace DAnTE.Tools
             this.Name = Name;
             this.Value = Value;
         }
-        
+
         public string Name { get; set; }
 
         public string Value { get; set; }

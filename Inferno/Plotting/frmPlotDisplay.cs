@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
         //public delegate void MenuClicked(string plottype);
         //public event MenuClicked meventMenuClicked;
         private Image rPlot;
-        
+
         public frmPlotDisplay()
         {
             InitializeComponent();
@@ -24,13 +24,13 @@ namespace DAnTE.Inferno
             tmrDante.Enabled = false;
             this.Close();
         }
-                
+
         private void mbtnCanel_Click(object sender, EventArgs e)
         {
             //this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-                
+
         private void mnuSave_Click(object sender, EventArgs e)
         {
             var workingFolder = Settings.Default.WorkingFolder;
@@ -93,7 +93,7 @@ namespace DAnTE.Inferno
             else
                 mPictureBoxEx.FitWidth();
         } // End OnResize()
-                
+
         private void RestoreSize_event(object sender, EventArgs e)
         {
             mPictureBoxEx.DoRestore();
@@ -191,7 +191,7 @@ namespace DAnTE.Inferno
 
             var stamp = "DAnTE: " + DateTime.Now.ToString("MM-dd-yyyy hh:mm tt");
             stamp = stamp + " (" + Settings.Default.DataFileName + ")";
-                        
+
             // Create image.
             var tmp = mPictureBoxEx.Image;
             // Create graphics object for alteration.
@@ -202,7 +202,7 @@ namespace DAnTE.Inferno
             var wmBrush = new SolidBrush(Color.Black);
             // Create point for upper-left corner of drawing.
             //PointF wmPoint = new PointF(10.0F, 10.0F);
-            var wmPoint = new PointF(tmp.Width - stamp.Length*6,tmp.Height-16);
+            var wmPoint = new PointF(tmp.Width - stamp.Length * 6, tmp.Height - 16);
             // Draw string to image.
             g.DrawString(stamp, wmFont, wmBrush, wmPoint);
             //Load the new image to picturebox		
@@ -212,15 +212,11 @@ namespace DAnTE.Inferno
             mPictureBoxEx.FitHeight();
         }
 
-
-
         #region Properties
+
         public Image Image
         {
-            get
-            {
-                return mPictureBoxEx.Image;
-            }
+            get { return mPictureBoxEx.Image; }
             set
             {
                 rPlot = value;
@@ -236,16 +232,10 @@ namespace DAnTE.Inferno
 
         public string Title
         {
-            set
-            {
-                Text = value;
-            }
-            get
-            {
-                return Text;
-            }
+            set { Text = value; }
+            get { return Text; }
         }
-       
+
         public bool EnableParameterMenu
         {
             set
@@ -261,8 +251,5 @@ namespace DAnTE.Inferno
         {
             Icon = Resources.dante;
         }
-
-        
-        
     }
 }

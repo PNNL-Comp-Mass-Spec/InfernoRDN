@@ -14,7 +14,6 @@ namespace DAnTE.Paradiso
 
         private void m_fadeInOutTimer_Tick(object sender, EventArgs e)
         {
-
             if (m_fadeInFlag == false)
             {
                 // Fading out
@@ -26,12 +25,9 @@ namespace DAnTE.Paradiso
                     m_fadeInOutTimer.Enabled = true;
                 else
                 {
-
                     m_fadeInOutTimer.Enabled = false;
                     Close();
-
                 } // End else we should close the form.
-
             }
             else
             {
@@ -45,14 +41,11 @@ namespace DAnTE.Paradiso
 
                     ShowCredits();
                 }
-
             }
-
         }
 
         protected override void OnLoad(EventArgs e)
         {
-
             base.OnLoad(e);
 
             if (!DesignMode)
@@ -63,12 +56,10 @@ namespace DAnTE.Paradiso
                 Opacity = 0;
 
                 m_fadeInOutTimer.Enabled = true;
-
             }
 
             mlblCredits.Visible = false;
             mlblDev.Visible = false;
-
         }
 
         // Uncomment to toggle fading out the about box
@@ -98,27 +89,25 @@ namespace DAnTE.Paradiso
 
         private void ShowCredits()
         {
-
             var credits = string.Empty +
-                             "Maintained by Matthew Monroe at Pacific Northwest National Laboratory" +
-                             Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
-                             Environment.NewLine +
-                             Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
-                             Environment.NewLine + Inferno.frmDAnTE.PROGRAM_DATE +
-                             Environment.NewLine +
-                             Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
-                             Environment.NewLine + "Center for Proteomics staff at TGen." +
-                             Environment.NewLine +
-                             Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
+                          "Maintained by Matthew Monroe at Pacific Northwest National Laboratory" +
+                          Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
+                          Environment.NewLine +
+                          Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
+                          Environment.NewLine + Inferno.frmDAnTE.PROGRAM_DATE +
+                          Environment.NewLine +
+                          Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
+                          Environment.NewLine + "Center for Proteomics staff at TGen." +
+                          Environment.NewLine +
+                          Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
 
             mlblCredits.Visible = true;
             mlblCredits.Text = credits;
 
             mlblDev.Visible = true;
             mlblDev.Text = "Originally developed by:" + Environment.NewLine +
-                "   Ashoka Polpitiya" + Environment.NewLine +
-                "   (ashoka@tgen.org)";
+                           "   Ashoka Polpitiya" + Environment.NewLine +
+                           "   (ashoka@tgen.org)";
         }
-      
     }
 }

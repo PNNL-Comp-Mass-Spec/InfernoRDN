@@ -21,7 +21,7 @@ namespace DAnTE.Inferno
             bool outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
             if (mchkBoxPlot.Checked && !outfolderOK)
                 MessageBox.Show("Invalid Folder name", "Error!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                                MessageBoxIcon.Error);
             else
                 DialogResult = DialogResult.OK;
         }
@@ -38,7 +38,7 @@ namespace DAnTE.Inferno
             {
                 mtxtBoxFolder.Enabled = true;
                 mbtnSelectFolder.Enabled = true;
-                mtxtBoxFolder.Text = Settings.Default.WorkingFolder; 
+                mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
             }
             else
             {
@@ -59,7 +59,7 @@ namespace DAnTE.Inferno
             }
             else mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
         }
-        
+
         private void frmPickFactor_Load(object sender, EventArgs e)
         {
             mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
@@ -127,7 +127,7 @@ namespace DAnTE.Inferno
                 if (mcmbBoxFactors.SelectedItem == null)
                     return string.Empty;
 
-                return mcmbBoxFactors.SelectedItem.ToString(); 
+                return mcmbBoxFactors.SelectedItem.ToString();
             }
         }
 
@@ -150,6 +150,7 @@ namespace DAnTE.Inferno
                     return "LeastMissing";
             }
         }
+
         #endregion
     }
 }

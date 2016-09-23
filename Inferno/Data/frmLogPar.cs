@@ -54,6 +54,7 @@ namespace DAnTE.Inferno
         }
 
         #region Properties
+
         public Purgatorio.clsLogTransformPar clsLogPar
         {
             get
@@ -69,10 +70,7 @@ namespace DAnTE.Inferno
 
         private string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         private string LogBase
@@ -99,14 +97,8 @@ namespace DAnTE.Inferno
 
         private double Bias
         {
-            get
-            {
-                return Convert.ToDouble(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo);
-            }
-            set
-            {
-                mtxtBoxBias.Text = value.ToString(CultureInfo.InvariantCulture);
-            }
+            get { return Convert.ToDouble(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo); }
+            set { mtxtBoxBias.Text = value.ToString(CultureInfo.InvariantCulture); }
         }
 
         private string BiasOp
@@ -124,12 +116,9 @@ namespace DAnTE.Inferno
                     mrBtnAdd.Checked = true;
                 else
                     mrBtnMult.Checked = true;
-
             }
         }
 
         #endregion
-
-        
     }
 }

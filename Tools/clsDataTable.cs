@@ -14,13 +14,14 @@ namespace DAnTE.Tools
     public static class clsDataTable
     {
         #region Events
+
         /// <summary>
         /// Progress event handler.
         /// </summary>
         public static event EventHandler<ProgressEventArgs> OnProgress;
 
         private static void OnProgressUpdate(ProgressEventArgs e)
-        {          
+        {
             var handler = OnProgress;
             handler?.Invoke(null, e);
         }
@@ -28,6 +29,7 @@ namespace DAnTE.Tools
         #endregion
 
         #region File loading methods
+
         public static DataTable LoadFile2DataTable(string FileName)
         {
             var sConnectionString = "";
@@ -74,11 +76,11 @@ namespace DAnTE.Tools
                     break;
                 case ".xls": //Excel files
                     sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                            FileName + ";" + "Extended Properties=Excel 8.0;";
+                                        FileName + ";" + "Extended Properties=Excel 8.0;";
                     goto case "Excel";
                 case ".xlsx": // New Excel files
                     sConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" +
-                            FileName + ";" + "Extended Properties=Excel 12.0;";
+                                        FileName + ";" + "Extended Properties=Excel 12.0;";
                     goto case "Excel";
                 case "Excel":
                     OleDbConnection objConn = null;
@@ -103,7 +105,7 @@ namespace DAnTE.Tools
                             excelSheets[i] = row["TABLE_NAME"].ToString();
                             i++;
                         }
-                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] +"]"; //read the first table
+                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
                         var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
                         var objAdapter1 = new OleDbDataAdapter
                         {
@@ -155,17 +157,17 @@ namespace DAnTE.Tools
 
             switch (fExt.ToLower())
             {
-                case ".csv":// CSV files
+                case ".csv": // CSV files
                 case ".txt":
                     objConn = null;
                     try
                     {
                         var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
-                                "Data Source=" + filePath + ";" + 
-                                @"Extended Properties=""text;HDR=Yes;FMT=Delimited""";
+                                                "Data Source=" + filePath + ";" +
+                                                @"Extended Properties=""text;HDR=Yes;FMT=Delimited""";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
-                        
+
                         var sheetCmd = "SELECT * FROM [" + fileName + "]"; //read the table
                         var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
                         var objAdapter1 = new OleDbDataAdapter
@@ -190,13 +192,13 @@ namespace DAnTE.Tools
                         }
                     }
                     break;
-                case ".xls"://Excel files
+                case ".xls": //Excel files
                     objConn = null;
                     DataTable dt = null;
                     try
                     {
                         var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                            FileName + ";" + "Extended Properties=Excel 8.0;";
+                                                FileName + ";" + "Extended Properties=Excel 8.0;";
                         objConn = new OleDbConnection(sConnectionString);
                         objConn.Open();
                         dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
@@ -265,28 +267,36 @@ namespace DAnTE.Tools
             switch (fExt.ToLower())
             {
                 case ".csv": // CSV files
-                    using (var csv = new CsvReader(new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)), true))
+                    using (
+                        var csv =
+                            new CsvReader(
+                                new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read,
+                                                                FileShare.ReadWrite)), true))
                     {
                         csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
                         dtOut.Load(csv);
-                    } 
+                    }
                     break;
                 case ".txt":
-                    using (var csv = new CsvReader(new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)), true, '\t'))
+                    using (
+                        var csv =
+                            new CsvReader(
+                                new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read,
+                                                                FileShare.ReadWrite)), true, '\t'))
                     {
                         csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
                         dtOut.Load(csv);
-                    } 
+                    }
                     break;
                 case ".xls": //Excel files
                     sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                            FileName + ";" + "Extended Properties=Excel 8.0;";
+                                        FileName + ";" + "Extended Properties=Excel 8.0;";
                     goto case "Excel";
                 case ".xlsx": // New Excel files
                     sConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" +
-                            FileName + ";" + "Extended Properties=Excel 12.0;";
+                                        FileName + ";" + "Extended Properties=Excel 12.0;";
                     goto case "Excel";
                 case "Excel":
                     OleDbConnection objConn = null;
@@ -364,7 +374,7 @@ namespace DAnTE.Tools
             return dtOut;
         }
 
-        
+
         static void csv_ParseError(object sender, ParseErrorEventArgs e)
         {
             MessageBox.Show(e.Error.Message, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -464,7 +474,7 @@ namespace DAnTE.Tools
                 //DataRow workRow = dt.Rows[row] ;
                 var obj = new object[colCount];
                 //obj = new string[colCount];
-                
+
                 for (var col = 0; col < colCount; col++)
                 {
                     obj[col] = dt.Rows[row].ItemArray[col];
@@ -560,7 +570,6 @@ namespace DAnTE.Tools
                         {
                             hTable.Add(thisRow[colName], thisRow);
                         }
-
                     }
                     catch (Exception)
                     {
@@ -584,18 +593,19 @@ namespace DAnTE.Tools
             return dTable;
         }
 
-        private static void AddDuplicateRow(IDictionary<object, DataRow> hTable, DataRow thisRow, ICollection<DataRow> duplicateList, string keyColName)
-	    {
-			duplicateList.Add(thisRow);
-			var prevRow = hTable[thisRow[keyColName]];
-			if (!RowsIdentical(thisRow, prevRow))
-			{
-				var currentRow = addRows(prevRow, thisRow);
-				hTable[thisRow[keyColName]] = currentRow;
-			}
-	    }
+        private static void AddDuplicateRow(IDictionary<object, DataRow> hTable, DataRow thisRow,
+                                            ICollection<DataRow> duplicateList, string keyColName)
+        {
+            duplicateList.Add(thisRow);
+            var prevRow = hTable[thisRow[keyColName]];
+            if (!RowsIdentical(thisRow, prevRow))
+            {
+                var currentRow = addRows(prevRow, thisRow);
+                hTable[thisRow[keyColName]] = currentRow;
+            }
+        }
 
-	    public static bool RowsIdentical(DataRow row1, DataRow row2)
+        public static bool RowsIdentical(DataRow row1, DataRow row2)
         {
             for (var i = 0; i < row1.ItemArray.Length; i++)
             {
@@ -612,7 +622,7 @@ namespace DAnTE.Tools
                 {
                     if (!item1.Equals(item2))
                         return false;
-                }               
+                }
             }
             return true;
         }
@@ -622,7 +632,7 @@ namespace DAnTE.Tools
         /// </summary>
         /// <param name="row"></param>
         /// <returns>True if at least one value in the row, otherwise false</returns>
-        public static bool ValidRow(DataRow row) 
+        public static bool ValidRow(DataRow row)
         {
             for (var i = 1; i < row.ItemArray.Length; i++)
             {
@@ -630,7 +640,6 @@ namespace DAnTE.Tools
                 {
                     return true;
                 }
-
             }
             return false;
         }
@@ -657,7 +666,7 @@ namespace DAnTE.Tools
             if (double.TryParse((string)item, out value))
                 return value;
 
-            return 0;            
+            return 0;
         }
 
         //----------------------------------------------------------------------------
@@ -703,14 +712,13 @@ namespace DAnTE.Tools
         }
 
 
-
         private static bool IsDup(DataRow sourceRow, DataRow targetRow, DataColumn[] keyColumns)
         {
             var retVal = true;
             foreach (var column in keyColumns)
             {
                 retVal = sourceRow[column].Equals(targetRow[column]);
-                if (!retVal) 
+                if (!retVal)
                     break;
             }
             return retVal;

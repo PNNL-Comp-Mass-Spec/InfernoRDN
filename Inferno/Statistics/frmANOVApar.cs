@@ -20,13 +20,12 @@ namespace DAnTE.Inferno
         {
             if (mlstBoxFixed.Items.Count == 0)
                 MessageBox.Show("Select at least one Fixed Factor", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (mchkBoxRandom.Checked && mlstBoxRandom.Items.Count == 0)
                 MessageBox.Show("Select Random Effect Factor(s)", "Incomplete Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
                 this.DialogResult = DialogResult.OK;
-
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
@@ -72,7 +71,7 @@ namespace DAnTE.Inferno
                 mchkBoxInteractions.Enabled = false;
             }
         }
-        
+
         private void mbtnFixedSelect_Click(object sender, EventArgs e)
         {
             if (mlstBoxFactors.SelectedItems.Count > 0)
@@ -90,7 +89,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Select Fixed Effect Factors.", "Empty selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void mbtnFixedUnselect_Click(object sender, EventArgs e)
@@ -109,7 +108,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
             if (mlstBoxFixed.Items.Count == 0)
                 mbtnFixedUnselect.Enabled = false;
         }
@@ -124,7 +123,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Select Random Effect Factor(s).", "Wrong selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void mbtnRandomUnselect_Click(object sender, EventArgs e)
@@ -136,7 +135,7 @@ namespace DAnTE.Inferno
             }
             else
                 MessageBox.Show("Make the selection first.", "Empty selection", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                                MessageBoxIcon.Exclamation);
             if (mlstBoxRandom.Items.Count == 0)
                 mBtnRandomUnselect.Enabled = false;
         }
@@ -146,7 +145,7 @@ namespace DAnTE.Inferno
             mlblDataName.Text = mclsAnovaPar.mstrDatasetName;
             mchkBoxRandom.Checked = mclsAnovaPar.randomE;
             mchkBoxREML.Checked = mclsAnovaPar.useREML;
-            
+
             ToggleRandomEff();
             ToggleUnbalanced();
         }
@@ -164,7 +163,7 @@ namespace DAnTE.Inferno
                 mclsAnovaPar.randomEff = this.RandomFactors;
                 mclsAnovaPar.interactions = this.Interactions;
                 mclsAnovaPar.numDatapts = this.NumDataThresh;
-                
+
                 return mclsAnovaPar;
             }
         }
@@ -190,7 +189,7 @@ namespace DAnTE.Inferno
                 foreach (var item in value)
                 {
                     mlstBoxFactors.Items.Add(item);
-                }                
+                }
             }
         }
 
@@ -223,14 +222,9 @@ namespace DAnTE.Inferno
 
         public bool Interactions
         {
-            get
-            {
-                return mchkBoxInteractions.Checked;
-            }
+            get { return mchkBoxInteractions.Checked; }
         }
 
         #endregion
-
-        
     }
 }

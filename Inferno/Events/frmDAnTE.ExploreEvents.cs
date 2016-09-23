@@ -111,7 +111,6 @@ namespace DAnTE.Inferno
 
             try
             {
-
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (doClust)
                     if (mRConnector.GetTableFromRvector("clusterResults"))
@@ -158,8 +157,8 @@ namespace DAnTE.Inferno
                 }
                 else
                     MessageBox.Show("Pattern Search failed." + Environment.NewLine +
-                        "Check if you have all data requirements and in correct format.", "Error!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Check if you have all data requirements and in correct format.", "Error!",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

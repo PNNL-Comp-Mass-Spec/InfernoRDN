@@ -3,56 +3,60 @@ using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
 {
-  /// <summary>
-  /// Summary description for frmRmessages. 
-  /// </summary>
-  public class frmRmsg : System.Windows.Forms.Form
-  {
-    //public AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice axStatConnectorCharacterDevice1;
-    //public STATCONNECTORCLNTLib.StatConnectorCharacterDevice axStatConnectorCharacterDevice1;
-    private Panel panel1;
-    private Button mbtnOK;
-    // public AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice axStatConnectorCharacterDevice1;
     /// <summary>
-    /// Required designer variable.
+    /// Summary description for frmRmessages. 
     /// </summary>
-    private System.ComponentModel.Container components = null;
-
-    //private static frmRmessages _instance = null ;
-
-    public frmRmsg()
+    public class frmRmsg : System.Windows.Forms.Form
     {
-      //
-      // Required for Windows Form Designer support
-      //
-      InitializeComponent();
+        //public AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice axStatConnectorCharacterDevice1;
+        //public STATCONNECTORCLNTLib.StatConnectorCharacterDevice axStatConnectorCharacterDevice1;
+        private Panel panel1;
+        private Button mbtnOK;
+        // public AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice axStatConnectorCharacterDevice1;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-      //
-      // TODO: Add any constructor code after InitializeComponent call
-      //
-    }
+        //private static frmRmessages _instance = null ;
 
-    /// <summary>
-    /// Clean up any resources being used.
-    /// </summary>
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing) {
-        if (components != null) {
-          components.Dispose();
+        public frmRmsg()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
         }
-      }
-      base.Dispose(disposing);
-    }
 
-    #region Windows Form Designer generated code
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRmsg));
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(frmRmsg));
             this.panel1 = new System.Windows.Forms.Panel();
             this.mbtnOK = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -89,37 +93,36 @@ namespace DAnTE.Paradiso
             this.Load += new System.EventHandler(this.frmRmsg_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+        }
 
+        #endregion
+
+        private void btnOKClick_event(object sender, System.EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+        }
+
+        private void FrmClosing_event(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
+
+        private void frmRmsg_Load(object sender, EventArgs e)
+        {
+        }
+
+        //public static frmRmessages Instance
+        //{
+        //    get
+        //    {
+        //        if (frmRmessages._instance == null || frmRmessages._instance.IsDisposed)
+        //        {
+        //            frmRmessages._instance = new frmRmessages();
+        //        }
+        //        return frmRmessages._instance;
+        //    }
+        //}
     }
-    #endregion
-
-    private void btnOKClick_event(object sender, System.EventArgs e)
-    {
-      this.DialogResult = DialogResult.OK;
-      this.Hide();
-    }
-
-    private void FrmClosing_event(object sender, FormClosingEventArgs e)
-    {
-      e.Cancel = true;
-      this.Hide();
-    }
-
-    private void frmRmsg_Load(object sender, EventArgs e)
-    {
-
-    }
-
-    //public static frmRmessages Instance
-    //{
-    //    get
-    //    {
-    //        if (frmRmessages._instance == null || frmRmessages._instance.IsDisposed)
-    //        {
-    //            frmRmessages._instance = new frmRmessages();
-    //        }
-    //        return frmRmessages._instance;
-    //    }
-    //}
-  }
 }

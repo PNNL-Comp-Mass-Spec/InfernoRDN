@@ -39,7 +39,7 @@ namespace DAnTE.Inferno
         private void mbtnPlot_Click(object sender, EventArgs e)
         {
             var protein = Protein2Plot;
-            
+
             var proteinRollupDisplay = new frmPlotDisplay();
 
             if (protein != null)
@@ -59,12 +59,12 @@ namespace DAnTE.Inferno
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error in R command: " + rcmd + "\nError: " + ex.Message,
-                        "Exception while talking to R");
+                                    "Exception while talking to R");
                 }
             }
             else
                 MessageBox.Show("Select a protein first!", "Nothing selected", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                                MessageBoxIcon.Warning);
         }
 
         private void mbtnClose_Click(object sender, EventArgs e)
@@ -183,34 +183,22 @@ namespace DAnTE.Inferno
 
         public string TempFile
         {
-            set
-            {
-                tempFile = value;
-            }
+            set { tempFile = value; }
         }
 
         public clsRconnect RConnect
         {
-            set
-            {
-                rConnector = value;
-            }
+            set { rConnector = value; }
         }
 
         public List<string> PopulateDataComboBox
         {
-            set
-            {
-                mcmbBoxData.DataSource = value;
-            }
+            set { mcmbBoxData.DataSource = value; }
         }
 
         public List<string> PopulatePDataComboBox
         {
-            set
-            {
-                mcmbBoxPData.DataSource = value;
-            }
+            set { mcmbBoxPData.DataSource = value; }
         }
 
         public string Dataset
@@ -259,10 +247,7 @@ namespace DAnTE.Inferno
 
         public frmDAnTEmdi ParentRef
         {
-            set
-            {
-                m_frmDAnTEmdi = value;
-            }
+            set { m_frmDAnTEmdi = value; }
         }
 
         #endregion

@@ -7,7 +7,7 @@ using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
 {
-    public partial class frmPatterns: Form
+    public partial class frmPatterns : Form
     {
         private int nPatterns = 3;
         private int nDatasets = 10;
@@ -41,7 +41,6 @@ namespace DAnTE.Inferno
             }
         }
 
-        
 
         // Call this method from the Form_Load method, passing your ZedGraphControl
         public void CreateChart(ZedGraphControl zgc, PointPairList pplist)
@@ -69,9 +68,9 @@ namespace DAnTE.Inferno
                 // Create a new graph - rect dimensions do not matter here, since it
                 // will be resized by MasterPane.AutoPaneLayout()
                 var myPane = new GraphPane(new Rectangle(10, 10, 10, 10),
-                   "Pattern: " + (j + 1).ToString(),
-                   "Dataset Number",
-                   "Intensity (normalized)");
+                                           "Pattern: " + (j + 1).ToString(),
+                                           "Dataset Number",
+                                           "Intensity (normalized)");
 
                 myPane.Title.FontSpec.Size = 12F;
                 myPane.XAxis.Title.FontSpec.Size = 10F;
@@ -96,24 +95,23 @@ namespace DAnTE.Inferno
                 {
                     var x = (double)i + 1;
                     var y = vpattern[i];
-                    
+
                     list.Add(x, y);
                 }
 
                 // Add a curve to the Graph, use the next sequential color and symbol
                 var myCurve = myPane.AddCurve("Type " + j,
-                   list, rotator.NextColor, rotator.NextSymbol);
+                                              list, rotator.NextColor, rotator.NextSymbol);
 
                 myCurve.Line.Width = 1.5F;
                 myCurve.Symbol.Fill = new Fill(Color.White);
                 myCurve.Symbol.Size = 5;
-                
+
                 // Fill the axis background with a gradient
                 myPane.Chart.Fill = new Fill(Color.White, Color.LightGray, 45.0f);
 
                 // Add the GraphPane to the MasterPane
                 myMaster.Add(myPane);
-
             }
 
             using (var g = CreateGraphics())
@@ -174,7 +172,7 @@ namespace DAnTE.Inferno
 
                 for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    var lstVItem = new ListViewItem((i+1).ToString());
+                    var lstVItem = new ListViewItem((i + 1).ToString());
                     lstVItem.SubItems.Add(marrDatasets[i]);
                     lstVItem.Tag = i;
                     lstVcolln[i] = lstVItem;
@@ -185,20 +183,12 @@ namespace DAnTE.Inferno
 
         public int NumPatterns
         {
-            set
-            {
-                nPatterns = value;
-            }
+            set { nPatterns = value; }
         }
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
-
-        
     }
 }

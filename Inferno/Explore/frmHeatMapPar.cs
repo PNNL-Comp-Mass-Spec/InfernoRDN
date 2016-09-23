@@ -70,18 +70,18 @@ namespace DAnTE.Inferno
                 success = false;
                 Console.WriteLine(ex.Message);
                 MessageBox.Show("Invalid entries.", "Errors",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if ((end - start) > 6000 || !(end > start + 1))
             {
                 MessageBox.Show("Select a number of rows between 2 ~ 6000", "Incorrect selection",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 success = false;
             }
             if ((k < 2) && mrBtnKmeans.Checked)
             {
                 MessageBox.Show("Incorrect cluster number was entered", "Incorrect value",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 success = false;
             }
 
@@ -132,11 +132,11 @@ namespace DAnTE.Inferno
             mtabLayoutRows.Enabled = mchkBoxRows.Checked;
         }
 
-        
+
         private void frmHeatMapPar_Load(object sender, EventArgs e)
         {
             DataSetName = mclsHmapPar.mstrDatasetName;
-            
+
             mintPalette = mclsHmapPar.paletteType;
             mstrPaletteName = mclsHmapPar.palettename;
             mlblHeatPalette.Text = mstrPaletteName;
@@ -148,17 +148,17 @@ namespace DAnTE.Inferno
             mchkBoxColRng.Checked = mclsHmapPar.mblsetColRng;
             mtxtBoxMaxCol.Enabled = mchkBoxColRng.Checked;
             mtxtBoxMinCol.Enabled = mchkBoxColRng.Checked;
-            
+
             PopulateFactorComboBox = mclsHmapPar.Factors;
             mcmbBoxFactors.SelectedIndex = mclsHmapPar.mintFactorIndex - 1;
-            
+
             mrBtnHclust.Checked = mclsHmapPar.hclust;
             mrBtnKmeans.Checked = !mclsHmapPar.hclust;
             mchkBoxRows.Checked = mclsHmapPar.rowClust;
             mchkBoxCols.Checked = mclsHmapPar.colClust;
             mtxtBoxK.Text = mclsHmapPar.k.ToString();
             mchkBoxSeed.Checked = mclsHmapPar.fixSeed;
-            
+
             mrBtnRowSelection.Checked = mclsHmapPar.gridSelect;
             mrBtnRowSelection.Enabled = mclsHmapPar.rowsSelected;
             mrBtnSelectSubset.Checked = !mclsHmapPar.gridSelect;
@@ -172,8 +172,9 @@ namespace DAnTE.Inferno
             mcmbBoxAggl.SelectedIndex = mclsHmapPar.agglomeration;
             mcmbBoxDist.SelectedIndex = mclsHmapPar.distance;
         }
-        
+
         #region Properties
+
         public clsHeatmapPar clsHmapPar
         {
             get
@@ -209,10 +210,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set
-            {
-                mlblDataName.Text = value;
-            }
+            set { mlblDataName.Text = value; }
         }
 
         public List<string> PopulateFactorComboBox
@@ -231,7 +229,7 @@ namespace DAnTE.Inferno
                     mcmbBoxFactors.Items.Add("<NA>");
             }
         }
-        
+
         public string Factor
         {
             get
@@ -252,23 +250,17 @@ namespace DAnTE.Inferno
                 if (mcmbBoxFactors.SelectedItem != null)
                 {
                     var idx = mcmbBoxFactors.SelectedIndex;
-                    return idx+1;
+                    return idx + 1;
                 }
 
                 return -1;
             }
         }
-                
+
         public int StartIdx
         {
-            get
-            {
-                return Convert.ToInt32(mtxtBoxStart.Text);
-            }
-            set
-            {
-                mtxtBoxStart.Text = value.ToString();
-            }
+            get { return Convert.ToInt32(mtxtBoxStart.Text); }
+            set { mtxtBoxStart.Text = value.ToString(); }
         }
 
         public int EndIdx
@@ -278,7 +270,7 @@ namespace DAnTE.Inferno
                 var endidx = Convert.ToInt32(mtxtBoxEnd.Text);
                 if (endidx > maxRowCount)
                     return maxRowCount;
-                
+
                 return endidx;
             }
             set
@@ -292,10 +284,7 @@ namespace DAnTE.Inferno
 
         public int ColorPalette
         {
-            get
-            {
-                return mintPalette;
-            }
+            get { return mintPalette; }
         }
 
         public string ColorPaletteName
@@ -319,11 +308,9 @@ namespace DAnTE.Inferno
 
         public bool DoClust
         {
-            get
-            {
-                return mchkBoxRows.Checked;
-            }
+            get { return mchkBoxRows.Checked; }
         }
+
         #endregion
 
         private void mchkBoxColRng_CheckedChanged(object sender, EventArgs e)
@@ -331,6 +318,5 @@ namespace DAnTE.Inferno
             mtxtBoxMaxCol.Enabled = mchkBoxColRng.Checked;
             mtxtBoxMinCol.Enabled = mchkBoxColRng.Checked;
         }
-        
     }
 }

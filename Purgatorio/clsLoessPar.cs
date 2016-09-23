@@ -7,8 +7,7 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         private string mstrOutFolder;
 
-        [Tools.clsAnalysisAttribute("Span", "LOESS")]
-        public string span;
+        [Tools.clsAnalysisAttribute("Span", "LOESS")] public string span;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "LOESS")]
         public string Rdataset;
@@ -35,25 +34,19 @@ namespace DAnTE.Purgatorio
             get
             {
                 rcmd = "loessData <- loess_normalize(" + Rdataset + "," + this.Factors +
-                            "," + this.Span + "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
+                       "," + this.Span + "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
                 return rcmd;
             }
         }
 
         private string Span
         {
-            get
-            {
-                return "span=" + span;
-            }
+            get { return "span=" + span; }
         }
 
         private string OutFolder
         {
-            get
-            {
-                return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
-            }
+            get { return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
         }
 
         private string PlotFlag
@@ -103,14 +96,8 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LOESS")]
         public string OutFolder_pub
         {
-            get
-            {
-                return mstrOutFolder;
-            }
-            set
-            {
-                mstrOutFolder = value;
-            }
+            get { return mstrOutFolder; }
+            set { mstrOutFolder = value; }
         }
 
         [Tools.clsAnalysisAttribute("Save_Plots", "LOESS")]

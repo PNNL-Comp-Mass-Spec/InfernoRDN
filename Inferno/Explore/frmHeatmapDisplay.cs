@@ -17,7 +17,7 @@ namespace DAnTE.Inferno
             parametersToolStripMenuItem.Click += mnuItemPara_Click;
             mtBtnParam.Click += mnuItemPara_Click;
         }
-                
+
         void mnuItemPara_Click(object sender, EventArgs e)
         {
             mfrmDante.PlotHeatmap(mclsHmapPar);
@@ -25,19 +25,12 @@ namespace DAnTE.Inferno
 
         public clsHeatmapPar clsHmapPar
         {
-            get
-            {
-                return mclsHmapPar;
-            }
+            get { return mclsHmapPar; }
         }
 
         public new frmDAnTE DAnTEinstance
         {
-            set
-            {
-                mfrmDante = value;
-            }
+            set { mfrmDante = value; }
         }
     }
 }
-

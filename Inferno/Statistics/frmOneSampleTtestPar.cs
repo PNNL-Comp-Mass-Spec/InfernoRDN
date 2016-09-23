@@ -41,7 +41,7 @@ namespace DAnTE.Inferno
                 return mclsOneSampleTtestPar;
             }
         }
-        
+
         public int NumDataThresh
         {
             get
@@ -52,7 +52,5 @@ namespace DAnTE.Inferno
         }
 
         #endregion
-
-        
     }
 }

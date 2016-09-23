@@ -49,6 +49,7 @@ using System.Security;
 
 namespace DAnTE.Tools
 {
+
     #region Enumerated Types
 
     /// <summary>
@@ -73,6 +74,7 @@ namespace DAnTE.Tools
         OK,
         FAIL
     }
+
     /// <summary>
     /// The ErrorCode type is defined to represent
     /// the possible errors placing an Engine instance
@@ -113,13 +115,19 @@ namespace DAnTE.Tools
         {
             switch (x)
             {
-                case EngineStatus.INIT: return "Initializing";
-                case EngineStatus.WORKING: return "Working";
-                case EngineStatus.OK: return "Ok";
-                case EngineStatus.FAIL: return "Failed";
-                default: return "Unrecognized Engine Status: " + x.ToString();
+                case EngineStatus.INIT:
+                    return "Initializing";
+                case EngineStatus.WORKING:
+                    return "Working";
+                case EngineStatus.OK:
+                    return "Ok";
+                case EngineStatus.FAIL:
+                    return "Failed";
+                default:
+                    return "Unrecognized Engine Status: " + x.ToString();
             }
         }
+
         /// <summary>
         /// Produces a human-readable form of the ErrorCode received
         /// as parameter.
@@ -130,14 +138,20 @@ namespace DAnTE.Tools
         {
             switch (x)
             {
-                case ErrorCode.OK: return "No Error";
-                case ErrorCode.BAD_FILENAME: return "Bad Filename";
-                case ErrorCode.NO_SUCH_FILE: return "No Such File";
-                case ErrorCode.SYS_ERROR: return "System Error";
-                case ErrorCode.MALFORMED_LINE: return "Malformed Line";
+                case ErrorCode.OK:
+                    return "No Error";
+                case ErrorCode.BAD_FILENAME:
+                    return "Bad Filename";
+                case ErrorCode.NO_SUCH_FILE:
+                    return "No Such File";
+                case ErrorCode.SYS_ERROR:
+                    return "System Error";
+                case ErrorCode.MALFORMED_LINE:
+                    return "Malformed Line";
                 case ErrorCode.MISSING_REQUIRED_PARAMETER:
                     return "Missing Required parameter(s)";
-                default: return "Unrecognized Error Code: " + x.ToString();
+                default:
+                    return "Unrecognized Error Code: " + x.ToString();
             }
         }
 
@@ -149,15 +163,18 @@ namespace DAnTE.Tools
         /// The status of the Engine.
         /// </summary>
         private EngineStatus status = EngineStatus.INIT;
+
         /// <summary>
         /// Error code describing the issue detected by the Engine.
         /// </summary>
         private ErrorCode errCode = ErrorCode.OK;
+
         /// <summary>
         /// Details regarding the error condition detected by the
         /// Engine.
         /// </summary>
         private string errDetails = "";
+
         /// <summary>
         /// Name of the cfg file to be read.
         /// </summary>
@@ -176,19 +193,34 @@ namespace DAnTE.Tools
         /// <summary>
         /// Gets the status of the Engine.
         /// </summary>
-        public EngineStatus Status { get { return status; } }
+        public EngineStatus Status
+        {
+            get { return status; }
+        }
+
         /// <summary>
         /// Gets the error code describing the current error.
         /// </summary>
-        public ErrorCode Error { get { return errCode; } }
+        public ErrorCode Error
+        {
+            get { return errCode; }
+        }
+
         /// <summary>
         /// Gets the details regarding the current error.
         /// </summary>
-        public string Details { get { return errDetails; } }
+        public string Details
+        {
+            get { return errDetails; }
+        }
+
         /// <summary>
         /// Gets the name of the cfg file to be read by the Engine.
         /// </summary>
-        public string Filename { get { return filename; } }
+        public string Filename
+        {
+            get { return filename; }
+        }
 
         /// <summary>
         /// Gets the Collection of Parameters defined for the Engine,
@@ -205,6 +237,7 @@ namespace DAnTE.Tools
                 return r;
             }
         }
+
         /// <summary>
         /// Indexer: gets the Parameter with the specified name;
         /// if no such Parameter exists in the Engine, it returns null.
@@ -213,7 +246,7 @@ namespace DAnTE.Tools
         {
             get
             {
-                if (!parameters.ContainsKey(pName)) 
+                if (!parameters.ContainsKey(pName))
                     return null;
 
                 return parameters[pName].Clone();
@@ -248,12 +281,13 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::Reset()]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
 
             status = EngineStatus.INIT;
             errCode = ErrorCode.OK;
             errDetails = "";
         }
+
         /// <summary>
         /// Changes the file the Engine is ready to read.
         /// <exception cref="System.ApplicationException">Thrown if the Engine
@@ -265,7 +299,7 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::ChangeFile(string)]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
 
             this.Reset();
             filename = inFilename;
@@ -280,10 +314,11 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::ClearParameters()]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
 
             parameters.Clear();
         }
+
         /// <summary>
         /// Adds the specified Parameter to the set held by the Engine.
         /// If another Parameter was defined in the Engine with the same name,
@@ -296,11 +331,12 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::AddParameter(Parameter)]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
 
             //Overwrites any existing parameter with same name !
             parameters[p.Name] = p.Clone();
         }
+
         /// <summary>
         /// Deletes the Parameter with the specified name.
         /// If no such Parameter is defined in the Engine, no exception
@@ -313,10 +349,11 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::DelParameter(string)]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
 
             parameters.Remove(pName);
         }
+
         /// <summary>
         /// Requests the Engine to read the cfg file.
         /// The name of the cfg file should be already set in the Engine's
@@ -331,12 +368,13 @@ namespace DAnTE.Tools
         {
             if (status == EngineStatus.WORKING)
                 throw new ApplicationException("CFGLite: [Engine::ReadFile()]\n" +
-                  "The Engine is currently Working.");
+                                               "The Engine is currently Working.");
             if (status != EngineStatus.INIT
-              && status != EngineStatus.OK)
+                && status != EngineStatus.OK)
                 throw new ApplicationException("CFGLite: [Engine::ReadFile()]\n" +
-                  "The Engine is currently in its " + Engine.EngineStatusName(status) + " state.\n" +
-                  "The Engine must be reset before a new cfg file may be read.");
+                                               "The Engine is currently in its " + Engine.EngineStatusName(status) +
+                                               " state.\n" +
+                                               "The Engine must be reset before a new cfg file may be read.");
 
             var sb = new StringBuilder();
             status = EngineStatus.WORKING;
@@ -504,7 +542,6 @@ namespace DAnTE.Tools
         /// <param name="line">The line to be processed.</param>
         private void ProcessLine(string line)
         {
-
             line = line.Trim();
             if (line.Length <= 0) return;
 
@@ -522,7 +559,7 @@ namespace DAnTE.Tools
                 return;
             }
 
-            var parts = line.Split(new[] { '=' }, 2);
+            var parts = line.Split(new[] {'='}, 2);
 
             if (parts[0] != null) parts[0] = parts[0].Trim();
             if (parts[1] != null) parts[1] = parts[1].Trim();
@@ -546,13 +583,14 @@ namespace DAnTE.Tools
                 return;
             }
 
-            if (!parameters.ContainsKey(parts[0])) 
+            if (!parameters.ContainsKey(parts[0]))
                 return;
 
             var p = parameters[parts[0]];
             p.Val = parts[1];
             parameters[parts[0]] = p;
         }
+
         /// <summary>
         /// Checks that all of the REQUIRED Parameters defined in the Engine
         /// instance have an assigned value.
@@ -568,7 +606,7 @@ namespace DAnTE.Tools
 
             foreach (var p in parameters.Values)
                 if (p.Type == ParameterType.REQUIRED
-                  && (p.Val == null || p.Val.Length <= 0))
+                    && (p.Val == null || p.Val.Length <= 0))
                 {
                     errCode = ErrorCode.MISSING_REQUIRED_PARAMETER;
                     sb.Append(p.Name);
