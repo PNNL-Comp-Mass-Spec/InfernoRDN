@@ -5,6 +5,9 @@ namespace DAnTE.Purgatorio
 {
     public class clsHistogramPar
     {
+        /// <summary>
+        /// Sturges' formula is used to auto-define the bin ranges used in a histogram
+        /// </summary>
         private const string BIN_METHOD_STURGES = "Sturges";
 
         private string rcmd;
