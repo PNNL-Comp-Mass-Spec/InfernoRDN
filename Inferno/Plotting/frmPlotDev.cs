@@ -9,8 +9,6 @@ namespace DAnTE.Inferno
 {
     public partial class frmPlotDev : Form
     {
-        //public delegate void ButtonClicked();
-        //public event ButtonClicked meventSaveButtonClicked;
 
         public frmPlotDev()
         {

@@ -21,8 +21,6 @@ namespace DAnTE.Purgatorio
         private string mstrFactor;
         public int mintFactorIndex;
 
-        public List<string> marrFactors;
-
         public clsImputePar()
         {
             DataSetName = "Eset";

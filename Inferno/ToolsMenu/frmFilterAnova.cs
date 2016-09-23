@@ -7,8 +7,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmFilterAnova : Form
     {
-        Double cutoff = 0.05;
-        private List<string> marrColumns = new List<string>();
+        double cutoff = 0.05;
 
         public frmFilterAnova()
         {
@@ -17,7 +16,7 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool success = true;
+            var success = true;
             if (mlstBoxpvals.SelectedIndex < 0)
             {
                 MessageBox.Show("Select an ANOVA Column", "Error", MessageBoxButtons.OK,
@@ -59,7 +58,6 @@ namespace DAnTE.Inferno
         {
             set
             {
-                marrColumns = value;
                 mlstBoxpvals.DataSource = value;
             }
         }

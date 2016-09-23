@@ -5,9 +5,9 @@ namespace Wizard.UI
     [DefaultEvent("SetActive")]
     public class WizardPage : System.Windows.Forms.UserControl
     {
-        private System.ComponentModel.Container components = null;
+        private Container components;
 
-        public WizardPage()
+        protected WizardPage()
         {
             InitializeComponent();
         }
@@ -16,10 +16,7 @@ namespace Wizard.UI
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -8,7 +8,6 @@ namespace DAnTE.Purgatorio
         private string rcmd;
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")] public string mstrDatasetName;
-        public string tempFile;
         [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")] public string selectedFactor;
         [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")] public string selectedfVal1;
         [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")] public string selectedfVal2;
@@ -18,7 +17,6 @@ namespace DAnTE.Purgatorio
         public clsFoldChangePar()
         {
             Rdataset = "Eset";
-            tempFile = "C:/";
             selectedFactor = "";
             mbllogScale = true;
         }

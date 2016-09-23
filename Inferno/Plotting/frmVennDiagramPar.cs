@@ -11,7 +11,7 @@ namespace DAnTE.Inferno
         private readonly string[] strarrFactors = new string[MAX_LEVELS];
         private List<clsFactorInfo> marrFactors;
         private readonly Purgatorio.clsVennPar mclsVennPar;
-        private bool mblPlotFactors = false;
+        private bool mblPlotFactors;
 
 
         public frmVennDiagramPar(Purgatorio.clsVennPar mclsVPar)
@@ -22,21 +22,19 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool mblLists = false;
-            bool mblFactors = false;
+            var mblLists = (!mtxtBoxA.Text.Equals("") &&
+                             !mtxtBoxB.Text.Equals("") &&
+                             !mtxtBoxA.Text.Equals(mtxtBoxB.Text) &&
+                             !mtxtBoxLA.Text.Equals(mtxtBoxLB.Text) &&
+                             !mtxtBoxLA.Text.Equals(mtxtBoxLC.Text) &&
+                             !mtxtBoxLC.Text.Equals(mtxtBoxLB.Text));
 
-            mblLists = (!mtxtBoxA.Text.Equals("") &&
-                        !mtxtBoxB.Text.Equals("") &&
-                        !mtxtBoxA.Text.Equals(mtxtBoxB.Text) &&
-                        !mtxtBoxLA.Text.Equals(mtxtBoxLB.Text) &&
-                        !mtxtBoxLA.Text.Equals(mtxtBoxLC.Text) &&
-                        !mtxtBoxLC.Text.Equals(mtxtBoxLB.Text));
-            mblFactors = (!mtxtBoxflA.Text.Equals("") &&
-                          !mtxtBoxflB.Text.Equals("") &&
-                          !mtxtBoxflA.Text.Equals(mtxtBoxflB.Text) &&
-                          !mtxtBoxfA.Text.Equals(mtxtBoxfB.Text) &&
-                          !mtxtBoxfA.Text.Equals(mtxtBoxfC.Text) &&
-                          !mtxtBoxfC.Text.Equals(mtxtBoxfB.Text));
+            var mblFactors = (!mtxtBoxflA.Text.Equals("") &&
+                               !mtxtBoxflB.Text.Equals("") &&
+                               !mtxtBoxflA.Text.Equals(mtxtBoxflB.Text) &&
+                               !mtxtBoxfA.Text.Equals(mtxtBoxfB.Text) &&
+                               !mtxtBoxfA.Text.Equals(mtxtBoxfC.Text) &&
+                               !mtxtBoxfC.Text.Equals(mtxtBoxfB.Text));
 
             if (mblLists || mblFactors)
             {
@@ -201,7 +199,7 @@ namespace DAnTE.Inferno
             {
                 if (mblPlotFactors)
                 {
-                    int idx = mcmbBoxFactors.SelectedIndex + 1;
+                    var idx = mcmbBoxFactors.SelectedIndex + 1;
                     return "Factor=factors[" + idx.ToString() + ",]";
                 }
                 else

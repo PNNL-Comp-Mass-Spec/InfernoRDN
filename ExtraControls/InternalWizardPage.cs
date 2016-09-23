@@ -2,15 +2,14 @@ namespace Wizard.UI
 {
     public class InternalWizardPage : Wizard.UI.WizardPage
     {
-        public Wizard.UI.WizardBanner Banner;
-        private System.ComponentModel.IContainer components = null;
+        protected Wizard.UI.WizardBanner Banner;
+        private readonly System.ComponentModel.IContainer components = null;
 
-        public InternalWizardPage()
+        protected InternalWizardPage()
         {
             // This call is required by the Windows Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
         }
 
         /// <summary>
@@ -20,10 +19,7 @@ namespace Wizard.UI
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

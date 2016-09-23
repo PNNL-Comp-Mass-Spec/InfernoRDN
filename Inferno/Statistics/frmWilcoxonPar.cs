@@ -92,9 +92,6 @@ namespace DAnTE.Inferno
             {
                 mclsWilcoxonPar.selectedFactor = this.SelectedFactor;
                 mclsWilcoxonPar.numDatapts = this.NumDataThresh;
-                if (mlstBoxFactors.SelectedIndex != -1)
-                    mclsWilcoxonPar.nF = mlstBoxFactors.SelectedIndex;
-
                 return mclsWilcoxonPar;
             }
         }

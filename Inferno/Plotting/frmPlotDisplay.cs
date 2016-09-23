@@ -9,8 +9,6 @@ namespace DAnTE.Inferno
 {
     public partial class frmPlotDisplay : Form
     {
-        //public delegate void MenuClicked(string plottype);
-        //public event MenuClicked meventMenuClicked;
         private Image rPlot;
 
         public frmPlotDisplay()

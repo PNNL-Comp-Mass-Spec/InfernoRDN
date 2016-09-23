@@ -6,7 +6,7 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        #region Threading events for Pre-Process --------------------------
+        #region Threading events for Pre-Process
 
         void m_BackgroundWorker_Log2Completed(object sender, RunWorkerCompletedEventArgs e)
         {

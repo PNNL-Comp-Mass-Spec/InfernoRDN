@@ -9,7 +9,7 @@ namespace DAnTE.Inferno
     /// <summary>
     /// Summary description for frmMain.
     /// </summary>
-    public class frmMain : System.Windows.Forms.Form
+    public class frmMain : Form
     {
         /// <summary>
         /// Required designer variable.

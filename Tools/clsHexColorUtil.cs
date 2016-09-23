@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace DAnTE.Tools
 {
-    sealed class clsHexColorUtil
+    static class clsHexColorUtil
         //
         //	Util class to convert hexadecimal represenations of colors used in html 
         //  to .NET framework colors. Hexadecimal colors are defined in this notation:
@@ -15,13 +15,6 @@ namespace DAnTE.Tools
         //	http://www.todesco.com
         //
     {
-        private clsHexColorUtil()
-            //  The constructor of the class is private, so nobody can instantiate it.
-            //  Because the class provides static methods only there is no need to do 
-            //  that.
-        {
-        }
-
         public static string ReverseString(string inStr)
             //  Helper Method that reverses a string.
         {
@@ -40,11 +33,10 @@ namespace DAnTE.Tools
             //  is not much error checking in this method. If the string does not
             //  represent a valid hexadecimal value it returns 0.
         {
-            int counter, hexint;
-            char[] hexarr;
-            hexint = 0;
+            int counter;
+            var hexint = 0;
             hexstr = hexstr.ToUpper();
-            hexarr = hexstr.ToCharArray();
+            var hexarr = hexstr.ToCharArray();
             for (counter = hexarr.Length - 1; counter >= 0; counter--)
             {
                 if ((hexarr[counter] >= '0') && (hexarr[counter] <= '9'))
@@ -72,14 +64,11 @@ namespace DAnTE.Tools
             //  int value. The returned string will look like this: 55FF. Note that there is
             //  no leading '#' in the returned string! 
         {
-            int counter, reminder;
-            string hexstr;
-
-            counter = 1;
-            hexstr = "";
+            var counter = 1;
+            var hexstr = "";
             while (hexint + 15 > Math.Pow(16, counter - 1))
             {
-                reminder = (int)(hexint % Math.Pow(16, counter));
+                var reminder = (int)(hexint % Math.Pow(16, counter));
                 reminder = (int)(reminder / Math.Pow(16, counter - 1));
                 if (reminder <= 9)
                 {
@@ -101,12 +90,11 @@ namespace DAnTE.Tools
             //  length parameter the missing characters will be filled up with leading zeroes.
             //  Note that the returend string though is not truncated if the value exeeds the length!
         {
-            string hexstr, ret;
-            int counter;
-            hexstr = IntToHex(hexint);
-            ret = "";
+            var hexstr = IntToHex(hexint);
+            var ret = "";
             if (hexstr.Length < length)
             {
+                int counter;
                 for (counter = 0; counter < (length - hexstr.Length); counter++)
                 {
                     ret = ret + "0";
@@ -122,15 +110,11 @@ namespace DAnTE.Tools
             //  the color white will be returned.
         {
             Color actColor;
-            int r, g, b;
-            r = 0;
-            g = 0;
-            b = 0;
-            if ((hexString.StartsWith("#")) && (hexString.Length == 7))
+            if (hexString.StartsWith("#") && (hexString.Length == 7))
             {
-                r = HexToInt(hexString.Substring(1, 2));
-                g = HexToInt(hexString.Substring(3, 2));
-                b = HexToInt(hexString.Substring(5, 2));
+                var r = HexToInt(hexString.Substring(1, 2));
+                var g = HexToInt(hexString.Substring(3, 2));
+                var b = HexToInt(hexString.Substring(5, 2));
                 actColor = Color.FromArgb(r, g, b);
             }
             else

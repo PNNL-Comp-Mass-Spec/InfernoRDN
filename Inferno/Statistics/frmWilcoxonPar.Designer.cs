@@ -60,7 +60,7 @@ namespace DAnTE.Inferno
             this.mlstBoxFactors.FormattingEnabled = true;
             this.mlstBoxFactors.ItemHeight = 16;
             this.mlstBoxFactors.Location = new System.Drawing.Point(47, 228);
-            this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mlstBoxFactors.Margin = new System.Windows.Forms.Padding(4);
             this.mlstBoxFactors.Name = "mlstBoxFactors";
             this.mlstBoxFactors.Size = new System.Drawing.Size(271, 164);
             this.mlstBoxFactors.TabIndex = 4;
@@ -79,7 +79,7 @@ namespace DAnTE.Inferno
             // mNumUpDthres
             // 
             this.mNumUpDthres.Location = new System.Drawing.Point(203, 416);
-            this.mNumUpDthres.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mNumUpDthres.Margin = new System.Windows.Forms.Padding(4);
             this.mNumUpDthres.Minimum = new decimal(new int[] {
             2,
             0,
@@ -99,7 +99,6 @@ namespace DAnTE.Inferno
             this.label4.Location = new System.Drawing.Point(20, 409);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label4.Size = new System.Drawing.Size(175, 43);
             this.label4.TabIndex = 61;
             this.label4.Text = "Minimum Number of Data Points per Factor Level:";
@@ -108,7 +107,7 @@ namespace DAnTE.Inferno
             // 
             this.mbtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.mbtnCancel.Location = new System.Drawing.Point(203, 481);
-            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnCancel.Name = "mbtnCancel";
             this.mbtnCancel.Size = new System.Drawing.Size(100, 28);
             this.mbtnCancel.TabIndex = 68;
@@ -119,7 +118,7 @@ namespace DAnTE.Inferno
             // mbtnOK
             // 
             this.mbtnOK.Location = new System.Drawing.Point(69, 481);
-            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mbtnOK.Margin = new System.Windows.Forms.Padding(4);
             this.mbtnOK.Name = "mbtnOK";
             this.mbtnOK.Size = new System.Drawing.Size(100, 28);
             this.mbtnOK.TabIndex = 67;
@@ -153,7 +152,7 @@ namespace DAnTE.Inferno
             this.mrTBox.BackColor = System.Drawing.SystemColors.Control;
             this.mrTBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.mrTBox.Location = new System.Drawing.Point(16, 107);
-            this.mrTBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mrTBox.Margin = new System.Windows.Forms.Padding(4);
             this.mrTBox.Name = "mrTBox";
             this.mrTBox.Size = new System.Drawing.Size(343, 86);
             this.mrTBox.TabIndex = 71;
@@ -163,7 +162,7 @@ namespace DAnTE.Inferno
             // niceLine2
             // 
             this.niceLine2.Location = new System.Drawing.Point(16, 455);
-            this.niceLine2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.niceLine2.Margin = new System.Windows.Forms.Padding(4);
             this.niceLine2.Name = "niceLine2";
             this.niceLine2.Size = new System.Drawing.Size(343, 17);
             this.niceLine2.TabIndex = 66;
@@ -171,7 +170,7 @@ namespace DAnTE.Inferno
             // niceLine1
             // 
             this.niceLine1.Location = new System.Drawing.Point(16, 44);
-            this.niceLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.niceLine1.Margin = new System.Windows.Forms.Padding(4);
             this.niceLine1.Name = "niceLine1";
             this.niceLine1.Size = new System.Drawing.Size(343, 17);
             this.niceLine1.TabIndex = 3;
@@ -196,7 +195,7 @@ namespace DAnTE.Inferno
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmWilcoxonPar";

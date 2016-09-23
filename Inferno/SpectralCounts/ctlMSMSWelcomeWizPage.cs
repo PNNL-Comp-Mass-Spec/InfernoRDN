@@ -8,8 +8,8 @@ namespace DAnTE.Inferno
 {
     public partial class ctlMSMSWelcomeWizPage : Wizard.UI.ExternalWizardPage
     {
-        FolderBrowserDialog folderBrwseDlg;
-        string foldername = null;
+        readonly FolderBrowserDialog folderBrwseDlg;
+        string foldername;
 
         public ctlMSMSWelcomeWizPage()
         {
@@ -35,7 +35,7 @@ namespace DAnTE.Inferno
         {
             folderBrwseDlg.Description = "Select the directory you want to use during this analysis.";
             folderBrwseDlg.SelectedPath = foldername;
-            DialogResult dresult = folderBrwseDlg.ShowDialog();
+            var dresult = folderBrwseDlg.ShowDialog();
             if (dresult == DialogResult.OK)
             {
                 foldername = folderBrwseDlg.SelectedPath;

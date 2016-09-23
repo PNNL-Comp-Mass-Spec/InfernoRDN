@@ -9,7 +9,7 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        #region Threading events for FileOpen --------------------------
+        #region Threading events for FileOpen
 
         private void m_BackgroundWorker_FileOpenCompleted(object sender, RunWorkerCompletedEventArgs e)
         {

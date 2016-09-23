@@ -6,7 +6,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmOneSampleTtestPar : Form
     {
-        private clsOneSampleTtestPar mclsOneSampleTtestPar = new clsOneSampleTtestPar();
+        private readonly clsOneSampleTtestPar mclsOneSampleTtestPar;
 
         public frmOneSampleTtestPar(clsOneSampleTtestPar clsTtest)
         {

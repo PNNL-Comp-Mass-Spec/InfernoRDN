@@ -5,21 +5,20 @@ namespace DAnTE.ExtraControls
     /// <summary>
     /// Summary description for ucDataGrid.
     /// </summary>
-    public class ucDataGrid : System.Windows.Forms.UserControl
+    public abstract class ucDataGrid : System.Windows.Forms.UserControl
     {
         private System.Windows.Forms.DataGrid dataGrid1;
 
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly System.ComponentModel.Container components = null;
 
-        public ucDataGrid()
+        protected ucDataGrid()
         {
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
         }
 
 
@@ -28,7 +27,6 @@ namespace DAnTE.ExtraControls
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
             dataGrid1.DataSource = null;
             dataGrid1.DataSource = dataT;
         }
@@ -40,10 +38,7 @@ namespace DAnTE.ExtraControls
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -8,7 +8,7 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        #region Threading events for plots --------------------------
+        #region Threading events for plots
 
         void m_BackgroundWorker_QQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {

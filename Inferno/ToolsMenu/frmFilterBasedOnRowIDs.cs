@@ -6,7 +6,6 @@ namespace DAnTE.Inferno
 {
     public partial class frmFilterBasedOnRowIDs : Form
     {
-        //Double cutoff = 0.05;
 
         public frmFilterBasedOnRowIDs()
         {

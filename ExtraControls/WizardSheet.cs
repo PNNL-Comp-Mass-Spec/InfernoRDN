@@ -9,23 +9,20 @@ namespace Wizard.UI
     /// <summary>
     /// Summary description for WizardSheet.
     /// </summary>
-    public class WizardSheet : System.Windows.Forms.Form
+    public class WizardSheet : Form
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly Container components = null;
 
-        public WizardSheet()
+        protected WizardSheet()
         {
             //
             // Required for Windows Form Designer support
             //
             InitializeComponent();
 
-            //
-            // TODO: Add any constructor code after InitializeComponent call
-            //
         }
 
         /// <summary>
@@ -35,10 +32,7 @@ namespace Wizard.UI
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

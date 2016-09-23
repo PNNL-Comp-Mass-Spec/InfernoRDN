@@ -12,12 +12,12 @@ namespace DAnTE.Inferno
         private const int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
         private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
-        private int numCol, bins;
+        private int bins;
         private List<string> marrDatasets = new List<string>();
         string foreC = "#FFC38A", borderC = "#5FAE27";
         private readonly clsHistogramPar mclsHistPar;
-        private bool mWarnedTooManyDatasets = false;
-        private bool mPopulating = false;
+        private bool mWarnedTooManyDatasets;
+        private bool mPopulating;
 
         public frmHistogramPar(clsHistogramPar clsHistPar)
         {
@@ -31,7 +31,6 @@ namespace DAnTE.Inferno
 
             try
             {
-                numCol = Convert.ToInt32(mtxtPlotCols.Text);
                 bins = Convert.ToInt32(mtxtBoxBins.Text) + 1;
             }
             catch (Exception ex)

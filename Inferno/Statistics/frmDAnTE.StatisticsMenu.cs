@@ -305,11 +305,10 @@ namespace DAnTE.Inferno
             mclsAnovaPar = new clsAnovaPar();
             Rdataset = selectedNodeTag.mstrRdatasetName;
 
-            mclsAnovaPar.tempFile = mRTempFilePath;
             mclsAnovaPar.Rdataset = Rdataset;
             mclsAnovaPar.mstrDatasetName = selectedNodeTag.mstrDataText;
             var factorTable = mhtDatasets["Factors"];
-            mclsAnovaPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+            clsDataTable.DataTableRows(factorTable.mDTable);
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
@@ -364,11 +363,10 @@ namespace DAnTE.Inferno
             mclsTamuQPar = new clsTamuQPar();
             Rdataset = selectedNodeTag.mstrRdatasetName;
 
-            mclsTamuQPar.tempFile = mRTempFilePath;
             mclsTamuQPar.Rdataset = Rdataset;
             mclsTamuQPar.mstrDatasetName = selectedNodeTag.mstrDataText;
             var factorTable = mhtDatasets["Factors"];
-            mclsTamuQPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+            clsDataTable.DataTableRows(factorTable.mDTable);
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
@@ -423,11 +421,10 @@ namespace DAnTE.Inferno
             mclsKWpar = new clsKruskalWPar();
             Rdataset = selectedNodeTag.mstrRdatasetName;
 
-            mclsKWpar.tempFile = mRTempFilePath;
             mclsKWpar.Rdataset = Rdataset;
             mclsKWpar.mstrDatasetName = selectedNodeTag.mstrDataText;
             var factorTable = mhtDatasets["Factors"];
-            mclsKWpar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+            clsDataTable.DataTableRows(factorTable.mDTable);
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
@@ -485,11 +482,10 @@ namespace DAnTE.Inferno
             mclsWilcoxPar = new clsWilcoxonPar();
             Rdataset = selectedNodeTag.mstrRdatasetName;
 
-            mclsWilcoxPar.tempFile = mRTempFilePath;
             mclsWilcoxPar.Rdataset = Rdataset;
             mclsWilcoxPar.mstrDatasetName = selectedNodeTag.mstrDataText;
             var factorTable = mhtDatasets["Factors"];
-            mclsWilcoxPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+            clsDataTable.DataTableRows(factorTable.mDTable);
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag, true))
             {

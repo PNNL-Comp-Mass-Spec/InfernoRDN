@@ -6,17 +6,17 @@ namespace DAnTE.Inferno
     /// <summary>
     /// Summary description for frmInputBlockSize.
     /// </summary>
-    public class frmInputBlockSize : System.Windows.Forms.Form
+    public class frmInputBlockSize : Form
     {
-        private System.Windows.Forms.NumericUpDown numericUpDownN;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
+        private NumericUpDown numericUpDownN;
+        private Label label1;
+        private Button btnOK;
+        private Button btnCancel;
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly System.ComponentModel.Container components = null;
 
         public frmInputBlockSize()
         {
@@ -25,9 +25,6 @@ namespace DAnTE.Inferno
             //
             InitializeComponent();
 
-            //
-            // TODO: Add any constructor code after InitializeComponent call
-            //
         }
 
         /// <summary>

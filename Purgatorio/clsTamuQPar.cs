@@ -5,28 +5,21 @@ namespace DAnTE.Purgatorio
     public class clsTamuQPar
     {
         private string rcmd;
-        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "TAMUimputation")] public bool unbalanced;
-        public bool randomE;
-        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "TAMUimputation")] public bool useREML;
-        [Tools.clsAnalysisAttribute("Check_Interactions", "TAMUimputation")] public bool interactions;
+        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "TAMUimputation")] public readonly bool unbalanced;
+        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "TAMUimputation")] public readonly bool useREML;
+        [Tools.clsAnalysisAttribute("Check_Interactions", "TAMUimputation")] public readonly bool interactions;
         //[Tools.clsAnalysisAttribute("Dataset(R)", "TAMUimputation")]
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "TAMUimputation")] public string mstrDatasetName;
-        public string tempFile;
-        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "TAMUimputation")] public int numDatapts;
         public List<string> fixedEff;
-        public List<string> randomEff;
-        public List<string> marrFactors;
+        private readonly List<string> randomEff;
 
         public clsTamuQPar()
         {
             unbalanced = false;
-            randomE = false;
             useREML = false;
             interactions = false;
             Rdataset = "Eset";
-            tempFile = "C:/";
-            numDatapts = 3;
             fixedEff = new List<string>();
             randomEff = new List<string>();
         }

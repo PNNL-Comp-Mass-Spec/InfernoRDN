@@ -9,9 +9,9 @@ namespace DAnTE.Inferno
 {
     public partial class ctlMSMSparaWizPage : Wizard.UI.InternalWizardPage
     {
-        private FolderBrowserDialog folderBrwseDlg;
-        private string foldername = null;
-        private bool mblUseSEQOut = false;
+        private readonly FolderBrowserDialog folderBrwseDlg;
+        private string foldername;
+        private bool mblUseSEQOut;
 
         public ctlMSMSparaWizPage()
         {
@@ -31,7 +31,7 @@ namespace DAnTE.Inferno
         {
             folderBrwseDlg.Description = "Select the folder where Sequest *.out files reside.";
             folderBrwseDlg.SelectedPath = foldername;
-            DialogResult dresult = folderBrwseDlg.ShowDialog();
+            var dresult = folderBrwseDlg.ShowDialog();
             if (dresult == DialogResult.OK)
             {
                 foldername = folderBrwseDlg.SelectedPath;
@@ -64,10 +64,9 @@ namespace DAnTE.Inferno
         {
             get
             {
-                bool none, full, partial;
-                none = mchkBoxNone.Checked;
-                full = mchkBoxFull.Checked;
-                partial = mchkBoxPartial.Checked;
+                var none = mchkBoxNone.Checked;
+                var full = mchkBoxFull.Checked;
+                var partial = mchkBoxPartial.Checked;
 
                 if (none && partial && full)
                     return @"TrypState='111'";

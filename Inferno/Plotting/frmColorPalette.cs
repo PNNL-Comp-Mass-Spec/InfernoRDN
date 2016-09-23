@@ -8,13 +8,13 @@ namespace DAnTE.Inferno
 {
     public partial class frmColorPalette : Form
     {
-        string lowC = null, midC = null, highC = null;
+        string lowC, midC, highC;
         int defaultPalette = 4;
-        private System.Windows.Forms.ColorDialog hexColorDialog;
+        private readonly ColorDialog hexColorDialog;
 
         public frmColorPalette()
         {
-            this.hexColorDialog = new System.Windows.Forms.ColorDialog();
+            this.hexColorDialog = new ColorDialog();
             InitializeComponent();
         }
 

@@ -11,7 +11,7 @@ namespace DAnTE.ExtraControls
     [ToolboxBitmap(typeof(System.Windows.Forms.GroupBox))]
     public class NiceLine : System.Windows.Forms.UserControl
     {
-        private System.ComponentModel.Container components = null;
+        private readonly Container components = null;
         private string _Caption = "";
         private int _CaptionMarginSpace = 16;
         private int _CaptionPadding = 2;

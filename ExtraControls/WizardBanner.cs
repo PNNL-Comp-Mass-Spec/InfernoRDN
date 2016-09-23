@@ -6,16 +6,16 @@ namespace Wizard.UI
     /// <summary>
     /// Summary description for WizardBanner.
     /// </summary>
-    public class WizardBanner : System.Windows.Forms.UserControl
+    public class WizardBanner : UserControl
     {
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label subtitleLabel;
+        private Label titleLabel;
+        private Label subtitleLabel;
         private Wizard.Controls.EtchedLine etchedLine1;
 
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly Container components = null;
 
         public WizardBanner()
         {
@@ -33,10 +33,7 @@ namespace Wizard.UI
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

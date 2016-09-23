@@ -5,14 +5,13 @@ namespace Wizard.UI
     public class ExternalWizardPage : Wizard.UI.WizardPage
     {
         private Panel panel1;
-        private System.ComponentModel.IContainer components = null;
+        private readonly System.ComponentModel.IContainer components = null;
 
-        public ExternalWizardPage()
+        protected ExternalWizardPage()
         {
             // This call is required by the Windows Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
         }
 
         /// <summary>
@@ -22,10 +21,7 @@ namespace Wizard.UI
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

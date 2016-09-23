@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 
@@ -18,7 +19,11 @@ namespace DAnTE.ExtraControls
     /// if you release mouse button, the event OnRangeChanged signals program that
     /// a new range was selected.
     /// </summary>
-    public class ZzzzRangeBar : System.Windows.Forms.UserControl
+    /// <remarks>
+    /// Class written by Detlef Neunherz 
+    /// and obtained from http://www.codeproject.com/Articles/2275/C-RangeBar-control
+    /// </remarks>
+    public sealed class ZzzzRangeBar : UserControl
     {
         // delegate to handle range changed
         public delegate void RangeChangedEventHandler(object sender, EventArgs e);
@@ -30,11 +35,11 @@ namespace DAnTE.ExtraControls
         /// <summary> 
         /// designer variable
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly System.ComponentModel.Container components = null;
 
         public ZzzzRangeBar()
         {
-            // Dieser Aufruf ist für den Windows Form-Designer erforderlich.
+            // Required by the Windows Form Designer
             InitializeComponent();
         }
 
@@ -45,36 +50,33 @@ namespace DAnTE.ExtraControls
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Erforderliche Methode für die Designerunterstützung. 
-        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             // 
             // ZzzzRangeBar
             // 
-            this.Name = "ZzzzRangeBar";
-            this.Size = new System.Drawing.Size(344, 64);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
-            this.Resize += new System.EventHandler(this.OnResize);
-            this.Load += new System.EventHandler(this.OnLoad);
-            this.SizeChanged += new System.EventHandler(this.OnSizeChanged);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
-            this.Leave += new System.EventHandler(this.OnLeave);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+            Name = "ZzzzRangeBar";
+            Size = new System.Drawing.Size(344, 64);
+            KeyPress += new System.Windows.Forms.KeyPressEventHandler(OnKeyPress);
+            Resize += new System.EventHandler(OnResize);
+            Load += new System.EventHandler(OnLoad);
+            SizeChanged += new System.EventHandler(OnSizeChanged);
+            MouseUp += new System.Windows.Forms.MouseEventHandler(OnMouseUp);
+            Paint += new System.Windows.Forms.PaintEventHandler(OnPaint);
+            Leave += new System.EventHandler(OnLeave);
+            MouseMove += new System.Windows.Forms.MouseEventHandler(OnMouseMove);
+            MouseDown += new System.Windows.Forms.MouseEventHandler(OnMouseDown);
         }
 
         #endregion
@@ -100,9 +102,9 @@ namespace DAnTE.ExtraControls
         };
 
         private Color colorInner = Color.LightGreen;
-        private Color colorRange = Color.FromKnownColor(KnownColor.Control);
-        private Color colorShadowLight = Color.FromKnownColor(KnownColor.ControlLightLight);
-        private Color colorShadowDark = Color.FromKnownColor(KnownColor.ControlDarkDark);
+        private readonly Color colorRange = Color.FromKnownColor(KnownColor.Control);
+        private readonly Color colorShadowLight = Color.FromKnownColor(KnownColor.ControlLightLight);
+        private readonly Color colorShadowDark = Color.FromKnownColor(KnownColor.ControlDarkDark);
         private int sizeShadow = 1;
         private double Minimum = 0;
         private double Maximum = 10;
@@ -119,14 +121,14 @@ namespace DAnTE.ExtraControls
         private int TickHeight = 6; // Height of axis tick
         private int numAxisDivision = 10;
 
-        private int PosL = 0, PosR = 0; // Pixel-Position of mark buttons
+        private int PosL, PosR; // Pixel-Position of mark buttons
         private int XPosMin, XPosMax;
 
-        private Point[] LMarkPnt = new Point[5];
-        private Point[] RMarkPnt = new Point[5];
+        private readonly Point[] LMarkPnt = new Point[5];
+        private readonly Point[] RMarkPnt = new Point[5];
 
-        private bool MoveLMark = false;
-        private bool MoveRMark = false;
+        private bool MoveLMark;
+        private bool MoveRMark;
 
         //------------------------------------
         // Properties
@@ -210,7 +212,7 @@ namespace DAnTE.ExtraControls
         {
             set
             {
-                rangeMax = (double)value;
+                rangeMax = value;
                 if (rangeMax < Minimum)
                     rangeMax = Minimum;
                 else if (rangeMax > Maximum)
@@ -231,7 +233,7 @@ namespace DAnTE.ExtraControls
         {
             set
             {
-                rangeMin = (double)value;
+                rangeMin = value;
                 if (rangeMin < Minimum)
                     rangeMin = Minimum;
                 else if (rangeMin > Maximum)
@@ -252,7 +254,7 @@ namespace DAnTE.ExtraControls
         {
             set
             {
-                Maximum = (double)value;
+                Maximum = value;
                 if (rangeMax > Maximum)
                     rangeMax = Maximum;
                 Range2Pos();
@@ -269,7 +271,7 @@ namespace DAnTE.ExtraControls
         {
             set
             {
-                Minimum = (double)value;
+                Minimum = value;
                 if (rangeMin < Minimum)
                     rangeMin = Minimum;
                 Range2Pos();
@@ -336,29 +338,28 @@ namespace DAnTE.ExtraControls
 
 
         // paint event reaction
-        private void OnPaint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void OnPaint(object sender, PaintEventArgs e)
         {
-            int h = this.Height;
-            int w = this.Width;
+            var h = Height;
+            var w = Width;
             int baryoff, markyoff, tickyoff1, tickyoff2;
             double dtick;
             int tickpos;
-            Pen penRange = new Pen(colorRange);
-            Pen penShadowLight = new Pen(colorShadowLight);
-            Pen penShadowDark = new Pen(colorShadowDark);
-            SolidBrush brushShadowLight = new SolidBrush(colorShadowLight);
-            SolidBrush brushShadowDark = new SolidBrush(colorShadowDark);
+            var penShadowLight = new Pen(colorShadowLight);
+            var penShadowDark = new Pen(colorShadowDark);
+            var brushShadowLight = new SolidBrush(colorShadowLight);
+            var brushShadowDark = new SolidBrush(colorShadowDark);
             SolidBrush brushInner;
-            SolidBrush brushRange = new SolidBrush(colorRange);
+            var brushRange = new SolidBrush(colorRange);
 
-            if (this.Enabled == true)
+            if (Enabled)
                 brushInner = new SolidBrush(colorInner);
             else
                 brushInner = new SolidBrush(Color.FromKnownColor(KnownColor.InactiveCaption));
 
             // range
             XPosMin = MarkWidth + 1;
-            if (this.orientationBar == RangeBarOrientation.horizontal)
+            if (orientationBar == RangeBarOrientation.horizontal)
                 XPosMax = w - MarkWidth - 1;
             else
                 XPosMax = h - MarkWidth - 1;
@@ -372,7 +373,7 @@ namespace DAnTE.ExtraControls
             Range2Pos();
 
 
-            if (this.orientationBar == RangeBarOrientation.horizontal)
+            if (orientationBar == RangeBarOrientation.horizontal)
             {
                 baryoff = (h - BarHeight) / 2;
                 markyoff = baryoff + (BarHeight - MarkHeight) / 2 - 1;
@@ -407,10 +408,10 @@ namespace DAnTE.ExtraControls
 
                 if (numAxisDivision > 1)
                 {
-                    dtick = (double)(XPosMax - XPosMin) / (double)numAxisDivision;
-                    for (int i = 0; i < numAxisDivision + 1; i++)
+                    dtick = (XPosMax - XPosMin) / (double)numAxisDivision;
+                    for (var i = 0; i < numAxisDivision + 1; i++)
                     {
-                        tickpos = (int)Math.Round((double)i * dtick);
+                        tickpos = (int)Math.Round(i * dtick);
                         if (orientationScale == TopBottomOrientation.bottom
                             || orientationScale == TopBottomOrientation.both)
                         {
@@ -491,23 +492,27 @@ namespace DAnTE.ExtraControls
 
                 if (MoveLMark)
                 {
-                    Font fontMark = new Font("Arial", MarkWidth);
-                    SolidBrush brushMark = new SolidBrush(colorShadowDark);
-                    StringFormat strformat = new StringFormat();
-                    strformat.Alignment = StringAlignment.Center;
-                    strformat.LineAlignment = StringAlignment.Near;
-                    e.Graphics.DrawString(rangeMin.ToString(), fontMark, brushMark, PosL, tickyoff1 + TickHeight,
+                    var fontMark = new Font("Arial", MarkWidth);
+                    var brushMark = new SolidBrush(colorShadowDark);
+                    var strformat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Near
+                    };
+                    e.Graphics.DrawString(rangeMin.ToString(CultureInfo.InvariantCulture), fontMark, brushMark, PosL, tickyoff1 + TickHeight,
                                           strformat);
                 }
 
                 if (MoveRMark)
                 {
-                    Font fontMark = new Font("Arial", MarkWidth);
-                    SolidBrush brushMark = new SolidBrush(colorShadowDark);
-                    StringFormat strformat = new StringFormat();
-                    strformat.Alignment = StringAlignment.Center;
-                    strformat.LineAlignment = StringAlignment.Near;
-                    e.Graphics.DrawString(rangeMax.ToString(), fontMark, brushMark, PosR, tickyoff1 + TickHeight,
+                    var fontMark = new Font("Arial", MarkWidth);
+                    var brushMark = new SolidBrush(colorShadowDark);
+                    var strformat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Near
+                    };
+                    e.Graphics.DrawString(rangeMax.ToString(CultureInfo.InvariantCulture), fontMark, brushMark, PosR, tickyoff1 + TickHeight,
                                           strformat);
                 }
             }
@@ -543,10 +548,10 @@ namespace DAnTE.ExtraControls
                 // Skala
                 if (numAxisDivision > 1)
                 {
-                    dtick = (double)(XPosMax - XPosMin) / (double)numAxisDivision;
-                    for (int i = 0; i < numAxisDivision + 1; i++)
+                    dtick = (XPosMax - XPosMin) / (double)numAxisDivision;
+                    for (var i = 0; i < numAxisDivision + 1; i++)
                     {
-                        tickpos = (int)Math.Round((double)i * dtick);
+                        tickpos = (int)Math.Round(i * dtick);
                         if (orientationScale == TopBottomOrientation.bottom
                             || orientationScale == TopBottomOrientation.both)
                             e.Graphics.DrawLine(penShadowDark,
@@ -626,23 +631,27 @@ namespace DAnTE.ExtraControls
 
                 if (MoveLMark)
                 {
-                    Font fontMark = new Font("Arial", MarkWidth);
-                    SolidBrush brushMark = new SolidBrush(colorShadowDark);
-                    StringFormat strformat = new StringFormat();
-                    strformat.Alignment = StringAlignment.Near;
-                    strformat.LineAlignment = StringAlignment.Center;
-                    e.Graphics.DrawString(rangeMin.ToString(), fontMark, brushMark, tickyoff1 + TickHeight + 2, PosL,
+                    var fontMark = new Font("Arial", MarkWidth);
+                    var brushMark = new SolidBrush(colorShadowDark);
+                    var strformat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Near,
+                        LineAlignment = StringAlignment.Center
+                    };
+                    e.Graphics.DrawString(rangeMin.ToString(CultureInfo.InvariantCulture), fontMark, brushMark, tickyoff1 + TickHeight + 2, PosL,
                                           strformat);
                 }
 
                 if (MoveRMark)
                 {
-                    Font fontMark = new Font("Arial", MarkWidth);
-                    SolidBrush brushMark = new SolidBrush(colorShadowDark);
-                    StringFormat strformat = new StringFormat();
-                    strformat.Alignment = StringAlignment.Near;
-                    strformat.LineAlignment = StringAlignment.Center;
-                    e.Graphics.DrawString(rangeMax.ToString(), fontMark, brushMark, tickyoff1 + TickHeight, PosR,
+                    var fontMark = new Font("Arial", MarkWidth);
+                    var brushMark = new SolidBrush(colorShadowDark);
+                    var strformat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Near,
+                        LineAlignment = StringAlignment.Center
+                    };
+                    e.Graphics.DrawString(rangeMax.ToString(CultureInfo.InvariantCulture), fontMark, brushMark, tickyoff1 + TickHeight, PosR,
                                           strformat);
                 }
             }
@@ -650,17 +659,17 @@ namespace DAnTE.ExtraControls
 
 
         // mouse down event
-        private void OnMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            if (this.Enabled)
+            if (Enabled)
             {
-                Rectangle LMarkRect = new Rectangle(
+                var LMarkRect = new Rectangle(
                     Math.Min(LMarkPnt[0].X, LMarkPnt[1].X), // X
                     Math.Min(LMarkPnt[0].Y, LMarkPnt[3].Y), // Y
                     Math.Abs(LMarkPnt[2].X - LMarkPnt[0].X), // width
                     Math.Max(Math.Abs(LMarkPnt[0].Y - LMarkPnt[3].Y), Math.Abs(LMarkPnt[0].Y - LMarkPnt[1].Y)));
                     // height
-                Rectangle RMarkRect = new Rectangle(
+                var RMarkRect = new Rectangle(
                     Math.Min(RMarkPnt[0].X, RMarkPnt[2].X), // X
                     Math.Min(RMarkPnt[0].Y, RMarkPnt[1].Y), // Y
                     Math.Abs(RMarkPnt[0].X - RMarkPnt[2].X), // width
@@ -669,7 +678,7 @@ namespace DAnTE.ExtraControls
 
                 if (LMarkRect.Contains(e.X, e.Y))
                 {
-                    this.Capture = true;
+                    Capture = true;
                     MoveLMark = true;
                     ActiveMark = ActiveMarkType.left;
                     Invalidate(true);
@@ -677,7 +686,7 @@ namespace DAnTE.ExtraControls
 
                 if (RMarkRect.Contains(e.X, e.Y))
                 {
-                    this.Capture = true;
+                    Capture = true;
                     MoveRMark = true;
                     ActiveMark = ActiveMarkType.right;
                     Invalidate(true);
@@ -687,11 +696,11 @@ namespace DAnTE.ExtraControls
 
 
         // mouse up event
-        private void OnMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            if (this.Enabled)
+            if (Enabled)
             {
-                this.Capture = false;
+                Capture = false;
 
                 MoveLMark = false;
                 MoveRMark = false;
@@ -704,21 +713,17 @@ namespace DAnTE.ExtraControls
 
 
         // mouse move event
-        private void OnMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Enabled)
+            if (Enabled)
             {
-                int h = this.Height;
-                int w = this.Width;
-                double r1 = (double)rangeMin * (double)w / (double)(Maximum - Minimum);
-                double r2 = (double)rangeMax * (double)w / (double)(Maximum - Minimum);
-                Rectangle LMarkRect = new Rectangle(
+                var LMarkRect = new Rectangle(
                     Math.Min(LMarkPnt[0].X, LMarkPnt[1].X), // X
                     Math.Min(LMarkPnt[0].Y, LMarkPnt[3].Y), // Y
                     Math.Abs(LMarkPnt[2].X - LMarkPnt[0].X), // width
                     Math.Max(Math.Abs(LMarkPnt[0].Y - LMarkPnt[3].Y), Math.Abs(LMarkPnt[0].Y - LMarkPnt[1].Y)));
                     // height
-                Rectangle RMarkRect = new Rectangle(
+                var RMarkRect = new Rectangle(
                     Math.Min(RMarkPnt[0].X, RMarkPnt[2].X), // X
                     Math.Min(RMarkPnt[0].Y, RMarkPnt[1].Y), // Y
                     Math.Abs(RMarkPnt[0].X - RMarkPnt[2].X), // width
@@ -727,20 +732,20 @@ namespace DAnTE.ExtraControls
 
                 if (LMarkRect.Contains(e.X, e.Y) || RMarkRect.Contains(e.X, e.Y))
                 {
-                    if (this.orientationBar == RangeBarOrientation.horizontal)
-                        this.Cursor = Cursors.SizeWE;
+                    if (orientationBar == RangeBarOrientation.horizontal)
+                        Cursor = Cursors.SizeWE;
                     else
-                        this.Cursor = Cursors.SizeNS;
+                        Cursor = Cursors.SizeNS;
                 }
-                else this.Cursor = Cursors.Arrow;
+                else Cursor = Cursors.Arrow;
 
                 if (MoveLMark)
                 {
-                    if (this.orientationBar == RangeBarOrientation.horizontal)
-                        this.Cursor = Cursors.SizeWE;
+                    if (orientationBar == RangeBarOrientation.horizontal)
+                        Cursor = Cursors.SizeWE;
                     else
-                        this.Cursor = Cursors.SizeNS;
-                    if (this.orientationBar == RangeBarOrientation.horizontal)
+                        Cursor = Cursors.SizeNS;
+                    if (orientationBar == RangeBarOrientation.horizontal)
                         PosL = e.X;
                     else
                         PosL = e.Y;
@@ -758,11 +763,11 @@ namespace DAnTE.ExtraControls
                 }
                 else if (MoveRMark)
                 {
-                    if (this.orientationBar == RangeBarOrientation.horizontal)
-                        this.Cursor = Cursors.SizeWE;
+                    if (orientationBar == RangeBarOrientation.horizontal)
+                        Cursor = Cursors.SizeWE;
                     else
-                        this.Cursor = Cursors.SizeNS;
-                    if (this.orientationBar == RangeBarOrientation.horizontal)
+                        Cursor = Cursors.SizeNS;
+                    if (orientationBar == RangeBarOrientation.horizontal)
                         PosR = e.X;
                     else
                         PosR = e.Y;
@@ -788,16 +793,16 @@ namespace DAnTE.ExtraControls
         private void Pos2Range()
         {
             int w;
-            int posw;
 
-            if (this.orientationBar == RangeBarOrientation.horizontal)
-                w = this.Width;
+            if (orientationBar == RangeBarOrientation.horizontal)
+                w = Width;
             else
-                w = this.Height;
-            posw = w - 2 * MarkWidth - 2;
+                w = Height;
 
-            rangeMin = Minimum + (int)Math.Round((double)(Maximum - Minimum) * (double)(PosL - XPosMin) / (double)posw);
-            rangeMax = Minimum + (int)Math.Round((double)(Maximum - Minimum) * (double)(PosR - XPosMin) / (double)posw);
+            var posw = w - 2 * MarkWidth - 2;
+
+            rangeMin = Minimum + (int)Math.Round((Maximum - Minimum) * (PosL - XPosMin) / posw);
+            rangeMax = Minimum + (int)Math.Round((Maximum - Minimum) * (PosR - XPosMin) / posw);
         }
 
 
@@ -807,16 +812,16 @@ namespace DAnTE.ExtraControls
         private void Range2Pos()
         {
             int w;
-            int posw;
 
-            if (this.orientationBar == RangeBarOrientation.horizontal)
-                w = this.Width;
+            if (orientationBar == RangeBarOrientation.horizontal)
+                w = Width;
             else
-                w = this.Height;
-            posw = w - 2 * MarkWidth - 2;
+                w = Height;
 
-            PosL = XPosMin + (int)Math.Round((double)posw * (double)(rangeMin - Minimum) / (double)(Maximum - Minimum));
-            PosR = XPosMin + (int)Math.Round((double)posw * (double)(rangeMax - Minimum) / (double)(Maximum - Minimum));
+            var posw = w - 2 * MarkWidth - 2;
+
+            PosL = XPosMin + (int)Math.Round(posw * (rangeMin - Minimum) / (Maximum - Minimum));
+            PosR = XPosMin + (int)Math.Round(posw * (rangeMax - Minimum) / (Maximum - Minimum));
         }
 
 
@@ -825,7 +830,7 @@ namespace DAnTE.ExtraControls
         /// </summary>
         /// <param name="sender">object that sends event to resize</param>
         /// <param name="e">event parameter</param>
-        private void OnResize(object sender, System.EventArgs e)
+        private void OnResize(object sender, EventArgs e)
         {
             //Range2Pos();
             Invalidate(true);
@@ -837,9 +842,9 @@ namespace DAnTE.ExtraControls
         /// </summary>
         /// <param name="sender">object that sends key pressed event</param>
         /// <param name="e">event parameter</param>
-        private void OnKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (this.Enabled)
+            if (Enabled)
             {
                 if (ActiveMark == ActiveMarkType.left)
                 {
@@ -884,7 +889,7 @@ namespace DAnTE.ExtraControls
         }
 
 
-        private void OnLoad(object sender, System.EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             // use double buffering
             SetStyle(ControlStyles.DoubleBuffer, true);
@@ -892,13 +897,13 @@ namespace DAnTE.ExtraControls
             SetStyle(ControlStyles.UserPaint, true);
         }
 
-        private void OnSizeChanged(object sender, System.EventArgs e)
+        private void OnSizeChanged(object sender, EventArgs e)
         {
             Invalidate(true);
             Update();
         }
 
-        private void OnLeave(object sender, System.EventArgs e)
+        private void OnLeave(object sender, EventArgs e)
         {
             ActiveMark = ActiveMarkType.none;
         }
@@ -907,16 +912,14 @@ namespace DAnTE.ExtraControls
         public event RangeChangedEventHandler RangeChanged; // event handler for range changed
         public event RangeChangedEventHandler RangeChanging; // event handler for range is changing
 
-        public virtual void OnRangeChanged(EventArgs e)
+        public void OnRangeChanged(EventArgs e)
         {
-            if (RangeChanged != null)
-                RangeChanged(this, e);
+            RangeChanged?.Invoke(this, e);
         }
 
-        public virtual void OnRangeChanging(EventArgs e)
+        public void OnRangeChanging(EventArgs e)
         {
-            if (RangeChanging != null)
-                RangeChanging(this, e);
+            RangeChanging?.Invoke(this, e);
         }
     }
 }

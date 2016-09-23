@@ -7,7 +7,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmZRollupPar : Form
     {
-        readonly Purgatorio.clsZRollupPar mclsZRollup = new Purgatorio.clsZRollupPar();
+        readonly Purgatorio.clsZRollupPar mclsZRollup;
         private bool fieldsOK = true;
 
         public frmZRollupPar(Purgatorio.clsZRollupPar mclsZRoll)
@@ -18,7 +18,6 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            int gminpCount; //, minCountPerP;
             float gpvalue = 0.05f, minPresence = 50.0f;
 
             if (mtxtBoxGminP.Text.Length == 0 && mtxtBoxGpval.Text.Length == 0 &&
@@ -28,7 +27,6 @@ namespace DAnTE.Inferno
             {
                 try
                 {
-                    gminpCount = Convert.ToInt16(gminPCount);
                     minPresence = Convert.ToSingle(MinPresence, NumberFormatInfo.InvariantInfo);
                     gpvalue = Convert.ToSingle(Gp_value, NumberFormatInfo.InvariantInfo);
                 }
@@ -78,12 +76,11 @@ namespace DAnTE.Inferno
 
         private void mbtnSelectFolder_Click(object sender, EventArgs e)
         {
-            string folderName = null;
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            var folderBrowserDialog1 = new FolderBrowserDialog();
+            var result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                folderName = folderBrowserDialog1.SelectedPath;
+                var folderName = folderBrowserDialog1.SelectedPath;
                 mtxtBoxFolder.Text = folderName;
             }
             else mtxtBoxFolder.Text = Settings.Default.WorkingFolder;
@@ -91,7 +88,7 @@ namespace DAnTE.Inferno
 
         private void mtxtBoxGminP_TextChanged(object sender, EventArgs e)
         {
-            int grubbsMinP = 5;
+            int grubbsMinP;
             try
             {
                 grubbsMinP = Convert.ToInt16(mtxtBoxGminP.Text);

@@ -5,8 +5,8 @@ namespace DAnTE.Tools
 {
     public class clsDatasetInfo : ICloneable
     {
-        public string mstrDataSetName;
-        public List<Factor> marrFactorAssnmnts;
+        public readonly string mstrDataSetName;
+        public readonly List<Factor> marrFactorAssnmnts;
         public bool factorsSET = false;
 
         public clsDatasetInfo()

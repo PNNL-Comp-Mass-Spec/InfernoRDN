@@ -27,7 +27,7 @@ namespace DAnTE.Inferno.Plotting
             get { return mclsMAplotPar; }
         }
 
-        public new frmDAnTE DAnTEinstance
+        public frmDAnTE DAnTEinstance
         {
             set { mfrmDante = value; }
         }

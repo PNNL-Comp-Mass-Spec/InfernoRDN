@@ -15,26 +15,31 @@ namespace DAnTE.Paradiso
         private void m_fadeInOutTimer_Tick(object sender, EventArgs e)
         {
             // How should we fade?
-            if (m_fadeInFlag == false)
+            if (!m_fadeInFlag)
             {
+                // Fading out
                 Opacity -= (m_fadeInOutTimer.Interval / 400.0);
 
                 // Should we continue to fade?
                 if (this.Opacity > 0)
+                {
                     m_fadeInOutTimer.Enabled = true;
+                }
                 else
                 {
+                    // Close the form.
                     m_fadeInOutTimer.Enabled = false;
                     Close();
-                } // End else we should close the form.
-            } // End if we should fade in.
+                }
+            }
             else
             {
+                // Fading in
                 Opacity += (m_fadeInOutTimer.Interval / 400.0);
                 m_fadeInOutTimer.Enabled = (Opacity < 1.0);
                 m_fadeInFlag = (Opacity < 1.0);
-            } // End else we should fade out.
-        } // End m_fadeInOutTimer_Tick()
+            }
+        }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -57,7 +62,7 @@ namespace DAnTE.Paradiso
         //    base.OnClosing(e);
 
         //    // If the user canceled then don't fade anything.
-        //    if (e.Cancel == true)
+        //    if (e.Cancel)
         //        return;
 
         //    // Should we fade instead of closing?

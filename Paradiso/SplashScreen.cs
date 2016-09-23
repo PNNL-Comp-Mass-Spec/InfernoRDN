@@ -11,7 +11,7 @@ namespace DAnTE.Paradiso
     /// <summary>
     /// Summary description for SplashScreen.
     /// </summary>
-    public class SplashScreen : System.Windows.Forms.Form
+    public class SplashScreen : Form
     {
         public const string VALIDATING_R_PACKAGES = "Validating R Packages ...";
 
@@ -180,7 +180,7 @@ namespace DAnTE.Paradiso
 
         // A static method to create the thread and 
         // launch the SplashScreen.
-        static public void ShowSplashScreen()
+        public static void ShowSplashScreen()
         {
             // Make sure it's only launched once.
             if (ms_frmSplash != null)
@@ -194,22 +194,22 @@ namespace DAnTE.Paradiso
         }
 
         // A property returning the splash screen instance
-        static public SplashScreen SplashForm
+        public static SplashScreen SplashForm
         {
             get { return ms_frmSplash; }
         }
 
         // A private entry point for the thread.
-        static private void ShowForm()
+        private static void ShowForm()
         {
             ms_frmSplash = new SplashScreen();
             Application.Run(ms_frmSplash);
         }
 
         // A static method to close the SplashScreen
-        static public void CloseForm()
+        public static void CloseForm()
         {
-            if (ms_frmSplash != null && ms_frmSplash.IsDisposed == false)
+            if (ms_frmSplash != null && !ms_frmSplash.IsDisposed)
             {
                 // Make it start going away.
                 ms_frmSplash.m_dblOpacityIncrement = -Math.Abs(ms_frmSplash.m_dblOpacityDecrement);
@@ -219,7 +219,7 @@ namespace DAnTE.Paradiso
         }
 
         // A static method to set the status and update the reference.
-        static public void SetStatus(string newStatus)
+        public static void SetStatus(string newStatus)
         {
             SetStatus(newStatus, true);
         }
@@ -227,7 +227,7 @@ namespace DAnTE.Paradiso
         // A static method to set the status and optionally update the reference.
         // This is useful if you are in a section of code that has a variable
         // set of status string updates.  In that case, don't set the reference.
-        static public void SetStatus(string newStatus, bool setReference)
+        public static void SetStatus(string newStatus, bool setReference)
         {
             ms_sStatus = newStatus;
             if (ms_frmSplash == null)
@@ -239,11 +239,9 @@ namespace DAnTE.Paradiso
         // Static method called from the initializing application to 
         // give the splash screen reference points.  Not needed if
         // you are using a lot of status strings.
-        static public void SetReferencePoint()
+        public static void SetReferencePoint()
         {
-            if (ms_frmSplash == null)
-                return;
-            ms_frmSplash.SetReferenceInternal();
+            ms_frmSplash?.SetReferenceInternal();
         }
 
         // ************ Private methods ************
@@ -251,7 +249,7 @@ namespace DAnTE.Paradiso
         // Internal method for setting reference points.
         private void SetReferenceInternal()
         {
-            if (m_bDTSet == false)
+            if (!m_bDTSet)
             {
                 m_bDTSet = true;
                 m_dtStart = DateTime.Now;
@@ -365,7 +363,7 @@ namespace DAnTE.Paradiso
             }
 
             var showPeriods = true;
-            if (m_bFirstLaunch == false && m_dblLastCompletionFraction <= m_dblCompletionFraction)
+            if (!m_bFirstLaunch && m_dblLastCompletionFraction <= m_dblCompletionFraction)
             {
                 m_dblLastCompletionFraction += m_dblPBIncrementPerTimerInterval;
                 var width = (int)Math.Floor(pnlStatus.ClientRectangle.Width * m_dblLastCompletionFraction);
@@ -446,7 +444,7 @@ namespace DAnTE.Paradiso
         // Paint the portion of the panel invalidated during the tick event.
         private void pnlStatus_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            if (m_bFirstLaunch == false && e.ClipRectangle.Width > 0 && m_iActualTicks > 1)
+            if (!m_bFirstLaunch && e.ClipRectangle.Width > 0 && m_iActualTicks > 1)
             {
                 try
                 {
@@ -479,7 +477,7 @@ namespace DAnTE.Paradiso
         private const string APPLICATION_NAME = "Inferno";
 
         // Method for retrieving a Registry Value.
-        static public string GetStringRegistryValue(string key, string defaultValue)
+        public static string GetStringRegistryValue(string key, string defaultValue)
         {
             var softwareKey = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, false);
 
@@ -511,7 +509,7 @@ namespace DAnTE.Paradiso
         }
 
         // Method for storing a Registry Value.
-        static public void SetStringRegistryValue(string key, string stringValue)
+        public static void SetStringRegistryValue(string key, string stringValue)
         {
             var rkSoftware = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, true);
             if (rkSoftware == null)

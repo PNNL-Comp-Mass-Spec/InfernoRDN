@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace DAnTE.Purgatorio
 {
     public class clsMADPar
@@ -12,8 +10,6 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Set_Zero_Mean", "MedianAbsoluteDeviation_Adjustment")] public bool mblMeanAdj;
 
         public int mintFactorIndex;
-
-        public List<string> marrFactors;
 
         public clsMADPar()
         {

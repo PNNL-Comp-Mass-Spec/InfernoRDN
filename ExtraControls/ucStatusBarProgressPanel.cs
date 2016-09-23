@@ -1,13 +1,15 @@
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace DAnTE.ExtraControls
 {
+    [Obsolete("Unused")]
     public class ucStatusBarProgressPanel : StatusBarPanel
     {
-        private bool isAdded = false;
+        private bool isAdded;
 
-        private ProgressBar progressBar = new ProgressBar();
+        private readonly ProgressBar progressBar = new ProgressBar();
 
         [Category("Progress")]
         public ProgressBar ProgressBar
@@ -24,7 +26,7 @@ namespace DAnTE.ExtraControls
         public void ParentDrawItemHandler(object sender, StatusBarDrawItemEventArgs sbdevent)
         {
             // Only add this once to the parent's control container
-            if (isAdded == false)
+            if (!isAdded)
             {
                 this.Parent.Controls.Add(this.progressBar);
                 this.isAdded = true;

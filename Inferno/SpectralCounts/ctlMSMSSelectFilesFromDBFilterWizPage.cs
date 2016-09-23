@@ -10,21 +10,21 @@ namespace DAnTE.Inferno
     public class ctlMSMSSelectFilesFromDBFilterWizPage : Wizard.UI.InternalWizardPage
     {
         public string mstrFilter;
-        private System.Windows.Forms.Panel panelStep;
-        private System.Windows.Forms.Label labelSelect;
-        private System.Windows.Forms.Panel panelFileNames;
+        private Panel panelStep;
+        private Label labelSelect;
+        private Panel panelFileNames;
         private readonly System.ComponentModel.IContainer components = null;
 
         private List<string> marrDatasetInfo = new List<string>();
         private string[] mstrArrProjects;
 
-        private System.Windows.Forms.TextBox mtxtBoxfilter;
+        private TextBox mtxtBoxfilter;
 
-        private System.Windows.Forms.ListView mlstViewJobs;
-        private System.Windows.Forms.ColumnHeader datasetName;
+        private ListView mlstViewJobs;
+        private ColumnHeader datasetName;
 
-        private System.Windows.Forms.Button mbtnFilter;
-        private System.Windows.Forms.Button buttonToggleAll;
+        private Button mbtnFilter;
+        private Button buttonToggleAll;
 
         private bool FilesSelected = false;
         private const int NUM_COLUMNS = 8;
@@ -34,7 +34,7 @@ namespace DAnTE.Inferno
         //private int selectedFileIndex = 0 ;
         //MultiAlignWin.enmSelectType selection ;
         //private string job_Id ;
-        private System.Windows.Forms.Button buttonClearAll;
+        private Button buttonClearAll;
         //private bool mblRunIt = false;
         private DataTable mdtLabKeyFiles = new DataTable();
         private readonly SortedSet<string> mhTable = new SortedSet<string>();
@@ -60,7 +60,6 @@ namespace DAnTE.Inferno
             _lvwItemComparer = new ListViewItemComparer();
             this.mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
 
-            // TODO: Add any initialization after the InitializeComponent call
             this.SetActive += this.ctlSelectFilesFromDBFilterWizardPage_SetActive;
         }
 
@@ -74,7 +73,6 @@ namespace DAnTE.Inferno
             _lvwItemComparer = new ListViewItemComparer();
             this.mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
 
-            // TODO: Add any initialization after the InitializeComponent call
             this.SetActive += this.ctlSelectFilesFromDBFilterWizardPage_SetActive;
         }
 

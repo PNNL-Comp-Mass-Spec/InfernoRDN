@@ -16,7 +16,7 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public Annotation()
         {
-            Changed += new EventHandler(OnAnnotationChanged);
+            Changed += OnAnnotationChanged;
 
             _guid = Guid.NewGuid();
         }
@@ -40,7 +40,7 @@ namespace DAnTE.ExtraControls
         /// <param name="location">The location where the string should be placed</param>
         public Annotation(string text, Font font, Color color, Point location)
         {
-            Changed += new EventHandler(OnAnnotationChanged);
+            Changed += OnAnnotationChanged;
 
             this.Text = text;
             this.Font = font;

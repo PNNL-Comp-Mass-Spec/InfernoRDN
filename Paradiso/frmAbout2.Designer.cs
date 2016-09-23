@@ -60,10 +60,10 @@ namespace DAnTE.Paradiso
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.panel1.Controls.Add(this.mbtnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 361);
+            this.panel1.Location = new System.Drawing.Point(0, 364);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(387, 59);
+            this.panel1.Size = new System.Drawing.Size(523, 59);
             this.panel1.TabIndex = 9;
             // 
             // mlblDev
@@ -81,10 +81,10 @@ namespace DAnTE.Paradiso
             // 
             this.mlblCredits.BackColor = System.Drawing.Color.Transparent;
             this.mlblCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mlblCredits.Location = new System.Drawing.Point(31, 112);
+            this.mlblCredits.Location = new System.Drawing.Point(13, 112);
             this.mlblCredits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.mlblCredits.Name = "mlblCredits";
-            this.mlblCredits.Size = new System.Drawing.Size(321, 245);
+            this.mlblCredits.Size = new System.Drawing.Size(497, 244);
             this.mlblCredits.TabIndex = 11;
             this.mlblCredits.Text = "Credits";
             // 
@@ -94,7 +94,7 @@ namespace DAnTE.Paradiso
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BackgroundImage = global::DAnTE.Properties.Resources.AboutInfernoBack;
-            this.ClientSize = new System.Drawing.Size(387, 420);
+            this.ClientSize = new System.Drawing.Size(523, 423);
             this.Controls.Add(this.mlblCredits);
             this.Controls.Add(this.mlblDev);
             this.Controls.Add(this.panel1);

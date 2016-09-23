@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using DAnTE.Properties;
 using DAnTE.Tools;
 
@@ -55,12 +56,12 @@ namespace DAnTE.Purgatorio
                 palettename = "Black-Body";
 
             eColor = Settings.Default.ellipseCol;
-            if (eColor == "")
+            if (string.IsNullOrWhiteSpace(eColor))
                 eColor = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Green));
             var lowC = Settings.Default.colCustLow;
             var midC = Settings.Default.colCustMid;
             var highC = Settings.Default.colCustHigh;
-            if ((lowC == "") || (midC == "") || (highC == ""))
+            if (string.IsNullOrWhiteSpace(lowC) || string.IsNullOrWhiteSpace(midC) || string.IsNullOrWhiteSpace(highC))
             {
                 lowC = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Blue));
                 midC = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.White));
@@ -100,8 +101,6 @@ namespace DAnTE.Purgatorio
                     case 4:
                         func = "plot2Dmat";
                         break;
-                    default:
-                        break;
                 }
                 return func;
             }
@@ -133,8 +132,6 @@ namespace DAnTE.Purgatorio
                     case 5:
                         cMap = @"cMap=""BlueWhiteRed""";
                         palettename = "Blue-White-Red";
-                        break;
-                    default:
                         break;
                 }
                 return cMap;
@@ -222,29 +219,32 @@ namespace DAnTE.Purgatorio
             get
             {
                 var Rfunction = RplotFunc;
+                var commandBuilder = new StringBuilder();
 
-                rcmd = Rfunction + "(" + Rdataset + "[," + datasubset + "]," + this.Background + ",";
-                rcmd = rcmd + this.Stamp + @",file=""" + tempFile + "\"";
+                commandBuilder.Append(Rfunction + "(" + Rdataset + "[," + datasubset + "]," + Background + ",");
+                commandBuilder.Append(Stamp + @",file=""" + tempFile + "\"");
 
                 if (Rfunction.Equals("plotHeatmapCorr"))
                 {
-                    rcmd = rcmd + "," + this.FontScale + "," + Palette + "," + customCol + "," + corrRange + @")";
+                    commandBuilder.Append("," + FontScale + "," + Palette + "," + customCol + "," + corrRange + @")");
                 }
                 else if (Rfunction.Equals("plotEllipseCorr"))
                 {
-                    rcmd = rcmd + "," + this.FontScale + "," + EColor + @")";
+                    commandBuilder.Append("," + FontScale + "," + EColor + @")");
                 }
                 else if (Rfunction.Equals("plot2Dmat"))
                 {
-                    rcmd = rcmd + "," + ShowCorr + "," + Palette + "," + customCol + "," + corrRange + @")";
+                    commandBuilder.Append("," + ShowCorr + "," + Palette + "," + customCol + "," + corrRange + @")");
                 }
-                else if (showYXLine)
-                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," +
-                           PlotHist + ",regL=TRUE" + @")";
                 else
-                    rcmd = rcmd + "," + this.ShowOverlap + "," + this.ShowLoess + "," +
-                           PlotHist + @")";
+                {
+                    if (showYXLine)
+                        commandBuilder.Append("," + ShowOverlap + "," + ShowLoess + "," + PlotHist + ",regL=TRUE" + @")");
+                    else
+                        commandBuilder.Append("," + ShowOverlap + "," + ShowLoess + "," + PlotHist + @")");
+                }
 
+                rcmd = commandBuilder.ToString();
                 return rcmd;
             }
         }

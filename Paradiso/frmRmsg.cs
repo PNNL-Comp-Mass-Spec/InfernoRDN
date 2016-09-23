@@ -6,7 +6,7 @@ namespace DAnTE.Paradiso
     /// <summary>
     /// Summary description for frmRmessages. 
     /// </summary>
-    public class frmRmsg : System.Windows.Forms.Form
+    public class frmRmsg : Form
     {
         //public AxSTATCONNECTORCLNTLib.AxStatConnectorCharacterDevice axStatConnectorCharacterDevice1;
         //public STATCONNECTORCLNTLib.StatConnectorCharacterDevice axStatConnectorCharacterDevice1;

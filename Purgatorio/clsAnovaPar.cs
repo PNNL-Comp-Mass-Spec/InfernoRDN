@@ -12,11 +12,9 @@ namespace DAnTE.Purgatorio
         //[Tools.clsAnalysisAttribute("Dataset(R)", "ANOVA")]
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")] public string mstrDatasetName;
-        public string tempFile;
         [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")] public int numDatapts;
         public List<string> fixedEff;
         public List<string> randomEff;
-        public List<string> marrFactors;
 
         public clsAnovaPar()
         {
@@ -25,7 +23,6 @@ namespace DAnTE.Purgatorio
             useREML = false;
             interactions = false;
             Rdataset = "Eset";
-            tempFile = "C:/";
             numDatapts = 3;
             fixedEff = new List<string>();
             randomEff = new List<string>();

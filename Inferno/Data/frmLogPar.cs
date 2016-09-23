@@ -6,7 +6,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmLogPar : Form
     {
-        Purgatorio.clsLogTransformPar mclsLogParam = new Purgatorio.clsLogTransformPar();
+        readonly Purgatorio.clsLogTransformPar mclsLogParam;
 
         public frmLogPar(Purgatorio.clsLogTransformPar clsLogPar)
         {

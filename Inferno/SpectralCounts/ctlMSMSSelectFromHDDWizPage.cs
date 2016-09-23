@@ -9,18 +9,18 @@ namespace DAnTE.Inferno
 {
     public class ctlMSMSSelectFromHDDWizPage : Wizard.UI.InternalWizardPage
     {
-        private System.Windows.Forms.Panel panelStep;
-        private System.Windows.Forms.Label labelSelect;
-        private System.Windows.Forms.Button mbtnSelectFiles;
-        private System.Windows.Forms.Panel panelFileNames;
-        private System.ComponentModel.IContainer components = null;
+        private Panel panelStep;
+        private Label labelSelect;
+        private Button mbtnSelectFiles;
+        private Panel panelFileNames;
+        private readonly IContainer components = null;
 
         private string[] strarrFilePaths;
         private List<string> marrDatasetFilePaths = new List<string>();
 
-        private System.Windows.Forms.ListView joblistView;
+        private ListView joblistView;
         private Button mbtnClear;
-        private System.Windows.Forms.ColumnHeader mFileNameColumnHeader;
+        private ColumnHeader mFileNameColumnHeader;
         private readonly OpenFileDialog openFileDialog1;
 
         public ctlMSMSSelectFromHDDWizPage()
@@ -28,7 +28,6 @@ namespace DAnTE.Inferno
             // This call is required by the Windows Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
             openFileDialog1 = new OpenFileDialog();
         }
 
@@ -39,10 +38,7 @@ namespace DAnTE.Inferno
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

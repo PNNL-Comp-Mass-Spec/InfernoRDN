@@ -14,7 +14,7 @@ namespace DAnTE.Paradiso
 
         private void m_fadeInOutTimer_Tick(object sender, EventArgs e)
         {
-            if (m_fadeInFlag == false)
+            if (!m_fadeInFlag)
             {
                 // Fading out
 
@@ -25,9 +25,10 @@ namespace DAnTE.Paradiso
                     m_fadeInOutTimer.Enabled = true;
                 else
                 {
+                    // Close the form.
                     m_fadeInOutTimer.Enabled = false;
                     Close();
-                } // End else we should close the form.
+                }
             }
             else
             {
@@ -70,7 +71,7 @@ namespace DAnTE.Paradiso
         //    base.OnClosing(e);
 
         //    // If the user canceled then don't fade anything.
-        //    if (e.Cancel == true)
+        //    if (e.Cancel)
         //        return;
 
         //    if (Opacity > 0)
@@ -89,8 +90,7 @@ namespace DAnTE.Paradiso
 
         private void ShowCredits()
         {
-            var credits = string.Empty +
-                          "Maintained by Matthew Monroe at Pacific Northwest National Laboratory" +
+            var credits = "Maintained by Matthew Monroe at Pacific Northwest National Laboratory" +
                           Environment.NewLine + "Contact: matthew.monroe@pnnl.gov or proteomics@pnnl.gov" +
                           Environment.NewLine +
                           Environment.NewLine + "This is version " + Tools.clsRCmdLog.GetProgramVersion() +
@@ -99,7 +99,8 @@ namespace DAnTE.Paradiso
                           Environment.NewLine + "Thanks to Konstantinos Petritis and the" +
                           Environment.NewLine + "Center for Proteomics staff at TGen." +
                           Environment.NewLine +
-                          Environment.NewLine + "Utilizes R.NET, http://rdotnet.codeplex.com/";
+                          Environment.NewLine + "Utilizes R.NET (https://github.com/jmp75/rdotnet)" +
+                          Environment.NewLine + "with bug fixes from https://github.com/PNNL-Comp-Mass-Spec/rdotnet";
 
             mlblCredits.Visible = true;
             mlblCredits.Text = credits;

@@ -22,7 +22,7 @@ namespace DAnTE.Inferno
             mfrmDante.PlotCorrelation(mclsCorrPar);
         }
 
-        public new frmDAnTE DAnTEinstance
+        public frmDAnTE DAnTEinstance
         {
             set { mfrmDante = value; }
         }

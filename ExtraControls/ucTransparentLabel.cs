@@ -18,8 +18,8 @@ namespace DAnTE.ExtraControls
         };
 
         private ShapeBorderStyles _borderStyle = ShapeBorderStyles.ShapeBSNone;
-        private System.Drawing.Color _backColor = Color.Black;
-        private System.Drawing.Color _borderColor = Color.White;
+        private Color _backColor = Color.Black;
+        private Color _borderColor = Color.White;
         private int _radius = 20;
         private int _opacity = 125;
         private string _text = "ucTransparentLabel";
@@ -44,13 +44,13 @@ namespace DAnTE.ExtraControls
         protected TextAlignment _textAlign = TextAlignment.Center;
         protected MoveType _moving = MoveType.None;
         protected bool _isSelected = false;
-        private System.Drawing.Color _dimmedColor = Color.LightGray;
+        private Color _dimmedColor = Color.LightGray;
 
         // Work Variables
-        protected int pointX = 0;
-        protected int pointY = 0;
-        protected Rectangle iRect = new Rectangle();
-        protected Rectangle txtRect = new Rectangle();
+        protected int pointX;
+        protected int pointY;
+        protected Rectangle iRect;
+        protected Rectangle txtRect;
 
         #endregion
 
@@ -65,14 +65,13 @@ namespace DAnTE.ExtraControls
                 ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.Opaque, false);
             UpdateStyles();
-            this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = false;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            this.timer1.Interval = 100;
+            components = new Container();
+            timer1 = new Timer(components)
+            {
+                Enabled = false,
+                Interval = 100
+            };
+            timer1.Tick += timer1_Tick;
         }
 
         #endregion
@@ -246,7 +245,9 @@ namespace DAnTE.ExtraControls
             get { return this.timer1.Enabled; }
             set
             {
-                if (value == false) _moving = MoveType.None;
+                if (!value)
+                    _moving = MoveType.None;
+
                 this.timer1.Enabled = value;
                 this.Invalidate();
             }
@@ -258,7 +259,7 @@ namespace DAnTE.ExtraControls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            SmoothingMode sm = e.Graphics.SmoothingMode;
+            var sm = e.Graphics.SmoothingMode;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             if (_borderStyle == ShapeBorderStyles.ShapeBSFixedSingle)
                 DrawBorder(e.Graphics);
@@ -269,12 +270,12 @@ namespace DAnTE.ExtraControls
 
         private void DrawBorder(Graphics g)
         {
-            Rectangle rect = this.ClientRectangle;
+            var rect = this.ClientRectangle;
             rect.Width--;
             rect.Height--;
-            using (GraphicsPath bp = GetPath(rect, _radius))
+            using (var bp = GetPath(rect, _radius))
             {
-                using (Pen p = new Pen(_borderColor))
+                using (var p = new Pen(_borderColor))
                 {
                     g.DrawPath(p, bp);
                 }
@@ -283,13 +284,13 @@ namespace DAnTE.ExtraControls
 
         private void DrawLabelBackground(Graphics g)
         {
-            Rectangle rect = this.ClientRectangle;
+            var rect = this.ClientRectangle;
             iRect = rect;
             rect.X++;
             rect.Y++;
             rect.Width -= 2;
             rect.Height -= 2;
-            using (GraphicsPath bb = GetPath(rect, _radius))
+            using (var bb = GetPath(rect, _radius))
             {
                 using (Brush br = new SolidBrush(Color.FromArgb(_opacity, _backColor)))
                 {
@@ -304,7 +305,7 @@ namespace DAnTE.ExtraControls
         {
             int x = rc.X, y = rc.Y, w = rc.Width, h = rc.Height;
             r = r << 1;
-            GraphicsPath path = new GraphicsPath();
+            var path = new GraphicsPath();
             if (r > 0)
                 //  If the radious of rounded corner is greater than one side then
                 //  do the side rounded
@@ -339,7 +340,7 @@ namespace DAnTE.ExtraControls
         {
             //This is a workaround to get MeasureString to work properly
             //pe.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-            SizeF sz = pe.Graphics.MeasureString(_text, base.Font);
+            var sz = pe.Graphics.MeasureString(_text, base.Font);
             switch (_moving)
             {
                 case MoveType.None:

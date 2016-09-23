@@ -6,7 +6,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmShapiroWilksPar : Form
     {
-        private clsShapiroWilksPar mclsShapiroWilksPar = new clsShapiroWilksPar();
+        private readonly clsShapiroWilksPar mclsShapiroWilksPar;
 
         public frmShapiroWilksPar(clsShapiroWilksPar clsKW)
         {

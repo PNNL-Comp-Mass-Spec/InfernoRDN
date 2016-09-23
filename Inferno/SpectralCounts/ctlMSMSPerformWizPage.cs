@@ -1,20 +1,15 @@
 using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using Wizard.UI;
 
 namespace DAnTE.Inferno
 {
     public partial class ctlMSMSPerformWizPage : Wizard.UI.InternalWizardPage
     {
-        FolderBrowserDialog folderBrwseDlg;
-        string foldername = null;
-
         public ctlMSMSPerformWizPage()
         {
             InitializeComponent();
-            folderBrwseDlg = new FolderBrowserDialog();
-            foldername = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
         private void ctlMSMSPerformWizPage_SetActive(object sender, CancelEventArgs e)

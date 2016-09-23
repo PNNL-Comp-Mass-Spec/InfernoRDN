@@ -4,7 +4,7 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        #region Designer Variables -----------------------------------
+        #region Designer Variables
         private System.Windows.Forms.MenuStrip mnuStripDAnTE;
         private System.Windows.Forms.ToolStripMenuItem menuItemFile;
         private System.Windows.Forms.ToolStripMenuItem menuItemOpen;

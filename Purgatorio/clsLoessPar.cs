@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace DAnTE.Purgatorio
 {
     public class clsLoessPar
@@ -16,7 +14,6 @@ namespace DAnTE.Purgatorio
         public int mintFactorIndex;
 
         private string mstrReference;
-        public List<string> marrFactors;
 
         public clsLoessPar()
         {

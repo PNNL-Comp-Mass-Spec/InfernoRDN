@@ -27,7 +27,7 @@ namespace DAnTE.Inferno
             get { return mclsHistPar; }
         }
 
-        public new frmDAnTE DAnTEinstance
+        public frmDAnTE DAnTEinstance
         {
             set { mfrmDante = value; }
         }

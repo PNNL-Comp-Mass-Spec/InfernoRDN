@@ -5,20 +5,11 @@ namespace DAnTE.Inferno
 {
     public partial class frmShowProgress : Form
     {
-        public delegate void ButtonClicked();
-
-        //public event ButtonClicked meventCancelButtonClicked;
 
         public frmShowProgress()
         {
             InitializeComponent();
         }
-
-        //private void mbtnCancel_Click(object sender, System.EventArgs e)
-        //{
-        //    if (meventCancelButtonClicked != null)
-        //        meventCancelButtonClicked();
-        //}
 
         private void frmPrBarLoad_event(object sender, EventArgs e)
         {

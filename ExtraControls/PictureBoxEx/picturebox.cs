@@ -16,9 +16,6 @@ namespace DAnTE.ExtraControls
     /// </summary>
     public class PictureBoxEx : ScrollableControl
     {
-        public delegate void menuclicked();
-
-        //public event menuclicked meventmenuclicked;
 
         /// <summary>
         /// Constructor: create a new extended picturebox

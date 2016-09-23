@@ -309,7 +309,7 @@ namespace DAnTE.Inferno
             {
                 var factorTable = mhtDatasets["Factors"];
                 madParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
-                mclsMADPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+                clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
                 madParams.PopulateFactorComboBox = null;
@@ -438,7 +438,7 @@ namespace DAnTE.Inferno
             {
                 var factorTable = mhtDatasets["Factors"];
                 imputeParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
-                mclsImputePar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
+                clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
                 imputeParams.PopulateFactorComboBox = null;
