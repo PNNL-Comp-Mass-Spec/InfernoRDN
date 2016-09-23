@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace DAnTE.Paradiso
 {
+    [Obsolete("Unused")]
     public class Splasher
     {
         private static Form m_SplashForm = null;
@@ -24,11 +25,11 @@ namespace DAnTE.Paradiso
                 throw (new Exception("splashFormType is null"));
             }
 
-            m_SplashThread = new Thread(new ThreadStart(delegate()
+            m_SplashThread = new Thread(delegate()
             {
                 CreateInstance(splashFormType);
                 Application.Run(m_SplashForm);
-            }));
+            });
 
             m_SplashThread.IsBackground = true;
             m_SplashThread.SetApartmentState(ApartmentState.STA);
@@ -75,7 +76,7 @@ namespace DAnTE.Paradiso
 
         private static void CreateInstance(Type FormType)
         {
-            object obj = FormType.InvokeMember(null,
+            var obj = FormType.InvokeMember(null,
                                                BindingFlags.DeclaredOnly |
                                                BindingFlags.Public | BindingFlags.NonPublic |
                                                BindingFlags.Instance | BindingFlags.CreateInstance, null, null, null);

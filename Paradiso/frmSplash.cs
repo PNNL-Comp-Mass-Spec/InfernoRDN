@@ -1,7 +1,9 @@
+using System;
 using System.Windows.Forms;
 
 namespace DAnTE.Paradiso
 {
+    [Obsolete("Unused")]
     public partial class frmSplash : Form, ISplashForm
     {
         public frmSplash()

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace DAnTE.Purgatorio
 {
+    [Obsolete("Unused")]
     public class clsSpectralCountPar
     {
         public List<string> marrFileNames;

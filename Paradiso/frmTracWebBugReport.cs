@@ -7,6 +7,7 @@ namespace DAnTE.Paradiso
     /// <summary>
     /// Summary description for frmTracWebBugReport.
     /// </summary>
+    [Obsolete("Unused", true)]
     public class frmTracWebBugReport : Form
     {
         private GroupBox grpBoxUserInfo;
