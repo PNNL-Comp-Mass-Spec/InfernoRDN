@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using DAnTE.Properties;
@@ -9,9 +8,9 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        DAnTE.Purgatorio.clsRRollupPar mclsRRollupPar;
-        DAnTE.Purgatorio.clsZRollupPar mclsZRollupPar;
-        DAnTE.Purgatorio.clsQRollupPar mclsQRollupPar;
+        Purgatorio.clsRRollupPar mclsRRollupPar;
+        Purgatorio.clsZRollupPar mclsZRollupPar;
+        Purgatorio.clsQRollupPar mclsQRollupPar;
 
         #region Rollup Menu items
 
@@ -23,29 +22,28 @@ namespace DAnTE.Inferno
 
         private void menuItemRRollup_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateTables(mclsSelected, "RRollup"))
+            if (!ValidateTables(selectedNodeTag, "RRollup"))
             {
                 return;
             }
 
-            string dataset = mclsSelected.mstrRdatasetName;
+            var dataset = selectedNodeTag.mstrRdatasetName;
             
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_RRollup);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_RRollupCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_RRollup;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_RRollupCompleted;
             #endregion
 
-            mclsRRollupPar = new DAnTE.Purgatorio.clsRRollupPar
+            mclsRRollupPar = new Purgatorio.clsRRollupPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText,
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText,
                 OutFolder_pub = Settings.Default.WorkingFolder
             };
 
-            frmRRollUpPar mfrmRefRollup = new frmRRollUpPar(mclsRRollupPar);
+            var rRollupParams = new frmRRollUpPar(mclsRRollupPar);
 
             if (mhtDatasets.ContainsKey("RRollup"))
             {
@@ -53,14 +51,14 @@ namespace DAnTE.Inferno
                 return;
             }
             
-            if (mfrmRefRollup.ShowDialog() == DialogResult.OK)
+            if (rRollupParams.ShowDialog() == DialogResult.OK)
             {
-                mclsRRollupPar = mfrmRefRollup.clsRRollupPar;
+                mclsRRollupPar = rRollupParams.clsRRollupPar;
 
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsRRollupPar, "RRollup");
-                    string rcmd = mclsRRollupPar.Rcmd;
+                    var rcmd = mclsRRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
                     mfrmShowProgress.Message = "RRollup : Scaling Peptides and Rolling up to Proteins ...";
@@ -69,38 +67,36 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_RRollup);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_RRollupCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_RRollup;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_RRollupCompleted;
             #endregion
         }
 
 
         private void menuItemZRollup_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateTables(mclsSelected, "ZRollup"))
+            if (!ValidateTables(selectedNodeTag, "ZRollup"))
             {
                 return;
             }
 
-            string dataset = mclsSelected.mstrRdatasetName;            
+            var dataset = selectedNodeTag.mstrRdatasetName;            
 
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_ZRollup);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ZRollupCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_ZRollup;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_ZRollupCompleted;
             #endregion
 
-            mclsZRollupPar = new DAnTE.Purgatorio.clsZRollupPar
+            mclsZRollupPar = new Purgatorio.clsZRollupPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText,
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText,
                 OutFolder_pub = Settings.Default.WorkingFolder
             };
 
-            frmZRollupPar mfrmScaling = new frmZRollupPar(mclsZRollupPar);
+            var zRollupParams = new frmZRollupPar(mclsZRollupPar);
 
             if (mhtDatasets.ContainsKey("ZRollup"))
             {
@@ -108,14 +104,14 @@ namespace DAnTE.Inferno
                 return;
             }
                 
-            if (mfrmScaling.ShowDialog() == DialogResult.OK)
+            if (zRollupParams.ShowDialog() == DialogResult.OK)
             {
-                mclsZRollupPar = mfrmScaling.clsZRollupPar;
+                mclsZRollupPar = zRollupParams.clsZRollupPar;
 
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsZRollupPar, "ZRollup");
-                    string rcmd = mclsZRollupPar.Rcmd;
+                    var rcmd = mclsZRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
                     mfrmShowProgress.Message = "ZRollup: Scaling Peptides and Rolling up to Proteins ...";
@@ -124,36 +120,34 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_ZRollup);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_ZRollupCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_ZRollup;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_ZRollupCompleted;
             #endregion
         }
 
         private void menuItemQRup_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateTables(mclsSelected, "QRollup"))
+            if (!ValidateTables(selectedNodeTag, "QRollup"))
             {
                 return;
             }
 
-            string dataset = mclsSelected.mstrRdatasetName;
+            var dataset = selectedNodeTag.mstrRdatasetName;
             
             #region Hook Threading events
-            m_BackgroundWorker.DoWork += new DoWorkEventHandler(m_BackgroundWorker_QRollup);
-            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_QRollupCompleted);
+            m_BackgroundWorker.DoWork += m_BackgroundWorker_QRollup;
+            m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QRollupCompleted;
             #endregion
 
-            mclsQRollupPar = new DAnTE.Purgatorio.clsQRollupPar
+            mclsQRollupPar = new Purgatorio.clsQRollupPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            frmQRollupPar mfrmQRup = new frmQRollupPar(mclsQRollupPar);
+            var qRollupParams = new frmQRollupPar(mclsQRollupPar);
 
             if (mhtDatasets.ContainsKey("Protein (Q)rollup"))
             {
@@ -161,14 +155,14 @@ namespace DAnTE.Inferno
                 return;
             }
                 
-            if (mfrmQRup.ShowDialog() == DialogResult.OK)
+            if (qRollupParams.ShowDialog() == DialogResult.OK)
             {
-                mclsQRollupPar = mfrmQRup.clsQRollupPar;
+                mclsQRollupPar = qRollupParams.clsQRollupPar;
 
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsQRollupPar, "QRollup");
-                    string rcmd = mclsQRollupPar.Rcmd;
+                    var rcmd = mclsQRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
                     mfrmShowProgress.Message = "QRollup: Rolling up to Proteins ...";
@@ -177,9 +171,8 @@ namespace DAnTE.Inferno
             }
 
             #region Unhook Threading events
-            m_BackgroundWorker.DoWork -= new DoWorkEventHandler(m_BackgroundWorker_QRollup);
-            m_BackgroundWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(
-                m_BackgroundWorker_QRollupCompleted);
+            m_BackgroundWorker.DoWork -= m_BackgroundWorker_QRollup;
+            m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QRollupCompleted;
             #endregion
         }
 
@@ -188,8 +181,7 @@ namespace DAnTE.Inferno
         #region Private Methods
         private bool DoQRollup(string rcmd)
         {
-            DataTable mDTQProteins = new DataTable();
-            bool success = true;
+            var success = true;
 
             try
             {
@@ -197,11 +189,11 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]"); // dataset with no peptide counts
                 if (mRConnector.GetTableFromRproteinMatrix("qrollupP"))
                 {
-                    mDTQProteins = mRConnector.DataTable.Copy();
-                    mDTQProteins.TableName = "qrollupP1";
-                    mDTQProteins.Columns[0].ColumnName = "Protein";
+                    var qRollupResults = mRConnector.DataTable.Copy();
+                    qRollupResults.TableName = "qrollupP1";
+                    qRollupResults.Columns[0].ColumnName = "Protein";
                     mRConnector.EvaluateNoReturn("cat(\"Proteins Q rolled up.\n\")");
-                    AddDataset2HashTable(mDTQProteins);
+                    AddDataset2HashTable(qRollupResults);
                 }
                 else
                     success = false;
@@ -217,8 +209,7 @@ namespace DAnTE.Inferno
 
         private bool DoZRollup(string rcmd) //ZRollup
         {
-            DataTable mDTZProteins = new DataTable();
-            bool success = true;
+            var success = true;
 
             //rcmd = "pScaled2 <- scale.proteins(Eset,ProtInfo)";
             try
@@ -231,11 +222,11 @@ namespace DAnTE.Inferno
 
                 if (mRConnector.GetTableFromRproteinMatrix("pData2"))
                 {
-                    mDTZProteins = mRConnector.DataTable.Copy();
-                    mDTZProteins.TableName = "pData22";
-                    mDTZProteins.Columns[0].ColumnName = "Protein";
+                    var zRollupResults = mRConnector.DataTable.Copy();
+                    zRollupResults.TableName = "pData22";
+                    zRollupResults.Columns[0].ColumnName = "Protein";
                     mRConnector.EvaluateNoReturn("cat(\"Data scaling done.\n\")");
-                    AddDataset2HashTable(mDTZProteins);
+                    AddDataset2HashTable(zRollupResults);
                 }
                 else
                     success = false;
@@ -250,10 +241,10 @@ namespace DAnTE.Inferno
 
         private bool DoRRollup(string rcmd) //RRollup
         {
-            bool success = true;
-            DataTable mDTRProteins = new DataTable();
-            DataTable mDTRScaled = new DataTable();
-            DataTable mDTRORscaled = new DataTable();
+            var success = true;
+            var rRollupProteins = new DataTable();
+            var scaledData = new DataTable();
+            var scaledDataNoOutliers = new DataTable();
 
             try
             {
@@ -265,21 +256,21 @@ namespace DAnTE.Inferno
 
                 if (mRConnector.GetTableFromRproteinMatrix("pData1"))
                 {
-                    mDTRProteins = mRConnector.DataTable.Copy();
-                    mDTRProteins.TableName = "pData11";
-                    mDTRProteins.Columns[0].ColumnName = "Protein";
+                    rRollupProteins = mRConnector.DataTable.Copy();
+                    rRollupProteins.TableName = "pData11";
+                    rRollupProteins.Columns[0].ColumnName = "Protein";
 
                     if (mRConnector.GetTableFromRmatrix("sData1"))
                     {
-                        mDTRScaled = mRConnector.DataTable.Copy();
-                        mDTRScaled.TableName = "sData1";
+                        scaledData = mRConnector.DataTable.Copy();
+                        scaledData.TableName = "sData1";
                     }
                     else
                         success = false;
                     if (mRConnector.GetTableFromRmatrix("orData1"))
                     {
-                        mDTRORscaled = mRConnector.DataTable.Copy();
-                        mDTRORscaled.TableName = "orData1";
+                        scaledDataNoOutliers = mRConnector.DataTable.Copy();
+                        scaledDataNoOutliers.TableName = "orData1";
                         mRConnector.EvaluateNoReturn("cat(\"Data Ref scaling/outliers test done.\n\")");
                     }
                     else
@@ -289,9 +280,9 @@ namespace DAnTE.Inferno
                     success = false;
                 if (success)
                 {
-                    AddDataset2HashTable(mDTRProteins);
-                    AddDataset2HashTable(mDTRScaled);
-                    AddDataset2HashTable(mDTRORscaled);
+                    AddDataset2HashTable(rRollupProteins);
+                    AddDataset2HashTable(scaledData);
+                    AddDataset2HashTable(scaledDataNoOutliers);
                 }
             }
             catch (Exception ex)

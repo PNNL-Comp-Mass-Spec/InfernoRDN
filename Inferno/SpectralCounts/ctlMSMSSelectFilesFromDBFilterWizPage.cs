@@ -13,7 +13,7 @@ namespace DAnTE.Inferno
         private System.Windows.Forms.Panel panelStep;
         private System.Windows.Forms.Label labelSelect;
         private System.Windows.Forms.Panel panelFileNames;
-        private System.ComponentModel.IContainer components = null;
+        private readonly System.ComponentModel.IContainer components = null;
 
         private List<string> marrDatasetInfo = new List<string>();
         private string[] mstrArrProjects;
@@ -372,9 +372,9 @@ namespace DAnTE.Inferno
             }
             //string tmpwildcardFilter = mtxtBoxfilter.Text;
 
-            var mstrProj = (string)mcmbBoxProjects.SelectedItem;
+            var selectedProject = (string)mcmbBoxProjects.SelectedItem;
 
-            if (!mtxtBoxfilter.Text.Equals(wildcardFilter) || !mtxtBoxURL.Text.Equals(mstrUrl) || !mstrProj.Equals(mstrFolder))
+            if (!mtxtBoxfilter.Text.Equals(wildcardFilter) || !mtxtBoxURL.Text.Equals(mstrUrl) || !selectedProject.Equals(mstrFolder))
             //check if filter string has changed
             {
                 wildcardFilter = mtxtBoxfilter.Text;

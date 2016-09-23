@@ -12,8 +12,7 @@ namespace DAnTE.Inferno
         //public delegate void MenuClicked(string plottype);
         //public event MenuClicked meventMenuClicked;
         private Image rPlot;
-        private frmDAnTE mfrmDante;
-
+        
         public frmPlotDisplay()
         {
             InitializeComponent();
@@ -32,7 +31,7 @@ namespace DAnTE.Inferno
             this.Close();
         }
                 
-        private void mnuSave_Click(object sender, System.EventArgs e)
+        private void mnuSave_Click(object sender, EventArgs e)
         {
             var workingFolder = Settings.Default.WorkingFolder;
             try
@@ -44,11 +43,11 @@ namespace DAnTE.Inferno
                     Filter = "PNG files (*.png)|*.png|JPEG files (*.jpg)|*.jpg|TIFF files (*.tif)|*.tif|" +
                              "Bitmaps (*.bmp)|*.bmp|WMF files (*.wmf)|*.wmf",
                     FilterIndex = 1,
-                    RestoreDirectory = true
+                    RestoreDirectory = true,
+                    InitialDirectory = workingFolder ??
+                                       Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 };
 
-                saveFileDialog1.InitialDirectory = workingFolder ??
-                                                   Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -75,8 +74,8 @@ namespace DAnTE.Inferno
 
         private void stretchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var x = this.ClientSize.Width;
-            var y = this.ClientSize.Height;
+            var x = ClientSize.Width;
+            var y = ClientSize.Height;
             if (x > y)
                 mPictureBoxEx.FitHeight();
             else
@@ -85,10 +84,10 @@ namespace DAnTE.Inferno
 
         protected override void OnResize(EventArgs e)
         {
-            this.Icon = DAnTE.Properties.Resources.dante;
+            Icon = Resources.dante;
             base.OnResize(e);
-            var x = this.ClientSize.Width;
-            var y = this.ClientSize.Height;
+            var x = ClientSize.Width;
+            var y = ClientSize.Height;
             if (x > y)
                 mPictureBoxEx.FitHeight();
             else
@@ -103,8 +102,8 @@ namespace DAnTE.Inferno
         private void frmPlotDisplay_Load(object sender, EventArgs e)
         {
             tmrDante.Enabled = true;
-            this.TopMost = true;
-            this.Icon = DAnTE.Properties.Resources.dante;
+            TopMost = true;
+            Icon = Resources.dante;
         }
 
         private void frmPlotDisplay_Activated(object sender, EventArgs e)
@@ -182,7 +181,7 @@ namespace DAnTE.Inferno
 
         private void tmrDante_Tick(object sender, EventArgs e)
         {
-            this.TopMost = false;
+            TopMost = false;
             tmrDante.Enabled = false;
         }
 
@@ -239,22 +238,14 @@ namespace DAnTE.Inferno
         {
             set
             {
-                this.Text = value;
+                Text = value;
             }
             get
             {
-                return this.Text;
+                return Text;
             }
         }
-
-        public frmDAnTE DAnTEinstance
-        {
-            set
-            {
-                mfrmDante = value;
-            }
-        }
-
+       
         public bool EnableParameterMenu
         {
             set
@@ -268,7 +259,7 @@ namespace DAnTE.Inferno
 
         private void frmPlotDisplay_Resize(object sender, EventArgs e)
         {
-            this.Icon = DAnTE.Properties.Resources.dante;
+            Icon = Resources.dante;
         }
 
         

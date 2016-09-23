@@ -35,10 +35,7 @@ namespace DAnTE.Inferno
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -134,10 +131,10 @@ namespace DAnTE.Inferno
                 MessageBox.Show("Exception parsing the command line arguments: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            var mfrmDAnTEmdi = new frmDAnTEmdi(mDanteFilePath, mLogFilePath);
+            var danteMDI = new frmDAnTEmdi(mDanteFilePath, mLogFilePath);
             
-            if (!mfrmDAnTEmdi.IsDisposed)
-                Application.Run(mfrmDAnTEmdi);
+            if (!danteMDI.IsDisposed)
+                Application.Run(danteMDI);
         }
 
         private static bool SetOptionsUsingCommandLineParameters(clsParseCommandLine objParseCommandLine)

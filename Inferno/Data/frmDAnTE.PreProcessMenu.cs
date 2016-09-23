@@ -23,14 +23,14 @@ namespace DAnTE.Inferno
         /// <param name="e"></param>
         private void menuItemLogEset_Click(object sender, System.EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -42,16 +42,16 @@ namespace DAnTE.Inferno
 
             mclsLogPar = new Purgatorio.clsLogTransformPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DatasetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DatasetName = selectedNodeTag.mstrDataText
             };
 
-            var mfrmLog = new frmLogPar(mclsLogPar);
+            var logTransformParams = new frmLogPar(mclsLogPar);
 
-            var res = mfrmLog.ShowDialog();
+            var res = logTransformParams.ShowDialog();
             if (res == DialogResult.OK)
             {
-                mclsLogPar = mfrmLog.clsLogPar;
+                mclsLogPar = logTransformParams.clsLogPar;
                 Add2AnalysisHTable(mclsLogPar, "LogTransform");
 
                 var rcmd = mclsLogPar.Rcmd;
@@ -68,9 +68,9 @@ namespace DAnTE.Inferno
 
         private void menuItemLOESSNorm_Click(object sender, EventArgs e) //LOESS
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -85,7 +85,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -99,21 +99,21 @@ namespace DAnTE.Inferno
 
             mclsLoessPar = new Purgatorio.clsLoessPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mfrmLoessPar = new frmLOESSPar(mclsLoessPar)
+            var loessParams = new frmLOESSPar(mclsLoessPar)
             {
-                DataSetName = mclsSelected.mstrDataText
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mclsFactors = mhtDatasets["Factors"];
-            mfrmLoessPar.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
+            var factorTable = mhtDatasets["Factors"];
+            loessParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
 
-            if (mfrmLoessPar.ShowDialog() == DialogResult.OK)
+            if (loessParams.ShowDialog() == DialogResult.OK)
             {
-                mclsLoessPar = mfrmLoessPar.clsLoessPar;
+                mclsLoessPar = loessParams.clsLoessPar;
 
                 Add2AnalysisHTable(mclsLoessPar, "LOESS");
 
@@ -134,9 +134,9 @@ namespace DAnTE.Inferno
 
         private void mnuItemQnorm_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -149,13 +149,13 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
 
             // check if there's enough complete data to do Quantile normalization
-            var rcmd = "qnOK <- IsCompleteData(" + mclsSelected.mstrRdatasetName + ")";
+            var rcmd = "qnOK <- IsCompleteData(" + selectedNodeTag.mstrRdatasetName + ")";
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
@@ -182,8 +182,8 @@ namespace DAnTE.Inferno
 
             mclsQnormPar = new Purgatorio.clsQnormPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
             Add2AnalysisHTable(mclsQnormPar, "Quantile_Normalization");
@@ -204,9 +204,9 @@ namespace DAnTE.Inferno
 
         private void menuItemMeanC_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -216,7 +216,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -228,18 +228,18 @@ namespace DAnTE.Inferno
 
             mclsMeanCPar = new Purgatorio.clsCentralTendencyPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mfrmMeanC = new frmMeanCenterPar(mclsMeanCPar)
+            var meanCenterParams = new frmMeanCenterPar(mclsMeanCPar)
             {
-                DataSetName = mclsSelected.mstrDataText
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            if (mfrmMeanC.ShowDialog() == DialogResult.OK)
+            if (meanCenterParams.ShowDialog() == DialogResult.OK)
             {
-                mclsMeanCPar = mfrmMeanC.clsCentrTendPar;
+                mclsMeanCPar = meanCenterParams.clsCentrTendPar;
 
                 Add2AnalysisHTable(mclsMeanCPar, "CentralTendency");
 
@@ -263,9 +263,9 @@ namespace DAnTE.Inferno
 
         private void menuItemMAD_Click(object sender, EventArgs e) // MAD Adjustment
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -275,7 +275,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -287,26 +287,26 @@ namespace DAnTE.Inferno
 
             mclsMADPar = new Purgatorio.clsMADPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mfrmMad = new frmMADPar(mclsMADPar)
+            var madParams = new frmMADPar(mclsMADPar)
             {
-                DataSetName = mclsSelected.mstrDataText
+                DataSetName = selectedNodeTag.mstrDataText
             };
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                mfrmMad.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
-                mclsMADPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                var factorTable = mhtDatasets["Factors"];
+                madParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
+                mclsMADPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
-                mfrmMad.PopulateFactorComboBox = null;
+                madParams.PopulateFactorComboBox = null;
 
-            if (mfrmMad.ShowDialog() == DialogResult.OK)
+            if (madParams.ShowDialog() == DialogResult.OK)
             {
-                mclsMADPar = mfrmMad.clsMADPar;
+                mclsMADPar = madParams.clsMADPar;
 
                 Add2AnalysisHTable(mclsMADPar, "MedianAbsoluteDeviation_Adjustment");
 
@@ -326,9 +326,9 @@ namespace DAnTE.Inferno
 
         private void menuItemLinReg_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -343,7 +343,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -357,17 +357,17 @@ namespace DAnTE.Inferno
 
             mclsLinRegPar = new Purgatorio.clsLinRegrnPar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mclsFactors = mhtDatasets["Factors"];
-            mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+            var factorTable = mhtDatasets["Factors"];
+            mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
 
-            var mfrmLinReg = new frmLinRegPar(mclsLinRegPar);
-            if (mfrmLinReg.ShowDialog() == DialogResult.OK)
+            var linearRegressionParams = new frmLinRegPar(mclsLinRegPar);
+            if (linearRegressionParams.ShowDialog() == DialogResult.OK)
             {
-                mclsLinRegPar = mfrmLinReg.clsLinRegPar;
+                mclsLinRegPar = linearRegressionParams.clsLinRegPar;
 
                 Add2AnalysisHTable(mclsLinRegPar, "LinearRegression");
 
@@ -389,9 +389,9 @@ namespace DAnTE.Inferno
 
         private void menuItemImpute_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -401,7 +401,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -413,27 +413,27 @@ namespace DAnTE.Inferno
 
             mclsImputePar = new Purgatorio.clsImputePar
             {
-                Rdataset = mclsSelected.mstrRdatasetName,
-                DataSetName = mclsSelected.mstrDataText
+                Rdataset = selectedNodeTag.mstrRdatasetName,
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            var mfrmImpute = new frmImputePar(mclsImputePar)
+            var imputeParams = new frmImputePar(mclsImputePar)
             {
-                DataSetName = mclsSelected.mstrDataText
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                mfrmImpute.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
-                mclsImputePar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                var factorTable = mhtDatasets["Factors"];
+                imputeParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
+                mclsImputePar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
-                mfrmImpute.PopulateFactorComboBox = null;
+                imputeParams.PopulateFactorComboBox = null;
 
-            if (mfrmImpute.ShowDialog() == DialogResult.OK)
+            if (imputeParams.ShowDialog() == DialogResult.OK)
             {
-                mclsImputePar = mfrmImpute.clsImputePar;
+                mclsImputePar = imputeParams.clsImputePar;
 
                 Add2AnalysisHTable(mclsImputePar, "Imputation");
 
@@ -461,10 +461,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("madEset"))
                 {
-                    var mDTMAD = mRConnector.DataTable.Copy();
-                    mDTMAD.TableName = "madEset";
+                    var madAdjustedData = mRConnector.DataTable.Copy();
+                    madAdjustedData.TableName = "madEset";
                     mRConnector.EvaluateNoReturn("cat(\"Data MAD Adjusted.\n\")");
-                    AddDataset2HashTable(mDTMAD);
+                    AddDataset2HashTable(madAdjustedData);
                 }
                 else
                     success = false;
@@ -528,10 +528,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("quaNormEset"))
                 {
-                    var mDTQuantile = mRConnector.DataTable.Copy();
-                    mDTQuantile.TableName = "quaNormEset";
+                    var quantileNormalizedData = mRConnector.DataTable.Copy();
+                    quantileNormalizedData.TableName = "quaNormEset";
                     mRConnector.EvaluateNoReturn("cat(\"Data Quantile Normalized (Only complete data).\n\")");
-                    AddDataset2HashTable(mDTQuantile);
+                    AddDataset2HashTable(quantileNormalizedData);
                 }
                 else
                     success = false;
@@ -553,10 +553,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("loessData"))
                 {
-                    var mDTLoess = mRConnector.DataTable.Copy();
-                    mDTLoess.TableName = "loessData";
+                    var loessNormalizedData = mRConnector.DataTable.Copy();
+                    loessNormalizedData.TableName = "loessData";
                     mRConnector.EvaluateNoReturn("cat(\"LOESS normalization done.\n\")");
-                    AddDataset2HashTable(mDTLoess);
+                    AddDataset2HashTable(loessNormalizedData);
                 }
                 else
                     success = false;
@@ -578,10 +578,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("linregData"))
                 {
-                    var mDTLinReg = mRConnector.DataTable.Copy();
-                    mDTLinReg.TableName = "linregData";
+                    var linearRegressionData = mRConnector.DataTable.Copy();
+                    linearRegressionData.TableName = "linregData";
                     mRConnector.EvaluateNoReturn("cat(\"Linear Regression done.\n\")");
-                    AddDataset2HashTable(mDTLinReg);
+                    AddDataset2HashTable(linearRegressionData);
                 }
                 else
                     success = false;
@@ -603,10 +603,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("imputedData"))
                 {
-                    var mDTImpute = mRConnector.DataTable.Copy();
-                    mDTImpute.TableName = "imputedData";
+                    var imputedData = mRConnector.DataTable.Copy();
+                    imputedData.TableName = "imputedData";
                     mRConnector.EvaluateNoReturn("cat(\"Imputing done.\n\")");
-                    AddDataset2HashTable(mDTImpute);
+                    AddDataset2HashTable(imputedData);
                 }
                 else
                     success = false;
@@ -628,10 +628,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("mergedData"))
                 {
-                    var mDTmerged = mRConnector.DataTable.Copy();
-                    mDTmerged.TableName = "mergedData";
+                    var mergedColumnData = mRConnector.DataTable.Copy();
+                    mergedColumnData.TableName = "mergedData";
                     mRConnector.EvaluateNoReturn("cat(\"Merging done.\n\")");
-                    AddDataset2HashTable(mDTmerged);
+                    AddDataset2HashTable(mergedColumnData);
                 }
                 else
                     success = false;

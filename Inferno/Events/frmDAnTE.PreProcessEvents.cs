@@ -20,7 +20,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Log2 Operation Canceled");
+                Console.WriteLine("Log2 Operation Cancelled");
             }
             else
             {
@@ -45,11 +45,11 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(rcmd);
                 if (mRConnector.GetTableFromRmatrix("logEset"))
                 {
-                    var mDTLogEset1 = mRConnector.DataTable.Copy();
-                    mDTLogEset1.TableName = "logEset";
+                    var log2Data = mRConnector.DataTable.Copy();
+                    log2Data.TableName = "logEset";
                     mRConnector.EvaluateNoReturn("cat(\"Log Expressions calculated.\n\")");
                     //--------------------------------------
-                    AddDataset2HashTable(mDTLogEset1);
+                    AddDataset2HashTable(log2Data);
                     e.Result = true;
                 }
                 else
@@ -75,7 +75,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Loess Normalization Canceled");
+                Console.WriteLine("Loess Normalization Cancelled");
             }
             else
             {
@@ -110,7 +110,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Linear Regression Canceled");
+                Console.WriteLine("Linear Regression Cancelled");
             }
             else
             {
@@ -145,7 +145,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Mean/Median Centering Canceled");
+                Console.WriteLine("Mean/Median Centering Cancelled");
             }
             else
             {
@@ -182,7 +182,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Quantile Normalization Canceled");
+                Console.WriteLine("Quantile Normalization Cancelled");
             }
             else
             {
@@ -217,7 +217,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("MAD Adjustment Canceled");
+                Console.WriteLine("MAD Adjustment Cancelled");
             }
             else
             {
@@ -252,7 +252,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Imputation Canceled");
+                Console.WriteLine("Imputation Cancelled");
             }
             else
             {
@@ -287,7 +287,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Imputation Canceled");
+                Console.WriteLine("Imputation Cancelled");
             }
             else
             {

@@ -7,10 +7,10 @@ namespace DAnTE.Inferno
 {
     public partial class frmZRollupPar : Form
     {
-        readonly DAnTE.Purgatorio.clsZRollupPar mclsZRollup = new DAnTE.Purgatorio.clsZRollupPar();
+        readonly Purgatorio.clsZRollupPar mclsZRollup = new Purgatorio.clsZRollupPar();
         private bool fieldsOK = true;
 
-        public frmZRollupPar(DAnTE.Purgatorio.clsZRollupPar mclsZRoll)
+        public frmZRollupPar(Purgatorio.clsZRollupPar mclsZRoll)
         {
             InitializeComponent();
             mclsZRollup = mclsZRoll;
@@ -118,7 +118,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsZRollupPar clsZRollupPar
+        public Purgatorio.clsZRollupPar clsZRollupPar
         {
             get
             {

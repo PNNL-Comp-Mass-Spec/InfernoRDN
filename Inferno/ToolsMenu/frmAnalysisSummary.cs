@@ -27,8 +27,8 @@ namespace DAnTE.Inferno
 
             foreach (var analysis in marrAnalyses)
             {
-                object o = analysis.AnalysisObject;
-                string strKey = analysis.Operation;
+                var o = analysis.AnalysisObject;
+                var strKey = analysis.Operation;
 
                 var grp = new ListViewGroup(strKey, HorizontalAlignment.Left);
                 mlstViewSummary.Groups.Add(grp);
@@ -176,10 +176,7 @@ namespace DAnTE.Inferno
             if (fExt.Equals(".xml", StringComparison.CurrentCultureIgnoreCase))
             {
                 var metaDataXML = FillSummaryXML();
-                if (metaDataXML != null)
-                {
-                    metaDataXML.WriteFile(fileName);
-                }
+                metaDataXML?.WriteFile(fileName);
             }
 
             if (fExt.Equals(".txt", StringComparison.CurrentCultureIgnoreCase))
@@ -199,17 +196,14 @@ namespace DAnTE.Inferno
 
             var fdlg = new SaveFileDialog
             {
-                Title = mstrFldgTitle
+                Title = mstrFldgTitle,
+                InitialDirectory = workingFolder ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = filter,
+                FilterIndex = 1,
+                RestoreDirectory = false
             };
 
-            if (workingFolder != null)
-                fdlg.InitialDirectory = workingFolder;
-            else
-                fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            fdlg.Filter = filter;
-            fdlg.FilterIndex = 1;
-            fdlg.RestoreDirectory = false;
             if (fdlg.ShowDialog() == DialogResult.OK)
             {
                 fileName = fdlg.FileName;

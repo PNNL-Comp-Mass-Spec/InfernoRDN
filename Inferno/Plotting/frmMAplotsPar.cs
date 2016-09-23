@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -12,13 +11,13 @@ namespace DAnTE.Inferno
     {
         private readonly clsMAplotsPar mclsMApar;
 		
-		private int SUGGESTED_MAX = 20;
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
+		private const int SUGGESTED_MAX = 20;
+        private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT_CPU_INTENSIVE;
 
         private List<string> marrDatasets = new List<string>();
         string dataColor = "#00FF00", lColor = "#FF0000";
-        private bool mWarnedTooManyDatasets = false;
-        private bool mPopulating = false;
+        private bool mWarnedTooManyDatasets;
+        private bool mPopulating;
 
         public frmMAplotsPar(clsMAplotsPar clsMApar)
         {
@@ -32,19 +31,19 @@ namespace DAnTE.Inferno
             if (mlstViewDataSets.CheckedIndices.Count < 2)
             {
                 MessageBox.Show("Select at least two datasets.", "Select datasets");
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
             else
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
             var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, SUGGESTED_MAX, true);
 
@@ -65,9 +64,9 @@ namespace DAnTE.Inferno
         {
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.mlblDC.BackColor = hexColorDialog.Color;
-                this.mlblDC.ForeColor = hexColorDialog.Color;
-                dataColor = clsHexColorUtil.ColorToHex(this.hexColorDialog.Color);
+                mlblDC.BackColor = hexColorDialog.Color;
+                mlblDC.ForeColor = hexColorDialog.Color;
+                dataColor = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
                 Settings.Default.maplotDcol = dataColor;
                 Settings.Default.Save();
             }
@@ -77,9 +76,9 @@ namespace DAnTE.Inferno
         {
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.mlblLC.BackColor = hexColorDialog.Color;
-                this.mlblLC.ForeColor = hexColorDialog.Color;
-                lColor = clsHexColorUtil.ColorToHex(this.hexColorDialog.Color);
+                mlblLC.BackColor = hexColorDialog.Color;
+                mlblLC.ForeColor = hexColorDialog.Color;
+                lColor = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
                 Settings.Default.maplotLcol = lColor;
                 Settings.Default.Save();
             }
@@ -104,10 +103,10 @@ namespace DAnTE.Inferno
             lColor = "#FF0000";
             Settings.Default.maplotLcol = lColor;
             Settings.Default.Save();
-            this.mlblDC.BackColor = clsHexColorUtil.HexToColor(dataColor);
-            this.mlblDC.ForeColor = clsHexColorUtil.HexToColor(dataColor);
-            this.mlblLC.BackColor = clsHexColorUtil.HexToColor(lColor);
-            this.mlblLC.ForeColor = clsHexColorUtil.HexToColor(lColor);
+            mlblDC.BackColor = clsHexColorUtil.HexToColor(dataColor);
+            mlblDC.ForeColor = clsHexColorUtil.HexToColor(dataColor);
+            mlblLC.BackColor = clsHexColorUtil.HexToColor(lColor);
+            mlblLC.ForeColor = clsHexColorUtil.HexToColor(lColor);
 
             mchkBoxTransparent.Checked = false;
             mchkBoxStamp.Checked = false;
@@ -117,15 +116,15 @@ namespace DAnTE.Inferno
         {
             dataColor = mclsMApar.dCol;
             lColor = mclsMApar.lCol;
-            this.mlblDC.BackColor = clsHexColorUtil.HexToColor(dataColor);
-            this.mlblDC.ForeColor = clsHexColorUtil.HexToColor(dataColor);
-            this.mlblLC.BackColor = clsHexColorUtil.HexToColor(lColor);
-            this.mlblLC.ForeColor = clsHexColorUtil.HexToColor(lColor);
+            mlblDC.BackColor = clsHexColorUtil.HexToColor(dataColor);
+            mlblDC.ForeColor = clsHexColorUtil.HexToColor(dataColor);
+            mlblLC.BackColor = clsHexColorUtil.HexToColor(lColor);
+            mlblLC.ForeColor = clsHexColorUtil.HexToColor(lColor);
 
-            this.mchkBoxTransparent.Checked = mclsMApar.trBkground;
-            this.PopulateListView = mclsMApar.Datasets;
-            this.SelectedDatasets = mclsMApar.CheckedDatasets;
-            this.DataSetName = mclsMApar.mstrDatasetName;
+            mchkBoxTransparent.Checked = mclsMApar.trBkground;
+            PopulateListView = mclsMApar.Datasets;
+            SelectedDatasets = mclsMApar.CheckedDatasets;
+            DataSetName = mclsMApar.mstrDatasetName;
             mchkBoxStamp.Checked = mclsMApar.stamp;
         }
 
@@ -136,10 +135,10 @@ namespace DAnTE.Inferno
             get
             {
                 mclsMApar.datasubset = "c(" + Selected + ")";
-                mclsMApar.trBkground = this.Background;
-                mclsMApar.CheckedDatasets = this.SelectedDatasets;
-                mclsMApar.dCol = this.dataColor;
-                mclsMApar.lCol = this.LOESSColor;
+                mclsMApar.trBkground = Background;
+                mclsMApar.CheckedDatasets = SelectedDatasets;
+                mclsMApar.dCol = dataColor;
+                mclsMApar.lCol = LOESSColor;
                 mclsMApar.stamp = mchkBoxStamp.Checked;
 
                 return mclsMApar;
@@ -167,7 +166,7 @@ namespace DAnTE.Inferno
 
                 for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    var lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i])
                     {
                         Tag = i
                     };

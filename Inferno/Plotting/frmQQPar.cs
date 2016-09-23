@@ -10,15 +10,14 @@ namespace DAnTE.Inferno
 {
     public partial class frmQQPar : Form
     {
-        private int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+        private const int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
+        private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
-        private int numCol;
         private List<string> marrDatasets = new List<string>();
         string foreC = "#FFC38A", borderC = "#5FAE27", lineC = "#FF0000";
         private readonly clsQQPar mclsQQPar;
-        private bool mWarnedTooManyDatasets = false;
-        private bool mPopulating = false;
+        private bool mWarnedTooManyDatasets;
+        private bool mPopulating;
 
         public frmQQPar(clsQQPar clsQQPar)
         {
@@ -28,17 +27,15 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool valid = true;
-            double shape, scale, exprate;
-            int df;
+            var valid = true;
 
             try
             {
-                numCol = Convert.ToInt32(mtxtPlotCols.Text);
-                shape = Double.Parse(mtxtBoxShape.Text, CultureInfo.InvariantCulture);
-                scale = Double.Parse(mtxtBoxScale.Text, CultureInfo.InvariantCulture);
-                df = Int16.Parse(mtxtBoxDf.Text);
-                exprate = Double.Parse(mtxtBoxExp.Text, CultureInfo.InvariantCulture);
+                var numCol = Convert.ToInt32(mtxtPlotCols.Text);
+                var shape = double.Parse(mtxtBoxShape.Text, CultureInfo.InvariantCulture);
+                var scale = double.Parse(mtxtBoxScale.Text, CultureInfo.InvariantCulture);
+                var df = short.Parse(mtxtBoxDf.Text);
+                var exprate = double.Parse(mtxtBoxExp.Text, CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {
@@ -48,23 +45,23 @@ namespace DAnTE.Inferno
             if (mlstViewDataSets.CheckedIndices.Count == 0)
             {
                 MessageBox.Show("No datasets selected.", "Select datasets");
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
             else if (valid)
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
 
             var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, SUGGESTED_MAX, true);
-            
+
             if (mlstViewDataSets.Items.Count > SUGGESTED_MAX && !mPopulating &&
                 (checkStateNew != clsUtilities.eCheckState.checkNone))
             {
@@ -83,8 +80,8 @@ namespace DAnTE.Inferno
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
                 foreC = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
-                this.mlblFC.BackColor = hexColorDialog.Color;
-                this.mlblFC.ForeColor = hexColorDialog.Color;
+                mlblFC.BackColor = hexColorDialog.Color;
+                mlblFC.ForeColor = hexColorDialog.Color;
                 Settings.Default.qqForeCol = foreC;
                 Settings.Default.Save();
                 mclsQQPar.Fcol = foreC;
@@ -96,8 +93,8 @@ namespace DAnTE.Inferno
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
                 borderC = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
-                this.mlblBC.BackColor = hexColorDialog.Color;
-                this.mlblBC.ForeColor = hexColorDialog.Color;
+                mlblBC.BackColor = hexColorDialog.Color;
+                mlblBC.ForeColor = hexColorDialog.Color;
                 Settings.Default.qqBkCol = borderC;
                 Settings.Default.Save();
                 mclsQQPar.Bcol = borderC;
@@ -109,8 +106,8 @@ namespace DAnTE.Inferno
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
                 lineC = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
-                this.mlblLC.BackColor = hexColorDialog.Color;
-                this.mlblLC.ForeColor = hexColorDialog.Color;
+                mlblLC.BackColor = hexColorDialog.Color;
+                mlblLC.ForeColor = hexColorDialog.Color;
                 Settings.Default.qqLCol = lineC;
                 Settings.Default.Save();
                 mclsQQPar.Lcol = lineC;
@@ -129,10 +126,10 @@ namespace DAnTE.Inferno
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                double colN = Math.Ceiling(Math.Sqrt(mlstViewDataSets.CheckedIndices.Count));
+                var colN = Math.Ceiling(Math.Sqrt(mlstViewDataSets.CheckedIndices.Count));
                 if (colN < 1)
                     colN = 1;
-                mtxtPlotCols.Text = colN.ToString();
+                mtxtPlotCols.Text = colN.ToString(CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {
@@ -163,10 +160,10 @@ namespace DAnTE.Inferno
             Settings.Default.qqForeCol = foreC;
             Settings.Default.qqBkCol = borderC;
             Settings.Default.Save();
-            this.mlblFC.BackColor = clsHexColorUtil.HexToColor(foreC);
-            this.mlblFC.ForeColor = clsHexColorUtil.HexToColor(foreC);
-            this.mlblBC.BackColor = clsHexColorUtil.HexToColor(borderC);
-            this.mlblBC.ForeColor = clsHexColorUtil.HexToColor(borderC);
+            mlblFC.BackColor = clsHexColorUtil.HexToColor(foreC);
+            mlblFC.ForeColor = clsHexColorUtil.HexToColor(foreC);
+            mlblBC.BackColor = clsHexColorUtil.HexToColor(borderC);
+            mlblBC.ForeColor = clsHexColorUtil.HexToColor(borderC);
             mtxtPlotCols.Text = "2";
             mchkBoxTransparent.Checked = false;
             mrBtnNormal.Checked = true;
@@ -181,20 +178,20 @@ namespace DAnTE.Inferno
             foreC = mclsQQPar.Fcol;
             borderC = mclsQQPar.Bcol;
             mtxtPlotCols.Text = mclsQQPar.ncolumns.ToString();
-            this.mlblFC.BackColor = clsHexColorUtil.HexToColor(foreC);
-            this.mlblFC.ForeColor = clsHexColorUtil.HexToColor(foreC);
-            this.mlblBC.BackColor = clsHexColorUtil.HexToColor(borderC);
-            this.mlblBC.ForeColor = clsHexColorUtil.HexToColor(borderC);
-            this.mlblLC.BackColor = clsHexColorUtil.HexToColor(lineC);
-            this.mlblLC.ForeColor = clsHexColorUtil.HexToColor(lineC);
-            this.PopulateListView = mclsQQPar.Datasets;
-            this.DataSetName = mclsQQPar.mstrDatasetName;
-            this.SelectedDatasets = mclsQQPar.CheckedDatasets;
-            this.ReferenceDist = mclsQQPar.reference;
-            this.mtxtBoxScale.Text = mclsQQPar.wscale;
-            this.mtxtBoxShape.Text = mclsQQPar.wshape;
-            this.mtxtBoxDf.Text = mclsQQPar.df;
-            this.mtxtBoxExp.Text = mclsQQPar.exprate;
+            mlblFC.BackColor = clsHexColorUtil.HexToColor(foreC);
+            mlblFC.ForeColor = clsHexColorUtil.HexToColor(foreC);
+            mlblBC.BackColor = clsHexColorUtil.HexToColor(borderC);
+            mlblBC.ForeColor = clsHexColorUtil.HexToColor(borderC);
+            mlblLC.BackColor = clsHexColorUtil.HexToColor(lineC);
+            mlblLC.ForeColor = clsHexColorUtil.HexToColor(lineC);
+            PopulateListView = mclsQQPar.Datasets;
+            DataSetName = mclsQQPar.mstrDatasetName;
+            SelectedDatasets = mclsQQPar.CheckedDatasets;
+            ReferenceDist = mclsQQPar.reference;
+            mtxtBoxScale.Text = mclsQQPar.wscale;
+            mtxtBoxShape.Text = mclsQQPar.wshape;
+            mtxtBoxDf.Text = mclsQQPar.df;
+            mtxtBoxExp.Text = mclsQQPar.exprate;
             mtxtBoxDf.Enabled = mrBtnStudent.Checked;
             mtxtBoxScale.Enabled = mrBtnWeibull.Checked;
             mtxtBoxShape.Enabled = mrBtnWeibull.Checked;
@@ -215,11 +212,11 @@ namespace DAnTE.Inferno
                 mclsQQPar.bkground = Background;
                 mclsQQPar.CheckedDatasets = SelectedDatasets;
                 mclsQQPar.ncolumns = Convert.ToInt16(mtxtPlotCols.Text);
-                mclsQQPar.reference = this.ReferenceDist;
-                mclsQQPar.wscale = this.mtxtBoxScale.Text;
-                mclsQQPar.wshape = this.mtxtBoxShape.Text;
-                mclsQQPar.df = this.mtxtBoxDf.Text;
-                mclsQQPar.exprate = this.mtxtBoxExp.Text;
+                mclsQQPar.reference = ReferenceDist;
+                mclsQQPar.wscale = mtxtBoxScale.Text;
+                mclsQQPar.wshape = mtxtBoxShape.Text;
+                mclsQQPar.df = mtxtBoxDf.Text;
+                mclsQQPar.exprate = mtxtBoxExp.Text;
 
                 return mclsQQPar;
             }
@@ -244,7 +241,7 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int Ncols = 2;
+                int Ncols;
                 try
                 {
                     Ncols = Convert.ToInt16(mtxtPlotCols.Text);
@@ -268,7 +265,7 @@ namespace DAnTE.Inferno
 
                 for (var i = 0; i < marrDatasets.Count; i++)
                 {
-                    var lstVItem = new ListViewItem(marrDatasets[i].ToString())
+                    var lstVItem = new ListViewItem(marrDatasets[i])
                     {
                         Tag = i
                     };
@@ -292,22 +289,21 @@ namespace DAnTE.Inferno
             get
             {
                 string selected = null;
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
-                if (indexes.Count != 0)
+                var indexes = mlstViewDataSets.CheckedIndices;
+                if (indexes.Count == 0)
+                    return null;
+
+                var k = 0;
+                foreach (int i in indexes)
                 {
-                    int k = 0;
-                    foreach (int i in indexes)
-                    {
-                        if (k == 0)
-                            selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.
-                                Items[i].Tag) + 1);
-                        else
-                            selected = selected + "," + Convert.ToString(Convert.ToInt16(
-                                mlstViewDataSets.Items[i].Tag) + 1);
-                        k++;
-                        if (k == MAX)
-                            break;
-                    }
+                    if (k == 0)
+                        selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
+                    else
+                        selected = selected + "," + Convert.ToString(Convert.ToInt16(
+                            mlstViewDataSets.Items[i].Tag) + 1);
+                    k++;
+                    if (k == MAX)
+                        break;
                 }
                 return selected;
             }

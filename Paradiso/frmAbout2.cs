@@ -22,7 +22,7 @@ namespace DAnTE.Paradiso
                 Opacity -= (m_fadeInOutTimer.Interval / 400.0);
 
                 // Should we continue to fade?
-                if (this.Opacity > 0)
+                if (Opacity > 0)
                     m_fadeInOutTimer.Enabled = true;
                 else
                 {
@@ -93,7 +93,7 @@ namespace DAnTE.Paradiso
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void ShowCredits()

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -14,8 +13,8 @@ namespace DAnTE.Inferno
     {
         private readonly clsCorrelationPar mclsCorrPar;
 		
-        private int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
-        private readonly int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+        private const int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
+        private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
         private List<string> marrDatasets = new List<string>();
         private string ellipseC;
@@ -35,19 +34,19 @@ namespace DAnTE.Inferno
             if (mlstViewDataSets.CheckedIndices.Count == 0)
             {
                 MessageBox.Show("No datasets selected.", "Select datasets");
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
             else
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
                 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
             var N = mlstViewDataSets.Items.Count;
 
@@ -122,8 +121,8 @@ namespace DAnTE.Inferno
 
         private void mbtnDefaults_Click(object sender, EventArgs e)
         {
-            this.mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
-            this.mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
+            mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
+            mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
             ellipseC = clsHexColorUtil.ColorToHex(mlblEcolor.BackColor);
             Settings.Default.ellipseCol = ellipseC;
             Settings.Default.Save();
@@ -158,8 +157,8 @@ namespace DAnTE.Inferno
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
                 ellipseC = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
-                this.mlblEcolor.BackColor = hexColorDialog.Color;
-                this.mlblEcolor.ForeColor = hexColorDialog.Color;
+                mlblEcolor.BackColor = hexColorDialog.Color;
+                mlblEcolor.ForeColor = hexColorDialog.Color;
                 Settings.Default.ellipseCol = ellipseC;
                 Settings.Default.Save();
             }
@@ -176,16 +175,16 @@ namespace DAnTE.Inferno
 
         private void mbtnHeatmapPalette_Click(object sender, EventArgs e)
         {
-            var mfrmColPalette = new frmColorPalette
+            var colorPaletteSelection = new frmColorPalette
             {
                 SetDefaultPalette = mintPalette
             };
 
-            if (mfrmColPalette.ShowDialog() == DialogResult.OK)
+            if (colorPaletteSelection.ShowDialog() == DialogResult.OK)
             {
-                mintPalette = mfrmColPalette.ColorPalette;
-                customCol = mfrmColPalette.CustomColors;
-                mstrPaletteName = mfrmColPalette.ColorPaletteName;
+                mintPalette = colorPaletteSelection.ColorPalette;
+                customCol = colorPaletteSelection.CustomColors;
+                mstrPaletteName = colorPaletteSelection.ColorPaletteName;
                 mlblHeatPalette.Text = mstrPaletteName;
                 Settings.Default.colorMapType = mintPalette;
                 Settings.Default.colorMap = mstrPaletteName;
@@ -195,16 +194,16 @@ namespace DAnTE.Inferno
 
         private void mbtn2Dpalette_Click(object sender, EventArgs e)
         {
-            var mfrmColPalette = new frmColorPalette
+            var colorPaletteSelection = new frmColorPalette
             {
                 SetDefaultPalette = mintPalette
             };
 
-            if (mfrmColPalette.ShowDialog() == DialogResult.OK)
+            if (colorPaletteSelection.ShowDialog() == DialogResult.OK)
             {
-                mintPalette = mfrmColPalette.ColorPalette;
-                customCol = mfrmColPalette.CustomColors;
-                mstrPaletteName = mfrmColPalette.ColorPaletteName;
+                mintPalette = colorPaletteSelection.ColorPalette;
+                customCol = colorPaletteSelection.CustomColors;
+                mstrPaletteName = colorPaletteSelection.ColorPaletteName;
                 mlbl2DPalette.Text = mstrPaletteName;
                 Settings.Default.colorMapType = mintPalette;
                 Settings.Default.colorMap = mstrPaletteName;
@@ -217,16 +216,16 @@ namespace DAnTE.Inferno
             ellipseC = Settings.Default.ellipseCol;
             if (ellipseC == "")
             {
-                this.mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
-                this.mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
+                mlblEcolor.ForeColor = Color.FromKnownColor(KnownColor.Green);
+                mlblEcolor.BackColor = Color.FromKnownColor(KnownColor.Green);
                 ellipseC = clsHexColorUtil.ColorToHex(mlblEcolor.BackColor);
                 Settings.Default.ellipseCol = ellipseC;
                 Settings.Default.Save();
             }
             else
             {
-                this.mlblEcolor.ForeColor = clsHexColorUtil.HexToColor(ellipseC);
-                this.mlblEcolor.BackColor = clsHexColorUtil.HexToColor(ellipseC);
+                mlblEcolor.ForeColor = clsHexColorUtil.HexToColor(ellipseC);
+                mlblEcolor.BackColor = clsHexColorUtil.HexToColor(ellipseC);
             }
 
             mbtnEcol.Enabled = mrbtnEllipse.Checked;
@@ -240,9 +239,9 @@ namespace DAnTE.Inferno
             mlblMax.Text = mclsCorrPar.maxCorr.ToString(CultureInfo.InvariantCulture);
             mlblMin.Text = mclsCorrPar.minCorr.ToString(CultureInfo.InvariantCulture);
 
-            this.PopulateListView = mclsCorrPar.Datasets;
-            this.DataSetName = mclsCorrPar.mstrDatasetName;
-            this.SelectedDatasets = mclsCorrPar.CheckedDatasets;
+            PopulateListView = mclsCorrPar.Datasets;
+            DataSetName = mclsCorrPar.mstrDatasetName;
+            SelectedDatasets = mclsCorrPar.CheckedDatasets;
             mintPalette = mclsCorrPar.paletteType;
             mstrPaletteName = mclsCorrPar.palettename;
             customCol = mclsCorrPar.customCol;
@@ -510,8 +509,8 @@ namespace DAnTE.Inferno
                     var max = (double)mRangeBar.RangeMaximum / 20;
                     return "corRange=c(" + min.ToString(CultureInfo.InvariantCulture) + "," + max.ToString(CultureInfo.InvariantCulture) + ")";
                 }
-                else
-                    return "corRange=c(0,1)";
+
+                return "corRange=c(0,1)";
             }
         }
 

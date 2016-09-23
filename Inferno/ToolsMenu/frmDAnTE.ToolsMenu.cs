@@ -18,29 +18,30 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var mfrmFilterANOVA = new frmFilterAnova
+            var anovaParams = new frmFilterAnova
             {
                 PopulateDataComboBox = AvailableDataSources()
             };
 
-            var mclsAnova = mhtDatasets["p-Values"];
-            mfrmFilterANOVA.PopulateListBox = clsDataTable.DataTableColumns(mclsAnova.mDTable, true);
+            var pvaluesTable = mhtDatasets["p-Values"];
+            anovaParams.PopulateListBox = clsDataTable.DataTableColumns(pvaluesTable.mDTable, true);
 
-            if (mfrmFilterANOVA.ShowDialog() == DialogResult.OK)
+            if (anovaParams.ShowDialog() == DialogResult.OK)
             {
-                var column = mfrmFilterANOVA.SelectedColumn + 1;
-                var datasetNameInR = (mhtDatasets[mfrmFilterANOVA.Dataset]).mstrRdatasetName;
-                var thres = mfrmFilterANOVA.Thres.ToString(CultureInfo.InvariantCulture);
+                var column = anovaParams.SelectedColumn + 1;
+                var datasetNameInR = (mhtDatasets[anovaParams.Dataset]).mstrRdatasetName;
+                var thres = anovaParams.Thres.ToString(CultureInfo.InvariantCulture);
                 string ltgt;
-                if (mfrmFilterANOVA.LessThan)
+                if (anovaParams.LessThan)
                     ltgt = @"smode=""LT""";
                 else
                     ltgt = @"smode=""GT""";
 
                 var rcmd = "filterResult <- filterAnova(pvalues," + datasetNameInR + "," + thres + "," +
-                              column.ToString() + "," + ltgt + ")";
-                var mblErr = true;
-                var mblNoData = true;
+                              column + "," + ltgt + ")";
+
+                bool executionError;
+                bool dataNotFound;
                 try
                 {
                     mintFilterTblNum++;
@@ -49,25 +50,27 @@ namespace DAnTE.Inferno
                     mRConnector.EvaluateNoReturn("err<-filterResult$error");
                     mRConnector.EvaluateNoReturn("nodata<-filterResult$NoData");
                     mRConnector.EvaluateNoReturn(filtTableName + "<-filterResult$Filtered");
-                    mblErr = mRConnector.GetSymbolAsBool("err");
-                    mblNoData = mRConnector.GetSymbolAsBool("nodata");
+                    executionError = mRConnector.GetSymbolAsBool("err");
+                    dataNotFound = mRConnector.GetSymbolAsBool("nodata");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    mblErr = true;
-                    mblNoData = true;
+                    executionError = true;
+                    dataNotFound = true;
                 }
-                if (mblErr || mblNoData)
+                if (executionError || dataNotFound)
+                {
                     MessageBox.Show("No matches found. Check if you selected the correct dataset or" +
                                     Environment.NewLine + "if your cutoff is too conservative.",
                                     "Problem...", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
                 else if (mRConnector.GetTableFromRmatrix(filtTableName))
                 {
-                    var mDTfiltered = mRConnector.DataTable.Copy();
-                    mDTfiltered.TableName = filtTableName;
-                    mDTfiltered.Columns[0].ColumnName = "ID";
-                    AddDataset2HashTable(mDTfiltered);
+                    var filteredDataFromR = mRConnector.DataTable.Copy();
+                    filteredDataFromR.TableName = filtTableName;
+                    filteredDataFromR.Columns[0].ColumnName = "ID";
+                    AddDataset2HashTable(filteredDataFromR);
                     if (mhtDatasets.ContainsKey("Filtered Data" + mintFilterTblNum))
                         AddDataNode(mhtDatasets["Filtered Data" + mintFilterTblNum]);
                 }
@@ -77,9 +80,9 @@ namespace DAnTE.Inferno
         private void mnuItemMissFilt_Click(object sender, EventArgs e)
         {
 
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
@@ -89,19 +92,19 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = mclsSelected.mstrRdatasetName;
+            var dataset = selectedNodeTag.mstrRdatasetName;
 
-            var mfrmMissing = new frmMissingFilter
+            var missingValueParams = new frmMissingFilter
             {
-                DataSetName = mclsSelected.mstrDataText
+                DataSetName = selectedNodeTag.mstrDataText
             };
 
-            if (mfrmMissing.ShowDialog() != DialogResult.OK)
+            if (missingValueParams.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
-            var filterCutoff = mfrmMissing.CutOff;
+            var filterCutoff = missingValueParams.CutOff;
             mintFilterTblNum++;
             var filtTableName = "filteredData" + mintFilterTblNum.ToString();
             var rcmd = filtTableName + "<- filterMissing(" + dataset + "," + filterCutoff + ")";
@@ -113,9 +116,9 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                var mDTmissFilt = mRConnector.DataTable.Copy();
-                mDTmissFilt.TableName = filtTableName;
-                AddDataset2HashTable(mDTmissFilt);
+                var dataTableFromR = mRConnector.DataTable.Copy();
+                dataTableFromR.TableName = filtTableName;
+                AddDataset2HashTable(dataTableFromR);
                 AddDataNode(mhtDatasets["Filtered Data" + mintFilterTblNum]);
             }
             catch (Exception ex)
@@ -126,14 +129,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemMergeCols_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            var dataset = mclsSelected.mstrRdatasetName;
+            var dataset = selectedNodeTag.mstrRdatasetName;
 
             if (!ValidateExpressionsLoaded("merge columns"))
             {
@@ -145,7 +148,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            if (!ValidateDataMatrixTableSelected(mclsSelected))
+            if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
                 return;
             }
@@ -157,15 +160,15 @@ namespace DAnTE.Inferno
 
             #endregion
 
-            var mfrmMergeC = new frmMergeColsPar();
-            var mclsFactors = mhtDatasets["Factors"];
-            mfrmMergeC.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
-            mfrmMergeC.DataSetName = mclsSelected.mstrDataText;
+            var mergeColumnsParams = new frmMergeColsPar();
+            var factorTable = mhtDatasets["Factors"];
+            mergeColumnsParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
+            mergeColumnsParams.DataSetName = selectedNodeTag.mstrDataText;
 
-            if (mfrmMergeC.ShowDialog() == DialogResult.OK)
+            if (mergeColumnsParams.ShowDialog() == DialogResult.OK)
             {
-                var pmode = mfrmMergeC.pMode;
-                var factor = mfrmMergeC.SelectedFactor;
+                var pmode = mergeColumnsParams.pMode;
+                var factor = mergeColumnsParams.SelectedFactor;
 
                 var rcmd = "mergedData <- mergeColumns(" + dataset + "," + factor + ",";
                 rcmd += pmode + ")";
@@ -183,6 +186,7 @@ namespace DAnTE.Inferno
 
         }
 
+        [Obsolete("Unused")]
         private void mnuArrangeColumns_Click(object sender, EventArgs e)
         {
 
@@ -191,14 +195,14 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var mfrmArrCols = new frmArrangeColumns
+            var arrangeColumnsParams = new frmArrangeColumns
             {
                 DatasetInfo = marrDatasetInfo
             };
 
-            if (mfrmArrCols.ShowDialog() == DialogResult.OK)
+            if (arrangeColumnsParams.ShowDialog() == DialogResult.OK)
             {
-                var newOrder = mfrmArrCols.NewDatasetOrder;
+                var newOrder = arrangeColumnsParams.NewDatasetOrder;
             }
         }
 

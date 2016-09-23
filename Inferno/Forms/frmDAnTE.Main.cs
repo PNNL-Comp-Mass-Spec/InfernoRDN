@@ -112,9 +112,12 @@ namespace DAnTE.Inferno
 
         public static frmDAnTE GetChildInstance()
         {
-            if (m_frmDAnTE == null || m_frmDAnTE.IsDisposed) //if not created yet, Create an instance
+            //if not created yet, Create an instance
+            if (m_frmDAnTE == null || m_frmDAnTE.IsDisposed) 
                 m_frmDAnTE = new frmDAnTE();
-            return m_frmDAnTE;  //just created or created earlier.Return it
+
+            // Return the instance
+            return m_frmDAnTE;
         }
 
         private DataGridViewSelectedRowCollection GetSelectedRows(DataGridView currGrid)
@@ -319,7 +322,7 @@ namespace DAnTE.Inferno
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, this.mhelpProviderDAnTE.HelpNamespace);
+            Help.ShowHelp(this, mhelpProviderDAnTE.HelpNamespace);
         }
 
         #endregion
@@ -359,11 +362,11 @@ namespace DAnTE.Inferno
         {
             get
             {
-                return this.Text;
+                return Text;
             }
             set
             {
-                this.Text = value;
+                Text = value;
             }
         }
 
@@ -403,7 +406,7 @@ namespace DAnTE.Inferno
                 if (mp != null)
                 {
                     ToolStripManager.RevertMerge(mp.mToolStripMDI); //toolstrip reference to parent toolstrip
-                    ToolStripManager.Merge(this.mtoolStripDAnTE, mp.mToolStripMDI);
+                    ToolStripManager.Merge(mtoolStripDAnTE, mp.mToolStripMDI);
                 }
             }
         }

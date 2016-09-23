@@ -9,7 +9,7 @@ namespace DAnTE.Inferno
 {
     public partial class frmPCAplotPar : Form
     {
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+        private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
         private readonly clsPCAplotPar mclsPCApar;
         private List<string> marrDatasets = new List<string>();
@@ -24,7 +24,7 @@ namespace DAnTE.Inferno
 
         private List<string> PrincipalComponents()
         {
-            var marrPCs = new List<string>
+            var pcNames = new List<string>
             {
                 "PC1",
                 "PC2",
@@ -33,7 +33,7 @@ namespace DAnTE.Inferno
                 "PC5"
             };
 
-            return marrPCs;
+            return pcNames;
         }
 
         private void mrbtn3D_CheckedChanged(object sender, EventArgs e)
@@ -57,10 +57,10 @@ namespace DAnTE.Inferno
             if (mlstViewDataSets.CheckedIndices.Count == 0)
             {
                 MessageBox.Show("No datasets selected.", "Select datasets");
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
             else
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
 
         private void mchkBoxBiPlot_CheckedChanged(object sender, EventArgs e)
@@ -120,10 +120,10 @@ namespace DAnTE.Inferno
             mcmbBoxFactors.SelectedIndex = mclsPCApar.factorIdx;
             mrBtnPCA.Checked = mclsPCApar.pca;
             mrBtnPLS.Checked = !(mclsPCApar.pca);
-            this.DataSetName = mclsPCApar.mstrDatasetName;
+            DataSetName = mclsPCApar.mstrDatasetName;
             mchkBoxStamp.Checked = mclsPCApar.stamp;
-            this.PopulateListView = mclsPCApar.Datasets;
-            this.SelectedDatasets = mclsPCApar.CheckedDatasets;
+            PopulateListView = mclsPCApar.Datasets;
+            SelectedDatasets = mclsPCApar.CheckedDatasets;
 
             if (marrFactorList.Count == 1)
                 mrBtnPLS.Enabled = false;
@@ -136,23 +136,23 @@ namespace DAnTE.Inferno
             get
             {
                 mclsPCApar.datasubset = "c(" + Selected + ")";
-                mclsPCApar.arrows = this.BiArrows;
-                mclsPCApar.biplot = this.BiPlot;
-                mclsPCApar.biplotL = this.BiLabels;
-                mclsPCApar.dropLines = this.DropLines;
-                mclsPCApar.factor = this.Factor;
-                mclsPCApar.factorIdx = this.FactorIdx;
-                mclsPCApar.labels = this.ShowLabels;
-                mclsPCApar.pcx = this.PCx;
-                mclsPCApar.pcy = this.PCy;
-                mclsPCApar.pcz = this.PCz;
-                mclsPCApar.persp = this.Perspective;
-                mclsPCApar.prinComps = this.PrincipalComps;
-                mclsPCApar.screeplot = this.Screeplot;
-                mclsPCApar.threeD = this.ThreeD;
-                mclsPCApar.pca = this.PCA;
+                mclsPCApar.arrows = BiArrows;
+                mclsPCApar.biplot = BiPlot;
+                mclsPCApar.biplotL = BiLabels;
+                mclsPCApar.dropLines = DropLines;
+                mclsPCApar.factor = Factor;
+                mclsPCApar.factorIdx = FactorIdx;
+                mclsPCApar.labels = ShowLabels;
+                mclsPCApar.pcx = PCx;
+                mclsPCApar.pcy = PCy;
+                mclsPCApar.pcz = PCz;
+                mclsPCApar.persp = Perspective;
+                mclsPCApar.prinComps = PrincipalComps;
+                mclsPCApar.screeplot = Screeplot;
+                mclsPCApar.threeD = ThreeD;
+                mclsPCApar.pca = PCA;
                 mclsPCApar.stamp = mchkBoxStamp.Checked;
-                mclsPCApar.CheckedDatasets = this.SelectedDatasets;
+                mclsPCApar.CheckedDatasets = SelectedDatasets;
 
                 return mclsPCApar;
             }

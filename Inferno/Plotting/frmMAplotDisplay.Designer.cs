@@ -1,4 +1,4 @@
-namespace DAnTE.Inferno
+namespace DAnTE.Inferno.Plotting
 {
     partial class frmMAplotDisplay
     {

@@ -16,48 +16,45 @@ namespace DAnTE.Inferno
         private clsRconnect rConnector;
         private frmDAnTEmdi m_frmDAnTEmdi;
         public frmDAnTE m_frmDAnTE;
-        //private frmPlotDisplay mfrmPlotDisplay = new frmPlotDisplay();
 
         public frmPlotProteinRollup()
         {
             InitializeComponent();
         }
 
-        private Image LoadImage(string tempFile)
+        private Image LoadImage(string imageFilePath)
         {
-            Image currImg = null;
-            using (FileStream fs = new FileStream(tempFile, FileMode.Open,
-                                FileAccess.Read, FileShare.ReadWrite))
+            Image currImg;
+            using (var fs = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                Image img = Image.FromStream(fs);
+                var img = Image.FromStream(fs);
                 fs.Close();
                 currImg = img.Clone() as Image;
                 img.Dispose();
-                File.Delete(tempFile);
+                File.Delete(imageFilePath);
             }
             return currImg;
         }
 
         private void mbtnPlot_Click(object sender, EventArgs e)
         {
-            string rcmd = null;
-            string protein = this.Protein2Plot;
-            //string Data = Dataset;
-            frmPlotDisplay mfrmPlotDisplay = new frmPlotDisplay();
+            var protein = Protein2Plot;
+            
+            var proteinRollupDisplay = new frmPlotDisplay();
 
             if (protein != null)
             {
-                rcmd = plotCommand + "(" + Rdataset + ", IPI=\"" + protein + "\",";
+                var rcmd = plotCommand + "(" + Rdataset + ", IPI=\"" + protein + "\",";
                 rcmd = rcmd + "Data=" + Dataset + "," + ShowDataLabels + @",file=""" + tempFile + @""")";
 
                 try
                 {
                     rConnector.EvaluateNoReturn(rcmd);
-                    mfrmPlotDisplay.Image = LoadImage(tempFile);
-                    mfrmPlotDisplay.EnableParameterMenu = false;
-                    mfrmPlotDisplay.MdiParent = m_frmDAnTEmdi;
-                    mfrmPlotDisplay.Title = protein;
-                    mfrmPlotDisplay.Show();
+                    proteinRollupDisplay.Image = LoadImage(tempFile);
+                    proteinRollupDisplay.EnableParameterMenu = false;
+                    proteinRollupDisplay.MdiParent = m_frmDAnTEmdi;
+                    proteinRollupDisplay.Title = protein;
+                    proteinRollupDisplay.Show();
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +70,7 @@ namespace DAnTE.Inferno
         private void mbtnClose_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
         private void mcmbBoxData_SelectionChangeCommitted(object sender, EventArgs e)
@@ -141,21 +138,23 @@ namespace DAnTE.Inferno
                         pListOK = true;
                     }
                     break;
-                default:
-                    break;
             }
+
             if (pListOK)
             {
-                var mintMaxColumns = proteinList.Length;
-                var lstBoxEntries = new object[mintMaxColumns];
+                var maxColumns = proteinList.Length;
+                var lstBoxEntries = new object[maxColumns];
                 proteinList.CopyTo(lstBoxEntries, 0);
                 var lboxObjColData = new ListBox.ObjectCollection(mlstBoxProteins, lstBoxEntries);
                 mlstBoxProteins.Items.Clear();
                 mlstBoxProteins.Items.AddRange(lboxObjColData);
-                mNiceLineProts.Caption = "Select a Protein to Plot (Total:" + mlstBoxProteins.Items.Count.ToString() + ")";
+                mNiceLineProts.Caption = "Select a Protein to Plot (Total:" + mlstBoxProteins.Items.Count.ToString() +
+                                         ")";
             }
             else
+            {
                 MessageBox.Show("No proteins found!", "Error");
+            }
         }
 
         #region Properties
@@ -166,7 +165,7 @@ namespace DAnTE.Inferno
             {
                 if (mlstBoxProteins.SelectedIndex >= 0)
                     return mlstBoxProteins.SelectedItem.ToString();
-                
+
                 return null;
             }
         }
@@ -224,7 +223,7 @@ namespace DAnTE.Inferno
                 {
                     selected = mcmbBoxData.SelectedItem.ToString();
                 }
-            
+
                 var dataset = m_frmDAnTE.CorrespondingRdataset(selected);
                 return dataset;
             }
@@ -252,8 +251,6 @@ namespace DAnTE.Inferno
                         break;
                     case ("QRollup"):
                         dataset = "qrollupP";
-                        break;
-                    default:
                         break;
                 }
                 return dataset;

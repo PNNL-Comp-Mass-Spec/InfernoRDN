@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows.Forms;
 using DAnTE.ExtraControls;
 using DAnTE.Purgatorio;
@@ -20,25 +19,25 @@ namespace DAnTE.Inferno
 
         private void menuItemPCAPlot_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsPCApar = new clsPCAplotPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsPCApar.tempFile = mRTempFilePath;
             mclsPCApar.Rdataset = datasetNameInR;
-            mclsPCApar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsPCApar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsPCApar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsPCApar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotPCA(mclsPCApar);
         }
@@ -59,24 +58,24 @@ namespace DAnTE.Inferno
             m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_PCAPlotCompleted;
             #endregion
 
-            var mfrmPCA = new frmPCAplotPar(mclsPCA);
+            var frmPCA = new frmPCAplotPar(mclsPCA);
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                if ((mclsFactors.mDTable.Columns.Count - 1) == mclsPCA.Datasets.Count)
-                    mfrmPCA.PopulateFactorComboBox = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                var factorTable = mhtDatasets["Factors"];
+                if ((factorTable.mDTable.Columns.Count - 1) == mclsPCA.Datasets.Count)
+                    frmPCA.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
                 else
-                    mfrmPCA.PopulateFactorComboBox = null;
+                    frmPCA.PopulateFactorComboBox = null;
             }
             else
-                mfrmPCA.PopulateFactorComboBox = null;
+                frmPCA.PopulateFactorComboBox = null;
 
-            if (mfrmPCA.ShowDialog() == DialogResult.OK)
+            if (frmPCA.ShowDialog() == DialogResult.OK)
             {
-                mclsPCApar = mfrmPCA.clsPCApar;
-                var mclsRplots = new clsRplotData(mclsPCApar.Rcmd, "PCA");
+                mclsPCApar = frmPCA.clsPCApar;
+                var pcaPlots = new clsRplotData(mclsPCApar.Rcmd, "PCA");
 
-                m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                m_BackgroundWorker.RunWorkerAsync(pcaPlots);
                 mfrmShowProgress.Message = "Generating PCA Plots ...";
                 mfrmShowProgress.ShowDialog();
             }
@@ -91,26 +90,26 @@ namespace DAnTE.Inferno
 
         private void mnuItemHeatmap_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            maxRow = mclsSelected.mDTable.Rows.Count;
+            maxRow = selectedNodeTag.mDTable.Rows.Count;
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsHeatmapPar = new clsHeatmapPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
-            var marrSelRows = new List<string>();
+            var selectedRowKeys = new List<string>();
 
-            var selectedRows = ((ucDataGridView)this.ctltabPage.Controls[0]).SelectedRows;
+            var selectedRows = ((ucDataGridView)ctltabPage.Controls[0]).SelectedRows;
 
             //if (((ucDataGridView)this.ctltabPage.Controls[0]).SelectedRows.Count > 1000)
             //    MessageBox.Show("Maximum number of rows is set to 1000." + Environment.NewLine +
@@ -120,18 +119,18 @@ namespace DAnTE.Inferno
             //{
             foreach (DataGridViewRow row in selectedRows)
             {
-                marrSelRows.Add(row.Cells[0].Value.ToString());
+                selectedRowKeys.Add(row.Cells[0].Value.ToString());
             }
 
             mclsHeatmapPar.tempFile = mRTempFilePath;
             mclsHeatmapPar.Rdataset = datasetNameInR;
-            mclsHeatmapPar.mstrDatasetName = mclsSelected.mstrDataText;
-            mclsHeatmapPar.SelectedRows = marrSelRows;
+            mclsHeatmapPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsHeatmapPar.SelectedRows = selectedRowKeys;
 
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                mclsHeatmapPar.Factors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                var factorTable = mhtDatasets["Factors"];
+                mclsHeatmapPar.Factors = clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
                 mclsHeatmapPar.Factors = null;
@@ -149,21 +148,21 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_HeatMapCompleted;
                 #endregion
 
-                var mfrmHmapPar = new frmHeatMapPar(mclsHmapPar)
+                var frmHmapParams = new frmHeatMapPar(mclsHmapPar)
                 {
                     maxRowCount = maxRow
                 };
 
-                var res = mfrmHmapPar.ShowDialog();
+                var res = frmHmapParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsHeatmapPar = mfrmHmapPar.clsHmapPar;
-                    doClust = mfrmHmapPar.DoClust;
-                    var mclsRplots = new clsRplotData(mclsHeatmapPar.Rcmd, "Hmap");
+                    mclsHeatmapPar = frmHmapParams.clsHmapPar;
+                    doClust = frmHmapParams.DoClust;
+                    var heatmapPlot = new clsRplotData(mclsHeatmapPar.Rcmd, "Hmap");
 
                     Add2AnalysisHTable(mclsHeatmapPar, "Heatmap_Clustering");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(heatmapPlot);
                     mfrmShowProgress.Message = "Generating Heatmap ...";
                     mfrmShowProgress.ShowDialog();
                 }
@@ -177,14 +176,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemPatterns_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -196,28 +195,28 @@ namespace DAnTE.Inferno
 
             mclsPatternPar = new clsPatternSearchPar();
             
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
             mclsPatternPar.Rdataset = datasetNameInR;
-            mclsPatternPar.mstrDatasetName = mclsSelected.mstrDataText;
-            mclsPatternPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
+            mclsPatternPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsPatternPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
 
-            var mstrnum = DAnTE.ExtraControls.InputBox.Show("How many patterns (1 ~ 6)?", "Number", "2");
-            if (mstrnum.Length > 0)
+            var patternCount = DAnTE.ExtraControls.InputBox.Show("How many patterns (1 ~ 6)?", "Number", "2");
+            if (patternCount.Length > 0)
             {
-                var mfrmPatterns = new frmPatterns(mclsPatternPar);
+                var patternDefForm = new frmPatterns(mclsPatternPar);
 
                 try
                 {
-                    int N = Convert.ToInt16(mstrnum);
+                    int N = Convert.ToInt16(patternCount);
                     if (N < 7)
-                        mfrmPatterns.NumPatterns = N;
+                        patternDefForm.NumPatterns = N;
                     else
-                        throw new System.ArgumentException("Number of patterns should be at most 6");
+                        throw new ArgumentException("Number of patterns should be at most 6");
 
-                    var res = mfrmPatterns.ShowDialog();
+                    var res = patternDefForm.ShowDialog();
                     if (res == DialogResult.OK)
                     {
-                        mclsPatternPar = mfrmPatterns.clsPatternPar;
+                        mclsPatternPar = patternDefForm.clsPatternPar;
                         Add2AnalysisHTable(mclsPatternPar, "Pattern_Search");
 
                         m_BackgroundWorker.RunWorkerAsync(mclsPatternPar.Rcmd);
@@ -239,7 +238,7 @@ namespace DAnTE.Inferno
 
         }
 
-        private bool SearchPatterns(string rcmd)
+        private bool SearchPatterns()
         {
             var success = true;
             try
@@ -247,10 +246,10 @@ namespace DAnTE.Inferno
                 mRConnector.EvaluateNoReturn(mclsPatternPar.Rcmd);
                 if (mRConnector.GetTableFromRmatrix("patternData"))
                 {
-                    var mDTPatterns = mRConnector.DataTable.Copy();
-                    mDTPatterns.TableName = "patternData";
+                    var patternTable = mRConnector.DataTable.Copy();
+                    patternTable.TableName = "patternData";
                     mRConnector.EvaluateNoReturn("cat(\"Pattern searching done.\n\")");
-                    AddDataset2HashTable(mDTPatterns);
+                    AddDataset2HashTable(patternTable);
                 }
                 else
                     success = false;

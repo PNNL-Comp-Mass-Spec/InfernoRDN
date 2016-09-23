@@ -3,18 +3,18 @@ using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
 {
-    public partial class frmPCAPlotDisplay : DAnTE.Inferno.frmPlotDisplay
+    public partial class frmPCAPlotDisplay : frmPlotDisplay
     {
-        private clsPCAplotPar mclsPCAPlotPar = new clsPCAplotPar();
+        private readonly clsPCAplotPar mclsPCAPlotPar;
         private frmDAnTE mfrmDante;
 
         public frmPCAPlotDisplay(clsPCAplotPar mclsPCA)
         {
-            mclsPCAPlotPar = (clsPCAplotPar)mclsPCA;
+            mclsPCAPlotPar = mclsPCA;
             InitializeComponent();
-            this.mnuItemPara.Click += new System.EventHandler(this.mnuItemPara_Click);
-            this.parametersToolStripMenuItem.Click += new System.EventHandler(this.mnuItemPara_Click);
-            this.mtBtnParam.Click += new System.EventHandler(this.mnuItemPara_Click);
+            mnuItemPara.Click += mnuItemPara_Click;
+            parametersToolStripMenuItem.Click += mnuItemPara_Click;
+            mtBtnParam.Click += mnuItemPara_Click;
         }
         
         private void mnuItemPara_Click(object sender, EventArgs e)

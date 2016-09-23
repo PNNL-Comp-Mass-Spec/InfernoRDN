@@ -4,18 +4,18 @@ using DAnTE.Purgatorio;
 
 namespace DAnTE.Inferno
 {
-    public partial class frmHeatmapDisplay : DAnTE.Inferno.frmPlotDisplay
+    public partial class frmHeatmapDisplay : frmPlotDisplay
     {
-        private clsHeatmapPar mclsHmapPar = new clsHeatmapPar();
+        private readonly clsHeatmapPar mclsHmapPar;
         private frmDAnTE mfrmDante;
 
         public frmHeatmapDisplay(clsHeatmapPar mclsHmap)
         {
             InitializeComponent();
             mclsHmapPar = mclsHmap;
-            this.mnuItemPara.Click += new EventHandler(mnuItemPara_Click);
-            this.parametersToolStripMenuItem.Click += new EventHandler(mnuItemPara_Click);
-            this.mtBtnParam.Click += new System.EventHandler(this.mnuItemPara_Click);
+            mnuItemPara.Click += mnuItemPara_Click;
+            parametersToolStripMenuItem.Click += mnuItemPara_Click;
+            mtBtnParam.Click += mnuItemPara_Click;
         }
                 
         void mnuItemPara_Click(object sender, EventArgs e)

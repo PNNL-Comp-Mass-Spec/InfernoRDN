@@ -9,7 +9,7 @@ namespace DAnTE.Paradiso
 	/// <summary>
 	/// Summary description for frmBugReportEmail.
 	/// </summary>
-	public class frmBugReportEmail : System.Windows.Forms.Form
+	public class frmBugReportEmail : Form
     {
 		private GroupBox grpBoxUserInfo;
 		private Label lblEmail;
@@ -27,16 +27,16 @@ namespace DAnTE.Paradiso
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.Container components = null;
+		private readonly System.ComponentModel.Container components = null;
 
 		private string mstrUserEmail ;
 		private string mstrShortSummary ;
 		private string mstrDescription ;
-        private DAnTE.ExtraControls.NiceLine niceLine4;
+        private ExtraControls.NiceLine niceLine4;
         private Label label2;
-        private DAnTE.ExtraControls.NiceLine niceLine1;
+        private ExtraControls.NiceLine niceLine1;
         private PictureBox pictureBox1;
-		private string version = Application.ProductVersion.ToString();
+		private readonly string version = Application.ProductVersion;
 
         public frmBugReportEmail()
 		{
@@ -57,12 +57,9 @@ namespace DAnTE.Paradiso
 		{
 			if( disposing )
 			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
+			    components?.Dispose();
 			}
-			base.Dispose( disposing );
+		    base.Dispose( disposing );
 		}
 
 		#region Windows Form Designer generated code
@@ -286,7 +283,7 @@ namespace DAnTE.Paradiso
 		}
 		#endregion
 
-		private void frmTracWebBugReport_Load(object sender, System.EventArgs e)
+		private void frmTracWebBugReport_Load(object sender, EventArgs e)
 		{
             mstrUserEmail = Settings.Default.email;
 			mcmbBoxRequest.Text = "Bug Report";
@@ -295,7 +292,7 @@ namespace DAnTE.Paradiso
 				mtxtBoxEmail.Text = mstrUserEmail ;
 		}
 
-		private void mbtnSend_Click(object sender, System.EventArgs e)
+		private void mbtnSend_Click(object sender, EventArgs e)
 		{
             var emailProcess = new Process();
 			var summary = mtxtBoxSummary.Text ;
@@ -309,14 +306,14 @@ namespace DAnTE.Paradiso
                 emailProcess.StartInfo.UseShellExecute = true;
                 emailProcess.StartInfo.RedirectStandardOutput = false;
                 emailProcess.Start();
-				this.DialogResult = DialogResult.OK;
-				this.Close();
+				DialogResult = DialogResult.OK;
+				Close();
 			}
 		}
 
-		private void mbtnCancel_Click(object sender, System.EventArgs e)
+		private void mbtnCancel_Click(object sender, EventArgs e)
 		{
-            this.Close();
+            Close();
 		}
         
 		private string BuildTracLink() 

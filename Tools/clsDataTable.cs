@@ -22,10 +22,7 @@ namespace DAnTE.Tools
         private static void OnProgressUpdate(ProgressEventArgs e)
         {          
             var handler = OnProgress;
-            if (handler != null)
-            {
-                handler(null, e);
-            }
+            handler?.Invoke(null, e);
         }
 
         #endregion
@@ -34,8 +31,8 @@ namespace DAnTE.Tools
         public static DataTable LoadFile2DataTable(string FileName)
         {
             var sConnectionString = "";
-            var mdtOut = new DataTable();
-            DataTable mdtIn;
+            var dtOut = new DataTable();
+            DataTable dtIn;
 
             var fileName = Path.GetFileName(FileName);
             var fExt = Path.GetExtension(fileName);
@@ -57,9 +54,9 @@ namespace DAnTE.Tools
                         parser.FirstRowHasHeader = true;
                         parser.MaxBufferSize = 4096;
                         parser.TextQualifier = '\"';
-                        mdtIn = parser.GetDataTable();
+                        dtIn = parser.GetDataTable();
                         parser.Close();
-                        mdtOut = ReplaceMissingStr(mdtIn);
+                        dtOut = ReplaceMissingStr(dtIn);
                     }
                     break;
                 case ".txt":
@@ -70,9 +67,9 @@ namespace DAnTE.Tools
                         parser.FirstRowHasHeader = true;
                         parser.MaxBufferSize = 4096;
                         parser.TextQualifier = '\"';
-                        mdtIn = parser.GetDataTable();
+                        dtIn = parser.GetDataTable();
                         parser.Close();
-                        mdtOut = ReplaceMissingStr(mdtIn);
+                        dtOut = ReplaceMissingStr(dtIn);
                     }
                     break;
                 case ".xls": //Excel files
@@ -112,7 +109,7 @@ namespace DAnTE.Tools
                         {
                             SelectCommand = objCmdSelect
                         };
-                        objAdapter1.Fill(mdtOut);
+                        objAdapter1.Fill(dtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
@@ -127,27 +124,23 @@ namespace DAnTE.Tools
                             objConn.Close();
                             objConn.Dispose();
                         }
-                        if (dt != null)
-                        {
-                            dt.Dispose();
-                        }
+                        dt?.Dispose();
                     }
                     break;
                 default:
                     Console.WriteLine("Unknown File type");
                     //fileOK = false;
-                    mdtOut = null;
+                    dtOut = null;
                     break;
             }
-            return mdtOut;
+            return dtOut;
         }
 
         public static DataTable LoadFile2DataTableJETOLEDB(string FileName)
         {
-            var mdtOut = new DataTable();
+            var dtOut = new DataTable();
 
             OleDbConnection objConn;
-            DataTable dt;
 
             var fileName = Path.GetFileName(FileName);
             var filePath = Path.GetDirectoryName(FileName);
@@ -180,7 +173,7 @@ namespace DAnTE.Tools
                             SelectCommand = objCmdSelect
                         };
 
-                        objAdapter1.Fill(mdtOut);
+                        objAdapter1.Fill(dtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
@@ -199,7 +192,7 @@ namespace DAnTE.Tools
                     break;
                 case ".xls"://Excel files
                     objConn = null;
-                    dt = null;
+                    DataTable dt = null;
                     try
                     {
                         var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
@@ -227,7 +220,7 @@ namespace DAnTE.Tools
                             SelectCommand = objCmdSelect
                         };
 
-                        objAdapter1.Fill(mdtOut);
+                        objAdapter1.Fill(dtOut);
                         //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
                     }
                     catch (Exception ex)
@@ -242,25 +235,22 @@ namespace DAnTE.Tools
                             objConn.Close();
                             objConn.Dispose();
                         }
-                        if (dt != null)
-                        {
-                            dt.Dispose();
-                        }
+                        dt?.Dispose();
                     }
                     break;
                 default:
                     Console.WriteLine("Unknown File");
                     //fileOK = false;
-                    mdtOut = null;
+                    dtOut = null;
                     break;
             }
-            return mdtOut;
+            return dtOut;
         }
 
         public static DataTable LoadFile2DataTableFastCSVReader(string FileName)
         {
             var sConnectionString = "";
-            var mdtOut = new DataTable();
+            var dtOut = new DataTable();
 
             var fileName = Path.GetFileName(FileName);
             var fExt = Path.GetExtension(fileName);
@@ -279,7 +269,7 @@ namespace DAnTE.Tools
                     {
                         csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
-                        mdtOut.Load(csv);
+                        dtOut.Load(csv);
                     } 
                     break;
                 case ".txt":
@@ -287,7 +277,7 @@ namespace DAnTE.Tools
                     {
                         csv.ParseError += csv_ParseError;
                         csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
-                        mdtOut.Load(csv);
+                        dtOut.Load(csv);
                     } 
                     break;
                 case ".xls": //Excel files
@@ -317,28 +307,28 @@ namespace DAnTE.Tools
                             mstrSheet = (dt.Rows[0])["TABLE_NAME"].ToString();
                         else
                         {
-                            var marrExcelSheets = new List<string>();
+                            var arrExcelSheets = new List<string>();
                             var i = 0;
 
                             // Add the sheet name to the string array.
                             foreach (DataRow row in dt.Rows)
                             {
                                 mstrSheet = row["TABLE_NAME"].ToString();
-                                marrExcelSheets.Add(mstrSheet);
+                                arrExcelSheets.Add(mstrSheet);
                                 i++;
                             }
-                            var mfrmSheets = new frmSelectExcelSheet
+                            var frmSheets = new frmSelectExcelSheet
                             {
-                                PopulateListBox = marrExcelSheets
+                                PopulateListBox = arrExcelSheets
                             };
-                            if (mfrmSheets.ShowDialog() == DialogResult.OK)
+                            if (frmSheets.ShowDialog() == DialogResult.OK)
                             {
-                                i = mfrmSheets.SelectedSheet;
-                                mstrSheet = marrExcelSheets[i];
+                                i = frmSheets.SelectedSheet;
+                                mstrSheet = arrExcelSheets[i];
                             }
                             else
                             {
-                                mdtOut = null;
+                                dtOut = null;
                                 break;
                             }
                         }
@@ -348,7 +338,7 @@ namespace DAnTE.Tools
                         {
                             SelectCommand = objCmdSelect
                         };
-                        objAdapter1.Fill(mdtOut);
+                        objAdapter1.Fill(dtOut);
                     }
                     catch (Exception ex)
                     {
@@ -362,19 +352,16 @@ namespace DAnTE.Tools
                             objConn.Close();
                             objConn.Dispose();
                         }
-                        if (dt != null)
-                        {
-                            dt.Dispose();
-                        }
+                        dt?.Dispose();
                     }
                     break;
                 default:
                     Console.WriteLine("Unknown File");
                     //fileOK = false;
-                    mdtOut = null;
+                    dtOut = null;
                     break;
             }
-            return mdtOut;
+            return dtOut;
         }
 
         
@@ -387,56 +374,54 @@ namespace DAnTE.Tools
 
         public static DataTable Array2DataTable(double[,] matrix, string[] rowNames, string[] colHeaders)
         {
-            var mDataTable = new DataTable();
+            var dataTable = new DataTable();
 
-            var mDataColumn = new DataColumn
+            var dataColumn = new DataColumn
             {
                 DataType = Type.GetType("System.String"),
                 ColumnName = "Row_ID"
             };
-            //mDataColumn.ReadOnly = true ;
-            mDataTable.Columns.Add(mDataColumn);
+            dataTable.Columns.Add(dataColumn);
 
             foreach (var header in colHeaders)
             {
-                mDataColumn = new DataColumn
+                dataColumn = new DataColumn
                 {
                     DataType = Type.GetType("System.String"),
                     ColumnName = header
                 };
-                //mDataColumn.ReadOnly = true ;
-                mDataTable.Columns.Add(mDataColumn);
+                dataTable.Columns.Add(dataColumn);
             }
             for (var i = 0; i < matrix.GetLength(0); i++)
             {
-                var mDataRow = mDataTable.NewRow();
-                mDataRow[0] = rowNames[i];
+                var dataRow = dataTable.NewRow();
+                dataRow[0] = rowNames[i];
                 for (var j = 0; j < matrix.GetLength(1); j++)
                 {
-                    mDataRow[j + 1] = matrix[i, j].ToString(CultureInfo.InvariantCulture);
+                    dataRow[j + 1] = matrix[i, j].ToString(CultureInfo.InvariantCulture);
                 }
-                mDataTable.Rows.Add(mDataRow);
+                dataTable.Rows.Add(dataRow);
             }
-            return ReplaceMissingStr(mDataTable);
+            return ReplaceMissingStr(dataTable);
         }
 
-        public static string[] DataColumn2strArray(DataTable mTab, string Colmn)
+        public static string[] DataColumn2strArray(DataTable dataTable, string keyColumnName)
         {
-            var mStrArr = new string[mTab.Rows.Count];
-            var columns = mTab.Columns;
+            var stringArray = new string[dataTable.Rows.Count];
+            var columns = dataTable.Columns;
             var i = 0;
             foreach (DataColumn column in columns)
             {
-                if (!Colmn.Equals(column.ColumnName))
+                if (!keyColumnName.Equals(column.ColumnName))
                     i++;
                 else
                     break;
             }
-            for (var row = 0; row < mTab.Rows.Count; row++)
+            for (var row = 0; row < dataTable.Rows.Count; row++)
             {
-                mStrArr[row] = mTab.Rows[row].ItemArray[i].ToString();
+                stringArray[row] = dataTable.Rows[row].ItemArray[i].ToString();
             }
-            return mStrArr;
+            return stringArray;
         }
 
         public static DataTable ReplaceMissingStr(DataTable dt)
@@ -778,7 +763,7 @@ namespace DAnTE.Tools
         /// </summary>
         public static List<string> DataTableColumns(DataTable dt, bool dataonly)
         {
-            var marrCols = new List<string>();
+            var columnNames = new List<string>();
             var i = 0;
             foreach (DataColumn column in dt.Columns)
             {
@@ -787,39 +772,40 @@ namespace DAnTE.Tools
                     //Ignore MassTag column
                     //if (i != 0 || !column.ColumnName.Equals("PepCount"))
                     if (i != 0)
-                        marrCols.Add(column.ColumnName);
+                        columnNames.Add(column.ColumnName);
                     i++;
                 }
                 else
-                    marrCols.Add(column.ColumnName);
+                    columnNames.Add(column.ColumnName);
             }
-            return marrCols;
+            return columnNames;
         }
 
         public static List<string> DataTableColumns(DataTable dt, string dataset)
         {
-            var marrCols = new List<string>();
+            var columnNames = new List<string>();
             var i = 0;
-            var prots = (dataset.Contains("pData") || dataset.Contains("qrollup"));
+            var prots = dataset.Contains("pData") || dataset.Contains("qrollup");
 
             foreach (DataColumn column in dt.Columns)
             {
                 if (prots)
                 {
-                    //Ignore first two columns
+                    // Ignore the first two columns
+                    // May need to ignore more columns if protein metadata is present
                     if (i > 2)
-                        marrCols.Add(column.ColumnName);
+                        columnNames.Add(column.ColumnName);
                     i++;
                 }
                 else
                 {
                     //Ignore the first column
                     if (i != 0)
-                        marrCols.Add(column.ColumnName);
+                        columnNames.Add(column.ColumnName);
                     i++;
                 }
             }
-            return marrCols;
+            return columnNames;
         }
 
         /// <summary>
@@ -829,8 +815,8 @@ namespace DAnTE.Tools
         /// <returns></returns>
         public static List<string> DataTableRows(DataTable dt)
         {
-            var marrRows = (from DataRow dRow in dt.Rows select dRow.ItemArray[0].ToString()).ToList();
-            return marrRows;
+            var rowList = (from DataRow dRow in dt.Rows select dRow.ItemArray[0].ToString()).ToList();
+            return rowList;
         }
     }
 }

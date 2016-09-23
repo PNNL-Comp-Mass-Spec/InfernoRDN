@@ -6,9 +6,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmMADPar : Form
     {
-        readonly DAnTE.Purgatorio.clsMADPar mclsMADPar;
+        readonly Purgatorio.clsMADPar mclsMADPar;
 
-        public frmMADPar(DAnTE.Purgatorio.clsMADPar mclsMAD)
+        public frmMADPar(Purgatorio.clsMADPar mclsMAD)
         {
             InitializeComponent();
             mclsMADPar = mclsMAD;
@@ -28,7 +28,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsMADPar clsMADPar
+        public Purgatorio.clsMADPar clsMADPar
         {
             get
             {

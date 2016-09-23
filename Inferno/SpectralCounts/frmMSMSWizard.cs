@@ -139,7 +139,7 @@ namespace DAnTE.Inferno
 
         private List<string> GetSEQOUT2DatasetNames(string mstrSeqFolder)
         {
-            var marrDatasets = new SortedSet<string>();
+            var datasetNames = new SortedSet<string>();
 
             var dir = new DirectoryInfo(mstrSeqFolder);
 
@@ -150,13 +150,13 @@ namespace DAnTE.Inferno
                     continue;
                 }
 
-                var mstrDataset = f.Name.Substring(0, f.Name.IndexOf('.'));
-                if (!marrDatasets.Contains(mstrDataset))
+                var datasetNameToAdd = f.Name.Substring(0, f.Name.IndexOf('.'));
+                if (!datasetNames.Contains(datasetNameToAdd))
                 {
-                    marrDatasets.Add(mstrDataset);
+                    datasetNames.Add(datasetNameToAdd);
                 }
             }
-            return marrDatasets.ToList();
+            return datasetNames.ToList();
         }
 
         /// <summary>
@@ -449,12 +449,13 @@ namespace DAnTE.Inferno
         private void backgroundWorker1_WorkProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressPrcnt = e.ProgressPercentage;
-            var mstrMssg = (string)e.UserState;
+            var userState = (string)e.UserState;
 
             mctlPerformPage.EnableNextButton(false);
             mctlPerformPage.ProgressVal = progressPrcnt;
-            if (!mstrMssg.Equals(""))
-                mctlPerformPage.ShowMessege = mstrMssg;
+
+            if (!string.IsNullOrWhiteSpace(userState))
+                mctlPerformPage.ShowMessege = userState;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

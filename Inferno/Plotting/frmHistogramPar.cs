@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
-using DAnTE.Tools;
 using DAnTE.Purgatorio;
+using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
     public partial class frmHistogramPar : Form
     {
-        private int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
-        private int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
+        private const int SUGGESTED_MAX = frmDAnTE.SUGGESTED_DATASETS_TO_SELECT;
+        private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
         private int numCol, bins;
         private List<string> marrDatasets = new List<string>();
@@ -146,7 +145,7 @@ namespace DAnTE.Inferno
 
         private void FormLoad_event(object sender, EventArgs e)
         {
-            int bins = mclsHistPar.numBins - 1;
+            var bins = mclsHistPar.numBins - 1;
             foreC = mclsHistPar.Fcol;
             borderC = mclsHistPar.Bcol;
             mtxtBoxBins.Text = bins.ToString();
@@ -173,7 +172,10 @@ namespace DAnTE.Inferno
                 mclsHistPar.Fcol = ForeGColor;
                 mclsHistPar.Bcol = BorderColor;
                 mclsHistPar.bkground = Background;
+
+                // When true, dd tick marks
                 mclsHistPar.addrug = AddRug;
+
                 mclsHistPar.CheckedDatasets = SelectedDatasets;
                 mclsHistPar.Bins = strBins;
                 mclsHistPar.numBins = numBins;
@@ -332,9 +334,13 @@ namespace DAnTE.Inferno
             get
             {
                 if (mchkBoxAutoBin.Checked)
-                    return @"cells=""Sturges""";
-                else
-                    return "cells=" + bins.ToString();
+                {
+                    // Set the method for auto-computing histogram bins to use Sturges' formula:
+                    // cells="Sturges"
+                    return clsHistogramPar.GetHistogramBinMethodCode();
+                }
+
+                return "cells=" + bins;
             }
         }
 

@@ -486,14 +486,14 @@ namespace DAnTE.Inferno
 
             var idx = 0;
             var nBlock = 1;
-            var mfrmInputBlockSize = new frmInputBlockSize();
+            var inputBlockSizeParams = new frmInputBlockSize();
 
-            var res = mfrmInputBlockSize.ShowDialog();
+            var res = inputBlockSizeParams.ShowDialog();
             if (res == DialogResult.Cancel)
                 return;
             if (res == DialogResult.OK)
             {
-                nBlock = mfrmInputBlockSize.blockSize;
+                nBlock = inputBlockSizeParams.blockSize;
             }
 
             foreach (ListViewItem item in mlstViewDataSets.Items)
@@ -547,14 +547,14 @@ namespace DAnTE.Inferno
 
             var idx = 0;
             var nBlock = 1;
-            var mfrmInputBlockSize = new frmInputBlockSize();
+            var inputBlockSizeParams = new frmInputBlockSize();
 
-            var res = mfrmInputBlockSize.ShowDialog();
+            var res = inputBlockSizeParams.ShowDialog();
             if (res == DialogResult.Cancel)
                 return;
             if (res == DialogResult.OK)
             {
-                nBlock = mfrmInputBlockSize.blockSize;
+                nBlock = inputBlockSizeParams.blockSize;
             }
 
             foreach (ListViewItem item in mlstViewDataSets.Items)

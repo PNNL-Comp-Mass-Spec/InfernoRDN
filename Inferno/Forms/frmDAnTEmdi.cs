@@ -17,7 +17,7 @@ namespace DAnTE.Inferno
         // See Inno Setup file inferno_setup.iss
         private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
-        public string mSessionFile;
+        public readonly string mSessionFile;
 
         private readonly StreamWriter mCustomLogWriter;
         private readonly bool mCustomLoggerEnabled;
@@ -62,7 +62,7 @@ namespace DAnTE.Inferno
                 }
             }
 
-            this.Text = "InfernoRDN"; //Application.ProductVersion.ToString();
+            Text = "InfernoRDN";
 
             var startupErrString = new StringBuilder();
 
@@ -200,32 +200,7 @@ namespace DAnTE.Inferno
                 Log(mCustomLoggerEnabled, "Error: Cleaning temp files failed.", mCustomLogWriter);
             }
             System.Threading.Thread.Sleep(10);
-
-
-            // No longer used (only used on Windows XP and 2000)
-            //
-            //SplashScreen.SetStatus("Setting Up Child Forms...");
-            //if (RunRlogs())
-            //{
-            //    mRmsgForm = new frmRmsg();
-            //    try
-            //    {
-            //        //-// rConnector.SetCharacterOutputDevice((StatConnectorCommonLib.IStatConnectorCharacterDevice)mfrmRmsg.axStatConnectorCharacterDevice1.GetOcx());
-            //        mRConnector.EvaluateNoReturn("print(version)");
-            //        Log(mCustomLoggerEnabled, "Done starting R log viewer.", mCustomLogWriter);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        startupErrString.Append("* Error starting R log viewer.").AppendLine();
-            //        //MessageBox.Show("Error: " + ex.Message, "Watchout!");
-            //        Log(mCustomLoggerEnabled, "Error: Error starting R log viewer." + ex.Message, mCustomLogWriter);
-            //    }
-            //}
-            //else
-            //{
-            //    Log(mCustomLoggerEnabled, "R log viewer not used for this OS.", mCustomLogWriter);
-            //}
-
+            
             this.Activate();
             SplashScreen.CloseForm();
 
@@ -242,7 +217,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public override sealed string Text
+        public sealed override string Text
         {
             get { return base.Text; }
             set { base.Text = value; }
@@ -319,10 +294,10 @@ namespace DAnTE.Inferno
         {
             bool success;
 
-            var mstrRDataFile = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
+            var rDataFilePath = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
             try
             {
-                success = mRConnector.loadRData(mstrRDataFile);
+                success = mRConnector.loadRData(rDataFilePath);
             }
             catch (Exception ex)
             {
@@ -512,32 +487,32 @@ namespace DAnTE.Inferno
             {
                 // Find a child window in which we can load the specified session file
 
-                foreach (var f in MdiChildren)
+                foreach (var mdiChild in MdiChildren)
                 {
-                    var mf = f as frmDAnTE;
-                    if (mf == null)
+                    var danteForm = mdiChild as frmDAnTE;
+                    if (danteForm == null)
                     {
                         continue;
                     }
 
-                    if (mf.WindowState == FormWindowState.Minimized)
-                        mf.WindowState = FormWindowState.Normal;
+                    if (danteForm.WindowState == FormWindowState.Minimized)
+                        danteForm.WindowState = FormWindowState.Normal;
 
-                    mf.BringToFront();
+                    danteForm.BringToFront();
                     if (!string.IsNullOrWhiteSpace(sessionFilePath))
-                        mf.OpenSessionCheckExisting(sessionFilePath, frmDAnTE.USE_THREADED_LOAD);
+                        danteForm.OpenSessionCheckExisting(sessionFilePath, frmDAnTE.USE_THREADED_LOAD);
                     return;
                 }
 
-                var mfrmDAnTE = frmDAnTE.GetChildInstance();
-                mfrmDAnTE.RTempFilePath = mRTempFilePath;
-                mfrmDAnTE.RConnector = mRConnector;
-                mfrmDAnTE.SessionFile = sessionFilePath;
-                mfrmDAnTE.MdiParent = this;
-                mfrmDAnTE.ParentInstance = this;
+                var danteInstance = frmDAnTE.GetChildInstance();
+                danteInstance.RTempFilePath = mRTempFilePath;
+                danteInstance.RConnector = mRConnector;
+                danteInstance.SessionFile = sessionFilePath;
+                danteInstance.MdiParent = this;
+                danteInstance.ParentInstance = this;
 
-                mfrmDAnTE.Show();
-                mfrmDAnTE.BringToFront();
+                danteInstance.Show();
+                danteInstance.BringToFront();
             }
             catch (Exception ex)
             {
@@ -561,22 +536,23 @@ namespace DAnTE.Inferno
         [StructLayout(LayoutKind.Sequential)]
         internal struct SYSTEM_INFO
         {
-            public ushort wProcessorArchitecture;
-            public ushort wReserved;
-            public uint dwPageSize;
+            public readonly ushort wProcessorArchitecture;
+            public readonly ushort wReserved;
+            public readonly uint dwPageSize;
             public IntPtr lpMinimumApplicationAddress;
             public IntPtr lpMaximumApplicationAddress;
             public UIntPtr dwActiveProcessorMask;
-            public uint dwNumberOfProcessors;
-            public uint dwProcessorType;
-            public uint dwAllocationGranularity;
-            public ushort wProcessorLevel;
-            public ushort wProcessorRevision;
+            public readonly uint dwNumberOfProcessors;
+            public readonly uint dwProcessorType;
+            public readonly uint dwAllocationGranularity;
+            public readonly ushort wProcessorLevel;
+            public readonly ushort wProcessorRevision;
         };
 
         [DllImport("kernel32.dll")]
         internal static extern void GetNativeSystemInfo(ref SYSTEM_INFO lpSystemInfo);
 
+        [Obsolete("Unused")]
         private Platform GetPlatform()
         {
             var sysInfo = new SYSTEM_INFO();
@@ -644,11 +620,11 @@ namespace DAnTE.Inferno
 
         private void mnuItemExit_Click(object sender, EventArgs e)
         {
-            var mfrmDAnTE = frmDAnTE.GetChildInstance();
+            var danteInstance = frmDAnTE.GetChildInstance();
 
-            if (mfrmDAnTE.OK2Exit())
+            if (danteInstance.OK2Exit())
             {
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
                 mRConnector.closeR();
                 this.Close();
             }
@@ -688,18 +664,15 @@ namespace DAnTE.Inferno
 
         private void mnuItemBugs_Click(object sender, EventArgs e)
         {
-            // frmTracWebBugReport mfrmTracWeb = new frmTracWebBugReport();
-            //mfrmTracWeb.Show();
-
-            var mfrmBugEmail = new frmBugReportEmail();
-            mfrmBugEmail.Show();
+            var debugEmailForm = new frmBugReportEmail();
+            debugEmailForm.Show();
         }
 
         private void mnuItemAbout_Click(object sender, EventArgs e)
         {
 
-            var mfrmAbout = new frmAbout2();
-            mfrmAbout.ShowDialog();
+            var aboutForm = new frmAbout2();
+            aboutForm.ShowDialog();
         }
 
         private void frmDAnTEmdi_Load(object sender, EventArgs e)
@@ -710,12 +683,8 @@ namespace DAnTE.Inferno
         private void mnuWindowItem_Click(object sender, EventArgs e)
         {
             var item = sender as ToolStripItem;
-            if (item == null)
-            {
-                return;
-            }
 
-            var enumVal = item.Tag as string;
+            var enumVal = item?.Tag as string;
             if (enumVal != null)
             {
                 LayoutMdi((MdiLayout)Enum.Parse(typeof(MdiLayout), enumVal));

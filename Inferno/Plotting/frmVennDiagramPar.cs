@@ -10,12 +10,12 @@ namespace DAnTE.Inferno
         private const int MAX_LEVELS = 100;
         private readonly string[] strarrFactors = new string[MAX_LEVELS];
         private List<clsFactorInfo> marrFactors;
-        private readonly DAnTE.Purgatorio.clsVennPar mclsVennPar;
+        private readonly Purgatorio.clsVennPar mclsVennPar;
         private bool mblPlotFactors = false;
 
 
 
-        public frmVennDiagramPar(DAnTE.Purgatorio.clsVennPar mclsVPar)
+        public frmVennDiagramPar(Purgatorio.clsVennPar mclsVPar)
         {
             InitializeComponent();
             mclsVennPar = mclsVPar;
@@ -105,14 +105,14 @@ namespace DAnTE.Inferno
 
         private void updateFactorForm()
         {
-            var marrFs = new List<string>();
+            var factorList = new List<string>();
 
             fillFactorArray();
 
             foreach (var factor in marrFactors)
-                marrFs.Add((factor).mstrFactor);
+                factorList.Add(factor.mstrFactor);
 
-            mcmbBoxFactors.DataSource = marrFs;
+            mcmbBoxFactors.DataSource = factorList;
         }
 
         private void fillFactorArray()
@@ -159,7 +159,6 @@ namespace DAnTE.Inferno
             mtxtBoxB.Text = mclsVennPar.x2;
             mtxtBoxC.Text = mclsVennPar.x3;
 
-            //this.PopulateFactorComboBox = mclsVennPar.marrFactorNames;
             this.FactorInfoArray = mclsVennPar.marrFactors;
             updateFactorForm();
             this.DataSetName = mclsVennPar.mstrDatasetName;
@@ -168,7 +167,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsVennPar clsVennPar
+        public Purgatorio.clsVennPar clsVennPar
         {
             get
             {

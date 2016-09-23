@@ -25,11 +25,12 @@ namespace DAnTE.Inferno
             if (originator.Contains("Expression"))
                 OpenExpressionFileCheckExisting();
             else
+            {
                 if (originator.Contains("Protein"))
-                OpenProteinsFile();
-            else
-                    if (originator.Contains("Factor"))
-                OpenFactorsFile();
+                    OpenProteinsFile();
+                else if (originator.Contains("Factor"))
+                    OpenFactorsFile();
+            }
 
         }
 
@@ -74,7 +75,7 @@ namespace DAnTE.Inferno
                 mfrmShowProgress.Show();
                 var success = OpenFile(mstrLoadedfileName);
 
-                this.HandleFileOpenCompleted(!success, success, string.Empty);
+                HandleFileOpenCompleted(!success, success, string.Empty);
             }
         }
 
@@ -231,7 +232,7 @@ namespace DAnTE.Inferno
 
                     statusBarPanelMsg.Text = "Session opened successfully.";
                     if (string.IsNullOrEmpty(mstrLoadedfileName))
-                        this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
+                        Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
                 }
                 else
                 {
@@ -239,7 +240,7 @@ namespace DAnTE.Inferno
 
                     if (LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        message += ". Try loading the file again -- in many cases the first load attempt fails, but the second load attempt succeeds.";
+                        message += ". Try loading the file again -- in some cases the first load attempt fails, but the second load attempt succeeds.";
                     }
 
                     MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -260,10 +261,10 @@ namespace DAnTE.Inferno
                 var msmsWizard = new frmMSMSWizard(mRConnector);
                 if (msmsWizard.ShowDialog(this) == DialogResult.OK)
                 {
-                    var mDTspectral = msmsWizard.SpectralDT;
-                    AddDataset2HashTable(mDTspectral);
+                    var spectraData = msmsWizard.SpectralDT;
+                    AddDataset2HashTable(spectraData);
 
-                    if (mDTspectral.Rows.Count != 0)
+                    if (spectraData.Rows.Count != 0)
                     {
                         AddDataNode(mhtDatasets["Expressions"]);
                     }
@@ -431,17 +432,17 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void menuItemExit_Click(object sender, System.EventArgs e)
+        private void menuItemExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
-        private void menuItemSave_Click(object sender, System.EventArgs e)
+        private void menuItemSave_Click(object sender, EventArgs e)
         {
             try
             {
 
-                var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+                var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
                 if (mtabControlData.Controls.Count != 0)
                 {
@@ -461,9 +462,9 @@ namespace DAnTE.Inferno
 
                     using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)))
                     {
-                        CsvWriter.WriteToStream(writer, mclsSelected.mDTable, true, false,
+                        CsvWriter.WriteToStream(writer, selectedNodeTag.mDTable, true, false,
                                                 outputFile.Extension.ToLower().Equals(".txt"));
-                        this.statusBarPanelMsg.Text = "File saved successfully.";
+                        statusBarPanelMsg.Text = "File saved successfully.";
                     }
                 }
             }
@@ -664,7 +665,7 @@ namespace DAnTE.Inferno
 
                     }
 
-                    this.statusBarPanelMsg.Text = "File saved successfully.";
+                    statusBarPanelMsg.Text = "File saved successfully.";
                 }
 
             }

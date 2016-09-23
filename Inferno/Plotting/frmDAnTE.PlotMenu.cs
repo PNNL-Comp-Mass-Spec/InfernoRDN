@@ -21,25 +21,25 @@ namespace DAnTE.Inferno
 
         private void mnuItemQQplot_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsQQPar = new clsQQPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsQQPar.tempFile = mRTempFilePath;
             mclsQQPar.Rdataset = datasetNameInR;
-            mclsQQPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsQQPar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsQQPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsQQPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotQQ(mclsQQPar);
 
@@ -56,19 +56,19 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_QQPlotCompleted;
                 #endregion
 
-                var mfrmQQPar = new frmQQPar(clsQQPar);
+                var qqParams = new frmQQPar(clsQQPar);
 
-                var res = mfrmQQPar.ShowDialog();
+                var res = qqParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsQQPar = mfrmQQPar.clsQQPar;
+                    mclsQQPar = qqParams.clsQQPar;
+                    var qqPlot = new clsRplotData(clsQQPar.Rcmd, "QQ");
 
-                    var mclsRplots = new clsRplotData(clsQQPar.Rcmd, "QQ");
-
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(qqPlot);
                     mfrmShowProgress.Message = "Generating Q-Q Plots ...";
                     mfrmShowProgress.ShowDialog();
                 }
+
                 #region Unhook Threading Events
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_QQPlotCompleted;
@@ -83,25 +83,25 @@ namespace DAnTE.Inferno
         /// <param name="e"></param>
         private void mnuHistogrms_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsHistPar = new clsHistogramPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsHistPar.tempFile = mRTempFilePath;
             mclsHistPar.Rdataset = datasetNameInR;
-            mclsHistPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsHistPar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsHistPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsHistPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotHistograms(mclsHistPar);
 
@@ -118,19 +118,19 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_HistPlotCompleted;
                 #endregion
 
-                var mfrmHistPar = new frmHistogramPar(clsHistPar);
+                var histogramParams = new frmHistogramPar(clsHistPar);
 
-                var res = mfrmHistPar.ShowDialog();
+                var res = histogramParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsHistPar = mfrmHistPar.clsHistPar;
+                    mclsHistPar = histogramParams.clsHistPar;
+                    var histogramPlot = new clsRplotData(clsHistPar.Rcmd, "Hist");
 
-                    var mclsRplots = new clsRplotData(clsHistPar.Rcmd, "Hist");
-
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(histogramPlot);
                     mfrmShowProgress.Message = "Generating Histograms ...";
                     mfrmShowProgress.ShowDialog();
                 }
+
                 #region Unhook Threading Events
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_HistPlotCompleted;
@@ -140,25 +140,25 @@ namespace DAnTE.Inferno
 
         private void menuItemCorr_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsCorrPar = new clsCorrelationPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsCorrPar.tempFile = mRTempFilePath;
             mclsCorrPar.Rdataset = datasetNameInR;
-            mclsCorrPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsCorrPar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsCorrPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsCorrPar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotCorrelation(mclsCorrPar);
 
@@ -175,16 +175,15 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_CorrPlotCompleted;
                 #endregion
 
-                frmCorrelationPar mfrmCorrPar;
-                mfrmCorrPar = new frmCorrelationPar(clsCorrPar);
+                var correlationParams = new frmCorrelationPar(clsCorrPar);
 
-                DialogResult res = mfrmCorrPar.ShowDialog();
+                var res = correlationParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsCorrPar = mfrmCorrPar.clsCorrPar;
-                    var mclsRplots = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
+                    mclsCorrPar = correlationParams.clsCorrPar;
+                    var correlationPlot = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(correlationPlot);
                     mfrmShowProgress.Message = "Generating Correlation Plot ...";
                     mfrmShowProgress.ShowDialog();
                 }
@@ -198,29 +197,29 @@ namespace DAnTE.Inferno
 
         private void menuItemBoxPlot_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsBoxPlotPar = new clsBoxPlotPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsBoxPlotPar.tempFile = mRTempFilePath;
             mclsBoxPlotPar.Rdataset = datasetNameInR;
-            mclsBoxPlotPar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsBoxPlotPar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsBoxPlotPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsBoxPlotPar.mstrDatasetName = selectedNodeTag.mstrDataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                mclsBoxPlotPar.Factors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                var factorDataset = mhtDatasets["Factors"];
+                mclsBoxPlotPar.Factors = clsDataTable.DataTableRows(factorDataset.mDTable);
             }
             else
                 mclsBoxPlotPar.Factors = null;
@@ -240,15 +239,15 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_BoxPlotCompleted;
                 #endregion
 
-                var mfrmBoxplotPar = new frmBoxPlotPar(clsBoxPlotPar);
+                var boxPlotParams = new frmBoxPlotPar(clsBoxPlotPar);
 
-                var res = mfrmBoxplotPar.ShowDialog();
+                var res = boxPlotParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsBoxPlotPar = mfrmBoxplotPar.clsBoxPlotPar;
-                    var mclsRplots = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
+                    mclsBoxPlotPar = boxPlotParams.clsBoxPlotPar;
+                    var boxPlot = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(boxPlot);
                     mfrmShowProgress.Message = "Generating the Box Plot ...";
                     mfrmShowProgress.ShowDialog();
                 }
@@ -263,36 +262,36 @@ namespace DAnTE.Inferno
         private void mnuProteinRollupPlot_Click(object sender, EventArgs e)
         {
             var dataSourceList = new List<string>();
-            var mblPlot = false;
+            var validPlot = false;
 
             if (mhtDatasets.ContainsKey("QRollup"))
             {
                 dataSourceList.Add("QRollup");
-                mblPlot = true;
+                validPlot = true;
             }
             if (mhtDatasets.ContainsKey("RRollup"))
             {
                 dataSourceList.Add("RRollup");
-                mblPlot = true;
+                validPlot = true;
             }
             if (mhtDatasets.ContainsKey("ZRollup"))
             {
                 dataSourceList.Add("ZRollup");
-                mblPlot = true;
+                validPlot = true;
             }
             if (mhtDatasets.ContainsKey("Protein Info"))
             {
                 dataSourceList.Add("None<raw>");
-                mblPlot = true;
+                validPlot = true;
             }
 
-            if (!mblPlot)
+            if (!validPlot)
             {
                 MessageBox.Show("No Protein Information found", "Nothing to do");
                 return;
             }
 
-            var mfrmPlotRollup = new frmPlotProteinRollup
+            var frmRollup = new frmPlotProteinRollup
             {
                 PopulateDataComboBox = AvailableDataSources(),
                 PopulatePDataComboBox = dataSourceList,
@@ -301,30 +300,30 @@ namespace DAnTE.Inferno
                 ParentRef = (frmDAnTEmdi)this.MdiParent,
                 m_frmDAnTE = this
             };
-            mfrmPlotRollup.Show();
+            frmRollup.Show();
         }
 
         private void menuItemMAPlot_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsMApar = new clsMAplotsPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsMApar.tempFile = mRTempFilePath;
             mclsMApar.Rdataset = datasetNameInR;
-            mclsMApar.Datasets = clsDataTable.DataTableColumns(mclsSelected.mDTable, datasetNameInR);
-            mclsMApar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsMApar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mclsMApar.mstrDatasetName = selectedNodeTag.mstrDataText;
 
             PlotMA(mclsMApar);
 
@@ -341,18 +340,19 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_MAplotCompleted;
                 #endregion
 
-                var mfrmMAPar = new frmMAplotsPar(clsMApar);
+                var maPlotParams = new frmMAplotsPar(clsMApar);
 
-                var res = mfrmMAPar.ShowDialog();
+                var res = maPlotParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsMApar = mfrmMAPar.clsMAplotPar;
-                    var mclsRplots = new clsRplotData(mclsMApar.Rcmd, "MA");
+                    mclsMApar = maPlotParams.clsMAplotPar;
+                    var maPlot = new clsRplotData(mclsMApar.Rcmd, "MA");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(maPlot);
                     mfrmShowProgress.Message = "Generating MA Plots ...";
                     mfrmShowProgress.ShowDialog();
                 }
+
                 #region Unhook Threading Events
                 m_BackgroundWorker.DoWork -= m_BackgroundWorker_GeneratePlots;
                 m_BackgroundWorker.RunWorkerCompleted -= m_BackgroundWorker_MAplotCompleted;
@@ -364,9 +364,9 @@ namespace DAnTE.Inferno
         {
             try
             {
-                var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+                var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-                if (!ValidateNodeIsSelected(mclsSelected))
+                if (!ValidateNodeIsSelected(selectedNodeTag))
                 {
                     return;
                 }
@@ -411,22 +411,22 @@ namespace DAnTE.Inferno
 
         private void ctxtMnuItemPlotRows_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            var mfrmPlotDisplay = new frmPlotDisplay();
+            var plotDisplay = new frmPlotDisplay();
             var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
 
-            if (!ValidateIsPlottable(mclsSelected))
+            if (!ValidateIsPlottable(selectedNodeTag))
             {
                 return;
             }
 
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
@@ -460,11 +460,11 @@ namespace DAnTE.Inferno
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
-                mfrmPlotDisplay.Image = LoadImage(mRTempFilePath);
-                mfrmPlotDisplay.EnableParameterMenu = false;
-                mfrmPlotDisplay.MdiParent = m_frmDAnTEmdi;
-                mfrmPlotDisplay.Title = "Table Rows";
-                mfrmPlotDisplay.Show();
+                plotDisplay.Image = LoadImage(mRTempFilePath);
+                plotDisplay.EnableParameterMenu = false;
+                plotDisplay.MdiParent = m_frmDAnTEmdi;
+                plotDisplay.Title = "Table Rows";
+                plotDisplay.Show();
             }
             catch (Exception ex)
             {
@@ -475,35 +475,31 @@ namespace DAnTE.Inferno
 
         private void mnuItemVenn_Click(object sender, EventArgs e)
         {
-            var mclsSelected = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateNodeIsSelected(mclsSelected))
+            if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(mclsSelected, 2))
+            if (!ValidateIsPlottable(selectedNodeTag, 2))
             {
                 return;
             }
 
             mclsVennPar = new clsVennPar();
-            var datasetNameInR = mclsSelected.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
 
             mclsVennPar.tempFile = mRTempFilePath;
             mclsVennPar.Rdataset = datasetNameInR;
             mclsVennPar.mhtDatasets = mhtDatasets;
             mclsVennPar.marrDatasets = AvailableDataSources();
 
-            mclsVennPar.mstrDatasetName = mclsSelected.mstrDataText;
+            mclsVennPar.mstrDatasetName = selectedNodeTag.mstrDataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
-                var mclsFactors = mhtDatasets["Factors"];
-                mclsVennPar.marrFactorNames = clsDataTable.DataTableRows(mclsFactors.mDTable);
                 mclsVennPar.marrFactors = marrFactorInfo;
             }
-            else
-                mclsVennPar.marrFactorNames = null;
 
             PlotVenn(mclsVennPar);
 
@@ -518,14 +514,14 @@ namespace DAnTE.Inferno
                 m_BackgroundWorker.RunWorkerCompleted += m_BackgroundWorker_VennCompleted;
                 #endregion
 
-                var mfrmVennPar = new frmVennDiagramPar(vennParameters);
-                var res = mfrmVennPar.ShowDialog();
+                var vennDiagramParams = new frmVennDiagramPar(vennParameters);
+                var res = vennDiagramParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    vennParameters = mfrmVennPar.clsVennPar;
-                    var mclsRplots = new clsRplotData(vennParameters.Rcmd, "Venn");
+                    vennParameters = vennDiagramParams.clsVennPar;
+                    var vennDiagramPlot = new clsRplotData(vennParameters.Rcmd, "Venn");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsRplots);
+                    m_BackgroundWorker.RunWorkerAsync(vennDiagramPlot);
                     mfrmShowProgress.Message = "Generating Venn Diagram ...";
                     mfrmShowProgress.ShowDialog();
                 }

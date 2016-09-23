@@ -5,9 +5,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmMeanCenterPar : Form
     {
-        readonly DAnTE.Purgatorio.clsCentralTendencyPar mclsCentrTendPar = new DAnTE.Purgatorio.clsCentralTendencyPar();
+        readonly Purgatorio.clsCentralTendencyPar mclsCentrTendPar = new Purgatorio.clsCentralTendencyPar();
 
-        public frmMeanCenterPar(DAnTE.Purgatorio.clsCentralTendencyPar mclsCTendPar)
+        public frmMeanCenterPar(Purgatorio.clsCentralTendencyPar mclsCTendPar)
         {
             InitializeComponent();
             mclsCentrTendPar = mclsCTendPar;
@@ -34,7 +34,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsCentralTendencyPar clsCentrTendPar
+        public Purgatorio.clsCentralTendencyPar clsCentrTendPar
         {
             get
             {

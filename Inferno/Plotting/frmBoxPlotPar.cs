@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DAnTE.Properties;
 using DAnTE.Tools;
@@ -27,19 +26,19 @@ namespace DAnTE.Inferno
             if (mlstViewDataSets.CheckedIndices.Count == 0)
             {
                 MessageBox.Show("No datasets selected.", "Select datasets");
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
             else
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
 			var checkStateNew = clsUtilities.ToggleListViewCheckboxes(mlstViewDataSets, frmDAnTE.MAX_DATASETS_TO_SELECT * 3, true);
 
@@ -61,9 +60,9 @@ namespace DAnTE.Inferno
         {
             if (hexColorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.mlblColor.BackColor = hexColorDialog.Color;
-                this.mlblColor.ForeColor = hexColorDialog.Color;
-                color = clsHexColorUtil.ColorToHex(this.hexColorDialog.Color);
+                mlblColor.BackColor = hexColorDialog.Color;
+                mlblColor.ForeColor = hexColorDialog.Color;
+                color = clsHexColorUtil.ColorToHex(hexColorDialog.Color);
                 Settings.Default.boxplotCol = color;
                 Settings.Default.Save();
             }
@@ -74,8 +73,8 @@ namespace DAnTE.Inferno
             color = "#CAFF70";
             Settings.Default.boxplotCol = color;
             Settings.Default.Save();
-            this.mlblColor.BackColor = clsHexColorUtil.HexToColor(color);
-            this.mlblColor.ForeColor = clsHexColorUtil.HexToColor(color);
+            mlblColor.BackColor = clsHexColorUtil.HexToColor(color);
+            mlblColor.ForeColor = clsHexColorUtil.HexToColor(color);
             mnumUDFontSc.Value = 1.0M;
             mNumUDwidth.Value = 0.8M;
             mchkBoxOutl.Checked = true;
@@ -86,20 +85,20 @@ namespace DAnTE.Inferno
         private void FormLoad_event(object sender, EventArgs e)
         {
             color = mclsBoxPlotPar.color;
-            this.mlblColor.BackColor = clsHexColorUtil.HexToColor(color);
-            this.mlblColor.ForeColor = clsHexColorUtil.HexToColor(color);
+            mlblColor.BackColor = clsHexColorUtil.HexToColor(color);
+            mlblColor.ForeColor = clsHexColorUtil.HexToColor(color);
 
             mnumUDFontSc.Value = mclsBoxPlotPar.fontScale;
             mNumUDwidth.Value = mclsBoxPlotPar.boxWidth;
             mchkBoxOutl.Checked = mclsBoxPlotPar.outliers;
             mchkBoxCount.Checked = mclsBoxPlotPar.showcount;
             mchkBoxTransparent.Checked = mclsBoxPlotPar.trBkground;
-            this.PopulateListView = mclsBoxPlotPar.Datasets;
-            this.PopulateFactorComboBox = mclsBoxPlotPar.Factors;
-            this.SelectedDatasets = mclsBoxPlotPar.CheckedDatasets;
+            PopulateListView = mclsBoxPlotPar.Datasets;
+            PopulateFactorComboBox = mclsBoxPlotPar.Factors;
+            SelectedDatasets = mclsBoxPlotPar.CheckedDatasets;
             mcmbBoxFactors.SelectedIndex = mclsBoxPlotPar.factorIdx;
-            this.DataSetName = mclsBoxPlotPar.mstrDatasetName;
-            this.mchkBoxStamp.Checked = mclsBoxPlotPar.stamp;
+            DataSetName = mclsBoxPlotPar.mstrDatasetName;
+            mchkBoxStamp.Checked = mclsBoxPlotPar.stamp;
         }
 
         #region Properties
@@ -109,16 +108,16 @@ namespace DAnTE.Inferno
             get
             {
                 mclsBoxPlotPar.datasubset = "c(" + Selected + ")";
-                mclsBoxPlotPar.color = this.Color;
-                mclsBoxPlotPar.trBkground = this.Background;
-                mclsBoxPlotPar.boxWidth = this.BoxWidth;
-                mclsBoxPlotPar.CheckedDatasets = this.SelectedDatasets;
-                mclsBoxPlotPar.factor = this.Factor;
-                mclsBoxPlotPar.fontScale = this.FontScale;
-                mclsBoxPlotPar.outliers = this.Outliers;
-                mclsBoxPlotPar.showcount = this.ShowCount;
-                mclsBoxPlotPar.factorIdx = this.FactorIdx;
-                mclsBoxPlotPar.stamp = this.mchkBoxStamp.Checked;
+                mclsBoxPlotPar.color = Color;
+                mclsBoxPlotPar.trBkground = Background;
+                mclsBoxPlotPar.boxWidth = BoxWidth;
+                mclsBoxPlotPar.CheckedDatasets = SelectedDatasets;
+                mclsBoxPlotPar.factor = Factor;
+                mclsBoxPlotPar.fontScale = FontScale;
+                mclsBoxPlotPar.outliers = Outliers;
+                mclsBoxPlotPar.showcount = ShowCount;
+                mclsBoxPlotPar.factorIdx = FactorIdx;
+                mclsBoxPlotPar.stamp = mchkBoxStamp.Checked;
                 return mclsBoxPlotPar;
             }
         }
@@ -165,18 +164,18 @@ namespace DAnTE.Inferno
             get
             {
                 string selected = null;
-                ListView.CheckedIndexCollection indexes = mlstViewDataSets.CheckedIndices;
-                if (indexes.Count != 0)
+                var indexes = mlstViewDataSets.CheckedIndices;
+                if (indexes.Count == 0)
+                    return null;
+
+                var k = 0;
+                foreach (int i in indexes)
                 {
-                    int k = 0;
-                    foreach (int i in indexes)
-                    {
-                        if (k == 0)
-                            selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
-                        else
-                            selected = selected + "," + Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
-                        k++;
-                    }
+                    if (k == 0)
+                        selected = Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
+                    else
+                        selected = selected + "," + Convert.ToString(Convert.ToInt16(mlstViewDataSets.Items[i].Tag) + 1);
+                    k++;
                 }
                 return selected;
             }
@@ -283,14 +282,11 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem.ToString().Equals("<One Color>"))
                     return "1";
-                else
-                {
-                    idx = mcmbBoxFactors.SelectedIndex + 1;
-                    return "factors[" + idx.ToString() + ",]";
-                }
+
+                var idx = mcmbBoxFactors.SelectedIndex + 1;
+                return "factors[" + idx.ToString() + ",]";
             }
         }
 

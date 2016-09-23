@@ -8,9 +8,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmRRollUpPar : Form
     {
-        readonly DAnTE.Purgatorio.clsRRollupPar mclsRRollup = new DAnTE.Purgatorio.clsRRollupPar();
+        readonly Purgatorio.clsRRollupPar mclsRRollup = new Purgatorio.clsRRollupPar();
 
-        public frmRRollUpPar(DAnTE.Purgatorio.clsRRollupPar mclsRR)
+        public frmRRollUpPar(Purgatorio.clsRRollupPar mclsRR)
         {
             InitializeComponent();
             mclsRRollup = mclsRR;
@@ -137,7 +137,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsRRollupPar clsRRollupPar
+        public Purgatorio.clsRRollupPar clsRRollupPar
         {
             get
             {

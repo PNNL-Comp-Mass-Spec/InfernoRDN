@@ -21,7 +21,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Ref. Scaling Operation Canceled", "Error!", MessageBoxButtons.OK,
+                Console.WriteLine("Ref. Scaling Operation Cancelled", "Error!", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
             }
             else
@@ -61,7 +61,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("Scaling Operation Canceled", "Error!", MessageBoxButtons.OK,
+                Console.WriteLine("Scaling Operation Cancelled", "Error!", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
             }
             else
@@ -96,7 +96,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("QRollup Operation Canceled", "Error!", MessageBoxButtons.OK,
+                Console.WriteLine("QRollup Operation Cancelled", "Error!", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
             }
             else

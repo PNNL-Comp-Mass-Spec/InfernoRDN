@@ -7,9 +7,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmImputePar : Form
     {
-        readonly DAnTE.Purgatorio.clsImputePar mclsImputePar = new DAnTE.Purgatorio.clsImputePar();
+        readonly Purgatorio.clsImputePar mclsImputePar = new Purgatorio.clsImputePar();
 
-        public frmImputePar(DAnTE.Purgatorio.clsImputePar mclsImpute)
+        public frmImputePar(Purgatorio.clsImputePar mclsImpute)
         {
             InitializeComponent();
             mclsImputePar = mclsImpute;
@@ -119,7 +119,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsImputePar clsImputePar
+        public Purgatorio.clsImputePar clsImputePar
         {
             get
             {

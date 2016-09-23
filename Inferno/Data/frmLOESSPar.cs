@@ -9,9 +9,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmLOESSPar : Form
     {
-        readonly DAnTE.Purgatorio.clsLoessPar mclsLoess;
+        readonly Purgatorio.clsLoessPar mclsLoess;
 
-        public frmLOESSPar(DAnTE.Purgatorio.clsLoessPar clsLoess)
+        public frmLOESSPar(Purgatorio.clsLoessPar clsLoess)
         {
             InitializeComponent();
             mclsLoess = clsLoess;
@@ -76,7 +76,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsLoessPar clsLoessPar
+        public Purgatorio.clsLoessPar clsLoessPar
         {
             get
             {

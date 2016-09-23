@@ -91,11 +91,11 @@ namespace DAnTE.Inferno
                 }
                 if (newIndex != -1)
                 {
-                    var mstrSelected = mlistViewDatasets.Items[index].Text;
+                    var selectedListView = mlistViewDatasets.Items[index].Text;
                     var selectedTag = (int)mlistViewDatasets.Items[index].Tag;
                     mlistViewDatasets.Items[index].Text = mlistViewDatasets.Items[newIndex].Text;
                     mlistViewDatasets.Items[index].Tag = mlistViewDatasets.Items[newIndex].Tag;
-                    mlistViewDatasets.Items[newIndex].Text = mstrSelected;
+                    mlistViewDatasets.Items[newIndex].Text = selectedListView;
                     mlistViewDatasets.Items[newIndex].Tag = selectedTag;
                     mlistViewDatasets.Items[newIndex].Selected = true;
                     mlistViewDatasets.Refresh();

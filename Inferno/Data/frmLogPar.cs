@@ -6,9 +6,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmLogPar : Form
     {
-        DAnTE.Purgatorio.clsLogTransformPar mclsLogParam = new DAnTE.Purgatorio.clsLogTransformPar();
+        Purgatorio.clsLogTransformPar mclsLogParam = new Purgatorio.clsLogTransformPar();
 
-        public frmLogPar(DAnTE.Purgatorio.clsLogTransformPar clsLogPar)
+        public frmLogPar(Purgatorio.clsLogTransformPar clsLogPar)
         {
             InitializeComponent();
             mclsLogParam = clsLogPar;
@@ -16,7 +16,7 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            float bias = 10.0f;
+            var bias = 10.0f;
 
             if (mtxtBoxBias.Text.Length == 0)
             {
@@ -54,7 +54,7 @@ namespace DAnTE.Inferno
         }
 
         #region Properties
-        public DAnTE.Purgatorio.clsLogTransformPar clsLogPar
+        public Purgatorio.clsLogTransformPar clsLogPar
         {
             get
             {

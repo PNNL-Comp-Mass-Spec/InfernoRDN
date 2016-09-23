@@ -5,6 +5,8 @@ namespace DAnTE.Purgatorio
 {
     public class clsHistogramPar
     {
+        private const string BIN_METHOD_STURGES = "Sturges";
+
         private string rcmd;
         public string Fcol;
         public string Bcol;
@@ -25,12 +27,19 @@ namespace DAnTE.Purgatorio
         public clsHistogramPar()
         {
             ncolumns = 2;
-            Bins = @"cells=""Sturges""";
+
+            // Set the method for auto-computing histogram bins to use Sturges' formula:
+            // cells="Sturges"
+            Bins = GetHistogramBinMethodCode();
+
             numBins = 11;
             autoBins = true;
             rcmd = "";
             datasubset = null;
+            
+            // When true, add tick marks
             addrug = "addRug=TRUE";
+
             Fcol = Settings.Default.histFore;
             Bcol = Settings.Default.histBrdr;
             if (Fcol == "")
@@ -42,6 +51,16 @@ namespace DAnTE.Purgatorio
             mstrDatasetName = "";
             tempFile = "C:/_temp.png";
             stamp = false;
+        }
+
+        /// <summary>
+        /// Return the code string that instructs R how to bin the data when creating a histogram
+        /// </summary>
+        /// <param name="binMethod"></param>
+        /// <returns></returns>
+        public static string GetHistogramBinMethodCode(string binMethod = BIN_METHOD_STURGES)
+        {
+            return "cells=" + '"' + binMethod + '"';
         }
 
         public string Rcmd

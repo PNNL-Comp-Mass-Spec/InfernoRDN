@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace DAnTE.Purgatorio
 {
@@ -8,7 +9,7 @@ namespace DAnTE.Purgatorio
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "PatternSearch")]
         public string Rdataset;
-        
+
         [Tools.clsAnalysisAttribute("Number_of_Patterns", "PatternSearch")]
         public int nPatterns;
         public Dictionary<string, List<double>> mhtVectorPatterns;
@@ -42,29 +43,33 @@ namespace DAnTE.Purgatorio
             get
             {
                 var nDatasets = Datasets.Count;
-                var mstrPattern = "c(";
+                var patternCommand = new StringBuilder();
+                patternCommand.Append("c(");
 
                 foreach (var pattern in mhtVectorPatterns)
                 {
-                    var marrPattern = pattern.Value;
-                    for (var i = 0; i < marrPattern.Count; i++)
+                    var patternValues = pattern.Value;
+                    foreach (var value in patternValues)
                     {
-                        mstrPattern = mstrPattern + marrPattern[i] + ",";
+                        patternCommand.Append(value + ",");
                     }
                 }
-                
-                if (mstrPattern.Length < 3)
+
+                if (patternCommand.Length < 3)
                 {
                     // mhtVectorPatterns was empty; add a dummy data point
-                    mstrPattern += "0,";
+                    patternCommand.Append("0,");
                 }
 
                 // Remove the trailing comma, then add the closing parenthesis
-                mstrPattern = mstrPattern.Substring(0, mstrPattern.Length - 1) + ")";
-                mstrPattern = "matrix(" + mstrPattern + "," + nDatasets + "," + nPatterns + ")";
-                return mstrPattern;
+                if (patternCommand.Length > 0 && patternCommand[patternCommand.Length - 1] == ',')
+                    patternCommand.Remove(patternCommand.Length - 1, 1);
+
+                patternCommand.Append(")");
+
+                return "matrix(" + patternCommand + "," + nDatasets + "," + nPatterns + ")";
             }
         }
-       
+
     }
 }

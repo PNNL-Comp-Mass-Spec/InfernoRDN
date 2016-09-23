@@ -72,6 +72,7 @@ namespace DAnTE.Inferno
                    "Pattern: " + (j + 1).ToString(),
                    "Dataset Number",
                    "Intensity (normalized)");
+
                 myPane.Title.FontSpec.Size = 12F;
                 myPane.XAxis.Title.FontSpec.Size = 10F;
                 myPane.YAxis.Title.FontSpec.Size = 10F;

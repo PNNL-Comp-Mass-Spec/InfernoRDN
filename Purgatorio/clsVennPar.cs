@@ -6,12 +6,10 @@ namespace DAnTE.Purgatorio
     public class clsVennPar
     {
         private string rcmd;
-        public bool factorPlot;
         public string x1, x2, x3;
         public string labelA, labelB, labelC;
         public string tempFile;
         public string factor;
-        public List<string> marrFactorNames = new List<string>();
         public List<clsFactorInfo> marrFactors = new List<clsFactorInfo>();
         public List<string> marrDatasets;
         public Dictionary<string, clsDatasetTreeNode> mhtDatasets;

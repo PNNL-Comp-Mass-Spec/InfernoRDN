@@ -18,14 +18,14 @@ namespace DAnTE.Inferno
             mclsFCPar = mclsFCpar;
         }
 
-        private void updateFactorForm()
+        private void UpdateFactorForm()
         {
-            var marrFs = new List<string>();
+            var factorNames = new List<string>();
 
             foreach (var factor in marrFactors)
-                marrFs.Add(factor.mstrFactor);
+                factorNames.Add(factor.mstrFactor);
 
-            mcmbBoxFactors.DataSource = marrFs;
+            mcmbBoxFactors.DataSource = factorNames;
         }
 
 
@@ -83,7 +83,7 @@ namespace DAnTE.Inferno
             this.DataSetName = mclsFCPar.mstrDatasetName;
             this.FactorInfoArray = mclsFCPar.marrFactors;
             this.mchkBoxLogScale.Checked = mclsFCPar.mbllogScale;
-            updateFactorForm();
+            UpdateFactorForm();
             this.mcmbBoxFactors.SelectedItem = 0;
         }
         

@@ -8,9 +8,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmLinRegPar : Form
     {
-        readonly DAnTE.Purgatorio.clsLinRegrnPar mclsLinReg = new DAnTE.Purgatorio.clsLinRegrnPar();
+        readonly Purgatorio.clsLinRegrnPar mclsLinReg = new Purgatorio.clsLinRegrnPar();
 
-        public frmLinRegPar(DAnTE.Purgatorio.clsLinRegrnPar o)
+        public frmLinRegPar(Purgatorio.clsLinRegrnPar o)
         {
             InitializeComponent();
             mclsLinReg = o;
@@ -70,7 +70,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public DAnTE.Purgatorio.clsLinRegrnPar clsLinRegPar
+        public Purgatorio.clsLinRegrnPar clsLinRegPar
         {
             get
             {
@@ -87,7 +87,7 @@ namespace DAnTE.Inferno
 
                 //mclsLinRegPar.Rdataset = mclsSelected.mstrRdatasetName;
                 //mclsLinRegPar.DataSetName = mlblDataName.Text;
-                //mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(mclsFactors.mDTable);
+                //mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
 
                 return mclsLinReg;
             }

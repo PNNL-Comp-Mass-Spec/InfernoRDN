@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
@@ -12,7 +11,7 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_ANOVACompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             mfrmShowProgress.Hide();
-            this.Focus();
+            Focus();
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -21,7 +20,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("ANOVA Canceled");
+                Console.WriteLine("ANOVA Cancelled");
             }
             else
             {
@@ -66,9 +65,9 @@ namespace DAnTE.Inferno
             e.Result = DoOneSampleTtest((string)e.Argument);
         }
 
-	void m_BackgroundWorker_TamuQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
+        void m_BackgroundWorker_TamuQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-	    var mfrmTamuQplotDisplay = new frmQQplotDisplay(mclsQQPar);
+            var tamuQPlotDisplay = new frmQQplotDisplay(mclsQQPar);
             mfrmShowProgress.Hide();
             mfrmShowProgress.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
@@ -83,7 +82,7 @@ namespace DAnTE.Inferno
                 // the DoWork event handler, the Cancelled
                 // flag may not have been set, even though
                 // CancelAsync was called.
-                Console.WriteLine("Canceled");
+                Console.WriteLine("Cancelled");
             }
             else
             {
@@ -91,20 +90,20 @@ namespace DAnTE.Inferno
                 // succeeded.
                 //mfrmPlot.Image = e.Result as Image;
                 //DialogResult dres = mfrmPlot.ShowDialog();
-                var mclsPlotResult = (clsPlotResult)e.Result;
-                mfrmTamuQplotDisplay.Image = mclsPlotResult.mImage;
-                mfrmTamuQplotDisplay.PlotName = mclsPlotResult.mstrPlotName;
-                mfrmTamuQplotDisplay.DAnTEinstance = this;
-                mfrmTamuQplotDisplay.MdiParent = m_frmDAnTE.MdiParent;
-                mfrmTamuQplotDisplay.Title = "Tamu-Q Plot";
-                mfrmTamuQplotDisplay.Show();
+                var tamuQResult = (clsPlotResult)e.Result;
+                tamuQPlotDisplay.Image = tamuQResult.mImage;
+                tamuQPlotDisplay.PlotName = tamuQResult.mstrPlotName;
+                tamuQPlotDisplay.DAnTEinstance = this;
+                tamuQPlotDisplay.MdiParent = m_frmDAnTE.MdiParent;
+                tamuQPlotDisplay.Title = "Tamu-Q Plot";
+                tamuQPlotDisplay.Show();
             }
         }
 
-	void m_BackgroundWorker_TamuQCompleted(object sender, RunWorkerCompletedEventArgs e)
+        void m_BackgroundWorker_TamuQCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             mfrmShowProgress.Hide();
-            this.Focus();
+            Focus();
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -113,7 +112,7 @@ namespace DAnTE.Inferno
             {
                 // Next, handle the case where the user canceled 
                 // the operation.
-                Console.WriteLine("TamuQ Canceled");
+                Console.WriteLine("TamuQ Cancelled");
             }
             else
             {
@@ -135,7 +134,7 @@ namespace DAnTE.Inferno
             }
         }
 
-	 void m_BackgroundWorker_TamuQ(object sender, DoWorkEventArgs e)
+        void m_BackgroundWorker_TamuQ(object sender, DoWorkEventArgs e)
         {
             e.Result = DoTamuQ((string)e.Argument);
         }

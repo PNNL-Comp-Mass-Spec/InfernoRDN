@@ -33,26 +33,26 @@ namespace DAnTE.Inferno
 
         private void AddDataset2HashTable(DataTable mDT)
         {
-            var mstrRdataset = mDT.TableName;
-            var mclsDataset = new clsDatasetTreeNode
+            var dataTableNameInR = mDT.TableName;
+            var datasetNode = new clsDatasetTreeNode
             {
                 mDTable = mDT
             };
 
-            switch (mstrRdataset)
+            switch (dataTableNameInR)
             {
                 case "Eset":
                     #region Eset
-                    mclsDataset.mTNode = new TreeNode("Expressions", 1, 2);
-                    mclsDataset.mstrDataText = "Expressions";
-                    mclsDataset.mstrMessage = "Expression values selected.";
-                    mclsDataset.mstrRdatasetName = "Eset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Expressions", 1, 2);
+                    datasetNode.mstrDataText = "Expressions";
+                    datasetNode.mstrMessage = "Expression values selected.";
+                    datasetNode.mstrRdatasetName = "Eset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Expressions"))
-                        mhtDatasets["Expressions"] = mclsDataset;
+                        mhtDatasets["Expressions"] = datasetNode;
                     else
-                        mhtDatasets.Add("Expressions", mclsDataset);
+                        mhtDatasets.Add("Expressions", datasetNode);
 
                     if (!mhtDatasets.ContainsKey("Factors"))
                         DatasetFactorInfo(mDT, false);
@@ -60,399 +60,399 @@ namespace DAnTE.Inferno
                     #endregion
                 case "ProtInfo":
                     #region ProtInfo
-                    mclsDataset.mTNode = new TreeNode("Protein Info", 3, 4);
-                    mclsDataset.mstrDataText = "Protein Info";
-                    mclsDataset.mstrMessage = "Protein Info selected.";
-                    mclsDataset.mstrRdatasetName = "ProtInfo";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Protein Info", 3, 4);
+                    datasetNode.mstrDataText = "Protein Info";
+                    datasetNode.mstrMessage = "Protein Info selected.";
+                    datasetNode.mstrRdatasetName = "ProtInfo";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Protein Info"))
-                        mhtDatasets["Protein Info"] = mclsDataset;
+                        mhtDatasets["Protein Info"] = datasetNode;
                     else
-                        mhtDatasets.Add("Protein Info", mclsDataset);
+                        mhtDatasets.Add("Protein Info", datasetNode);
                     break;
                     #endregion
                 case "factors":
                     #region Factors
-                    mclsDataset.mTNode = new TreeNode("Factors", 3, 4);
-                    mclsDataset.mstrDataText = "Factors";
-                    mclsDataset.mstrMessage = "Factors selected.";
-                    mclsDataset.mstrRdatasetName = "factors";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Factors", 3, 4);
+                    datasetNode.mstrDataText = "Factors";
+                    datasetNode.mstrMessage = "Factors selected.";
+                    datasetNode.mstrRdatasetName = "factors";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Factors"))
-                        mhtDatasets["Factors"] = mclsDataset;
+                        mhtDatasets["Factors"] = datasetNode;
                     else
-                        mhtDatasets.Add("Factors", mclsDataset);
+                        mhtDatasets.Add("Factors", datasetNode);
                     marrDatasetInfo.Clear();
                     DatasetFactorInfo(mDT, true);
                     break;
                     #endregion
                 case "logEset":
                     #region logEset
-                    mclsDataset.mTNode = new TreeNode("Log Expressions", 1, 2);
-                    mclsDataset.mstrDataText = "Log Expressions";
-                    mclsDataset.mstrMessage = "Log Expressions selected.";
-                    mclsDataset.mstrRdatasetName = "logEset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Log Expressions", 1, 2);
+                    datasetNode.mstrDataText = "Log Expressions";
+                    datasetNode.mstrMessage = "Log Expressions selected.";
+                    datasetNode.mstrRdatasetName = "logEset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Log Expressions"))
-                        mhtDatasets["Log Expressions"] = mclsDataset;
+                        mhtDatasets["Log Expressions"] = datasetNode;
                     else
-                        mhtDatasets.Add("Log Expressions", mclsDataset);
+                        mhtDatasets.Add("Log Expressions", datasetNode);
                     break;
                     #endregion
                 case "loessData":
                     #region loessData
-                    mclsDataset.mTNode = new TreeNode("LOESS Data", 1, 2);
-                    mclsDataset.mstrDataText = "LOESS Data";
-                    mclsDataset.mstrMessage = "LOESS Data selected.";
-                    mclsDataset.mstrRdatasetName = "loessData";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("LOESS Data", 1, 2);
+                    datasetNode.mstrDataText = "LOESS Data";
+                    datasetNode.mstrMessage = "LOESS Data selected.";
+                    datasetNode.mstrRdatasetName = "loessData";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("LOESS Data"))
-                        mhtDatasets["LOESS Data"] = mclsDataset;
+                        mhtDatasets["LOESS Data"] = datasetNode;
                     else
-                        mhtDatasets.Add("LOESS Data", mclsDataset);
+                        mhtDatasets.Add("LOESS Data", datasetNode);
                     break;
                     #endregion
                 case "quaNormEset":
                     #region quaNormEset
-                    mclsDataset.mTNode = new TreeNode("Quantile Normalized", 1, 2);
-                    mclsDataset.mstrDataText = "Quantile Normalized";
-                    mclsDataset.mstrMessage = "Quantile normalized data selected.";
-                    mclsDataset.mstrRdatasetName = "quaNormEset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Quantile Normalized", 1, 2);
+                    datasetNode.mstrDataText = "Quantile Normalized";
+                    datasetNode.mstrMessage = "Quantile normalized data selected.";
+                    datasetNode.mstrRdatasetName = "quaNormEset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Quantile Normalized"))
-                        mhtDatasets["Quantile Normalized"] = mclsDataset;
+                        mhtDatasets["Quantile Normalized"] = datasetNode;
                     else
-                        mhtDatasets.Add("Quantile Normalized", mclsDataset);
+                        mhtDatasets.Add("Quantile Normalized", datasetNode);
                     break;
                     #endregion
                 case "meanCEset":
                     #region MeanCEset
-                    mclsDataset.mTNode = new TreeNode("Mean Centered", 1, 2);
-                    mclsDataset.mstrDataText = "Mean Centered";
-                    mclsDataset.mstrMessage = "Mean centered data selected.";
-                    mclsDataset.mstrRdatasetName = "meanCEset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Mean Centered", 1, 2);
+                    datasetNode.mstrDataText = "Mean Centered";
+                    datasetNode.mstrMessage = "Mean centered data selected.";
+                    datasetNode.mstrRdatasetName = "meanCEset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Mean Centered"))
-                        mhtDatasets["Mean Centered"] = mclsDataset;
+                        mhtDatasets["Mean Centered"] = datasetNode;
                     else
-                        mhtDatasets.Add("Mean Centered", mclsDataset);
+                        mhtDatasets.Add("Mean Centered", datasetNode);
                     break;
                     #endregion
                 case "medianCEset":
                     #region MedianCEset
-                    mclsDataset.mTNode = new TreeNode("Median Centered", 1, 2);
-                    mclsDataset.mstrDataText = "Median Centered";
-                    mclsDataset.mstrMessage = "Median centered data selected.";
-                    mclsDataset.mstrRdatasetName = "medianCEset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Median Centered", 1, 2);
+                    datasetNode.mstrDataText = "Median Centered";
+                    datasetNode.mstrMessage = "Median centered data selected.";
+                    datasetNode.mstrRdatasetName = "medianCEset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Median Centered"))
-                        mhtDatasets["Median Centered"] = mclsDataset;
+                        mhtDatasets["Median Centered"] = datasetNode;
                     else
-                        mhtDatasets.Add("Median Centered", mclsDataset);
+                        mhtDatasets.Add("Median Centered", datasetNode);
                     break;
                     #endregion
                 case "madEset":
                     #region madEset
-                    mclsDataset.mTNode = new TreeNode("MAD Adjusted", 1, 2);
-                    mclsDataset.mstrDataText = "MAD Adjusted";
-                    mclsDataset.mstrMessage = "MAD Adjusted data selected.";
-                    mclsDataset.mstrRdatasetName = "madEset";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("MAD Adjusted", 1, 2);
+                    datasetNode.mstrDataText = "MAD Adjusted";
+                    datasetNode.mstrMessage = "MAD Adjusted data selected.";
+                    datasetNode.mstrRdatasetName = "madEset";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("MAD Adjusted"))
-                        mhtDatasets["MAD Adjusted"] = mclsDataset;
+                        mhtDatasets["MAD Adjusted"] = datasetNode;
                     else
-                        mhtDatasets.Add("MAD Adjusted", mclsDataset);
+                        mhtDatasets.Add("MAD Adjusted", datasetNode);
                     break;
                     #endregion
                 case "linregData":
                     #region linregData
-                    mclsDataset.mTNode = new TreeNode("Linear Regressed", 1, 2);
-                    mclsDataset.mstrDataText = "Linear Regressed";
-                    mclsDataset.mstrMessage = "Linear Regressed Data selected.";
-                    mclsDataset.mstrRdatasetName = "linregData";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Linear Regressed", 1, 2);
+                    datasetNode.mstrDataText = "Linear Regressed";
+                    datasetNode.mstrMessage = "Linear Regressed Data selected.";
+                    datasetNode.mstrRdatasetName = "linregData";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Linear Regressed"))
-                        mhtDatasets["Linear Regressed"] = mclsDataset;
+                        mhtDatasets["Linear Regressed"] = datasetNode;
                     else
-                        mhtDatasets.Add("Linear Regressed", mclsDataset);
+                        mhtDatasets.Add("Linear Regressed", datasetNode);
                     break;
                     #endregion
                 case "imputedData":
                     #region imputedData
-                    mclsDataset.mTNode = new TreeNode("Imputed Data", 1, 2);
-                    mclsDataset.mstrDataText = "Imputed Data";
-                    mclsDataset.mstrMessage = "Imputed Data selected.";
-                    mclsDataset.mstrRdatasetName = "imputedData";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
+                    datasetNode.mTNode = new TreeNode("Imputed Data", 1, 2);
+                    datasetNode.mstrDataText = "Imputed Data";
+                    datasetNode.mstrMessage = "Imputed Data selected.";
+                    datasetNode.mstrRdatasetName = "imputedData";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
                     if (mhtDatasets.ContainsKey("Imputed Data"))
-                        mhtDatasets["Imputed Data"] = mclsDataset;
+                        mhtDatasets["Imputed Data"] = datasetNode;
                     else
-                        mhtDatasets.Add("Imputed Data", mclsDataset);
+                        mhtDatasets.Add("Imputed Data", datasetNode);
                     break;
                     #endregion
                 case "mergedData":
                     #region mergedData
-                    mclsDataset.mTNode = new TreeNode("Merged Data", 1, 2);
-                    mclsDataset.mstrDataText = "Merged Data";
-                    mclsDataset.mstrMessage = "Merged Data selected.";
-                    mclsDataset.mstrRdatasetName = "mergedData";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Merged Data", 1, 2);
+                    datasetNode.mstrDataText = "Merged Data";
+                    datasetNode.mstrMessage = "Merged Data selected.";
+                    datasetNode.mstrRdatasetName = "mergedData";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Merged Data"))
-                        mhtDatasets["Merged Data"] = mclsDataset;
+                        mhtDatasets["Merged Data"] = datasetNode;
                     else
-                        mhtDatasets.Add("Merged Data", mclsDataset);
+                        mhtDatasets.Add("Merged Data", datasetNode);
                     break;
                     #endregion
                 case "pData11":
                     #region pData11 (RRollup)
-                    mclsDataset.mTNode = new TreeNode("RRollup", 1, 2);
-                    mclsDataset.mstrDataText = "RRollup";
-                    mclsDataset.mstrMessage = "RRollup selected.";
-                    mclsDataset.mstrRdatasetName = "pData11";
-                    mclsDataset.mstrRProtDatasetName = @"pScaled1"",""pData1";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("RRollup", 1, 2);
+                    datasetNode.mstrDataText = "RRollup";
+                    datasetNode.mstrMessage = "RRollup selected.";
+                    datasetNode.mstrRdatasetName = "pData11";
+                    datasetNode.mstrRProtDatasetName = @"pScaled1"",""pData1";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("RRollup"))
-                        mhtDatasets["RRollup"] = mclsDataset;
+                        mhtDatasets["RRollup"] = datasetNode;
                     else
-                        mhtDatasets.Add("RRollup", mclsDataset);
+                        mhtDatasets.Add("RRollup", datasetNode);
                     break;
                     #endregion
                 case "sData1":
                     #region sData1 (RRollup)
-                    mclsDataset.mTNode = new TreeNode("ScaledData", 1, 2);
-                    mclsDataset.mstrDataText = "ScaledData";
-                    mclsDataset.mstrMessage = "Scaled data selected.";
-                    mclsDataset.mstrRdatasetName = "sData1";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
-                    mclsDataset.mstrParentNode = "RRollup";
+                    datasetNode.mTNode = new TreeNode("ScaledData", 1, 2);
+                    datasetNode.mstrDataText = "ScaledData";
+                    datasetNode.mstrMessage = "Scaled data selected.";
+                    datasetNode.mstrRdatasetName = "sData1";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.mstrParentNode = "RRollup";
                     if (mhtDatasets.ContainsKey("ScaledData"))
-                        mhtDatasets["ScaledData"] = mclsDataset;
+                        mhtDatasets["ScaledData"] = datasetNode;
                     else
-                        mhtDatasets.Add("ScaledData", mclsDataset);
+                        mhtDatasets.Add("ScaledData", datasetNode);
                     break;
                     #endregion
                 case "orData1":
                     #region orData1 (RRollup)
-                    mclsDataset.mTNode = new TreeNode("OutliersRemoved", 1, 2);
-                    mclsDataset.mstrDataText = "OutliersRemoved";
-                    mclsDataset.mstrMessage = "Outliers removed data selected.";
-                    mclsDataset.mstrRdatasetName = "orData1";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
-                    mclsDataset.mstrParentNode = "RRollup";
+                    datasetNode.mTNode = new TreeNode("OutliersRemoved", 1, 2);
+                    datasetNode.mstrDataText = "OutliersRemoved";
+                    datasetNode.mstrMessage = "Outliers removed data selected.";
+                    datasetNode.mstrRdatasetName = "orData1";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.mstrParentNode = "RRollup";
                     if (mhtDatasets.ContainsKey("OutliersRemoved"))
-                        mhtDatasets["OutliersRemoved"] = mclsDataset;
+                        mhtDatasets["OutliersRemoved"] = datasetNode;
                     else
-                        mhtDatasets.Add("OutliersRemoved", mclsDataset);
+                        mhtDatasets.Add("OutliersRemoved", datasetNode);
                     break;
                     #endregion
                 case "pData22":
                     #region pData2 (ZRollup)
-                    mclsDataset.mTNode = new TreeNode("ZRollup", 1, 2);
-                    mclsDataset.mstrDataText = "ZRollup";
-                    mclsDataset.mstrMessage = "ZRollup selected.";
-                    mclsDataset.mstrRdatasetName = "pData22";
-                    mclsDataset.mstrRProtDatasetName = @"pScaled2"",""pData2";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("ZRollup", 1, 2);
+                    datasetNode.mstrDataText = "ZRollup";
+                    datasetNode.mstrMessage = "ZRollup selected.";
+                    datasetNode.mstrRdatasetName = "pData22";
+                    datasetNode.mstrRProtDatasetName = @"pScaled2"",""pData2";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("ZRollup"))
-                        mhtDatasets["ZRollup"] = mclsDataset;
+                        mhtDatasets["ZRollup"] = datasetNode;
                     else
-                        mhtDatasets.Add("ZRollup", mclsDataset);
+                        mhtDatasets.Add("ZRollup", datasetNode);
                     break;
                     #endregion
                 case "qrollupP1":
                     #region QRollupP1
-                    mclsDataset.mTNode = new TreeNode("QRollup", 1, 2);
-                    mclsDataset.mstrDataText = "QRollup";
-                    mclsDataset.mstrMessage = "QRollup selected.";
-                    mclsDataset.mstrRdatasetName = "qrollupP1";
-                    mclsDataset.mstrRProtDatasetName = "qrollupP";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("QRollup", 1, 2);
+                    datasetNode.mstrDataText = "QRollup";
+                    datasetNode.mstrMessage = "QRollup selected.";
+                    datasetNode.mstrRdatasetName = "qrollupP1";
+                    datasetNode.mstrRProtDatasetName = "qrollupP";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("QRollup"))
-                        mhtDatasets["QRollup"] = mclsDataset;
+                        mhtDatasets["QRollup"] = datasetNode;
                     else
-                        mhtDatasets.Add("QRollup", mclsDataset);
+                        mhtDatasets.Add("QRollup", datasetNode);
                     break;
                     #endregion
                 case "PCAweights":
                     #region PCA weights
-                    mclsDataset.mTNode = new TreeNode("PCA Weights", 3, 4);
-                    mclsDataset.mstrDataText = "PCA Weights";
-                    mclsDataset.mstrMessage = "PCA Weights selected.";
-                    mclsDataset.mstrRdatasetName = "PCAweights";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("PCA Weights", 3, 4);
+                    datasetNode.mstrDataText = "PCA Weights";
+                    datasetNode.mstrMessage = "PCA Weights selected.";
+                    datasetNode.mstrRdatasetName = "PCAweights";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("PCA Weights"))
-                        mhtDatasets["PCA Weights"] = mclsDataset;
+                        mhtDatasets["PCA Weights"] = datasetNode;
                     else
-                        mhtDatasets.Add("PCA Weights", mclsDataset);
+                        mhtDatasets.Add("PCA Weights", datasetNode);
                     break;
                     #endregion
                 case "PLSweights":
                     #region PCA weights
-                    mclsDataset.mTNode = new TreeNode("PLS Weights", 3, 4);
-                    mclsDataset.mstrDataText = "PLS Weights";
-                    mclsDataset.mstrMessage = "PLS Weights selected.";
-                    mclsDataset.mstrRdatasetName = "PLSweights";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("PLS Weights", 3, 4);
+                    datasetNode.mstrDataText = "PLS Weights";
+                    datasetNode.mstrMessage = "PLS Weights selected.";
+                    datasetNode.mstrRdatasetName = "PLSweights";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("PLS Weights"))
-                        mhtDatasets["PLS Weights"] = mclsDataset;
+                        mhtDatasets["PLS Weights"] = datasetNode;
                     else
-                        mhtDatasets.Add("PLS Weights", mclsDataset);
+                        mhtDatasets.Add("PLS Weights", datasetNode);
                     break;
                     #endregion
                 case "clusterResults":
                     #region PCA weights
-                    mclsDataset.mTNode = new TreeNode("Heatmap Clusters", 3, 4);
-                    mclsDataset.mstrDataText = "Heatmap Clusters";
-                    mclsDataset.mstrMessage = "Heatmap Clusters selected.";
-                    mclsDataset.mstrRdatasetName = "clusterResults";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Heatmap Clusters", 3, 4);
+                    datasetNode.mstrDataText = "Heatmap Clusters";
+                    datasetNode.mstrMessage = "Heatmap Clusters selected.";
+                    datasetNode.mstrRdatasetName = "clusterResults";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Heatmap Clusters"))
-                        mhtDatasets["Heatmap Clusters"] = mclsDataset;
+                        mhtDatasets["Heatmap Clusters"] = datasetNode;
                     else
-                        mhtDatasets.Add("Heatmap Clusters", mclsDataset);
+                        mhtDatasets.Add("Heatmap Clusters", datasetNode);
                     break;
                     #endregion
                 case "pvalues":
                     #region p-values
-                    mclsDataset.mTNode = new TreeNode("p-Values", 3, 4);
-                    mclsDataset.mstrDataText = "p-Values";
-                    mclsDataset.mstrMessage = "p-Values selected.";
-                    mclsDataset.mstrRdatasetName = "pvalues";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("p-Values", 3, 4);
+                    datasetNode.mstrDataText = "p-Values";
+                    datasetNode.mstrMessage = "p-Values selected.";
+                    datasetNode.mstrRdatasetName = "pvalues";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("p-Values"))
-                        mhtDatasets["p-Values"] = mclsDataset;
+                        mhtDatasets["p-Values"] = datasetNode;
                     else
-                        mhtDatasets.Add("p-Values", mclsDataset);
+                        mhtDatasets.Add("p-Values", datasetNode);
                     break;
                     #endregion
                 case "yimputed":
                     #region yimputed
-                    mclsDataset.mTNode = new TreeNode("Imputed Values", 1, 2);
-                    mclsDataset.mstrDataText = "Imputed Values";
-                    mclsDataset.mstrMessage = "Imputed Values selected.";
-                    mclsDataset.mstrRdatasetName = "yimputed";
-                    mclsDataset.mblAddDGridCtxtMnu = true;
-                    mclsDataset.mblAddTVCtxtMnu = true;
-                    mclsDataset.mblIsNumeric = true;
-                    mclsDataset.mblIsPlottable = true;
-                    mclsDataset.mblRollupPossible = true;
+                    datasetNode.mTNode = new TreeNode("Imputed Values", 1, 2);
+                    datasetNode.mstrDataText = "Imputed Values";
+                    datasetNode.mstrMessage = "Imputed Values selected.";
+                    datasetNode.mstrRdatasetName = "yimputed";
+                    datasetNode.mblAddDGridCtxtMnu = true;
+                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.mblIsNumeric = true;
+                    datasetNode.mblIsPlottable = true;
+                    datasetNode.mblRollupPossible = true;
                     if (mhtDatasets.ContainsKey("Imputed Values"))
-                        mhtDatasets["Imputed Values"] = mclsDataset;
+                        mhtDatasets["Imputed Values"] = datasetNode;
                     else
-                        mhtDatasets.Add("Imputed Values", mclsDataset);
+                        mhtDatasets.Add("Imputed Values", datasetNode);
                     break;
                     #endregion
                 case "notused":
                     #region Unused data for ANOVA
-                    mclsDataset.mTNode = new TreeNode("Unused Data", 3, 4);
-                    mclsDataset.mstrDataText = "Unused Data";
-                    mclsDataset.mstrMessage = "Unused Data selected.";
-                    mclsDataset.mstrRdatasetName = "notused";
-                    mclsDataset.mstrParentNode = "p-Values";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = true;
-                    mclsDataset.mblIsPlottable = true;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Unused Data", 3, 4);
+                    datasetNode.mstrDataText = "Unused Data";
+                    datasetNode.mstrMessage = "Unused Data selected.";
+                    datasetNode.mstrRdatasetName = "notused";
+                    datasetNode.mstrParentNode = "p-Values";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = true;
+                    datasetNode.mblIsPlottable = true;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Unused Data"))
-                        mhtDatasets["Unused Data"] = mclsDataset;
+                        mhtDatasets["Unused Data"] = datasetNode;
                     else
-                        mhtDatasets.Add("Unused Data", mclsDataset);
+                        mhtDatasets.Add("Unused Data", datasetNode);
                     break;
                     #endregion
                 case "foldChanges":
                     #region Fold Changes
-                    mclsDataset.mTNode = new TreeNode("Fold Changes", 3, 4);
-                    mclsDataset.mstrDataText = "Fold Changes";
-                    mclsDataset.mstrMessage = "Fold Changes selected.";
-                    mclsDataset.mstrRdatasetName = "foldChanges";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Fold Changes", 3, 4);
+                    datasetNode.mstrDataText = "Fold Changes";
+                    datasetNode.mstrMessage = "Fold Changes selected.";
+                    datasetNode.mstrRdatasetName = "foldChanges";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Fold Changes"))
-                        mhtDatasets["Fold Changes"] = mclsDataset;
+                        mhtDatasets["Fold Changes"] = datasetNode;
                     else
-                        mhtDatasets.Add("Fold Changes", mclsDataset);
+                        mhtDatasets.Add("Fold Changes", datasetNode);
                     break;
                     #endregion
                 case "patternData":
                     #region Pattern Search
-                    mclsDataset.mTNode = new TreeNode("Pattern Corr", 3, 4);
-                    mclsDataset.mstrDataText = "Pattern Corr";
-                    mclsDataset.mstrMessage = "Pattern Correlations selected.";
-                    mclsDataset.mstrRdatasetName = "patternData";
-                    mclsDataset.mblAddDGridCtxtMnu = false;
-                    mclsDataset.mblAddTVCtxtMnu = false;
-                    mclsDataset.mblIsNumeric = false;
-                    mclsDataset.mblIsPlottable = false;
-                    mclsDataset.mblRollupPossible = false;
+                    datasetNode.mTNode = new TreeNode("Pattern Corr", 3, 4);
+                    datasetNode.mstrDataText = "Pattern Corr";
+                    datasetNode.mstrMessage = "Pattern Correlations selected.";
+                    datasetNode.mstrRdatasetName = "patternData";
+                    datasetNode.mblAddDGridCtxtMnu = false;
+                    datasetNode.mblAddTVCtxtMnu = false;
+                    datasetNode.mblIsNumeric = false;
+                    datasetNode.mblIsPlottable = false;
+                    datasetNode.mblRollupPossible = false;
                     if (mhtDatasets.ContainsKey("Pattern Corr"))
-                        mhtDatasets["Pattern Corr"] = mclsDataset;
+                        mhtDatasets["Pattern Corr"] = datasetNode;
                     else
-                        mhtDatasets.Add("Pattern Corr", mclsDataset);
+                        mhtDatasets.Add("Pattern Corr", datasetNode);
                     break;
                     #endregion
                 default:
                     #region All other tables (filteredData)
-                    if (mstrRdataset.Contains("filteredData"))
+                    if (dataTableNameInR.Contains("filteredData"))
                     {
-                        var setNum = mstrRdataset.Substring(12);
+                        var setNum = dataTableNameInR.Substring(12);
                         var nodeTxt = "Filtered Data" + setNum;
-                        mclsDataset.mTNode = new TreeNode(nodeTxt, 1, 2);
-                        mclsDataset.mstrDataText = nodeTxt;
-                        mclsDataset.mstrMessage = "Filtered Data selected.";
-                        mclsDataset.mstrRdatasetName = mstrRdataset;
-                        mclsDataset.mblAddDGridCtxtMnu = true;
-                        mclsDataset.mblAddTVCtxtMnu = false;
+                        datasetNode.mTNode = new TreeNode(nodeTxt, 1, 2);
+                        datasetNode.mstrDataText = nodeTxt;
+                        datasetNode.mstrMessage = "Filtered Data selected.";
+                        datasetNode.mstrRdatasetName = dataTableNameInR;
+                        datasetNode.mblAddDGridCtxtMnu = true;
+                        datasetNode.mblAddTVCtxtMnu = false;
                         if (mhtDatasets.ContainsKey(nodeTxt))
-                            mhtDatasets[nodeTxt] = mclsDataset;
+                            mhtDatasets[nodeTxt] = datasetNode;
                         else
-                            mhtDatasets.Add(nodeTxt, mclsDataset);
+                            mhtDatasets.Add(nodeTxt, datasetNode);
                     }
                     break;
                     #endregion
@@ -470,7 +470,6 @@ namespace DAnTE.Inferno
         {
             object vars;
             var success = true;
-            var mDTvar = new DataTable();
 
             mhtDatasets.Clear();
 
@@ -507,12 +506,15 @@ namespace DAnTE.Inferno
                 try
                 {
                     Console.WriteLine("frmDAnTE.OpenSession:{0} -> {1}", "", variables[i]);
+
+                    var dataToAdd = new DataTable();
+
                     switch (variables[i])
                     {
                         case ("ProtInfo"):
                             #region ProtInfo
-                            if ((mDTvar = GetProtInfoMatrix()) != null)
-                                mDTvar.TableName = "ProtInfo";
+                            if ((dataToAdd = GetProtInfoMatrix()) != null)
+                                dataToAdd.TableName = "ProtInfo";
                             else
                                 success = false;
                             break;
@@ -521,10 +523,10 @@ namespace DAnTE.Inferno
                             #region Factors
                             if (mRConnector.GetTableFromRmatrixNonNumeric("factors"))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.Columns[0].ColumnName = "Factors";
-                                mDTvar.TableName = "factors";
-                                DatasetFactorInfo(mDTvar, true);
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.Columns[0].ColumnName = "Factors";
+                                dataToAdd.TableName = "factors";
+                                DatasetFactorInfo(dataToAdd, true);
                                 UpdateFactorInfoArray();
                             }
                             else
@@ -536,10 +538,10 @@ namespace DAnTE.Inferno
                             mRConnector.EvaluateNoReturn("pData1 <- pScaled1$pData");
                             if (mRConnector.GetTableFromRproteinMatrix("pData1"))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.Columns[0].ColumnName = "Protein";
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.Columns[0].ColumnName = "Protein";
                                 mRConnector.EvaluateNoReturn("pData11 <- pData1[,-c(1,2)]");
-                                mDTvar.TableName = "pData11";
+                                dataToAdd.TableName = "pData11";
                             }
                             else
                                 success = false;
@@ -550,10 +552,10 @@ namespace DAnTE.Inferno
                             mRConnector.EvaluateNoReturn("pData2 <- pScaled2$pData");
                             if (mRConnector.GetTableFromRproteinMatrix("pData2"))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.Columns[0].ColumnName = "Protein";
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.Columns[0].ColumnName = "Protein";
                                 mRConnector.EvaluateNoReturn("pData22 <- pData2[,-c(1,2)]");
-                                mDTvar.TableName = "pData22";
+                                dataToAdd.TableName = "pData22";
                             }
                             #endregion
                             break;
@@ -561,10 +563,10 @@ namespace DAnTE.Inferno
                             #region Qrollup
                             if (mRConnector.GetTableFromRproteinMatrix("qrollupP"))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.Columns[0].ColumnName = "Protein";
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.Columns[0].ColumnName = "Protein";
                                 mRConnector.EvaluateNoReturn("qrollupP1 <- qrollupP[,-c(1,2)]");
-                                mDTvar.TableName = "qrollupP1";
+                                dataToAdd.TableName = "qrollupP1";
                             }
                             else
                                 success = false;
@@ -574,34 +576,34 @@ namespace DAnTE.Inferno
                             #region Cluster results
                             if (mRConnector.GetTableFromRvector("clusterResults"))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.TableName = "clusterResults";
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.TableName = "clusterResults";
                             }
                             else
                                 success = false;
                             #endregion
                             break;
                         case "pScaled1": // R list variable that holds RRollup information
-                            mDTvar = null;
+                            dataToAdd = null;
                             break;
                         case "pScaled2": // R list variable that holds ZRollup information
-                            mDTvar = null;
+                            dataToAdd = null;
                             break;
                         default:
                             #region Everything else
                             if (mRConnector.GetTableFromRmatrix(variables[i]))
                             {
-                                mDTvar = mRConnector.DataTable.Copy();
-                                mDTvar.TableName = variables[i];
+                                dataToAdd = mRConnector.DataTable.Copy();
+                                dataToAdd.TableName = variables[i];
                             }
                             else
                                 success = false;
                             #endregion
                             break;
                     }
-                    if (mDTvar != null)
+                    if (dataToAdd != null)
                     {
-                        AddDataset2HashTable(mDTvar);
+                        AddDataset2HashTable(dataToAdd);
                     }
                 }
                 catch (Exception ex)
@@ -620,7 +622,7 @@ namespace DAnTE.Inferno
         /// in a class of type 'clsDatasetTreeNode'
         /// </summary>
         /// <param name="mdataNode"></param>
-        private void AddDataNode(clsDatasetTreeNode mdataNode)
+        private void AddDataNode(clsDatasetTreeNode dataNodeToAdd)
         {
             TreeNode tn;
             if ((mtabControlData.Controls.Count == 0) &&
@@ -630,48 +632,48 @@ namespace DAnTE.Inferno
             {
                 #region Add Controls on tab page
                 var dataGridTab = new ucDataGridView();
-                this.ctltabPage = new TabPage();
-                this.mtabControlData.Controls.Add(this.ctltabPage);
-                this.ctltabPage.Name = "ctltabPageData";
-                this.ctltabPage.Controls.Add(dataGridTab);
-                dataGridTab.Dock = System.Windows.Forms.DockStyle.Fill;
+                ctltabPage = new TabPage();
+                mtabControlData.Controls.Add(ctltabPage);
+                ctltabPage.Name = "ctltabPageData";
+                ctltabPage.Controls.Add(dataGridTab);
+                dataGridTab.Dock = DockStyle.Fill;
                 #endregion
             }
 
-            if (mdataNode.mDTable == null)
+            if (dataNodeToAdd.mDTable == null)
             {
                 return;
             }
 
-            //mdataNode.mDTable.rea
-            if ((tn = GetNode(mdataNode.mstrDataText)) == null)
+            //dataNodeToAdd.mDTable.rea
+            if ((tn = GetNode(dataNodeToAdd.mstrDataText)) == null)
             {
-                this.ctltabPage.TabIndex = 0;
-                this.ctltabPage.Text = mdataNode.mstrDataText;
-                ((ucDataGridView)this.ctltabPage.Controls[0]).SetDataSource = mdataNode.mDTable;
+                ctltabPage.TabIndex = 0;
+                ctltabPage.Text = dataNodeToAdd.mstrDataText;
+                ((ucDataGridView)ctltabPage.Controls[0]).SetDataSource = dataNodeToAdd.mDTable;
 
-                if (mdataNode.mblAddDGridCtxtMnu)
-                    ((ucDataGridView)this.ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
-                if (mdataNode.mblAddTVCtxtMnu)
-                    mdataNode.mTNode.ContextMenuStrip = mContextMenuTreeV;
+                if (dataNodeToAdd.mblAddDGridCtxtMnu)
+                    ((ucDataGridView)ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
+                if (dataNodeToAdd.mblAddTVCtxtMnu)
+                    dataNodeToAdd.mTNode.ContextMenuStrip = mContextMenuTreeV;
 
-                if (mdataNode.mstrParentNode.Equals("DAnTE"))
-                    ctltreeView.Nodes[0].Nodes.Add(mdataNode.mTNode);
+                if (dataNodeToAdd.mstrParentNode.Equals("DAnTE"))
+                    ctltreeView.Nodes[0].Nodes.Add(dataNodeToAdd.mTNode);
                 else
                 {
-                    var mtnParent = (mhtDatasets[mdataNode.mstrParentNode]).mTNode;
-                    mtnParent.Nodes.Add(mdataNode.mTNode);
+                    var parentNode = (mhtDatasets[dataNodeToAdd.mstrParentNode]).mTNode;
+                    parentNode.Nodes.Add(dataNodeToAdd.mTNode);
                 }
                 ctltreeView.ExpandAll();
-                ctltreeView.SelectedNode = mdataNode.mTNode;
-                this.statusBarPanelMsg.Text = mdataNode.mstrMessage;
-                this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count + " Rows/" +
-                                                 mdataNode.mDTable.Columns.Count + " Columns.";
-                mdataNode.mTNode.Tag = mdataNode;
+                ctltreeView.SelectedNode = dataNodeToAdd.mTNode;
+                statusBarPanelMsg.Text = dataNodeToAdd.mstrMessage;
+                statusBarPanelRowNum.Text = dataNodeToAdd.mDTable.Rows.Count + " Rows/" +
+                                                 dataNodeToAdd.mDTable.Columns.Count + " Columns.";
+                dataNodeToAdd.mTNode.Tag = dataNodeToAdd;
             }
             else
             {
-                tn.Tag = mdataNode;
+                tn.Tag = dataNodeToAdd;
                 ctltreeView.SelectedNode = tn;
                 NodeSelect(tn);
             }
@@ -688,21 +690,21 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var mdataNode = (clsDatasetTreeNode)tn.Tag;
-            if (this.ctltabPage == null)
+            var selectedNodeTag = (clsDatasetTreeNode)tn.Tag;
+            if (ctltabPage == null)
             {
                 return;
             }
 
-            this.ctltabPage.Text = mdataNode.mstrDataText;
-            ((ucDataGridView)this.ctltabPage.Controls[0]).SetDataSource = mdataNode.mDTable;
-            if (mdataNode.mblAddDGridCtxtMnu)
-                ((ucDataGridView)this.ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
-            if (mdataNode.mblAddTVCtxtMnu)
+            ctltabPage.Text = selectedNodeTag.mstrDataText;
+            ((ucDataGridView)ctltabPage.Controls[0]).SetDataSource = selectedNodeTag.mDTable;
+            if (selectedNodeTag.mblAddDGridCtxtMnu)
+                ((ucDataGridView)ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
+            if (selectedNodeTag.mblAddTVCtxtMnu)
                 tn.ContextMenuStrip = mContextMenuTreeV;
-            this.statusBarPanelMsg.Text = mdataNode.mstrMessage;
-            this.statusBarPanelRowNum.Text = mdataNode.mDTable.Rows.Count.ToString() + " Rows/" +
-                                             mdataNode.mDTable.Columns.Count.ToString() + " Columns.";
+            statusBarPanelMsg.Text = selectedNodeTag.mstrMessage;
+            statusBarPanelRowNum.Text = selectedNodeTag.mDTable.Rows.Count.ToString() + " Rows/" +
+                                             selectedNodeTag.mDTable.Columns.Count.ToString() + " Columns.";
             //mDTselected = mdataNode.mDTable;
         }
 
@@ -712,19 +714,19 @@ namespace DAnTE.Inferno
         /// Exceptions are factors, ProtInfo etc.
         /// This is set in a bool variable in each node class
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of dataset names</returns>
         private List<string> AvailableDataSources()
         {
-            var marrDataList = new List<string>();
+            var datasetNames = new List<string>();
 
             foreach (var dataset in mhtDatasets)
             {
-                var mstrDataset = dataset.Key;
-                var mclsDataset = dataset.Value;
-                if (mclsDataset.mblIsNumeric)
-                    marrDataList.Add(mstrDataset);
+                var datasetName = dataset.Key;
+                var datasetTable = dataset.Value;
+                if (datasetTable.mblIsNumeric)
+                    datasetNames.Add(datasetName);
             }
-            return marrDataList;
+            return datasetNames;
         }
 
         /// <summary>
@@ -752,11 +754,11 @@ namespace DAnTE.Inferno
             string rcmd = null;
             foreach (var item in mhtDatasets)
             {
-                var mclsData = item.Value;
-                if (!mclsData.mstrRProtDatasetName.Equals(""))
-                    rcmd += @"""" + mclsData.mstrRProtDatasetName + @""",";
+                var datasetItem = item.Value;
+                if (!string.IsNullOrWhiteSpace(datasetItem.mstrRProtDatasetName))
+                    rcmd += '"' + datasetItem.mstrRProtDatasetName + '"' + ",";
                 else
-                    rcmd += @"""" + mclsData.mstrRdatasetName + @""",";
+                    rcmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
             }
             return rcmd;
         }
@@ -771,9 +773,9 @@ namespace DAnTE.Inferno
             string rcmd = null;
             foreach (var item in mhtDatasets)
             {
-                var mclsData = item.Value;
-                if (mclsData.mblIsNumeric)
-                    rcmd += @"""" + mclsData.mstrRdatasetName + @""",";
+                var datasetItem = item.Value;
+                if (datasetItem.mblIsNumeric)
+                    rcmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
             }
             return rcmd;
         }
@@ -786,10 +788,12 @@ namespace DAnTE.Inferno
         private void RemoveNodeTree(TreeNode tn)
         {
             if (tn.Nodes.Count > 0)
+            {
                 foreach (TreeNode t in tn.Nodes)
                 {
                     mhtDatasets.Remove(t.Text);
                 }
+            }
             mhtDatasets.Remove(tn.Text);
         }
 
@@ -801,11 +805,14 @@ namespace DAnTE.Inferno
             {
                 if (nodeText.Equals(node.Text))
                     return node;
-                else if (node.Nodes.Count > 0)
+
+                if (node.Nodes.Count > 0)
                 {
                     foreach (TreeNode nd in node.Nodes)
+                    {
                         if (nodeText.Equals(nd.Text))
                             return nd;
+                    }
                 }
             }
             return null;
@@ -835,23 +842,23 @@ namespace DAnTE.Inferno
                 var currNode = ctltreeView.SelectedNode;
                 var strSelectedNode = currNode.Text;
 
-                this.ctltreeView.Nodes.Remove(currNode);
+                ctltreeView.Nodes.Remove(currNode);
                 RemoveNodeTree(currNode);
 
-                if (this.ctltreeView.Nodes[0].Nodes.Count > 0)
+                if (ctltreeView.Nodes[0].Nodes.Count > 0)
                 {
                     var idx = ctltreeView.Nodes[0].Nodes.Count;
                     ctltreeView.SelectedNode = ctltreeView.Nodes[0].Nodes[idx - 1];
                 }
-                if (this.ctltreeView.Nodes[0].Nodes.Count == 0)
+                if (ctltreeView.Nodes[0].Nodes.Count == 0)
                 {
-                    this.mtabControlData.Controls.RemoveAt(0);
-                    this.Title = "Main";
+                    mtabControlData.Controls.RemoveAt(0);
+                    Title = "Main";
                     Settings.Default.SessionFileName = null;
                     Settings.Default.Save();
                 }
-                this.statusBarPanelMsg.Text = strSelectedNode + " removed.";
-                this.statusBarPanelRowNum.Text = "";
+                statusBarPanelMsg.Text = strSelectedNode + " removed.";
+                statusBarPanelRowNum.Text = "";
             }
         }
 
@@ -865,8 +872,8 @@ namespace DAnTE.Inferno
                 strKey = operation + "_" + i;
             }
             mhtAnalysisObjects.Add(strKey, "");
-            var mclsAnalysis = new clsAnalysisObject(strKey, o);
-            marrAnalysisObjects.Add(mclsAnalysis);
+            var analysisObject = new clsAnalysisObject(strKey, o);
+            marrAnalysisObjects.Add(analysisObject);
         }
     }
 }
