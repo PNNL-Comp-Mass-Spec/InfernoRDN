@@ -5,68 +5,83 @@
 
 [CustomMessages]
 AppName=InfernoRDN
+
 [Messages]
 WelcomeLabel2=This will install [name/ver] on your computer.%n%nInfernoRDN can perform various downstream data analysis, data reduction, and data comparison tasks including normalization, hypothesis testing, clustering, and heatmap generation.%n%nPlease install R 3.x prior to running InfernoRDN for the first time.
+
+[Dirs]
+Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
+Name: "{app}\Documentation"
+Name: "{app}\Sample_Data_Files"
+
 [Files]
 ; Application files
 ; R scripts
 ; Icon, readme, help, config and license files
-Source: ..\bin\Debug\InfernoHelp.chm; DestDir: {app}
-Source: ..\bin\Debug\inferno.conf; DestDir: {app}
-Source: ..\bin\Debug\Inferno.exe.config; DestDir: {app}
-Source: ..\bin\Debug\ICSharpCode.SharpZipLib.dll; DestDir: {app}
-Source: ..\bin\Debug\InputBox.dll; DestDir: {app}
-Source: ..\bin\Debug\Interop.IasHelperLib.dll; DestDir: {app}
-Source: ..\bin\Debug\LumenWorks.Framework.IO.dll; DestDir: {app}
-Source: ..\bin\Debug\RDotNet.dll; DestDir: {app}
-Source: ..\bin\Debug\RDotNet.NativeLibrary.dll; DestDir: {app}
-Source: ..\bin\Debug\DynamicInterop.dll; DestDir: {app}
-Source: ..\bin\Debug\ZedGraph.dll; DestDir: {app}
-Source: ..\bin\Debug\Inferno.exe; DestDir: {app}
-Source: ..\bin\Debug\Inferno.pdb; DestDir: {app}
-Source: ..\bin\Debug\LumenWorks.Framework.IO.pdb; DestDir: {app}
-Source: ..\bin\Debug\Inferno.RData; DestDir: {app}
-Source: ..\bin\Debug\Inferno_stdplots.RData; DestDir: {app}
-Source: ..\bin\Debug\LumenWorks.Framework.IO.xml; DestDir: {app}
-Source: ..\bin\Debug\RDotNet.NativeLibrary.xml; DestDir: {app}
-Source: ..\bin\Debug\RDotNet.xml; DestDir: {app}
-Source: ..\bin\Debug\ZedGraph.xml; DestDir: {app}
+Source: ..\bin\Debug\InfernoHelp.chm;                       DestDir: {app}
+Source: ..\bin\Debug\inferno.conf;                          DestDir: {app}
+Source: ..\bin\Debug\Inferno.exe.config;                    DestDir: {app}
+Source: ..\bin\Debug\ICSharpCode.SharpZipLib.dll;           DestDir: {app}
+Source: ..\bin\Debug\InputBox.dll;                          DestDir: {app}
+Source: ..\bin\Debug\Interop.IasHelperLib.dll;              DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.dll;           DestDir: {app}
+Source: ..\bin\Debug\RDotNet.dll;                           DestDir: {app}
+Source: ..\bin\Debug\RDotNet.NativeLibrary.dll;             DestDir: {app}
+Source: ..\bin\Debug\DynamicInterop.dll;                    DestDir: {app}
+Source: ..\bin\Debug\ZedGraph.dll;                          DestDir: {app}
+Source: ..\bin\Debug\Inferno.exe;                           DestDir: {app}
+Source: ..\bin\Debug\Inferno.pdb;                           DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.pdb;           DestDir: {app}
+Source: ..\bin\Debug\Inferno.RData;                         DestDir: {app}
+Source: ..\bin\Debug\Inferno_stdplots.RData;                DestDir: {app}
+Source: ..\bin\Debug\LumenWorks.Framework.IO.xml;           DestDir: {app}
+Source: ..\bin\Debug\RDotNet.NativeLibrary.xml;             DestDir: {app}
+Source: ..\bin\Debug\RDotNet.xml;                           DestDir: {app}
+Source: ..\bin\Debug\ZedGraph.xml;                          DestDir: {app}
+                                                             
+Source: Images\textdoc.ico;                                 DestDir: {app}
+Source: ..\Resources\delete_16x.ico;                        DestDir: {app}
+Source: ..\Resources\inferno.ico;                           DestDir: {app}
+Source: ..\Resources\inferno_help.ico;                      DestDir: {app}
+Source: ..\Readme.txt;                                      DestDir: {app}
+Source: ..\RevisionHistory.txt;                             DestDir: {app}
+                                                    
+Source: License.rtf;                                        DestDir: {app}
+Source: readme.rtf;                                         DestDir: {app}
 
-Source: Images\textdoc.ico; DestDir: {app}
-Source: ..\Resources\delete_16x.ico; DestDir: {app}
-Source: ..\Resources\inferno.ico; DestDir: {app}
-Source: ..\Resources\inferno_help.ico; DestDir: {app}
-Source: ..\Readme.txt; DestDir: {app}
-Source: ..\RevisionHistory.txt; DestDir: {app}
+Source: ..\Documentation\RollupMethods_InfernoRDN.pdf;                   DestDir: {app}\Documentation
+Source: ..\Documentation\InfernoRDN_Overview.pdf;                        DestDir: {app}\Documentation
+Source: ..\Documentation\InfernoRDN_Step_by_step_Instructions.pdf;       DestDir: {app}\Documentation
+                                                                     
+Source: ..\Sample_Input_Files\FactorDefinitionExample.txt;               DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv;               DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv;                     DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\Sample_Session_File_with_Factors.dnt;      DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\Sample_Expressions_Session_File.dnt;       DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\VolcanoPlot_InputData.csv;                 DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\VolcanoPlot_Example.dnt;                   DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\VolcanoPlot_Example.xlsx;                  DestDir: {app}\Sample_Data_Files
+Source: ..\Sample_Input_Files\Volcano_Plot_Steps.pdf;                    DestDir: {app}\Sample_Data_Files
 
-Source: License.rtf; DestDir: {app}
-Source: readme.rtf; DestDir: {app}
+Source: ..\Documentation\DAnTE_SupplementaryInfo\bioinformatics_supplement.dnt;    DestDir: {app}\Sample_Data_Files
 
-Source: ..\Sample_Input_Files\FactorDefinitionExample.txt; DestDir: {app}
-Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv; DestDir: {app}
-Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv; DestDir: {app}
-Source: ..\Sample_Input_Files\Sample_Session_File_with_Factors.dnt; DestDir: {app}
-Source: ..\Sample_Input_Files\Sample_Expressions_Session_File.dnt; DestDir: {app}
-Source: ..\Sample_Input_Files\VolcanoPlot_InputData.csv; DestDir: {app}
-Source: ..\Sample_Input_Files\VolcanoPlot_Example.dnt; DestDir: {app}
-Source: ..\Sample_Input_Files\VolcanoPlot_Example.xlsx; DestDir: {app}
-Source: ..\Sample_Input_Files\Volcano_Plot_Steps.pdf; DestDir: {app}
-
-
-[Dirs]
-Name: {commonappdata}\InfernoRDN; Flags: uninsalwaysuninstall
 
 [Tasks]
-Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
-Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon};               GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon};       GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
+
 [Icons]
-Name: {group}\InfernoRDN; Filename: {app}\inferno.exe; IconFilename: {app}\inferno.ico; IconIndex: 0; Comment: InfernoRDN for Proteomics
-Name: {group}\Inferno Help; Filename: {app}\InfernoHelp.chm; IconFilename: {app}\inferno_help.ico; Comment: Inferno Help File; IconIndex: 0
-Name: {group}\ReadMe File; Filename: {app}\readme.rtf; IconFilename: {app}\textdoc.ico; Comment: Inferno ReadMe; IconIndex: 0
-Name: {group}\License File; Filename: {app}\License.rtf; IconFilename: {app}\textdoc.ico; Comment: Inferno License; IconIndex: 0
-Name: {group}\Uninstall Inferno; Filename: {uninstallexe}; IconFilename: {app}\delete_16x.ico; IconIndex: 0
-Name: {commondesktop}\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: desktopicon; IconFilename: {app}\inferno.ico; Comment: Inferno; IconIndex: 0
+Name: {group}\InfernoRDN;           Filename: {app}\inferno.exe;         IconFilename: {app}\inferno.ico; IconIndex: 0; Comment: InfernoRDN for Proteomics
+Name: {group}\Inferno Help;         Filename: {app}\InfernoHelp.chm;     IconFilename: {app}\inferno_help.ico; Comment: Inferno Help File; IconIndex: 0
+Name: {group}\ReadMe File;          Filename: {app}\readme.rtf;          IconFilename: {app}\textdoc.ico; Comment: Inferno ReadMe; IconIndex: 0
+Name: {group}\License File;         Filename: {app}\License.rtf;         IconFilename: {app}\textdoc.ico; Comment: Inferno License; IconIndex: 0
+Name: {group}\Uninstall Inferno;    Filename: {uninstallexe};            IconFilename: {app}\delete_16x.ico; IconIndex: 0
+Name: {group}\Documentation;        Filename: {app}\Documentation
+Name: {group}\Sample Data Files;    Filename: {app}\Sample_Data_Files
+
+Name: {commondesktop}\{cm:AppName};                                        Filename: {app}\Inferno.exe; Tasks: desktopicon; IconFilename: {app}\inferno.ico; Comment: Inferno; IconIndex: 0
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\{cm:AppName}; Filename: {app}\Inferno.exe; Tasks: quicklaunchicon; IconFilename: {app}\inferno.ico; Comment: Inferno for Proteomics; IconIndex: 0
+
 [Setup]
 AppName=InfernoRDN
 ;AppVerName=InfernoRDN
