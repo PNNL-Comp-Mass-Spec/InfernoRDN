@@ -5,3 +5,5 @@ Deploy/Output/
 InfernoRDN_SourceCode/
 packages/
 User_Data/*
+/Rscripts/Rollup/.Rhistory
+/Sample_Input_Files/Extras
