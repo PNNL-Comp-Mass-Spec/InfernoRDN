@@ -70,12 +70,17 @@ InfernoRDN uses the following R packages (from http://cran.r-project.org/):
 * impute: Imputation for microarray data
 * qvalue: Q-value estimation for false discovery rate control
 * e1071: Misc Functions of the Department of Statistics (e1071), TU Wien
-* gplots: Various R programming tools for plotting data
+* ggplot2: Various R programming tools for plotting data
 * ellipse: Functions for drawing ellipses and ellipse-like confidence regions
 * plotrix: Various plotting functions
 * scatterplot3d: 3D Scatter Plot
 * colorspace: Colorspace Manipulation
+* Hmisc: Harrell Miscellaneous
+* Cairo: R graphics device using cairo graphics library
 
+The packages will be installed to either the library folder in C:\Program Files\R\R-3.x.x\library
+or, more likely (due to permissions) to the win-libary folder 
+in your "Documents" or "My Documents" folder.
 
 == Factor Definitions File ==
 
