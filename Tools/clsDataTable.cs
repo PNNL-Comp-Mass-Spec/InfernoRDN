@@ -30,7 +30,8 @@ namespace DAnTE.Tools
 
         #region File loading methods
 
-        public static DataTable LoadFile2DataTable(string FileName)
+        [Obsolete("Unused")]
+        public DataTable LoadFile2DataTable(string filePath)
         {
             var sConnectionString = "";
             var dtOut = new DataTable();
@@ -138,7 +139,8 @@ namespace DAnTE.Tools
             return dtOut;
         }
 
-        public static DataTable LoadFile2DataTableJETOLEDB(string FileName)
+        [Obsolete("Unused")]
+        public DataTable LoadFile2DataTableJETOLEDB(string filePath)
         {
             var dtOut = new DataTable();
 
@@ -382,7 +384,8 @@ namespace DAnTE.Tools
 
         #endregion
 
-        public static DataTable Array2DataTable(double[,] matrix, string[] rowNames, string[] colHeaders)
+        [Obsolete("Unused")]
+        private DataTable Array2DataTable(double[,] matrix, IList<string> rowNames, string[] colHeaders)
         {
             var dataTable = new DataTable();
 
@@ -434,7 +437,8 @@ namespace DAnTE.Tools
             return stringArray;
         }
 
-        public static DataTable ReplaceMissingStr(DataTable dt)
+        [Obsolete("Unused")]
+        private DataTable ReplaceMissingStr(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
@@ -462,7 +466,8 @@ namespace DAnTE.Tools
             return dt;
         }
 
-        public static DataTable ReplaceMissing(DataTable dt)
+        [Obsolete("Unused")]
+        private DataTable ReplaceMissing(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
             //DataTable outDtable = new DataTable();
@@ -491,7 +496,8 @@ namespace DAnTE.Tools
             return dt;
         }
 
-        public static DataTable ClearNulls(DataTable dt)
+        [Obsolete("Unused")]
+        private DataTable ClearNulls(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
 
@@ -516,7 +522,8 @@ namespace DAnTE.Tools
             return dt;
         }
 
-        public static void RemoveDuplicateRows(DataTable dTable, string colName)
+        [Obsolete("Unused")]
+        private void RemoveDuplicateRows(DataTable dTable, string colName)
         {
             var hTable = new Dictionary<object, string>();
             var duplicateList = new List<DataRow>();
@@ -676,7 +683,8 @@ namespace DAnTE.Tools
         /// <param name="tbl">Table to scan for duplicate rows</param>
         /// <param name="keyColumns">An array of DataColumns
         /// containing the columns to match for duplicates</param>
-        public static void RemoveDuplicates(DataTable tbl, DataColumn[] keyColumns)
+        [Obsolete("Unused")]
+        private void RemoveDuplicates(DataTable tbl, DataColumn[] keyColumns)
         {
             var rowNdx = 0;
             while (rowNdx < tbl.Rows.Count - 1)
@@ -696,7 +704,8 @@ namespace DAnTE.Tools
             }
         }
 
-        private static List<DataRow> FindDups(DataTable tbl, int sourceNdx, DataColumn[] keyColumns)
+        [Obsolete("Unused")]
+        private List<DataRow> FindDups(DataTable tbl, int sourceNdx, DataColumn[] keyColumns)
         {
             var retVal = new List<DataRow>();
             var sourceRow = tbl.Rows[sourceNdx];
@@ -711,8 +720,8 @@ namespace DAnTE.Tools
             return retVal;
         }
 
-
-        private static bool IsDup(DataRow sourceRow, DataRow targetRow, DataColumn[] keyColumns)
+        [Obsolete("Unused")]
+        private bool IsDup(DataRow sourceRow, DataRow targetRow, DataColumn[] keyColumns)
         {
             var retVal = true;
             foreach (var column in keyColumns)

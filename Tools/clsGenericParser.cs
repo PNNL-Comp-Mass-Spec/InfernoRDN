@@ -3,17 +3,17 @@
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights 
+//	in the Software without restriction, including without limitation the rights
 //	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-//	of the Software, and to permit persons to whom the Software is furnished to do so, 
+//	of the Software, and to permit persons to whom the Software is furnished to do so,
 //	subject to the following conditions:
 //
-//	The above copyright notice and this permission notice shall be included in all 
+//	The above copyright notice and this permission notice shall be included in all
 //	copies or substantial portions of the Software.
 //
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 //	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-//	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
+//	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
@@ -24,6 +24,7 @@ using System.IO;
 using System.Xml;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Collections.Specialized;
@@ -40,6 +41,7 @@ namespace DAnTE.Tools
     /// of parsing various flat files formats.
     /// </summary>
     /// <threadsafety static="false" instance="false"/>
+    [Obsolete("Unused")]
     public class clsGenericParser : IDisposable
     {
         #region Constants
@@ -131,6 +133,7 @@ namespace DAnTE.Tools
         ///   prior to using the parser (using <see cref="SetDataSource"/>), otherwise an
         ///   exception will be thrown.
         /// </remarks>
+        [Obsolete("Unused")]
         protected clsGenericParser()
         {
             m_ParserState = ParserState.NoDataSource;
@@ -188,10 +191,7 @@ namespace DAnTE.Tools
         ///   </para>
         /// </value>
         [System.ComponentModel.Browsable(false)]
-        public bool IsDisposed
-        {
-            get { return m_blnDisposed; }
-        }
+        public bool IsDisposed => m_blnDisposed;
 
         /// <summary>
         ///   <para>
@@ -233,9 +233,9 @@ namespace DAnTE.Tools
                                                               "You cannot set the value of ColumnWidths to an empty array.");
 
                     // Make sure all of the ColumnWidths are valid.
-                    for (var intColumnIndex = 0; intColumnIndex < m_iaColumnWidths.Length; ++intColumnIndex)
+                    foreach (var columnWidth in m_iaColumnWidths)
                     {
-                        if (m_iaColumnWidths[intColumnIndex] < 1)
+                        if (columnWidth < 1)
                             throw new ArgumentOutOfRangeException(nameof(ColumnWidths),
                                                                   "You cannot set the value of a ColumnWidth to a number less than one.");
                     }
@@ -621,11 +621,10 @@ namespace DAnTE.Tools
                 if (value == null)
                     throw new ArgumentNullException(nameof(RowDelimiter),
                                                     "You cannot set the value of RowDelimiter to null.");
-                else if (value.Length < 1)
+                if (value.Length < 1)
                     throw new ArgumentException("You cannot set the value of RowDelimiter to an empty array.",
                                                 nameof(RowDelimiter));
-                else
-                    m_caRowDelimiter = value;
+                m_caRowDelimiter = value;
             }
         }
 
@@ -663,11 +662,10 @@ namespace DAnTE.Tools
                 if (value == null)
                     throw new ArgumentNullException(nameof(ColumnDelimiter),
                                                     "You cannot set the value of ColumnDelimiter to null.");
-                else if (value.Length < 1)
+                if (value.Length < 1)
                     throw new ArgumentException("You cannot set the value of ColumnDelimiter to an empty array.",
                                                 nameof(ColumnDelimiter));
-                else
-                    m_caColumnDelimiter = value;
+                m_caColumnDelimiter = value;
             }
         }
 
@@ -816,7 +814,7 @@ namespace DAnTE.Tools
             {
                 _CheckDiposed();
 
-                return this[this._GetColumnIndex(strColumnName)];
+                return this[_GetColumnIndex(strColumnName)];
             }
         }
 
@@ -939,12 +937,12 @@ namespace DAnTE.Tools
         ///   <code lang="C#" escaped="true">
         ///     clsGenericParser p = new clsGenericParser();
         ///     p.SetDataSource(@"C:\MyData.txt");
-        ///     
+        ///
         ///     while(p.Read())
         ///     {
         ///       // Put code here to retrieve results of the read.
         ///     }
-        ///     
+        ///
         ///     p.Close();
         ///   </code>
         /// </example>
@@ -1266,6 +1264,12 @@ namespace DAnTE.Tools
 
             _CheckDiposed();
 
+            if (xmlConfig == null)
+                throw new NullReferenceException("Parameter xmlConfig cannot be null when calling Load in clsGenericParser");
+
+            if (xmlConfig.DocumentElement == null)
+                throw new NullReferenceException("Parameter xmlConfig hsa a null DocumentElement; error calling Load in clsGenericParser");
+
             ////////////////////////////////////////////////////////////////////
             // Access each element and load the contents of the configuration //
             // into the current GenericParser object.                         //
@@ -1273,7 +1277,7 @@ namespace DAnTE.Tools
 
             var xmlElement = xmlConfig.DocumentElement[XML_COLUMN_WIDTHS];
 
-            if ((xmlElement != null) && (xmlElement.ChildNodes.Count > 0))
+            if (xmlElement != null && xmlElement.ChildNodes.Count > 0)
             {
                 foreach (XmlElement xmlColumnWidth in xmlElement.ChildNodes)
                     if (xmlColumnWidth.Name == XML_COLUMN_WIDTH)
@@ -1429,7 +1433,7 @@ namespace DAnTE.Tools
         /// <example>
         ///   <code lang="C#" escaped="true">
         ///     FileStream fs = new FileStream(@"C:\MyData.txt", FileMode.Create);
-        ///   
+        ///
         ///     GenericParser p = new GenericParser();
         ///     p.Save(fs);
         ///   </code>
@@ -1589,12 +1593,12 @@ namespace DAnTE.Tools
         ///   <code lang="C#" escaped="true">
         ///     GenericParser p = new GenericParser();
         ///     p.SetDataSource(@"C:\MyData.txt");
-        ///     
+        ///
         ///     while(p.Read())
         ///     {
         ///       // Put code here to retrieve results of the read.
         ///     }
-        ///     
+        ///
         ///     p.Close();
         ///   </code>
         /// </example>
@@ -1612,7 +1616,7 @@ namespace DAnTE.Tools
         ///   </para>
         ///   <para>
         ///     If the column is not found, the column index will be -1.
-        ///   </para>  
+        ///   </para>
         /// </remarks>
         /// <param name="strColumnName">The name of the column you're looking for.</param>
         /// <returns>The index of the column with the name strColumnName.
@@ -1624,7 +1628,7 @@ namespace DAnTE.Tools
         ///     GenericParser p = new GenericParser();
         ///     p.SetDataSource(@"C:\MyData.txt");
         ///     p.FirstRowHasHeader = true;
-        ///     
+        ///
         ///     while(p.Read())
         ///     {
         ///       if (!blnGotIndices)
@@ -1633,7 +1637,7 @@ namespace DAnTE.Tools
         ///         intID = p.GetColumnIndex("ID");
         ///         intPrice = p.GetColumnIndex("Price");
         ///       }
-        ///       
+        ///
         ///       // Put code here to retrieve results of the read.
         ///     }
         ///   </code>
@@ -1662,7 +1666,7 @@ namespace DAnTE.Tools
         ///     GenericParser p = new GenericParser();
         ///     p.SetDataSource(@"C:\MyData.txt");
         ///     p.FirstRowHasHeader = true;
-        ///     
+        ///
         ///     while(p.Read())
         ///     {
         ///       if (!blnGotColumnNames)
@@ -1671,7 +1675,7 @@ namespace DAnTE.Tools
         ///         strColumn1 = p.GetColumnIndex(0);
         ///         strColumn2 = p.GetColumnIndex(1);
         ///       }
-        ///       
+        ///
         ///       // Put code here to retrieve results of the read.
         ///     }
         ///   </code>
@@ -1827,12 +1831,6 @@ namespace DAnTE.Tools
                     break;
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                case ParserState.Finished:
-                default:
-
-                    // Nothing.
-                    break;
             }
         }
 
@@ -1949,8 +1947,8 @@ namespace DAnTE.Tools
         {
             // Move the strings in the data array into the string collection
             // because they are the header names.
-            for (var intColumnIndex = 0; intColumnIndex < m_scData.Count; ++intColumnIndex)
-                m_scColumnNames.Add(m_scData[intColumnIndex]);
+            foreach (var columnName in m_scData)
+                m_scColumnNames.Add(columnName);
 
             m_blnHeaderRowFound = true;
 
@@ -2168,14 +2166,14 @@ namespace DAnTE.Tools
         ///     <see langword="false"/> - The character sequence is not a match.
         ///   </para>
         /// </returns>
-        private bool _MatchesDelimiter(char[] caDelimiter)
+        private bool _MatchesDelimiter(IList<char> caDelimiter)
         {
             // Just check the first character to perform a quick check.
             if (m_caBuffer[m_intCurrentIndex] != caDelimiter[0])
                 return false;
 
             // See if we could even match it based on available characters left in the buffer.
-            if ((m_intCurrentIndex + caDelimiter.Length) > m_intCharactersInBuffer)
+            if (m_intCurrentIndex + caDelimiter.Count > m_intCharactersInBuffer)
             {
                 // Indicate we need to grab more data.
                 if (m_BufferState == BufferState.NoAction)
@@ -2187,7 +2185,7 @@ namespace DAnTE.Tools
             // Increment the intBufferIndex because we already checked the first character.
             var intBufferIndex = m_intCurrentIndex + 1;
 
-            for (var intCheckIndex = 1; intCheckIndex < caDelimiter.Length; ++intCheckIndex, ++intBufferIndex)
+            for (var intCheckIndex = 1; intCheckIndex < caDelimiter.Count; ++intCheckIndex, ++intBufferIndex)
             {
                 if (m_caBuffer[intBufferIndex] != caDelimiter[intCheckIndex])
                     return false;
@@ -2259,7 +2257,7 @@ namespace DAnTE.Tools
         ///   </para>
         ///   <para>
         ///     If the column is not found, the column index will be -1.
-        ///   </para>  
+        ///   </para>
         /// </remarks>
         /// <param name="strColumnName">The name of the column you're looking for.</param>
         /// <returns>The index of the column with the name strColumnName.
@@ -2322,7 +2320,7 @@ namespace DAnTE.Tools
 
             // This object will be cleaned up by the Dispose method.
             //
-            // Therefore, you should call GC.SupressFinalize to take this object off the finalization queue 
+            // Therefore, you should call GC.SupressFinalize to take this object off the finalization queue
             // and prevent finalization code for this object from executing a second time.
 
             GC.SuppressFinalize(this);
@@ -2339,7 +2337,7 @@ namespace DAnTE.Tools
         /// </remarks>
         protected void _CheckDiposed()
         {
-            if (this.IsDisposed)
+            if (IsDisposed)
                 throw new ObjectDisposedException(GetType().FullName);
         }
 
@@ -2349,7 +2347,7 @@ namespace DAnTE.Tools
         /// <param name="e">The event data about the OnDisposed Event being fired.</param>
         protected virtual void OnDisposed(EventArgs e)
         {
-            this.Disposed?.Invoke(this, e);
+            Disposed?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2362,7 +2360,7 @@ namespace DAnTE.Tools
         {
             lock (this)
             {
-                if (!this.IsDisposed)
+                if (!IsDisposed)
                 {
                     try
                     {
@@ -2380,7 +2378,7 @@ namespace DAnTE.Tools
 
             try
             {
-                this.OnDisposed(EventArgs.Empty);
+                OnDisposed(EventArgs.Empty);
             }
             catch
             {
@@ -2434,7 +2432,7 @@ namespace DAnTE.Tools
         ///   prior to using the parser (using <see cref="GenericParser.SetDataSource"/>), otherwise an
         ///   exception will be thrown.
         /// </remarks>
-        public clsGenericParserAdapter() : base()
+        public clsGenericParserAdapter()
         {
             IncludeFileLineNumber = false;
         }
@@ -2471,7 +2469,7 @@ namespace DAnTE.Tools
         ///     the data was retrieved should be included as part of the result set.
         ///   </para>
         ///   <para>
-        ///     Default: <see langword="false"/> 
+        ///     Default: <see langword="false"/>
         ///   </para>
         /// </summary>
         public bool IncludeFileLineNumber
@@ -2510,7 +2508,7 @@ namespace DAnTE.Tools
         ///   <see cref="GenericParserAdapter"/>.
         /// </exception>
         /// <exception cref="ParsingException">
-        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/> 
+        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/>
         ///   cannot continue due to a conflict between the setup and the data being
         ///   parsed.
         /// </exception>
@@ -2549,7 +2547,7 @@ namespace DAnTE.Tools
         ///   <see cref="GenericParserAdapter"/>.
         /// </exception>
         /// <exception cref="ParsingException">
-        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/> 
+        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/>
         ///   cannot continue due to a conflict between the setup and the data being
         ///   parsed.
         /// </exception>
@@ -2588,7 +2586,7 @@ namespace DAnTE.Tools
         ///   <see cref="GenericParserAdapter"/>.
         /// </exception>
         /// <exception cref="ParsingException">
-        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/> 
+        ///   Thrown in the situations where the <see cref="GenericParserAdapter"/>
         ///   cannot continue due to a conflict between the setup and the data being
         ///   parsed.
         /// </exception>
@@ -2711,7 +2709,7 @@ namespace DAnTE.Tools
             // specific to the GenericParserAdapter.   //
             /////////////////////////////////////////////
 
-            var xmlElement = xmlConfig.DocumentElement[XML_INCLUDE_LINE_NUMBER];
+            var xmlElement = xmlConfig.DocumentElement?[XML_INCLUDE_LINE_NUMBER];
 
             if (xmlElement?.InnerText != null)
                 IncludeFileLineNumber = Convert.ToBoolean(xmlElement.InnerText);
@@ -2729,14 +2727,21 @@ namespace DAnTE.Tools
         {
             var xmlConfig = base.Save();
 
+            if (xmlConfig == null)
+                throw new NullReferenceException("base.Save returned a null xmlConfig instance; cannot save the configuration in clsGenericParser");
+
+            if (xmlConfig.DocumentElement == null)
+                throw new NullReferenceException("xmlConfig.DocumentElement is null; cannot save the configuration in clsGenericParser");
+
+
             ///////////////////////////////////////////////////////////////
             // Take the document and insert the additional configuration //
             // specific to the GenericParserAdapter.                     //
             ///////////////////////////////////////////////////////////////
 
             var xmlElement = xmlConfig.CreateElement(XML_INCLUDE_LINE_NUMBER);
-            xmlElement.InnerText = this.IncludeFileLineNumber.ToString();
-            xmlConfig.DocumentElement.AppendChild(xmlElement);
+            xmlElement.InnerText = IncludeFileLineNumber.ToString();
+            xmlConfig.DocumentElement?.AppendChild(xmlElement);
 
             return xmlConfig;
         }
@@ -2761,7 +2766,7 @@ namespace DAnTE.Tools
         ///   Creates a new <see cref="ParserSetupException"/> with default
         ///   values.
         /// </summary>
-        public ParserSetupException() : base()
+        public ParserSetupException()
         {
         }
 
@@ -2797,7 +2802,7 @@ namespace DAnTE.Tools
         /// <summary>
         ///   Creates a new <see cref="ParsingException"/> with default values.
         /// </summary>
-        public ParsingException() : base()
+        public ParsingException()
         {
         }
 
@@ -2839,10 +2844,7 @@ namespace DAnTE.Tools
         /// <summary>
         ///   The line number in the file that the exception was thrown at.
         /// </summary>
-        public int FileRowNumber
-        {
-            get { return m_intFileRowNumber; }
-        }
+        public int FileRowNumber => m_intFileRowNumber;
 
         #endregion Public Properties
 
@@ -2855,7 +2857,7 @@ namespace DAnTE.Tools
         #region Overridden Methods
 
         /// <summary>
-        ///   When overridden in a derived class, sets the <see cref="SerializationInfo"/> 
+        ///   When overridden in a derived class, sets the <see cref="SerializationInfo"/>
         ///   with information about the exception.
         /// </summary>
         /// <param name="sInfo">
