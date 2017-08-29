@@ -23,8 +23,6 @@ namespace DAnTE.Inferno
             Xlsx = 3
         }
 
-        private bool mProgressEventWired;
-
         private bool DeleteTempFile(string tempfile)
         {
             var ok = true;
@@ -457,8 +455,10 @@ namespace DAnTE.Inferno
                 return null;
             }
 
+            var dataLoader = new clsDataTable();
+
             //FactorsValid = true;
-            var loadedData = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+            var loadedData = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
             if (loadedData == null)
             {
                 return null;
@@ -531,6 +531,10 @@ namespace DAnTE.Inferno
                 return false;
             }
 
+            var dataLoader = new clsDataTable();
+            dataLoader.OnError += clsDataTable_OnError;
+            dataLoader.OnProgress += clsDataTable_OnProgress;
+
             switch (mDataSetType)
             {
                 case enmDataType.ESET:
@@ -541,11 +545,19 @@ namespace DAnTE.Inferno
 
                     mfrmShowProgress.Reset("Loading data");
 
-                    var esetTable = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var esetTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
                     if (esetTable == null)
                     {
+                        string errorMessage;
+                        if (string.IsNullOrWhiteSpace(mfrmShowProgress.ErrorMessage))
+                            errorMessage = "Unknown load error";
+                        else
+                            errorMessage = "Load error: " + mfrmShowProgress.ErrorMessage;
+
+                        MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
+
                     esetTable.TableName = "AllEset";
 
                     //Select columns
@@ -567,9 +579,9 @@ namespace DAnTE.Inferno
                             filteredDataTable.Columns[0].ColumnName = "Row_ID";
 
                             // Remove rows with no data or duplicate data
-                            filteredDataTable = clsDataTable.RemoveDuplicateRows2(filteredDataTable,
-                                                                                  filteredDataTable.Columns[0]
-                                                                                      .ColumnName);
+                            filteredDataTable = dataLoader.RemoveDuplicateRows2(
+                                filteredDataTable,
+                                filteredDataTable.Columns[0].ColumnName);
 
                             // Copy the data into R
                             filteredDataTable.TableName = "Eset";
@@ -622,7 +634,7 @@ namespace DAnTE.Inferno
 
                     #region Load Protein Info
 
-                    var proteinInfoTable = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var proteinInfoTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
                     if (proteinInfoTable == null)
                     {
                         return false;
@@ -664,7 +676,7 @@ namespace DAnTE.Inferno
                     #region Load Factors
 
                     validFactors = true;
-                    var factorTable = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var factorTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
                     if (factorTable == null)
                     {
                         return false;
@@ -800,6 +812,20 @@ namespace DAnTE.Inferno
             vars = vars + ")";
 
             return vars;
+        }
+
+        void clsDataTable_OnError(object sender, MessageEventArgs e)
+        {
+            if (mfrmShowProgress != null)
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new EventHandler<MessageEventArgs>(clsDataTable_OnError), sender, e);
+                    return;
+                }
+
+                mfrmShowProgress.ErrorMessage = e.Message;
+            }
         }
 
         void clsDataTable_OnProgress(object sender, ProgressEventArgs e)
