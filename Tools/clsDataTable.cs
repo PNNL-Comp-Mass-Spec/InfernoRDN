@@ -47,121 +47,46 @@ namespace DAnTE.Tools
         [Obsolete("Unused")]
         public DataTable LoadFile2DataTable(string filePath)
         {
-            var sConnectionString = "";
-            var dtOut = new DataTable();
-            DataTable dtIn;
 
-            var fileName = Path.GetFileName(FileName);
+            var fileName = Path.GetFileName(filePath);
             var fExt = Path.GetExtension(fileName);
 
             if (string.IsNullOrEmpty(fExt))
             {
-                Console.WriteLine("Unknown file type");
-                //fileOK = false;
+                ReportError("Unknown file type" + fExt);
                 return null;
             }
 
             switch (fExt.ToLower())
             {
-                case ".csv": // CSV files
-                    using (var parser = new clsGenericParserAdapter())
-                    {
-                        parser.SetDataSource(FileName);
-                        parser.ColumnDelimiter = ",".ToCharArray();
-                        parser.FirstRowHasHeader = true;
-                        parser.MaxBufferSize = 4096;
-                        parser.TextQualifier = '\"';
-                        dtIn = parser.GetDataTable();
-                        parser.Close();
-                        dtOut = ReplaceMissingStr(dtIn);
-                    }
-                    break;
-                case ".txt":
-                    using (var parser = new clsGenericParserAdapter())
-                    {
-                        parser.SetDataSource(FileName);
-                        parser.ColumnDelimiter = "\t".ToCharArray();
-                        parser.FirstRowHasHeader = true;
-                        parser.MaxBufferSize = 4096;
-                        parser.TextQualifier = '\"';
-                        dtIn = parser.GetDataTable();
-                        parser.Close();
-                        dtOut = ReplaceMissingStr(dtIn);
-                    }
-                    break;
-                case ".xls": //Excel files
-                    sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                                        FileName + ";" + "Extended Properties=Excel 8.0;";
-                    goto case "Excel";
-                case ".xlsx": // New Excel files
-                    sConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" +
-                                        FileName + ";" + "Extended Properties=Excel 12.0;";
-                    goto case "Excel";
-                case "Excel":
-                    OleDbConnection objConn = null;
-                    DataTable dt = null;
-                    try
-                    {
-                        //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                        //    FileName + ";" + "Extended Properties=Excel 8.0;";
-                        objConn = new OleDbConnection(sConnectionString);
-                        objConn.Open();
-                        dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                        if (dt == null)
-                        {
-                            return null;
-                        }
-                        var excelSheets = new string[dt.Rows.Count];
-                        var i = 0;
+                case ".csv":
+                    return LoadDelimitedFileViaGenericParser(filePath, '\t');
 
-                        // Add the sheet name to the string array.
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            excelSheets[i] = row["TABLE_NAME"].ToString();
-                            i++;
-                        }
-                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
-                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter
-                        {
-                            SelectCommand = objCmdSelect
-                        };
-                        objAdapter1.Fill(dtOut);
-                        //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    finally
-                    {
-                        // Clean up.
-                        if (objConn != null)
-                        {
-                            objConn.Close();
-                            objConn.Dispose();
-                        }
-                        dt?.Dispose();
-                    }
-                    break;
+                case ".txt":
+                    return LoadDelimitedFileViaGenericParser(filePath, ',');
+
+                case ".xls": //Excel files
+                    var connectionString1 =
+                        "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                        "Data Source=" + filePath + ";" +
+                        "Extended Properties=Excel 8.0;";
+                    return LoadExcelFile(filePath, connectionString1);
+
+                case ".xlsx": // New Excel files
+                    var connectionString2 = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" +
+                                        filePath + ";" + "Extended Properties=Excel 12.0;";
+                    return LoadExcelFile(filePath, connectionString2);
+
                 default:
-                    Console.WriteLine("Unknown File type");
-                    //fileOK = false;
-                    dtOut = null;
-                    break;
+                    ReportError("Unknown File type" + fExt);
+                    return null;
             }
-            return dtOut;
         }
 
         [Obsolete("Unused")]
         public DataTable LoadFile2DataTableJETOLEDB(string filePath)
         {
-            var dtOut = new DataTable();
-
-            OleDbConnection objConn;
-
-            var fileName = Path.GetFileName(FileName);
-            var filePath = Path.GetDirectoryName(FileName);
+            var fileName = Path.GetFileName(filePath);
             var fExt = Path.GetExtension(fileName);
 
             if (string.IsNullOrEmpty(fExt))
@@ -174,7 +99,7 @@ namespace DAnTE.Tools
             {
                 case ".csv": // CSV files
                 case ".txt":
-                    objConn = null;
+                    OleDbConnection objConn = null;
                     try
                     {
                         var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" +
@@ -190,8 +115,9 @@ namespace DAnTE.Tools
                             SelectCommand = objCmdSelect
                         };
 
+                        var dtOut = new DataTable();
                         objAdapter1.Fill(dtOut);
-                        //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
+                        return dtOut;
                     }
                     catch (Exception ex)
                     {
@@ -207,61 +133,33 @@ namespace DAnTE.Tools
                             objConn.Dispose();
                         }
                     }
-                    break;
+
                 case ".xls": //Excel files
-                    objConn = null;
-                    DataTable dt = null;
                     try
                     {
-                        var sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                                                FileName + ";" + "Extended Properties=Excel 8.0;";
-                        objConn = new OleDbConnection(sConnectionString);
-                        objConn.Open();
-                        dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                        if (dt == null)
-                        {
-                            return null;
-                        }
-                        var excelSheets = new string[dt.Rows.Count];
-                        var i = 0;
-
-                        // Add the sheet name to the string array.
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            excelSheets[i] = row["TABLE_NAME"].ToString();
-                            i++;
-                        }
-                        var sheetCmd = "SELECT * FROM [" + excelSheets[0] + "]"; //read the first table
-                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter
-                        {
-                            SelectCommand = objCmdSelect
-                        };
-
-                        objAdapter1.Fill(dtOut);
-                        //mdtOut = clsDataTable.ClearNulls(mdtIn) ;
+                        var connectionString =
+                            "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                            "Data Source=" + filePath + ";" +
+                            "Extended Properties=Excel 8.0;";
+                        var dtOut = LoadExcelFile(filePath, connectionString);
+                        return dtOut;
                     }
                     catch (Exception ex)
                     {
                         ReportError($"Error opening {filePath}: {ex.Message}");
                         return null;
                     }
-                    break;
+
                 default:
-                    Console.WriteLine("Unknown File");
-                    //fileOK = false;
-                    dtOut = null;
-                    break;
+                    Console.WriteLine("Unknown file type " + fExt);
+                    return null;
             }
-            return dtOut;
+
         }
 
-        public static DataTable LoadFile2DataTableFastCSVReader(string FileName)
+        public DataTable LoadFile2DataTableFastCSVReader(string filePath)
         {
-            var sConnectionString = "";
-            var dtOut = new DataTable();
-
-            var fileName = Path.GetFileName(FileName);
+            var fileName = Path.GetFileName(filePath);
             var fExt = Path.GetExtension(fileName);
 
             if (string.IsNullOrEmpty(fExt))
@@ -273,123 +171,189 @@ namespace DAnTE.Tools
             switch (fExt.ToLower())
             {
                 case ".csv": // CSV files
-                    using (
-                        var csv =
-                            new CsvReader(
-                                new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read,
-                                                                FileShare.ReadWrite)), true))
-                    {
-                        csv.ParseError += csv_ParseError;
-                        csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
-                        dtOut.Load(csv);
-                    }
-                    break;
+                    return LoadDelimitedFile(filePath, ',');
+
                 case ".txt":
-                    using (
-                        var csv =
-                            new CsvReader(
-                                new StreamReader(new FileStream(FileName, FileMode.Open, FileAccess.Read,
-                                                                FileShare.ReadWrite)), true, '\t'))
-                    {
-                        csv.ParseError += csv_ParseError;
-                        csv.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
-                        dtOut.Load(csv);
-                    }
-                    break;
+                    return LoadDelimitedFile(filePath, '\t');
+
                 case ".xls": //Excel files
-                    sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                                        FileName + ";" + "Extended Properties=Excel 8.0;";
-                    goto case "Excel";
+                    var connectionString1 =
+                        "Provider=Microsoft.Jet.OLEDB.4.0;" +
+                        "Data Source=" + filePath + ";" +
+                        "Extended Properties=Excel 8.0;";
+                    return LoadExcelFile(filePath, connectionString1);
+
                 case ".xlsx": // New Excel files
-                    sConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" +
-                                        FileName + ";" + "Extended Properties=Excel 12.0;";
-                    goto case "Excel";
-                case "Excel":
-                    OleDbConnection objConn = null;
-                    DataTable dt = null;
-                    try
+                    var connectionString2 =
+                        "Provider=Microsoft.ACE.OLEDB.12.0;" +
+                        "Data Source=" + filePath + ";" +
+                        "Extended Properties=Excel 12.0;";
+                    return LoadExcelFile(filePath, connectionString2);
 
                 default:
                     ReportError("Unknown file type" + fExt);
                     return null;
             }
         }
+
+        private DataTable LoadDelimitedFile(string filePath, char delimiter)
+        {
+            // Read the first line of the data file to make sure there are no duplicate column names
+            using (var fileStream = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            {
+                if (!fileStream.EndOfStream)
+                {
+                    var headerLine = fileStream.ReadLine();
+                    if (string.IsNullOrWhiteSpace(headerLine))
                     {
-                        //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
-                        //    FileName + ";" + @"Extended Properties=""Excel 8.0;HDR=Yes;IMEX=1;""";
-                        objConn = new OleDbConnection(sConnectionString);
-                        objConn.Open();
-                        dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                        if (dt == null)
+                        ReportError("Empty header line; cannot load data from " + filePath);
+                        return null;
+                    }
+
+                    var headers = headerLine.Split(delimiter);
+                    var uniqueHeaqders = new SortedSet<string>();
+
+                    foreach (var columnName in headers)
+                    {
+                        if (uniqueHeaqders.Contains(columnName))
                         {
+                            ReportError($"Duplicate column name in header line, column \"{columnName}\"; cannot load data from {filePath}");
                             return null;
                         }
-                        string mstrSheet;
-                        if (dt.Rows.Count == 1)
-                            mstrSheet = (dt.Rows[0])["TABLE_NAME"].ToString();
-                        else
-                        {
-                            var arrExcelSheets = new List<string>();
-                            var i = 0;
+                        uniqueHeaqders.Add(columnName);
+                    }
 
-                            // Add the sheet name to the string array.
-                            foreach (DataRow row in dt.Rows)
-                            {
-                                mstrSheet = row["TABLE_NAME"].ToString();
-                                arrExcelSheets.Add(mstrSheet);
-                                i++;
-                            }
-                            var frmSheets = new frmSelectExcelSheet
-                            {
-                                PopulateListBox = arrExcelSheets
-                            };
-                            if (frmSheets.ShowDialog() == DialogResult.OK)
-                            {
-                                i = frmSheets.SelectedSheet;
-                                mstrSheet = arrExcelSheets[i];
-                            }
-                            else
-                            {
-                                dtOut = null;
-                                break;
-                            }
-                        }
-                        var sheetCmd = "SELECT * FROM [" + mstrSheet + "]";
-                        var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
-                        var objAdapter1 = new OleDbDataAdapter
-                        {
-                            SelectCommand = objCmdSelect
-                        };
-                        objAdapter1.Fill(dtOut);
+                }
+            }
+
+            using (var fileStream = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            {
+                using (var reader = new CsvReader(fileStream, true, delimiter))
+                {
+                    mCsvErrors = 0;
+                    reader.ParseError += csv_ParseError;
+                    reader.MissingFieldAction = MissingFieldAction.ReplaceByEmpty;
+
+                    try
+                    {
+                        var dtOut = new DataTable();
+                        dtOut.Load(reader);
+                        return dtOut;
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        MessageBox.Show(
+                            $"Error reading data file {Path.GetFileName(filePath)}: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                        return null;
                     }
-                    finally
-                    {
-                        // Clean up.
-                        if (objConn != null)
-                        {
-                            objConn.Close();
-                            objConn.Dispose();
-                        }
-                        dt?.Dispose();
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Unknown File");
-                    //fileOK = false;
-                    dtOut = null;
-                    break;
+
+                }
             }
+        }
+
+        [Obsolete("Unused")]
+        private DataTable LoadDelimitedFileViaGenericParser(string filePath, char delimiter)
+        {
+            var delimiters = new List<char> {delimiter};
+
+            DataTable dtIn;
+
+            using (var parser = new clsGenericParserAdapter())
+            {
+                parser.SetDataSource(filePath);
+                parser.ColumnDelimiter = delimiters.ToArray();
+                parser.FirstRowHasHeader = true;
+                parser.MaxBufferSize = 4096;
+                parser.TextQualifier = '\"';
+                dtIn = parser.GetDataTable();
+                parser.Close();
+            }
+
+            var dtOut = ReplaceMissingStr(dtIn);
+            return dtOut;
+
+        }
+
+        private DataTable LoadExcelFile(string filePath, string connectionString)
+        {
+            OleDbConnection objConn = null;
+            DataTable dt = null;
+            var dtOut = new DataTable();
+
+            try
+            {
+                objConn = new OleDbConnection(connectionString);
+                objConn.Open();
+                dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                if (dt == null)
+                {
+                    return null;
+                }
+
+                string mstrSheet;
+                if (dt.Rows.Count == 1)
+                    mstrSheet = (dt.Rows[0])["TABLE_NAME"].ToString();
+                else
+                {
+                    var arrExcelSheets = new List<string>();
+                    var i = 0;
+
+                    // Add the sheet name to the string array.
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        mstrSheet = row["TABLE_NAME"].ToString();
+                        arrExcelSheets.Add(mstrSheet);
+                        i++;
+                    }
+                    var frmSheets = new frmSelectExcelSheet
+                    {
+                        PopulateListBox = arrExcelSheets
+                    };
+                    if (frmSheets.ShowDialog() == DialogResult.OK)
+                    {
+                        i = frmSheets.SelectedSheet;
+                        mstrSheet = arrExcelSheets[i];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                var sheetCmd = "SELECT * FROM [" + mstrSheet + "]";
+                var objCmdSelect = new OleDbCommand(sheetCmd, objConn);
+                var objAdapter1 = new OleDbDataAdapter
+                {
+                    SelectCommand = objCmdSelect
+                };
+                objAdapter1.Fill(dtOut);
+            }
+            catch (Exception ex)
+            {
+                ReportError($"Error opening {filePath}: {ex.Message}");
+            }
+            finally
+            {
+                // Clean up.
+                if (objConn != null)
+                {
+                    objConn.Close();
+                    objConn.Dispose();
+                }
+                dt?.Dispose();
+            }
+
             return dtOut;
         }
 
-
-        static void csv_ParseError(object sender, ParseErrorEventArgs e)
+        private void csv_ParseError(object sender, ParseErrorEventArgs e)
         {
-            MessageBox.Show(e.Error.Message, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            mCsvErrors++;
+
+            if (mCsvErrors < 5)
+                MessageBox.Show(e.Error.Message, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         #endregion
@@ -554,9 +518,19 @@ namespace DAnTE.Tools
                 dTable.Rows.Remove(dRow);
         }
 
-        public static DataTable RemoveDuplicateRows2(DataTable dTable, string colName)
+        /// <summary>
+        /// Checks for duplicate rows
+        /// </summary>
+        /// <param name="dTable"></param>
+        /// <param name="keyColumn">Name of the column with data values that cannot be duplicated (e.g. protein name)</param>
+        /// <returns>Updated data table</returns>
+        /// <remarks>
+        /// If two rows have the same key and identical data, the second row is removed
+        /// If two rows have the same key but different data, the data values are summed
+        /// </remarks>
+        public DataTable RemoveDuplicateRows2(DataTable dTable, string keyColumn)
         {
-            var hTable = new Dictionary<object, DataRow>();
+            var uniqueKeys = new Dictionary<object, DataRow>();
             var duplicateList = new List<DataRow>();
 
             foreach (DataColumn dC in dTable.Columns)
@@ -579,18 +553,21 @@ namespace DAnTE.Tools
                     // Non-empty row
                     try
                     {
-                        if (hTable.ContainsKey(thisRow[colName]))
+                        if (uniqueKeys.ContainsKey(thisRow[keyColumn]))
                         {
-                            AddDuplicateRow(hTable, thisRow, duplicateList, colName);
+                            // Compare the new row to the master row
+                            // If all values are identical, skip it
+                            // Otherwise, sum the values
+                            AddDuplicateRow(uniqueKeys, thisRow, duplicateList, keyColumn);
                         }
                         else
                         {
-                            hTable.Add(thisRow[colName], thisRow);
+                            uniqueKeys.Add(thisRow[keyColumn], thisRow);
                         }
                     }
                     catch (Exception)
                     {
-                        AddDuplicateRow(hTable, thisRow, duplicateList, colName);
+                        AddDuplicateRow(uniqueKeys, thisRow, duplicateList, keyColumn);
                     }
                 }
 
@@ -610,19 +587,20 @@ namespace DAnTE.Tools
             return dTable;
         }
 
-        private static void AddDuplicateRow(IDictionary<object, DataRow> hTable, DataRow thisRow,
-                                            ICollection<DataRow> duplicateList, string keyColName)
+        private void AddDuplicateRow(IDictionary<object, DataRow> uniqueKeys, DataRow thisRow,
+                                     ICollection<DataRow> duplicateList, string keyColumn)
         {
             duplicateList.Add(thisRow);
-            var prevRow = hTable[thisRow[keyColName]];
-            if (!RowsIdentical(thisRow, prevRow))
+
+            var masterRow = uniqueKeys[thisRow[keyColumn]];
+            if (!RowsIdentical(thisRow, masterRow))
             {
-                var currentRow = addRows(prevRow, thisRow);
-                hTable[thisRow[keyColName]] = currentRow;
+                var updatedRow = AddRows(masterRow, thisRow);
+                uniqueKeys[thisRow[keyColumn]] = updatedRow;
             }
         }
 
-        public static bool RowsIdentical(DataRow row1, DataRow row2)
+        private bool RowsIdentical(DataRow row1, DataRow row2)
         {
             for (var i = 0; i < row1.ItemArray.Length; i++)
             {
@@ -635,11 +613,10 @@ namespace DAnTE.Tools
                 if (item1 != null && item2 == null)
                     return false;
 
-                if (item1 != null)
-                {
-                    if (!item1.Equals(item2))
-                        return false;
-                }
+                if (item1 == null) continue;
+
+                if (!item1.Equals(item2))
+                    return false;
             }
             return true;
         }
@@ -649,7 +626,7 @@ namespace DAnTE.Tools
         /// </summary>
         /// <param name="row"></param>
         /// <returns>True if at least one value in the row, otherwise false</returns>
-        public static bool ValidRow(DataRow row)
+        private bool ValidRow(DataRow row)
         {
             for (var i = 1; i < row.ItemArray.Length; i++)
             {
@@ -661,7 +638,13 @@ namespace DAnTE.Tools
             return false;
         }
 
-        public static DataRow addRows(DataRow row1, DataRow row2)
+        /// <summary>
+        /// Add values between two rows, starting with the second column
+        /// </summary>
+        /// <param name="row1"></param>
+        /// <param name="row2"></param>
+        /// <returns></returns>
+        private DataRow AddRows(DataRow row1, DataRow row2)
         {
             for (var i = 1; i < row1.ItemArray.Length; i++)
             {
@@ -686,7 +669,6 @@ namespace DAnTE.Tools
             return 0;
         }
 
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Removes duplicate rows from given DataTable
         /// </summary>
@@ -743,47 +725,10 @@ namespace DAnTE.Tools
             return retVal;
         }
 
-        private static bool Is1stColumnEmpty(DataRow sourceRow)
+        private bool Is1stColumnEmpty(DataRow sourceRow)
         {
-            if (sourceRow[0].ToString().Equals(""))
-                return true;
-            else
-                return false;
+            return string.IsNullOrWhiteSpace(sourceRow[0].ToString());
         }
-
-        //private static bool Is2ndColumnEmpty(DataRow sourceRow)
-        //{
-        //    if (sourceRow[1].ToString().Equals(""))
-        //        return true;
-        //    else
-        //        return false;
-        //}
-
-        //public static void RemoveProtEmpty(DataTable tbl)
-        //{
-        //    DataRow[] blankRs = FindEmpty(tbl);
-        //    if (blankRs.Length > 0)
-        //    {
-        //        foreach (DataRow dup in blankRs)
-        //        {
-        //            tbl.Rows.Remove(dup);
-        //        }
-        //    }
-        //}
-
-        //private static DataRow[] FindEmpty(DataTable tbl)
-        //{
-        //    ArrayList retVal = new ArrayList();
-        //    for (int i = 0; i < tbl.Rows.Count; i++)
-        //    {
-        //        DataRow targetRow = tbl.Rows[i];
-        //        if (Is1stColumnEmpty(targetRow) || Is2ndColumnEmpty(targetRow))
-        //        {
-        //            retVal.Add(targetRow);
-        //        }
-        //    }
-        //    return (DataRow[])retVal.ToArray(typeof(DataRow));
-        //}
 
         /// <summary>
         /// Get the DataTable column names to an list
