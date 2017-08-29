@@ -11,19 +11,33 @@ using LumenWorks.Framework.IO.Csv;
 
 namespace DAnTE.Tools
 {
-    public static class clsDataTable
+    public class clsDataTable
     {
+
+        private int mCsvErrors;
+
         #region Events
 
         /// <summary>
-        /// Progress event handler.
+        /// Used for reporting errors
         /// </summary>
-        public static event EventHandler<ProgressEventArgs> OnProgress;
+        public event EventHandler<MessageEventArgs> OnError;
 
-        private static void OnProgressUpdate(ProgressEventArgs e)
+        /// <summary>
+        /// Used for reporting progress
+        /// </summary>
+        public event EventHandler<ProgressEventArgs> OnProgress;
+
+        private void ReportError(string message)
+        {
+            Console.WriteLine(message);
+            OnError?.Invoke(null, new MessageEventArgs(message));
+        }
+
+        private void ReportProgress(float percentComplete)
         {
             var handler = OnProgress;
-            handler?.Invoke(null, e);
+            handler?.Invoke(null, new ProgressEventArgs(percentComplete));
         }
 
         #endregion
@@ -152,8 +166,7 @@ namespace DAnTE.Tools
 
             if (string.IsNullOrEmpty(fExt))
             {
-                Console.WriteLine("Unknown file type");
-                //fileOK = false;
+                ReportError("Unknown file type " + fExt);
                 return null;
             }
 
@@ -182,7 +195,8 @@ namespace DAnTE.Tools
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        ReportError($"Error opening {filePath}: {ex.Message}");
+                        return null;
                     }
                     finally
                     {
@@ -229,17 +243,8 @@ namespace DAnTE.Tools
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                    }
-                    finally
-                    {
-                        // Clean up.
-                        if (objConn != null)
-                        {
-                            objConn.Close();
-                            objConn.Dispose();
-                        }
-                        dt?.Dispose();
+                        ReportError($"Error opening {filePath}: {ex.Message}");
+                        return null;
                     }
                     break;
                 default:
@@ -261,8 +266,7 @@ namespace DAnTE.Tools
 
             if (string.IsNullOrEmpty(fExt))
             {
-                Console.WriteLine("Unknown file type");
-                //fileOK = false;
+                ReportError("Unknown file type" + fExt);
                 return null;
             }
 
@@ -304,6 +308,12 @@ namespace DAnTE.Tools
                     OleDbConnection objConn = null;
                     DataTable dt = null;
                     try
+
+                default:
+                    ReportError("Unknown file type" + fExt);
+                    return null;
+            }
+        }
                     {
                         //string sConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" +
                         //    FileName + ";" + @"Extended Properties=""Excel 8.0;HDR=Yes;IMEX=1;""";
@@ -588,7 +598,7 @@ namespace DAnTE.Tools
                 var percentComplete = rowCountLoaded / (float)rowCountTotal * 100;
 
                 if (rowCountLoaded % 100 == 0)
-                    OnProgressUpdate(new ProgressEventArgs(percentComplete));
+                    ReportProgress(percentComplete);
             }
 
             dTable.AcceptChanges();
