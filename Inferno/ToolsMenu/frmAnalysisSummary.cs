@@ -220,12 +220,12 @@ namespace DAnTE.Inferno
 
         public List<clsAnalysisObject> SummaryArrayList
         {
-            set { marrAnalyses = value; }
+            set => marrAnalyses = value;
         }
 
         public string DataFileName
         {
-            set { mstrFileName = value; }
+            set => mstrFileName = value;
         }
 
         #endregion

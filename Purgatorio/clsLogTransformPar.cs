@@ -43,10 +43,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string Bias_R
-        {
-            get { return "bias=" + mdblBias.ToString(CultureInfo.InvariantCulture); }
-        }
+        private string Bias_R => "bias=" + mdblBias.ToString(CultureInfo.InvariantCulture);
 
         private string BiasOp_R
         {
@@ -65,22 +62,22 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Log_Base", "Log")]
         public string LogBase
         {
-            get { return mstrLogBase; }
-            set { mstrLogBase = value; }
+            get => mstrLogBase;
+            set => mstrLogBase = value;
         }
 
         [Tools.clsAnalysisAttribute("Bias", "Log")]
         public double LogBias
         {
-            get { return mdblBias; }
-            set { mdblBias = value; }
+            get => mdblBias;
+            set => mdblBias = value;
         }
 
         [Tools.clsAnalysisAttribute("Bias_Operation", "Log")]
         public string BiasOp
         {
-            get { return mstrBiasOp; }
-            set { mstrBiasOp = value; }
+            get => mstrBiasOp;
+            set => mstrBiasOp = value;
         }
     }
 }

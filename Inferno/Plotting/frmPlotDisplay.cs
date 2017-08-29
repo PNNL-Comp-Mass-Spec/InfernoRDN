@@ -214,7 +214,7 @@ namespace DAnTE.Inferno
 
         public Image Image
         {
-            get { return mPictureBoxEx.Image; }
+            get => mPictureBoxEx.Image;
             set
             {
                 rPlot = value;
@@ -230,8 +230,8 @@ namespace DAnTE.Inferno
 
         public string Title
         {
-            set { Text = value; }
-            get { return Text; }
+            set => Text = value;
+            get => Text;
         }
 
         public bool EnableParameterMenu

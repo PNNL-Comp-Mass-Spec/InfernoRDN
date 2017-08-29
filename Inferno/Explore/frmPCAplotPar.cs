@@ -278,75 +278,36 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool DropLines
-        {
-            get { return mchkBoxDropLines.Checked; }
-        }
+        public bool DropLines => mchkBoxDropLines.Checked;
 
-        public bool ShowLabels
-        {
-            get { return mchkBoxLabels.Checked; }
-        }
+        public bool ShowLabels => mchkBoxLabels.Checked;
 
-        public bool Perspective
-        {
-            get { return mchkBoxPersp.Checked; }
-        }
+        public bool Perspective => mchkBoxPersp.Checked;
 
-        public bool BiPlot
-        {
-            get { return mchkBoxBiPlot.Checked; }
-        }
+        public bool BiPlot => mchkBoxBiPlot.Checked;
 
-        public bool Screeplot
-        {
-            get { return mchkBoxScree.Checked; }
-        }
+        public bool Screeplot => mchkBoxScree.Checked;
 
-        public bool BiArrows
-        {
-            get { return mchkBoxBiLines.Checked; }
-        }
+        public bool BiArrows => mchkBoxBiLines.Checked;
 
-        public bool BiLabels
-        {
-            get { return mchkBoxBiLabels.Checked; }
-        }
+        public bool BiLabels => mchkBoxBiLabels.Checked;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
-        public int FactorIdx
-        {
-            get { return mcmbBoxFactors.SelectedIndex; }
-        }
+        public int FactorIdx => mcmbBoxFactors.SelectedIndex;
 
-        public int PCx
-        {
-            get { return mcmbBoxX.SelectedIndex; }
-        }
+        public int PCx => mcmbBoxX.SelectedIndex;
 
-        public int PCy
-        {
-            get { return mcmbBoxY.SelectedIndex; }
-        }
+        public int PCy => mcmbBoxY.SelectedIndex;
 
-        public int PCz
-        {
-            get { return mcmbBoxZ.SelectedIndex; }
-        }
+        public int PCz => mcmbBoxZ.SelectedIndex;
 
-        public bool ThreeD
-        {
-            get { return mrbtn3D.Checked; }
-        }
+        public bool ThreeD => mrbtn3D.Checked;
 
-        public bool PCA
-        {
-            get { return mrBtnPCA.Checked; }
-        }
+        public bool PCA => mrBtnPCA.Checked;
 
         #endregion
     }

@@ -23,33 +23,30 @@ namespace DAnTE.Tools
         private static int _traceFramesToShow = 4;
         private const int TraceStartingFrame = 3; // we don't care about internal details
 
-        public static string CurrentLogFilePath
-        {
-            get { return LogFilePath; }
-        }
+        public static string CurrentLogFilePath => LogFilePath;
 
         public static int TraceFramesToShow
         {
-            get { return _traceFramesToShow; }
-            set { _traceFramesToShow = value; }
+            get => _traceFramesToShow;
+            set => _traceFramesToShow = value;
         }
 
         public static bool EnableTrace
         {
-            get { return _traceEnabled; }
-            set { _traceEnabled = value; }
+            get => _traceEnabled;
+            set => _traceEnabled = value;
         }
 
         public static bool EnableCommentLog
         {
-            get { return _commentLogEnabled; }
-            set { _commentLogEnabled = value; }
+            get => _commentLogEnabled;
+            set => _commentLogEnabled = value;
         }
 
         public static bool EnableCmdLog
         {
-            get { return _cmdLogEnabled; }
-            set { _cmdLogEnabled = value; }
+            get => _cmdLogEnabled;
+            set => _cmdLogEnabled = value;
         }
 
         public static void Init()

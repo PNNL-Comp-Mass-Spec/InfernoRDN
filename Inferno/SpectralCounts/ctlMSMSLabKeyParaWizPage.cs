@@ -17,10 +17,7 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public string PepProphMin
-        {
-            get { return mtxtBoxPepProph.Text; }
-        }
+        public string PepProphMin => mtxtBoxPepProph.Text;
 
         #endregion
     }

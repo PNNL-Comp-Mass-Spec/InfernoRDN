@@ -70,7 +70,7 @@ namespace DAnTE.Inferno
 
         private string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         private string LogBase
@@ -97,8 +97,8 @@ namespace DAnTE.Inferno
 
         private double Bias
         {
-            get { return Convert.ToDouble(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo); }
-            set { mtxtBoxBias.Text = value.ToString(CultureInfo.InvariantCulture); }
+            get => Convert.ToDouble(mtxtBoxBias.Text, NumberFormatInfo.InvariantInfo);
+            set => mtxtBoxBias.Text = value.ToString(CultureInfo.InvariantCulture);
         }
 
         private string BiasOp

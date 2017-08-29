@@ -103,15 +103,15 @@ namespace Wizard.UI
         [Category("Appearance")]
         public string Title
         {
-            get { return titleLabel.Text; }
-            set { titleLabel.Text = value; }
+            get => titleLabel.Text;
+            set => titleLabel.Text = value;
         }
 
         [Category("Appearance")]
         public string Subtitle
         {
-            get { return subtitleLabel.Text; }
-            set { subtitleLabel.Text = value; }
+            get => subtitleLabel.Text;
+            set => subtitleLabel.Text = value;
         }
     }
 }

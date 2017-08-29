@@ -604,7 +604,7 @@ namespace DAnTE.Inferno
 
         public List<clsDatasetInfo> DatasetInfo
         {
-            set { marrDatasetInfo = value; }
+            set => marrDatasetInfo = value;
             get
             {
                 ArrangeDatasets();
@@ -614,13 +614,13 @@ namespace DAnTE.Inferno
 
         public List<clsFactorInfo> FactorInfo
         {
-            set { marrFactorInfo = value; }
-            get { return marrFactorInfo; }
+            set => marrFactorInfo = value;
+            get => marrFactorInfo;
         }
 
         public bool FactorsLoaded
         {
-            set { mblfactorsLoaded = value; }
+            set => mblfactorsLoaded = value;
         }
 
         public List<int> NewDatasetOrder
@@ -646,29 +646,26 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool OrderChanged
-        {
-            get { return mblOrderChanged; }
-        }
+        public bool OrderChanged => mblOrderChanged;
 
         public string Title
         {
-            set { mlblTitle.Text = value; }
+            set => mlblTitle.Text = value;
         }
 
         public string SubTitle
         {
-            set { txtDirections.Text = value; }
+            set => txtDirections.Text = value;
         }
 
         public string WinTitle
         {
-            set { this.Text = value; }
+            set => this.Text = value;
         }
 
         public bool OrderChangeOnly
         {
-            set { mblOrderChangeOnly = value; }
+            set => mblOrderChangeOnly = value;
         }
 
         #endregion

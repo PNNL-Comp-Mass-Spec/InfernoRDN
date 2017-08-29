@@ -221,8 +221,8 @@ namespace DAnTE.Inferno
 
         public sealed override string Text
         {
-            get { return base.Text; }
-            set { base.Text = value; }
+            get => base.Text;
+            set => base.Text = value;
         }
 
         #region Private methods
@@ -727,8 +727,8 @@ namespace DAnTE.Inferno
 
         public ToolStrip MainDanteToolBar
         {
-            get { return mToolStripMDI; }
-            set { mToolStripMDI = value; }
+            get => mToolStripMDI;
+            set => mToolStripMDI = value;
         }
 
         private void mnuItemUpgradeRPacks_Click(object sender, EventArgs e)

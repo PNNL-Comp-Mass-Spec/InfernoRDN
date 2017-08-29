@@ -22,14 +22,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotVenn(mclsVennPar);
         }
 
-        public clsVennPar clsVennPar
-        {
-            get { return mclsVennPar; }
-        }
+        public clsVennPar clsVennPar => mclsVennPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

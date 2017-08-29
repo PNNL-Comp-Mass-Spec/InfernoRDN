@@ -101,7 +101,7 @@ namespace DAnTE.Inferno
 
         private string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public string FactorName
@@ -119,7 +119,7 @@ namespace DAnTE.Inferno
 
         public List<clsFactorInfo> FactorInfoArray
         {
-            set { marrFactors = value; }
+            set => marrFactors = value;
         }
     }
 }

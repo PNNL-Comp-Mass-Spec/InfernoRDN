@@ -82,7 +82,7 @@ namespace DAnTE.ExtraControls
         public new Color BackColor
             // Gets or sets the background color of the control.
         {
-            get { return _backColor; }
+            get => _backColor;
             set
             {
                 _backColor = value;
@@ -98,7 +98,7 @@ namespace DAnTE.ExtraControls
         ]
         public ShapeBorderStyles ShapeBorderStyle
         {
-            get { return _borderStyle; }
+            get => _borderStyle;
             set
             {
                 _borderStyle = value;
@@ -110,7 +110,7 @@ namespace DAnTE.ExtraControls
         /// Gets or sets the outer border color of the control.
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set
             {
                 _borderColor = value;
@@ -126,7 +126,7 @@ namespace DAnTE.ExtraControls
         ]
         public int Opacity
         {
-            get { return _opacity; }
+            get => _opacity;
             set
             {
                 _opacity = value;
@@ -143,7 +143,7 @@ namespace DAnTE.ExtraControls
         ]
         public int Radius
         {
-            get { return _radius; }
+            get => _radius;
             set
             {
                 _radius = value;
@@ -159,7 +159,7 @@ namespace DAnTE.ExtraControls
         ]
         public string Caption
         {
-            get { return _text; }
+            get => _text;
             set
             {
                 _text = value;
@@ -169,7 +169,7 @@ namespace DAnTE.ExtraControls
 
         public override Font Font
         {
-            get { return base.Font; }
+            get => base.Font;
             set
             {
                 base.Font = value;
@@ -179,7 +179,7 @@ namespace DAnTE.ExtraControls
 
         public override Color ForeColor
         {
-            get { return base.ForeColor; }
+            get => base.ForeColor;
             set
             {
                 base.ForeColor = value;
@@ -194,7 +194,7 @@ namespace DAnTE.ExtraControls
         ]
         public Color DimmedColor
         {
-            get { return _dimmedColor; }
+            get => _dimmedColor;
             set
             {
                 _dimmedColor = value;
@@ -210,7 +210,7 @@ namespace DAnTE.ExtraControls
         ]
         public MoveType Moving
         {
-            get { return _moving; }
+            get => _moving;
             set
             {
                 _moving = value;
@@ -226,7 +226,7 @@ namespace DAnTE.ExtraControls
         ]
         public TextAlignment TextAlign
         {
-            get { return _textAlign; }
+            get => _textAlign;
             set
             {
                 _textAlign = value;
@@ -242,7 +242,7 @@ namespace DAnTE.ExtraControls
         ]
         public bool MovingActive
         {
-            get { return this.timer1.Enabled; }
+            get => this.timer1.Enabled;
             set
             {
                 if (!value)

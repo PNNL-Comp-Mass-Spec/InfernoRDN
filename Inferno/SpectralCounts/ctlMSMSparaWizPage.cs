@@ -43,14 +43,11 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public int MaxRank
-        {
-            get { return decimal.ToInt16(mNumUDXcorRank.Value); }
-        }
+        public int MaxRank => decimal.ToInt16(mNumUDXcorRank.Value);
 
         public string AnalysisFolder
         {
-            get { return mtxtBoxAnFolder.Text; }
+            get => mtxtBoxAnFolder.Text;
             set
             {
                 foldername = value;
@@ -165,7 +162,7 @@ namespace DAnTE.Inferno
 
         public bool UseSeqOUTFiles
         {
-            set { mblUseSEQOut = value; }
+            set => mblUseSEQOut = value;
         }
 
         #endregion

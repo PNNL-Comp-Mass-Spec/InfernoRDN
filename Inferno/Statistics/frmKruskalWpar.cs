@@ -62,13 +62,10 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateListBox
         {
-            set { mlstBoxFactors.DataSource = value; }
+            set => mlstBoxFactors.DataSource = value;
         }
 
-        public string SelectedFactor
-        {
-            get { return sfactor; }
-        }
+        public string SelectedFactor => sfactor;
 
         public int NumDataThresh
         {

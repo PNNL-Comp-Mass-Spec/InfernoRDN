@@ -47,15 +47,9 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool Mean
-        {
-            get { return mrbtnMean.Checked; }
-        }
+        public bool Mean => mrbtnMean.Checked;
 
-        public bool CenterZero
-        {
-            get { return mchkboxCenterZ.Checked; }
-        }
+        public bool CenterZero => mchkboxCenterZ.Checked;
 
         public string Method
         {
@@ -70,7 +64,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         #endregion

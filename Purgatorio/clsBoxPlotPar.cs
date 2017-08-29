@@ -60,15 +60,9 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        public string FontScale
-        {
-            get { return ("labelscale=" + fontScale.ToString(CultureInfo.InvariantCulture)); }
-        }
+        public string FontScale => ("labelscale=" + fontScale.ToString(CultureInfo.InvariantCulture));
 
-        public string BoxWidth
-        {
-            get { return ("boxwidth=" + boxWidth.ToString(CultureInfo.InvariantCulture)); }
-        }
+        public string BoxWidth => ("boxwidth=" + boxWidth.ToString(CultureInfo.InvariantCulture));
 
         public string Background
         {

@@ -95,29 +95,23 @@ namespace DAnTE.Inferno
 
         public string OutFolder
         {
-            get { return mtxtBoxFolder.Text; }
-            set { mtxtBoxFolder.Text = value; }
+            get => mtxtBoxFolder.Text;
+            set => mtxtBoxFolder.Text = value;
         }
 
-        public bool DoPlotting
-        {
-            get { return mchkBoxPlot.Checked; }
-        }
+        public bool DoPlotting => mchkBoxPlot.Checked;
 
-        public bool PlotFlag
-        {
-            get { return mchkBoxPlot.Checked; }
-        }
+        public bool PlotFlag => mchkBoxPlot.Checked;
 
         public List<string> PopulateFactorComboBox
         {
-            set { mcmbBoxFactors.DataSource = value; }
+            set => mcmbBoxFactors.DataSource = value;
         }
 
         //[clsAnalysis("Dataset Table", "Normalization")]
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public string Factor
@@ -131,10 +125,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int FactorIndex
-        {
-            get { return mcmbBoxFactors.SelectedIndex + 1; }
-        }
+        public int FactorIndex => mcmbBoxFactors.SelectedIndex + 1;
 
         public string Reference
         {

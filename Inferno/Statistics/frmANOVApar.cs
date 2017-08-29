@@ -220,10 +220,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool Interactions
-        {
-            get { return mchkBoxInteractions.Checked; }
-        }
+        public bool Interactions => mchkBoxInteractions.Checked;
 
         #endregion
     }

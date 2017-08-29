@@ -206,7 +206,7 @@ namespace DAnTE.ExtraControls
 
                 return _guid;
             }
-            set { _guid = value; }
+            set => _guid = value;
         }
 
         private Guid _guid = Guid.Empty;
@@ -216,8 +216,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public RotateFlipType Orientation
         {
-            get { return _orientation; }
-            set { _orientation = value; }
+            get => _orientation;
+            set => _orientation = value;
         }
 
         private RotateFlipType _orientation;

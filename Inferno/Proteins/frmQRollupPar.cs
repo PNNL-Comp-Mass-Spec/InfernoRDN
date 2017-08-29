@@ -79,25 +79,13 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool ModeMean
-        {
-            get { return mrbtnMean.Checked; }
-        }
+        public bool ModeMean => mrbtnMean.Checked;
 
-        public string MinPresence
-        {
-            get { return mtxtBoxMinPresent.Text; }
-        }
+        public string MinPresence => mtxtBoxMinPresent.Text;
 
-        public string Threshold
-        {
-            get { return mtxtBoxThres.Text; }
-        }
+        public string Threshold => mtxtBoxThres.Text;
 
-        public string TopN
-        {
-            get { return mtxtBoxNum.Text; }
-        }
+        public string TopN => mtxtBoxNum.Text;
 
         public bool UseTopN
         {
@@ -110,14 +98,11 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool OneHitWonders
-        {
-            get { return mchkBoxOneHit.Checked; }
-        }
+        public bool OneHitWonders => mchkBoxOneHit.Checked;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         #endregion

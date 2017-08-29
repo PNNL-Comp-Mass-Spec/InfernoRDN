@@ -145,7 +145,7 @@ namespace DAnTE.ExtraControls
                 Invalidate();
                 Update();
             }
-            get { return TickHeight; }
+            get => TickHeight;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace DAnTE.ExtraControls
                 Invalidate();
                 Update();
             }
-            get { return MarkHeight; }
+            get => MarkHeight;
         }
 
 
@@ -174,7 +174,7 @@ namespace DAnTE.ExtraControls
                 Invalidate();
                 Update();
             }
-            get { return BarHeight; }
+            get => BarHeight;
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace DAnTE.ExtraControls
                 Invalidate();
                 Update();
             }
-            get { return orientationBar; }
+            get => orientationBar;
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace DAnTE.ExtraControls
                 Invalidate();
                 Update();
             }
-            get { return orientationScale; }
+            get => orientationScale;
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace DAnTE.ExtraControls
                 Range2Pos();
                 Invalidate(true);
             }
-            get { return (int)rangeMax; }
+            get => (int)rangeMax;
         }
 
 
@@ -243,7 +243,7 @@ namespace DAnTE.ExtraControls
                 Range2Pos();
                 Invalidate(true);
             }
-            get { return (int)rangeMin; }
+            get => (int)rangeMin;
         }
 
 
@@ -260,7 +260,7 @@ namespace DAnTE.ExtraControls
                 Range2Pos();
                 Invalidate(true);
             }
-            get { return (int)Maximum; }
+            get => (int)Maximum;
         }
 
 
@@ -277,7 +277,7 @@ namespace DAnTE.ExtraControls
                 Range2Pos();
                 Invalidate(true);
             }
-            get { return (int)Minimum; }
+            get => (int)Minimum;
         }
 
 
@@ -291,7 +291,7 @@ namespace DAnTE.ExtraControls
                 numAxisDivision = value;
                 Refresh();
             }
-            get { return numAxisDivision; }
+            get => numAxisDivision;
         }
 
 
@@ -305,7 +305,7 @@ namespace DAnTE.ExtraControls
                 colorInner = value;
                 Refresh();
             }
-            get { return colorInner; }
+            get => colorInner;
         }
 
 

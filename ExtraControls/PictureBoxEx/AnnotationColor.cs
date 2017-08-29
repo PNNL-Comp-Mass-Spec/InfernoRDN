@@ -32,8 +32,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public byte Red
         {
-            get { return _red; }
-            set { _red = value; }
+            get => _red;
+            set => _red = value;
         }
 
         private byte _red = 0;
@@ -43,8 +43,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public byte Green
         {
-            get { return _green; }
-            set { _green = value; }
+            get => _green;
+            set => _green = value;
         }
 
         private byte _green = 0;
@@ -54,8 +54,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public byte Blue
         {
-            get { return _blue; }
-            set { _blue = value; }
+            get => _blue;
+            set => _blue = value;
         }
 
         private byte _blue = 0;

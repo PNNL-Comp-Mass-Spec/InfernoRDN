@@ -41,7 +41,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public List<string> PopulateFactorComboBox
@@ -96,10 +96,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool MeanAdj
-        {
-            get { return mchkBoxMeanAdj.Checked; }
-        }
+        public bool MeanAdj => mchkBoxMeanAdj.Checked;
 
         #endregion
     }

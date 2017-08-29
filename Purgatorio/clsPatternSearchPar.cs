@@ -33,8 +33,8 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Source_DataTable", "PatternSearch")]
         public string DataSetName
         {
-            get { return mstrDatasetName; }
-            set { mstrDatasetName = value; }
+            get => mstrDatasetName;
+            set => mstrDatasetName = value;
         }
 
         private string Patterns

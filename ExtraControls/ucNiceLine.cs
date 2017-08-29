@@ -34,7 +34,7 @@ namespace DAnTE.ExtraControls
             "The caption text displayed on the line. If the caption is \"\" (the default) the line is not broken")]
         public string Caption
         {
-            get { return _Caption; }
+            get => _Caption;
             set
             {
                 _Caption = value;
@@ -50,7 +50,7 @@ namespace DAnTE.ExtraControls
         [Description("The distance in pixels form the control margin to caption text")]
         public int CaptionMarginSpace
         {
-            get { return _CaptionMarginSpace; }
+            get => _CaptionMarginSpace;
             set
             {
                 _CaptionMarginSpace = value;
@@ -66,7 +66,7 @@ namespace DAnTE.ExtraControls
         [Description("The space in pixels arrownd text caption")]
         public int CaptionPadding
         {
-            get { return _CaptionPadding; }
+            get => _CaptionPadding;
             set
             {
                 _CaptionPadding = value;
@@ -82,7 +82,7 @@ namespace DAnTE.ExtraControls
         [Description("The vertical alignement of the line within the space of the control")]
         public LineVerticalAlign LineVerticalAlign
         {
-            get { return _LineVerticalAlign; }
+            get => _LineVerticalAlign;
             set
             {
                 _LineVerticalAlign = value;
@@ -98,7 +98,7 @@ namespace DAnTE.ExtraControls
         [Description("Tell where the text caption is aligned in the control")]
         public CaptionOrizontalAlign CaptionOrizontalAlign
         {
-            get { return _CaptionOrizontalAlign; }
+            get => _CaptionOrizontalAlign;
             set
             {
                 _CaptionOrizontalAlign = value;

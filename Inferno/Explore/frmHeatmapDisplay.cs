@@ -23,14 +23,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotHeatmap(mclsHmapPar);
         }
 
-        public clsHeatmapPar clsHmapPar
-        {
-            get { return mclsHmapPar; }
-        }
+        public clsHeatmapPar clsHmapPar => mclsHmapPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

@@ -128,7 +128,7 @@ namespace DAnTE.Inferno
 
         public string LabelText
         {
-            set { label1.Text = value; }
+            set => label1.Text = value;
         }
 
         private void btnOKClick_event(object sender, System.EventArgs e)
@@ -145,10 +145,7 @@ namespace DAnTE.Inferno
 
         #region Accessors
 
-        public int blockSize
-        {
-            get { return (Convert.ToInt16(numericUpDownN.Value.ToString())); }
-        }
+        public int blockSize => (Convert.ToInt16(numericUpDownN.Value.ToString()));
 
         #endregion
     }

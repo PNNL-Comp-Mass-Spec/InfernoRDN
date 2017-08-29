@@ -210,7 +210,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public List<string> PopulateFactorComboBox
@@ -259,8 +259,8 @@ namespace DAnTE.Inferno
 
         public int StartIdx
         {
-            get { return Convert.ToInt32(mtxtBoxStart.Text); }
-            set { mtxtBoxStart.Text = value.ToString(); }
+            get => Convert.ToInt32(mtxtBoxStart.Text);
+            set => mtxtBoxStart.Text = value.ToString();
         }
 
         public int EndIdx
@@ -282,10 +282,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int ColorPalette
-        {
-            get { return mintPalette; }
-        }
+        public int ColorPalette => mintPalette;
 
         public string ColorPaletteName
         {
@@ -306,10 +303,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool DoClust
-        {
-            get { return mchkBoxRows.Checked; }
-        }
+        public bool DoClust => mchkBoxRows.Checked;
 
         #endregion
 

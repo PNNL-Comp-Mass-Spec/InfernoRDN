@@ -134,10 +134,7 @@ namespace DAnTE.ExtraControls
         /// <summary>
         /// Gets picturebox's collection of annotations
         /// </summary>
-        public AnnotationCollection Annotations
-        {
-            get { return _annotations; }
-        }
+        public AnnotationCollection Annotations => _annotations;
 
         private readonly AnnotationCollection _annotations;
         private Annotation selectedAnnote; // Holds the currently selected annotation
@@ -215,7 +212,7 @@ namespace DAnTE.ExtraControls
          Browsable(true)]
         public float CurrentZoom
         {
-            get { return _currentZoom; }
+            get => _currentZoom;
             set
             {
                 if (Math.Abs(_currentZoom - value) < float.Epsilon)
@@ -265,7 +262,7 @@ namespace DAnTE.ExtraControls
          Browsable(true)]
         public float DefaultZoom
         {
-            get { return _defaultZoom; }
+            get => _defaultZoom;
             set
             {
                 if (Math.Abs(_defaultZoom - value) < float.Epsilon)
@@ -533,7 +530,7 @@ namespace DAnTE.ExtraControls
          Browsable(true)]
         public Image Image
         {
-            get { return resized; }
+            get => resized;
             set
             {
                 var started = DateTime.Now;
@@ -604,7 +601,7 @@ namespace DAnTE.ExtraControls
          Browsable(true)]
         public float MaximumZoom
         {
-            get { return _maximumZoom; }
+            get => _maximumZoom;
             set
             {
                 if (Math.Abs(_maximumZoom - value) < float.Epsilon)
@@ -636,7 +633,7 @@ namespace DAnTE.ExtraControls
          Browsable(true)]
         public float MinimumZoom
         {
-            get { return _minimumZoom; }
+            get => _minimumZoom;
             set
             {
                 if (Math.Abs(_minimumZoom - value) < float.Epsilon)
@@ -1517,8 +1514,8 @@ namespace DAnTE.ExtraControls
             /// </summary>
             public Annotation this[int index]
             {
-                get { return (Annotation)InnerList[index]; }
-                set { InnerList[index] = value; }
+                get => (Annotation)InnerList[index];
+                set => InnerList[index] = value;
             }
 
             /// <summary>

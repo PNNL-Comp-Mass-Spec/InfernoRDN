@@ -594,14 +594,11 @@ namespace DAnTE.Inferno
 
         #region Accessors
 
-        public int NumFactors
-        {
-            get { return numFactors; }
-        }
+        public int NumFactors => numFactors;
 
         public List<clsFactorInfo> FactorInfoArray
         {
-            get { return marrFactors; }
+            get => marrFactors;
             set
             {
                 marrFactors = value;

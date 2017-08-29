@@ -148,26 +148,20 @@ namespace DAnTE.Tools
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
-        public ParameterType Type
-        {
-            get { return type; }
-        }
+        public ParameterType Type => type;
 
         /// <summary>
         /// Gets the name of the parameter.
         /// </summary>
-        public string Name
-        {
-            get { return name; }
-        }
+        public string Name => name;
 
         /// <summary>
         /// Gets or Sets the value of the parameter.
         /// </summary>
         public string Val
         {
-            get { return val; }
-            set { val = value; }
+            get => val;
+            set => val = value;
         }
 
         #endregion

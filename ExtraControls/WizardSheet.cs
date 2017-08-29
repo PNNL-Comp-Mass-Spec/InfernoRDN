@@ -195,10 +195,7 @@ namespace Wizard.UI
             this.Size = newSize;
         }
 
-        public List<WizardPage> Pages
-        {
-            get { return _pages; }
-        }
+        public List<WizardPage> Pages => _pages;
 
         private int GetActiveIndex()
         {

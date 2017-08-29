@@ -340,15 +340,9 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool Scatter
-        {
-            get { return (mrBtnScatter.Checked); }
-        }
+        public bool Scatter => (mrBtnScatter.Checked);
 
-        public bool ShowYXLine
-        {
-            get { return mchkboxYXLine.Checked; }
-        }
+        public bool ShowYXLine => mchkboxYXLine.Checked;
 
         public List<string> PopulateListView
         {
@@ -432,10 +426,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int ColorPalette
-        {
-            get { return mintPalette; }
-        }
+        public int ColorPalette => mintPalette;
 
         public string ColorPaletteName
         {
@@ -456,30 +447,15 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string CustomColors
-        {
-            get { return customCol; }
-        }
+        public string CustomColors => customCol;
 
-        public string EColor
-        {
-            get { return ellipseC; }
-        }
+        public string EColor => ellipseC;
 
-        public decimal FontScale
-        {
-            get { return mnumUDFontSc.Value; }
-        }
+        public decimal FontScale => mnumUDFontSc.Value;
 
-        public bool Background
-        {
-            get { return mchkBoxTransparent.Checked; }
-        }
+        public bool Background => mchkBoxTransparent.Checked;
 
-        public bool ShowCorrVals
-        {
-            get { return mchkBoxShowCorr.Checked; }
-        }
+        public bool ShowCorrVals => mchkBoxShowCorr.Checked;
 
         public string CorrRange
         {
@@ -499,7 +475,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         #endregion

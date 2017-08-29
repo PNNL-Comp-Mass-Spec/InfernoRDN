@@ -191,14 +191,8 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string CustomColors
-        {
-            get
-            {
-                return @"customColors=c(""" + lowC + @""",""" + midC +
-                       @""",""" + highC + @""")";
-            }
-        }
+        public string CustomColors => @"customColors=c(""" + lowC + @""",""" + midC +
+                                      @""",""" + highC + @""")";
 
         public int SetDefaultPalette
         {

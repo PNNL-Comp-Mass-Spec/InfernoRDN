@@ -209,18 +209,12 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
-        public string ListA
-        {
-            get { return mtxtBoxA.Text; }
-        }
+        public string ListA => mtxtBoxA.Text;
 
-        public string ListB
-        {
-            get { return mtxtBoxB.Text; }
-        }
+        public string ListB => mtxtBoxB.Text;
 
         public string ListC
         {
@@ -233,20 +227,11 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string LabelA
-        {
-            get { return mtxtBoxLA.Text; }
-        }
+        public string LabelA => mtxtBoxLA.Text;
 
-        public string LabelB
-        {
-            get { return mtxtBoxLB.Text; }
-        }
+        public string LabelB => mtxtBoxLB.Text;
 
-        public string LabelC
-        {
-            get { return mtxtBoxLB.Text; }
-        }
+        public string LabelC => mtxtBoxLB.Text;
 
         public List<string> PopulateFactorComboBox
         {
@@ -281,20 +266,14 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int FactorIdx
-        {
-            get { return mcmbBoxFactors.SelectedIndex; }
-        }
+        public int FactorIdx => mcmbBoxFactors.SelectedIndex;
 
         public List<clsFactorInfo> FactorInfoArray
         {
-            set { marrFactors = value; }
+            set => marrFactors = value;
         }
 
-        public bool IsFactorPlot
-        {
-            get { return mblPlotFactors; }
-        }
+        public bool IsFactorPlot => mblPlotFactors;
 
         #endregion
     }

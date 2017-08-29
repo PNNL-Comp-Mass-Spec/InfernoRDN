@@ -123,10 +123,7 @@ namespace DAnTE.Inferno
         }
 
 
-        public string Color
-        {
-            get { return color; }
-        }
+        public string Color => color;
 
         public List<string> PopulateListView
         {
@@ -209,25 +206,13 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool Outliers
-        {
-            get { return mchkBoxOutl.Checked; }
-        }
+        public bool Outliers => mchkBoxOutl.Checked;
 
-        public bool ShowCount
-        {
-            get { return mchkBoxCount.Checked; }
-        }
+        public bool ShowCount => mchkBoxCount.Checked;
 
-        public decimal BoxWidth
-        {
-            get { return mNumUDwidth.Value; }
-        }
+        public decimal BoxWidth => mNumUDwidth.Value;
 
-        public decimal FontScale
-        {
-            get { return mnumUDFontSc.Value; }
-        }
+        public decimal FontScale => mnumUDFontSc.Value;
 
         public bool Background
         {
@@ -242,7 +227,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public List<string> PopulateFactorComboBox
@@ -274,10 +259,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int FactorIdx
-        {
-            get { return mcmbBoxFactors.SelectedIndex; }
-        }
+        public int FactorIdx => mcmbBoxFactors.SelectedIndex;
 
         #endregion
     }

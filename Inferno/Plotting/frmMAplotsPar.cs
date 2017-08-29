@@ -144,15 +144,9 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string DataColor
-        {
-            get { return dataColor; }
-        }
+        public string DataColor => dataColor;
 
-        public string LOESSColor
-        {
-            get { return lColor; }
-        }
+        public string LOESSColor => lColor;
 
 
         public List<string> PopulateListView
@@ -237,14 +231,11 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool Background
-        {
-            get { return mchkBoxTransparent.Checked; }
-        }
+        public bool Background => mchkBoxTransparent.Checked;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         #endregion

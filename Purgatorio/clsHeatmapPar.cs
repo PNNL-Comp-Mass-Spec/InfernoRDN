@@ -161,8 +161,8 @@ namespace DAnTE.Purgatorio
         [clsAnalysisAttribute("Selected_Factor", "Heatmap_Clustering")]
         public string FactorSelected
         {
-            set { mstrFactor = value; }
-            get { return mstrFactor; }
+            set => mstrFactor = value;
+            get => mstrFactor;
         }
 
         [clsAnalysisAttribute("DataSubset", "Heatmap_Clustering")]
@@ -209,10 +209,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string Agglom
-        {
-            get { return "agglomeration=" + agglomeration; }
-        }
+        private string Agglom => "agglomeration=" + agglomeration;
 
         [clsAnalysisAttribute("Agglomeration", "Heatmap_Clustering")]
         public string Agglomeration
@@ -241,10 +238,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string Dist
-        {
-            get { return "distance=" + distance; }
-        }
+        private string Dist => "distance=" + distance;
 
         [clsAnalysisAttribute("Distance_Metric", "Heatmap_Clustering")]
         public string Distance

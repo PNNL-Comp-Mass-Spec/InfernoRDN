@@ -35,8 +35,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public string FontFamily
         {
-            get { return _fontFamily; }
-            set { _fontFamily = value; }
+            get => _fontFamily;
+            set => _fontFamily = value;
         }
 
         private string _fontFamily = "Arial";
@@ -46,8 +46,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public float Size
         {
-            get { return _size; }
-            set { _size = value; }
+            get => _size;
+            set => _size = value;
         }
 
         private float _size = 9.0F;
@@ -57,8 +57,8 @@ namespace DAnTE.ExtraControls
         /// </summary>
         public FontStyle Style
         {
-            get { return _style; }
-            set { _style = value; }
+            get => _style;
+            set => _style = value;
         }
 
         private FontStyle _style = FontStyle.Regular;

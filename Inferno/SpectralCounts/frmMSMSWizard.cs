@@ -610,9 +610,6 @@ namespace DAnTE.Inferno
             }
         }
 
-        public DataTable SpectralDT
-        {
-            get { return mDTEset; }
-        }
+        public DataTable SpectralDT => mDTEset;
     }
 }

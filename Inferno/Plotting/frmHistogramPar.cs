@@ -185,15 +185,9 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string ForeGColor
-        {
-            get { return foreC; }
-        }
+        public string ForeGColor => foreC;
 
-        public string BorderColor
-        {
-            get { return borderC; }
-        }
+        public string BorderColor => borderC;
 
         public int NumPlotColumns
         {
@@ -321,7 +315,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         public string strBins
@@ -339,15 +333,9 @@ namespace DAnTE.Inferno
             }
         }
 
-        public int numBins
-        {
-            get { return bins; }
-        }
+        public int numBins => bins;
 
-        public bool Stamp
-        {
-            get { return mchkBoxStamp.Checked; }
-        }
+        public bool Stamp => mchkBoxStamp.Checked;
 
         #endregion
     }

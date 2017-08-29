@@ -79,7 +79,7 @@ namespace DAnTE.Inferno
 
         public Image Image
         {
-            get { return this.mucPicVwrRPlot.Image; }
+            get => this.mucPicVwrRPlot.Image;
             set
             {
                 this.mucPicVwrRPlot.Image = value;
@@ -90,7 +90,7 @@ namespace DAnTE.Inferno
 
         public SizeMode ImageSizeMode
         {
-            get { return this.mucPicVwrRPlot.ImageSizeMode; }
+            get => this.mucPicVwrRPlot.ImageSizeMode;
             set
             {
                 this.mucPicVwrRPlot.ImageSizeMode = value;

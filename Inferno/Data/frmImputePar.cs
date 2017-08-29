@@ -205,50 +205,26 @@ namespace DAnTE.Inferno
             }
         }
 
-        public bool NoFill
-        {
-            get { return mchkBoxNoImpute.Checked; }
-        }
+        public bool NoFill => mchkBoxNoImpute.Checked;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
-        public string CutOff
-        {
-            get { return mtxtBoxFthres.Text; }
-        }
+        public string CutOff => mtxtBoxFthres.Text;
 
-        public string Mode
-        {
-            get { return SelectedMode(); }
-        }
+        public string Mode => SelectedMode();
 
-        public string K
-        {
-            get { return mtxtBoxK.Text; }
-        }
+        public string K => mtxtBoxK.Text;
 
-        public string nPCs
-        {
-            get { return mtxtBoxnPCs.Text; }
-        }
+        public string nPCs => mtxtBoxnPCs.Text;
 
-        public string SVDthres
-        {
-            get { return mtxtBoxSVDthres.Text; }
-        }
+        public string SVDthres => mtxtBoxSVDthres.Text;
 
-        public string MaxSteps
-        {
-            get { return mtxtBoxSVDiter.Text; }
-        }
+        public string MaxSteps => mtxtBoxSVDiter.Text;
 
-        public string Const
-        {
-            get { return mtxtBoxConst.Text; }
-        }
+        public string Const => mtxtBoxConst.Text;
 
         #endregion
     }

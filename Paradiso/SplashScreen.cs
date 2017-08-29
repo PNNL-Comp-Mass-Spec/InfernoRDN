@@ -194,10 +194,7 @@ namespace DAnTE.Paradiso
         }
 
         // A property returning the splash screen instance
-        public static SplashScreen SplashForm
-        {
-            get { return ms_frmSplash; }
-        }
+        public static SplashScreen SplashForm => ms_frmSplash;
 
         // A private entry point for the thread.
         private static void ShowForm()

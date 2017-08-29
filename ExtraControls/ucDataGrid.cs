@@ -84,7 +84,7 @@ namespace DAnTE.ExtraControls
                 dataGrid1.DataSource = null;
                 dataGrid1.DataSource = value;
             }
-            get { return ((DataTable)dataGrid1.DataSource); }
+            get => ((DataTable)dataGrid1.DataSource);
         }
 
         //public DataGridViewSelectedRowCollection

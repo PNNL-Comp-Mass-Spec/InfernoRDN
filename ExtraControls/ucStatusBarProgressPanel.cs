@@ -12,10 +12,7 @@ namespace DAnTE.ExtraControls
         private readonly ProgressBar progressBar = new ProgressBar();
 
         [Category("Progress")]
-        public ProgressBar ProgressBar
-        {
-            get { return progressBar; }
-        }
+        public ProgressBar ProgressBar => progressBar;
 
         public ucStatusBarProgressPanel() : base()
         {

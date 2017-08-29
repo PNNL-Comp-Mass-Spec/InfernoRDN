@@ -22,14 +22,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotPCA(mclsPCAPlotPar);
         }
 
-        public clsPCAplotPar clsPCAPlotPar
-        {
-            get { return mclsPCAPlotPar; }
-        }
+        public clsPCAplotPar clsPCAPlotPar => mclsPCAPlotPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

@@ -205,10 +205,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string RowIDColumn
-        {
-            get { return mlstBoxMT.Items[0].ToString(); }
-        }
+        public string RowIDColumn => mlstBoxMT.Items[0].ToString();
 
         /// <summary>
         /// The Protein ID column, which is the first item in the Protein Name list box

@@ -87,10 +87,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string OutFolder
-        {
-            get { return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
-        }
+        private string OutFolder => "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
 
         [Tools.clsAnalysisAttribute("Source_DataTable", "QRollup")]
         public string DataSetName { get; set; }

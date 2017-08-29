@@ -193,34 +193,22 @@ namespace DAnTE.Tools
         /// <summary>
         /// Gets the status of the Engine.
         /// </summary>
-        public EngineStatus Status
-        {
-            get { return status; }
-        }
+        public EngineStatus Status => status;
 
         /// <summary>
         /// Gets the error code describing the current error.
         /// </summary>
-        public ErrorCode Error
-        {
-            get { return errCode; }
-        }
+        public ErrorCode Error => errCode;
 
         /// <summary>
         /// Gets the details regarding the current error.
         /// </summary>
-        public string Details
-        {
-            get { return errDetails; }
-        }
+        public string Details => errDetails;
 
         /// <summary>
         /// Gets the name of the cfg file to be read by the Engine.
         /// </summary>
-        public string Filename
-        {
-            get { return filename; }
-        }
+        public string Filename => filename;
 
         /// <summary>
         /// Gets the Collection of Parameters defined for the Engine,

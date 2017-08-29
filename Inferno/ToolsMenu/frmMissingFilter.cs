@@ -10,14 +10,11 @@ namespace DAnTE.Inferno
             InitializeComponent();
         }
 
-        public string CutOff
-        {
-            get { return "cutoff=" + mtxtBoxFthres.Text; }
-        }
+        public string CutOff => "cutoff=" + mtxtBoxFthres.Text;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         private void mbtnOK_Click(object sender, EventArgs e)

@@ -69,14 +69,11 @@ namespace DAnTE.Tools
             }
         }
 
-        public int vCount
-        {
-            get { return marrValues.Count; }
-        }
+        public int vCount => marrValues.Count;
 
         public List<string> SetFvals
         {
-            set { marrValues = MakeDeepCopy(value); }
+            set => marrValues = MakeDeepCopy(value);
         }
 
         #endregion

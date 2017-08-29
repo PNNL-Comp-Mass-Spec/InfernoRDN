@@ -22,14 +22,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotQQ(mclsQQPar);
         }
 
-        public clsQQPar clsQQPar
-        {
-            get { return mclsQQPar; }
-        }
+        public clsQQPar clsQQPar => mclsQQPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

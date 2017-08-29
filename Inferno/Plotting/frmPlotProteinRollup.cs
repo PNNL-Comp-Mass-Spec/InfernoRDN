@@ -183,22 +183,22 @@ namespace DAnTE.Inferno
 
         public string TempFile
         {
-            set { tempFile = value; }
+            set => tempFile = value;
         }
 
         public clsRconnect RConnect
         {
-            set { rConnector = value; }
+            set => rConnector = value;
         }
 
         public List<string> PopulateDataComboBox
         {
-            set { mcmbBoxData.DataSource = value; }
+            set => mcmbBoxData.DataSource = value;
         }
 
         public List<string> PopulatePDataComboBox
         {
-            set { mcmbBoxPData.DataSource = value; }
+            set => mcmbBoxPData.DataSource = value;
         }
 
         public string Dataset
@@ -247,7 +247,7 @@ namespace DAnTE.Inferno
 
         public frmDAnTEmdi ParentRef
         {
-            set { m_frmDAnTEmdi = value; }
+            set => m_frmDAnTEmdi = value;
         }
 
         #endregion

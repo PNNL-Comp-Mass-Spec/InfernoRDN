@@ -341,33 +341,30 @@ namespace DAnTE.Inferno
 
         public clsRconnect RConnector
         {
-            set { mRConnector = value; }
+            set => mRConnector = value;
         }
 
         public string RTempFilePath
         {
-            set { mRTempFilePath = value; }
+            set => mRTempFilePath = value;
         }
 
         public frmDAnTEmdi ParentInstance
         {
-            set { m_frmDAnTEmdi = value; }
+            set => m_frmDAnTEmdi = value;
         }
 
-        public ToolStrip ToolStripDAnTE
-        {
-            get { return mtoolStripDAnTE; }
-        }
+        public ToolStrip ToolStripDAnTE => mtoolStripDAnTE;
 
         public string Title
         {
-            get { return Text; }
-            set { Text = value; }
+            get => Text;
+            set => Text = value;
         }
 
         public string SessionFile
         {
-            set { mSessionFile = value; }
+            set => mSessionFile = value;
         }
 
         #endregion

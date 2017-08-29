@@ -25,12 +25,9 @@ namespace DAnTE.Tools
 
         public List<string> PopulateListBox
         {
-            set { mlstBoxSheets.DataSource = value; }
+            set => mlstBoxSheets.DataSource = value;
         }
 
-        public int SelectedSheet
-        {
-            get { return mlstBoxSheets.SelectedIndex; }
-        }
+        public int SelectedSheet => mlstBoxSheets.SelectedIndex;
     }
 }

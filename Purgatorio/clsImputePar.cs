@@ -158,8 +158,8 @@ namespace DAnTE.Purgatorio
 
         public string FactorSelected
         {
-            set { mstrFactor = value; }
-            get { return mstrFactor; }
+            set => mstrFactor = value;
+            get => mstrFactor;
         }
 
         [Tools.clsAnalysisAttribute("Selected_Factor", "Imputation")]

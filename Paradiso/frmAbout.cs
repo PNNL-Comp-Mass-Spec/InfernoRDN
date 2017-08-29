@@ -89,7 +89,7 @@ namespace DAnTE.Paradiso
 
         public string version
         {
-            set { mlblVersion.Text = value; }
+            set => mlblVersion.Text = value;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace DAnTE.ExtraControls
 
         public Image Image
         {
-            get { return this.pictureBox1.Image; }
+            get => this.pictureBox1.Image;
             set
             {
                 this.pictureBox1.Image = value;
@@ -37,7 +37,7 @@ namespace DAnTE.ExtraControls
 
         public SizeMode ImageSizeMode
         {
-            get { return this.sizeMode; }
+            get => this.sizeMode;
             set
             {
                 this.sizeMode = value;

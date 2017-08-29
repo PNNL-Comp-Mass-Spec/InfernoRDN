@@ -221,20 +221,11 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string ForeGColor
-        {
-            get { return foreC; }
-        }
+        public string ForeGColor => foreC;
 
-        public string BorderColor
-        {
-            get { return borderC; }
-        }
+        public string BorderColor => borderC;
 
-        public string LineColor
-        {
-            get { return lineC; }
-        }
+        public string LineColor => lineC;
 
         public int NumPlotColumns
         {
@@ -349,7 +340,7 @@ namespace DAnTE.Inferno
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
         private int ReferenceDist

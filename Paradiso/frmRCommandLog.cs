@@ -15,8 +15,8 @@ namespace DAnTE.Paradiso
 
         public string LogFilePath
         {
-            get { return mLogFilePath; }
-            set { ShowLogFile(value); }
+            get => mLogFilePath;
+            set => ShowLogFile(value);
         }
 
         public void ShowLogFile(string logFilePath)

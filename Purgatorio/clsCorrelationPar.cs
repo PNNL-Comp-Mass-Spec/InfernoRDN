@@ -160,15 +160,9 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        public string EColor
-        {
-            get { return @"color=""" + eColor + "\""; }
-        }
+        public string EColor => @"color=""" + eColor + "\"";
 
-        public string FontScale
-        {
-            get { return ("labelscale=" + fontScale); }
-        }
+        public string FontScale => ("labelscale=" + fontScale);
 
         public string Background
         {

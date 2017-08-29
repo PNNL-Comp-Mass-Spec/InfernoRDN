@@ -618,13 +618,10 @@ namespace DAnTE.Inferno
 
                 return marrDatasetInfo;
             }
-            set { marrDatasetInfo = value; }
+            set => marrDatasetInfo = value;
         }
 
-        public string ProjectFolder
-        {
-            get { return mcmbBoxProjects.SelectedItem.ToString(); }
-        }
+        public string ProjectFolder => mcmbBoxProjects.SelectedItem.ToString();
 
         #endregion
     }
@@ -699,16 +696,16 @@ namespace DAnTE.Inferno
         // apply the sorting operation (Defaults to '0').
         public int SortColumn
         {
-            set { ColumnToSort = value; }
-            get { return ColumnToSort; }
+            set => ColumnToSort = value;
+            get => ColumnToSort;
         }
 
         // Gets or sets the order of sorting to apply
         // (for example, 'Ascending' or 'Descending').
         public SortOrder Order
         {
-            set { OrderOfSort = value; }
-            get { return OrderOfSort; }
+            set => OrderOfSort = value;
+            get => OrderOfSort;
         }
     }
 

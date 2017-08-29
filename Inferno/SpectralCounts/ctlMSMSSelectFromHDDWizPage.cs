@@ -214,8 +214,8 @@ namespace DAnTE.Inferno
 
         public List<string> DatasetNames
         {
-            get { return marrDatasetFilePaths; }
-            set { marrDatasetFilePaths = value; }
+            get => marrDatasetFilePaths;
+            set => marrDatasetFilePaths = value;
         }
     }
 }

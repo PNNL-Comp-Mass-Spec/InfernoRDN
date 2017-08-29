@@ -156,61 +156,34 @@ namespace DAnTE.Inferno
             }
         }
 
-        public string MinPresence
-        {
-            get { return mtxtBoxMinPresent.Text; }
-        }
+        public string MinPresence => mtxtBoxMinPresent.Text;
 
-        public bool OneHitWonders
-        {
-            get { return mchkBoxOneHit.Checked; }
-        }
+        public bool OneHitWonders => mchkBoxOneHit.Checked;
 
-        public string Gp_value
-        {
-            get { return mtxtBoxGpval.Text; }
-        }
+        public string Gp_value => mtxtBoxGpval.Text;
 
-        public string gminPCount
-        {
-            get { return mtxtBoxGminP.Text; }
-        }
+        public string gminPCount => mtxtBoxGminP.Text;
 
-        public string MinOverlap
-        {
-            get { return mtxtBoxMinOlap.Text; }
-        }
+        public string MinOverlap => mtxtBoxMinOlap.Text;
 
         public string OutFolder
         {
-            get { return mtxtBoxFolder.Text; }
-            set { mtxtBoxFolder.Text = value; }
+            get => mtxtBoxFolder.Text;
+            set => mtxtBoxFolder.Text = value;
         }
 
-        public bool DoPlotting
-        {
-            get { return mchkBoxPlot.Checked; }
-        }
+        public bool DoPlotting => mchkBoxPlot.Checked;
 
-        public bool PlotFlag
-        {
-            get { return DoPlotting; }
-        }
+        public bool PlotFlag => DoPlotting;
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
 
-        public bool ModeMean
-        {
-            get { return mchkBoxMode.Checked; }
-        }
+        public bool ModeMean => mchkBoxMode.Checked;
 
-        public bool Center
-        {
-            get { return mchkBoxCenter.Checked; }
-        }
+        public bool Center => mchkBoxCenter.Checked;
 
         #endregion
     }

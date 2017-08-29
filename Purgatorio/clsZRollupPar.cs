@@ -55,10 +55,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string OutFolder
-        {
-            get { return "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
-        }
+        private string OutFolder => "outfolder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
 
         private string PlotFlag
         {
@@ -77,8 +74,8 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Results_Folder", "ZRollup")]
         public string OutFolder_pub
         {
-            get { return mstrOutFolder; }
-            set { mstrOutFolder = value; }
+            get => mstrOutFolder;
+            set => mstrOutFolder = value;
         }
     }
 }

@@ -22,14 +22,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotBoxPlots(mclsBoxPlotPar);
         }
 
-        public clsBoxPlotPar clsBoxPlotPar
-        {
-            get { return mclsBoxPlotPar; }
-        }
+        public clsBoxPlotPar clsBoxPlotPar => mclsBoxPlotPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

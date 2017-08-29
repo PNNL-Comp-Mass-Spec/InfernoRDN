@@ -36,10 +36,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string OutFolder
-        {
-            get { return "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\""; }
-        }
+        private string OutFolder => "folder=\"" + mstrOutFolder.Replace("\\", "/") + "/\"";
 
         private string PlotFlag
         {
@@ -55,10 +52,7 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Source_DataTable", "LinearRegression")]
         public string DataSetName { get; set; }
 
-        private string Factors
-        {
-            get { return "factors[" + mintFactorIndex.ToString() + ",]"; }
-        }
+        private string Factors => "factors[" + mintFactorIndex.ToString() + ",]";
 
         [Tools.clsAnalysisAttribute("Selected_Factor", "LinearRegression")]
         public string FactorSelected { set; get; }
@@ -81,15 +75,15 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Baseline_Criteria", "LinearRegression")]
         public string Reference_pub
         {
-            get { return mstrReference; }
-            set { mstrReference = value; }
+            get => mstrReference;
+            set => mstrReference = value;
         }
 
         [Tools.clsAnalysisAttribute("Save_Diagnostic_Images_Folder", "LinearRegression")]
         public string OutFolder_pub
         {
-            get { return mstrOutFolder; }
-            set { mstrOutFolder = value; }
+            get => mstrOutFolder;
+            set => mstrOutFolder = value;
         }
 
         [Tools.clsAnalysisAttribute("Save_Plots", "LinearRegression")]

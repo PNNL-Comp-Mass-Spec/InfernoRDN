@@ -22,14 +22,11 @@ namespace DAnTE.Inferno.Plotting
             mfrmDante.PlotMA(mclsMAplotPar);
         }
 
-        public clsMAplotsPar clsMAplotPar
-        {
-            get { return mclsMAplotPar; }
-        }
+        public clsMAplotsPar clsMAplotPar => mclsMAplotPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

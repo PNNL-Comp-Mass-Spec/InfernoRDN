@@ -88,7 +88,7 @@ namespace Wizard.Controls
         [Category("Appearance")]
         Color DarkColor
         {
-            get { return _darkColor; }
+            get => _darkColor;
 
             set
             {
@@ -102,7 +102,7 @@ namespace Wizard.Controls
         [Category("Appearance")]
         Color LightColor
         {
-            get { return _lightColor; }
+            get => _lightColor;
 
             set
             {
@@ -116,7 +116,7 @@ namespace Wizard.Controls
         [Category("Appearance")]
         public EtchEdge Edge
         {
-            get { return _edge; }
+            get => _edge;
 
             set
             {

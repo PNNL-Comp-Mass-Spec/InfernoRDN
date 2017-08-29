@@ -46,36 +46,21 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateDataComboBox
         {
-            set { mcmbBoxData.DataSource = value; }
+            set => mcmbBoxData.DataSource = value;
         }
 
-        public string Dataset
-        {
-            get { return mcmbBoxData.SelectedItem.ToString(); }
-        }
+        public string Dataset => mcmbBoxData.SelectedItem.ToString();
 
         public List<string> PopulateListBox
         {
-            set
-            {
-                mlstBoxpvals.DataSource = value;
-            }
+            set => mlstBoxpvals.DataSource = value;
         }
 
-        public int SelectedColumn
-        {
-            get { return mlstBoxpvals.SelectedIndex; }
-        }
+        public int SelectedColumn => mlstBoxpvals.SelectedIndex;
 
-        public Double Thres
-        {
-            get { return cutoff; }
-        }
+        public Double Thres => cutoff;
 
-        public bool LessThan
-        {
-            get { return mrBtnLT.Checked; }
-        }
+        public bool LessThan => mrBtnLT.Checked;
 
         #endregion
     }

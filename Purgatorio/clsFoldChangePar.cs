@@ -55,14 +55,8 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        private string FactorValue1
-        {
-            get { return @"fVal1=""" + selectedfVal1 + @""""; }
-        }
+        private string FactorValue1 => @"fVal1=""" + selectedfVal1 + @"""";
 
-        private string FactorValue2
-        {
-            get { return @"fVal2=""" + selectedfVal2 + @""""; }
-        }
+        private string FactorValue2 => @"fVal2=""" + selectedfVal2 + @"""";
     }
 }

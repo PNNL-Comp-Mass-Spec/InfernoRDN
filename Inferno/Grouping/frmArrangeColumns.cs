@@ -106,8 +106,8 @@ namespace DAnTE.Inferno
 
         public List<clsDatasetInfo> DatasetInfo
         {
-            set { marrDatasetInfo = value; }
-            get { return marrDatasetInfo; }
+            set => marrDatasetInfo = value;
+            get => marrDatasetInfo;
         }
 
         public List<int> NewDatasetOrder

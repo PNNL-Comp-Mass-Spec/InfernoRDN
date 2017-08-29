@@ -60,7 +60,7 @@ namespace DAnTE.Inferno
 
         public string SeqOutFolder
         {
-            get { return mtxtBoxSeqOutFolder.Text; }
+            get => mtxtBoxSeqOutFolder.Text;
             set
             {
                 foldername = value;

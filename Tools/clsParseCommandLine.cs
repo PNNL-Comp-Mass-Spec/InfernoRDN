@@ -32,25 +32,16 @@ namespace FileProcessor
 
         protected bool mDebugMode;
 
-        public bool NeedToShowHelp
-        {
-            get { return mShowHelp; }
-        }
+        public bool NeedToShowHelp => mShowHelp;
 
-        public int ParameterCount
-        {
-            get { return mSwitches.Count; }
-        }
+        public int ParameterCount => mSwitches.Count;
 
-        public int NonSwitchParameterCount
-        {
-            get { return mNonSwitchParameters.Count; }
-        }
+        public int NonSwitchParameterCount => mNonSwitchParameters.Count;
 
         public bool DebugMode
         {
-            get { return mDebugMode; }
-            set { mDebugMode = value; }
+            get => mDebugMode;
+            set => mDebugMode = value;
         }
 
         /// <summary>

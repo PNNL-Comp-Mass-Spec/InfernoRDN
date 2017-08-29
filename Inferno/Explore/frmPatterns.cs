@@ -183,12 +183,12 @@ namespace DAnTE.Inferno
 
         public int NumPatterns
         {
-            set { nPatterns = value; }
+            set => nPatterns = value;
         }
 
         public string DataSetName
         {
-            set { mlblDataName.Text = value; }
+            set => mlblDataName.Text = value;
         }
     }
 }

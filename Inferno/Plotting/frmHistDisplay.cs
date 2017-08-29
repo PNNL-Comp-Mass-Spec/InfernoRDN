@@ -22,14 +22,11 @@ namespace DAnTE.Inferno
             mfrmDante.PlotHistograms(mclsHistPar);
         }
 
-        public clsHistogramPar clsHistPar
-        {
-            get { return mclsHistPar; }
-        }
+        public clsHistogramPar clsHistPar => mclsHistPar;
 
         public frmDAnTE DAnTEinstance
         {
-            set { mfrmDante = value; }
+            set => mfrmDante = value;
         }
     }
 }

@@ -26,13 +26,10 @@ namespace DAnTE.Inferno
 
         public List<string> PopulateDataComboBox
         {
-            set { mcmbBoxData.DataSource = value; }
+            set => mcmbBoxData.DataSource = value;
         }
 
-        public string Dataset
-        {
-            get { return mcmbBoxData.SelectedItem.ToString(); }
-        }
+        public string Dataset => mcmbBoxData.SelectedItem.ToString();
 
         #endregion
     }
