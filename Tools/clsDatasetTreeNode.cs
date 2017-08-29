@@ -5,7 +5,7 @@ namespace DAnTE.Tools
 {
     public class clsDatasetTreeNode
     {
-        public DataTable mDTable;
+        public readonly DataTable mDTable;
         public TreeNode mTNode;
         public string mstrParentNode;
         public string mstrDataText;
@@ -18,8 +18,9 @@ namespace DAnTE.Tools
         public bool mblAddTVCtxtMnu;
         public bool mblAddDGridCtxtMnu;
 
-        public clsDatasetTreeNode()
+        public clsDatasetTreeNode(DataTable dt)
         {
+            mDTable = dt;
             mstrParentNode = "DAnTE";
             mstrRProtDatasetName = "";
             mblIsNumeric = true;
