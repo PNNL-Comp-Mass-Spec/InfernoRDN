@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.6449; August 28, 2017
+	- Inform the user of duplicate column names when loading data
+
 Version 1.1.6109; September 22, 2016
 	- Add ability to load protein descriptions along with protein names
 

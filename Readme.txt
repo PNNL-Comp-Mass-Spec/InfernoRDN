@@ -26,17 +26,19 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 1) Download and install the latest version of R 3.x from 
    http://cran.r-project.org/bin/windows/base/
 
-2) Run the installer, InfernoRDNSetup.exe
+2) Download the InfernoRDN installer from https://omics.pnl.gov/software/infernordn
 
-3) Start InfernoRDN using the Start Menu or desktop shortcut
+4) Run the installer, InfernoRDNSetup.exe
 
-4) The InfernoRDN splash screen will appear and status messages will be shown
+5) Start InfernoRDN using the Start Menu or desktop shortcut
+
+6) The InfernoRDN splash screen will appear and status messages will be shown
 	- If a Dialog box appears asking "Would you like to use a personal library"
 	  you should answer Yes to that question, and Yes to the next question regarding
 	  the folder to use for the personal library
 	- Following this, several Bioconductor packages will be downloaded
 
-5) Test loading a data file	
+7) Test loading a data file	
 	- Choose File, Open, Expression File
 	- Navigate to "C:\Program Files (x86)\InfernoRDN"
 	  (or C:\Program Files\PNNL\InfernoRDN)
@@ -47,7 +49,7 @@ InfernoRDN supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR,
 	- Select data columns P10A through P19B then click the ">>" button to the left (and below) "Data Columns" 
 	- Click OK
 
-6) Test the plotting
+8) Test the plotting
 	- Choose Plot, Correlation
 	- Enable checkbox Toggle All, then click OK
 

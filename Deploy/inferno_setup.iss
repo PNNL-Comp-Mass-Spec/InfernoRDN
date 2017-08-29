@@ -34,7 +34,6 @@ Source: ..\bin\Debug\Inferno.pdb;                           DestDir: {app}
 Source: ..\bin\Debug\LumenWorks.Framework.IO.pdb;           DestDir: {app}
 Source: ..\bin\Debug\Inferno.RData;                         DestDir: {app}
 Source: ..\bin\Debug\Inferno_stdplots.RData;                DestDir: {app}
-Source: ..\bin\Debug\LumenWorks.Framework.IO.xml;           DestDir: {app}
 Source: ..\bin\Debug\RDotNet.NativeLibrary.xml;             DestDir: {app}
 Source: ..\bin\Debug\RDotNet.xml;                           DestDir: {app}
 Source: ..\bin\Debug\ZedGraph.xml;                          DestDir: {app}
