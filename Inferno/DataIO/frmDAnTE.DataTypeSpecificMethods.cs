@@ -31,13 +31,10 @@ namespace DAnTE.Inferno
     {
         public string LastSessionLoadError { get; private set; }
 
-        private void AddDataset2HashTable(DataTable mDT)
+        private void AddDataset2HashTable(DataTable dt)
         {
-            var dataTableNameInR = mDT.TableName;
-            var datasetNode = new clsDatasetTreeNode
-            {
-                mDTable = mDT
-            };
+            var dataTableNameInR = dt.TableName;
+            var datasetNode = new clsDatasetTreeNode(dt);
 
             switch (dataTableNameInR)
             {
@@ -57,7 +54,7 @@ namespace DAnTE.Inferno
                         mhtDatasets.Add("Expressions", datasetNode);
 
                     if (!mhtDatasets.ContainsKey("Factors"))
-                        DatasetFactorInfo(mDT, false);
+                        DatasetFactorInfo(dt, false);
                     break;
 
                     #endregion
@@ -101,7 +98,7 @@ namespace DAnTE.Inferno
                     else
                         mhtDatasets.Add("Factors", datasetNode);
                     marrDatasetInfo.Clear();
-                    DatasetFactorInfo(mDT, true);
+                    DatasetFactorInfo(dt, true);
                     break;
 
                     #endregion
@@ -836,8 +833,8 @@ namespace DAnTE.Inferno
             if (selectedNodeTag.mblAddTVCtxtMnu)
                 tn.ContextMenuStrip = mContextMenuTreeV;
             statusBarPanelMsg.Text = selectedNodeTag.mstrMessage;
-            statusBarPanelRowNum.Text = selectedNodeTag.mDTable.Rows.Count.ToString() + " Rows/" +
-                                        selectedNodeTag.mDTable.Columns.Count.ToString() + " Columns.";
+            statusBarPanelRowNum.Text = selectedNodeTag.mDTable.Rows.Count + " Rows/" +
+                                        selectedNodeTag.mDTable.Columns.Count + " Columns.";
             //mDTselected = mdataNode.mDTable;
         }
 
