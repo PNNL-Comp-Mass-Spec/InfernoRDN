@@ -539,11 +539,7 @@ namespace DAnTE.Inferno
 
                     validFactors = true;
 
-                    if (!mProgressEventWired)
-                    {
-                        clsDataTable.OnProgress += clsDataTable_OnProgress;
-                        mProgressEventWired = true;
-                    }
+                    mfrmShowProgress.Reset("Loading data");
 
                     var esetTable = clsDataTable.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
                     if (esetTable == null)

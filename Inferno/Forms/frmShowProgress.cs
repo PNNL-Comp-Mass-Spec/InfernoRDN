@@ -9,33 +9,47 @@ namespace DAnTE.Inferno
         public frmShowProgress()
         {
             InitializeComponent();
+            Reset("No task");
         }
 
         private void frmPrBarLoad_event(object sender, EventArgs e)
         {
-            this.mprgrsBar.MarqueeAnimationSpeed = 0;
-            this.mprgrsBar.Minimum = 0;
-            this.mprgrsBar.Maximum = 100;
-            this.mprgrsBar.Value = 1;
+            pbarProgress.MarqueeAnimationSpeed = 0;
+            pbarProgress.Minimum = 0;
+            pbarProgress.Maximum = 100;
+            pbarProgress.Value = 1;
         }
 
-        public string Message
+        public string ErrorMessage
         {
-            set { mlblProgressMsg.Text = value; }
+            get => lblErrorMsg.Text;
+            set => lblErrorMsg.Text = value;
+        }
+
+        private string Message
+        {
+            set => lblProgressMsg.Text = value;
         }
 
         public int PercentComplete
         {
-            get { return mprgrsBar.Value; }
+            get { return pbarProgress.Value; }
             set
             {
-                if (value < mprgrsBar.Minimum)
-                    mprgrsBar.Value = this.mprgrsBar.Minimum;
-                else if (value > mprgrsBar.Maximum)
-                    mprgrsBar.Value = this.mprgrsBar.Maximum;
+                if (value < pbarProgress.Minimum)
+                    pbarProgress.Value = pbarProgress.Minimum;
+                else if (value > pbarProgress.Maximum)
+                    pbarProgress.Value = pbarProgress.Maximum;
                 else
-                    mprgrsBar.Value = value;
+                    pbarProgress.Value = value;
             }
+        }
+
+        public void Reset(string task)
+        {
+            Message = task;
+            ErrorMessage = string.Empty;
+            PercentComplete = 0;
         }
     }
 }

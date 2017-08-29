@@ -68,7 +68,7 @@ namespace DAnTE.Inferno
                 DataFileOpenThreaded(mstrLoadedfileName, "Loading Expressions ...");
             else
             {
-                mfrmShowProgress.Message = "Loading Expressions ...";
+                mfrmShowProgress.Reset("Loading Expressions ...");
                 mfrmShowProgress.Show();
                 var success = OpenFile(mstrLoadedfileName);
 
@@ -132,7 +132,7 @@ namespace DAnTE.Inferno
             #endregion
 
             m_BackgroundWorker.RunWorkerAsync(filePath);
-            mfrmShowProgress.Message = message;
+            mfrmShowProgress.Reset(message);
             mfrmShowProgress.ShowDialog();
 
             #region Threading
@@ -150,7 +150,7 @@ namespace DAnTE.Inferno
             Settings.Default.SessionFileName = sessionFilePath;
             Settings.Default.Save();
 
-            mfrmShowProgress.Message = "Loading Saved Session ...";
+            mfrmShowProgress.Reset("Loading Saved Session ...");
             mfrmShowProgress.Show();
 
             var success = false;
@@ -189,7 +189,7 @@ namespace DAnTE.Inferno
             mhtAnalysisObjects.Clear();
 
             m_BackgroundWorker.RunWorkerAsync(sessionFilePath);
-            mfrmShowProgress.Message = "Loading Saved Session ...";
+            mfrmShowProgress.Reset("Loading Saved Session ...");
             mfrmShowProgress.ShowDialog();
 
             #region Threading
@@ -325,7 +325,7 @@ namespace DAnTE.Inferno
                         rcmd = "save(list=" + rcmd2 + ",file=\"" + FileName + "\")";
 
                         m_BackgroundWorker.RunWorkerAsync(rcmd);
-                        mfrmShowProgress.Message = "Saving Session ...";
+                        mfrmShowProgress.Reset("Saving Session ...");
                         mfrmShowProgress.ShowDialog();
                     }
                 }
@@ -391,7 +391,7 @@ namespace DAnTE.Inferno
                         rcmd = "save(list=" + rcmd2 + ",file=\"" + fileName + "\")";
 
                         m_BackgroundWorker.RunWorkerAsync(rcmd);
-                        mfrmShowProgress.Message = "Saving Session ...";
+                        mfrmShowProgress.Reset("Saving Session ...");
                         mfrmShowProgress.ShowDialog();
                     }
                 }

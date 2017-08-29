@@ -66,7 +66,7 @@ namespace DAnTE.Inferno
                     var qqPlot = new clsRplotData(clsQQPar.Rcmd, "QQ");
 
                     m_BackgroundWorker.RunWorkerAsync(qqPlot);
-                    mfrmShowProgress.Message = "Generating Q-Q Plots ...";
+                    mfrmShowProgress.Reset("Generating Q-Q Plots ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -131,7 +131,7 @@ namespace DAnTE.Inferno
                     var histogramPlot = new clsRplotData(clsHistPar.Rcmd, "Hist");
 
                     m_BackgroundWorker.RunWorkerAsync(histogramPlot);
-                    mfrmShowProgress.Message = "Generating Histograms ...";
+                    mfrmShowProgress.Reset("Generating Histograms ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -191,7 +191,7 @@ namespace DAnTE.Inferno
                     var correlationPlot = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
 
                     m_BackgroundWorker.RunWorkerAsync(correlationPlot);
-                    mfrmShowProgress.Message = "Generating Correlation Plot ...";
+                    mfrmShowProgress.Reset("Generating Correlation Plot ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -258,7 +258,7 @@ namespace DAnTE.Inferno
                     var boxPlot = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
 
                     m_BackgroundWorker.RunWorkerAsync(boxPlot);
-                    mfrmShowProgress.Message = "Generating the Box Plot ...";
+                    mfrmShowProgress.Reset("Generating the Box Plot ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -362,7 +362,7 @@ namespace DAnTE.Inferno
                     var maPlot = new clsRplotData(mclsMApar.Rcmd, "MA");
 
                     m_BackgroundWorker.RunWorkerAsync(maPlot);
-                    mfrmShowProgress.Message = "Generating MA Plots ...";
+                    mfrmShowProgress.Reset("Generating MA Plots ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -539,7 +539,7 @@ namespace DAnTE.Inferno
                     var vennDiagramPlot = new clsRplotData(vennParameters.Rcmd, "Venn");
 
                     m_BackgroundWorker.RunWorkerAsync(vennDiagramPlot);
-                    mfrmShowProgress.Message = "Generating Venn Diagram ...";
+                    mfrmShowProgress.Reset("Generating Venn Diagram ...");
                     mfrmShowProgress.ShowDialog();
                 }
 

@@ -78,7 +78,7 @@ namespace DAnTE.Inferno
                 var pcaPlots = new clsRplotData(mclsPCApar.Rcmd, "PCA");
 
                 m_BackgroundWorker.RunWorkerAsync(pcaPlots);
-                mfrmShowProgress.Message = "Generating PCA Plots ...";
+                mfrmShowProgress.Reset("Generating PCA Plots ...");
                 mfrmShowProgress.ShowDialog();
             }
 
@@ -168,7 +168,7 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsHeatmapPar, "Heatmap_Clustering");
 
                     m_BackgroundWorker.RunWorkerAsync(heatmapPlot);
-                    mfrmShowProgress.Message = "Generating Heatmap ...";
+                    mfrmShowProgress.Reset("Generating Heatmap ...");
                     mfrmShowProgress.ShowDialog();
                 }
 
@@ -229,7 +229,7 @@ namespace DAnTE.Inferno
                         Add2AnalysisHTable(mclsPatternPar, "Pattern_Search");
 
                         m_BackgroundWorker.RunWorkerAsync(mclsPatternPar.Rcmd);
-                        mfrmShowProgress.Message = "Pattern Searching ...";
+                        mfrmShowProgress.Reset("Pattern Searching ...");
                         mfrmShowProgress.ShowDialog();
                     }
                 }

@@ -29,40 +29,56 @@ namespace DAnTE.Inferno
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmShowProgress));
-            this.mprgrsBar = new System.Windows.Forms.ProgressBar();
-            this.mlblProgressMsg = new System.Windows.Forms.Label();
+            this.pbarProgress = new System.Windows.Forms.ProgressBar();
+            this.lblProgressMsg = new System.Windows.Forms.Label();
+            this.lblErrorMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // mprgrsBar
+            // pbarProgress
             // 
-            this.mprgrsBar.ForeColor = System.Drawing.Color.LimeGreen;
-            this.mprgrsBar.Location = new System.Drawing.Point(12, 34);
-            this.mprgrsBar.Name = "mprgrsBar";
-            this.mprgrsBar.Size = new System.Drawing.Size(405, 20);
-            this.mprgrsBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.mprgrsBar.TabIndex = 0;
-            this.mprgrsBar.UseWaitCursor = true;
+            this.pbarProgress.ForeColor = System.Drawing.Color.LimeGreen;
+            this.pbarProgress.Location = new System.Drawing.Point(16, 42);
+            this.pbarProgress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbarProgress.Name = "pbarProgress";
+            this.pbarProgress.Size = new System.Drawing.Size(540, 25);
+            this.pbarProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pbarProgress.TabIndex = 0;
+            this.pbarProgress.UseWaitCursor = true;
             // 
-            // mlblProgressMsg
+            // lblProgressMsg
             // 
-            this.mlblProgressMsg.AutoSize = true;
-            this.mlblProgressMsg.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.mlblProgressMsg.Location = new System.Drawing.Point(12, 9);
-            this.mlblProgressMsg.Name = "mlblProgressMsg";
-            this.mlblProgressMsg.Size = new System.Drawing.Size(49, 13);
-            this.mlblProgressMsg.TabIndex = 1;
-            this.mlblProgressMsg.Text = "message";
+            this.lblProgressMsg.AutoSize = true;
+            this.lblProgressMsg.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblProgressMsg.Location = new System.Drawing.Point(16, 11);
+            this.lblProgressMsg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblProgressMsg.Name = "lblProgressMsg";
+            this.lblProgressMsg.Size = new System.Drawing.Size(65, 17);
+            this.lblProgressMsg.TabIndex = 1;
+            this.lblProgressMsg.Text = "message";
+            // 
+            // lblErrorMsg
+            // 
+            this.lblErrorMsg.AutoSize = true;
+            this.lblErrorMsg.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblErrorMsg.Location = new System.Drawing.Point(16, 85);
+            this.lblErrorMsg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblErrorMsg.Name = "lblErrorMsg";
+            this.lblErrorMsg.Size = new System.Drawing.Size(39, 17);
+            this.lblErrorMsg.TabIndex = 2;
+            this.lblErrorMsg.Text = "error";
             // 
             // frmShowProgress
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 66);
-            this.Controls.Add(this.mlblProgressMsg);
-            this.Controls.Add(this.mprgrsBar);
+            this.ClientSize = new System.Drawing.Size(569, 122);
+            this.Controls.Add(this.lblErrorMsg);
+            this.Controls.Add(this.lblProgressMsg);
+            this.Controls.Add(this.pbarProgress);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MinimizeBox = false;
             this.Name = "frmShowProgress";
             this.RightToLeftLayout = true;
@@ -77,7 +93,8 @@ namespace DAnTE.Inferno
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar mprgrsBar;
-        private System.Windows.Forms.Label mlblProgressMsg;
+        private System.Windows.Forms.ProgressBar pbarProgress;
+        private System.Windows.Forms.Label lblProgressMsg;
+        private System.Windows.Forms.Label lblErrorMsg;
     }
 }

@@ -169,10 +169,9 @@ namespace DAnTE.Inferno
                 var pmode = mergeColumnsParams.pMode;
                 var factor = mergeColumnsParams.SelectedFactor;
 
-                var rcmd = "mergedData <- mergeColumns(" + dataset + "," + factor + ",";
-                rcmd += pmode + ")";
+                var rcmd = "mergedData <- mergeColumns(" + dataset + "," + factor + "," + pmode + ")";
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
-                mfrmShowProgress.Message = "Merging Columns ...";
+                mfrmShowProgress.Reset("Merging Columns ...");
                 mfrmShowProgress.ShowDialog();
             }
 

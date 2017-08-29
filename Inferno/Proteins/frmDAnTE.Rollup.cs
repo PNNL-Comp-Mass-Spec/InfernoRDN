@@ -62,7 +62,7 @@ namespace DAnTE.Inferno
                     var rcmd = mclsRRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
-                    mfrmShowProgress.Message = "RRollup : Scaling Peptides and Rolling up to Proteins ...";
+                    mfrmShowProgress.Reset("RRollup : Scaling Peptides and Rolling up to Proteins ...");
                     mfrmShowProgress.ShowDialog();
                 }
             }
@@ -119,7 +119,7 @@ namespace DAnTE.Inferno
                     var rcmd = mclsZRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
-                    mfrmShowProgress.Message = "ZRollup: Scaling Peptides and Rolling up to Proteins ...";
+                    mfrmShowProgress.Reset("ZRollup: Scaling Peptides and Rolling up to Proteins ...");
                     mfrmShowProgress.ShowDialog();
                 }
             }
@@ -175,7 +175,7 @@ namespace DAnTE.Inferno
                     var rcmd = mclsQRollupPar.Rcmd;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
-                    mfrmShowProgress.Message = "QRollup: Rolling up to Proteins ...";
+                    mfrmShowProgress.Reset("QRollup: Rolling up to Proteins ...");
                     mfrmShowProgress.ShowDialog();
                 }
             }
