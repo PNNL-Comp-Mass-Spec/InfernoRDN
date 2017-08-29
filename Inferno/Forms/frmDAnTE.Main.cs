@@ -9,13 +9,13 @@ using DAnTE.Tools;
 namespace DAnTE.Inferno
 {
     /// <summary>
-    /// Summary description for Form1.
+    /// Main DAnTE form
     /// </summary>
     public partial class frmDAnTE : Form
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "September 23, 2016";
+        public const string PROGRAM_DATE = "August 28, 2017";
 
         public const int SUGGESTED_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT = 60;
@@ -23,7 +23,7 @@ namespace DAnTE.Inferno
 
         private IContainer components;
 
-        // Tab Page controls 
+        // Tab Page controls
         private TabControl mtabControlData;
 
         // Tab controls for Expressions

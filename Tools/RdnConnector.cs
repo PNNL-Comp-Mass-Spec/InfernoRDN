@@ -6,6 +6,14 @@ namespace DAnTE.Tools
 {
     public class RdnConnector
     {
+        /// <summary>
+        /// Connection to the R Engine
+        /// </summary>
+        /// <remarks>
+        /// This is an unmanaged DLL.
+        /// To access it, we need to reference NuGet package DynamicInterop by Jean-Michel Perraud
+        /// Note that version 0.8.1 of DynamicInterop is not compatible with .NET 4
+        /// </remarks>
         private static REngine _engine;
 
         private static void MakeEngine()
