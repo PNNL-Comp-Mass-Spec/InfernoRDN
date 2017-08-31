@@ -54,7 +54,7 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Source_DataTable", "LOESS")]
         public string DataSetName { get; set; }
 
-        private string Factors => "factors[" + mintFactorIndex.ToString() + ",]";
+        private string Factors => "factors[" + mintFactorIndex + ",]";
 
         [Tools.clsAnalysisAttribute("Selected_Factor", "LOESS")]
         public string FactorSelected { set; get; }

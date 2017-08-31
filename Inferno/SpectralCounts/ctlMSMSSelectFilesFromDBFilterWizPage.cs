@@ -58,9 +58,9 @@ namespace DAnTE.Inferno
             InitializeComponent();
 
             _lvwItemComparer = new ListViewItemComparer();
-            this.mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
+            mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
 
-            this.SetActive += this.ctlSelectFilesFromDBFilterWizardPage_SetActive;
+            SetActive += ctlSelectFilesFromDBFilterWizardPage_SetActive;
         }
 
         public ctlMSMSSelectFilesFromDBFilterWizPage(clsRconnect rconn)
@@ -71,9 +71,9 @@ namespace DAnTE.Inferno
             InitializeComponent();
 
             _lvwItemComparer = new ListViewItemComparer();
-            this.mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
+            mlstViewJobs.ListViewItemSorter = _lvwItemComparer;
 
-            this.SetActive += this.ctlSelectFilesFromDBFilterWizardPage_SetActive;
+            SetActive += ctlSelectFilesFromDBFilterWizardPage_SetActive;
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace DAnTE.Inferno
             SetWizardButtons(Wizard.UI.WizardButtons.Back | Wizard.UI.WizardButtons.Next);
             if (mlstViewJobs.Items.Count > 0)
             {
-                this.buttonToggleAll.Enabled = true;
+                buttonToggleAll.Enabled = true;
             }
         }
 
@@ -347,7 +347,7 @@ namespace DAnTE.Inferno
                 mcmbBoxProjects.SelectedIndex = 0;
         }
 
-        private void joblistView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
+        private void joblistView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Determine if clicked column is already the column that is being sorted.
             if (e.Column == _lvwItemComparer.SortColumn)
@@ -370,10 +370,10 @@ namespace DAnTE.Inferno
             }
 
             // Perform the sort with these new sort options.
-            this.mlstViewJobs.Sort();
+            mlstViewJobs.Sort();
         }
 
-        private void mbtnOKFilter_Click(object sender, System.EventArgs e)
+        private void mbtnOKFilter_Click(object sender, EventArgs e)
         {
             if (!FetchMatchingData())
                 MessageBox.Show("No data returned. Check your inputs again.", "Error",
@@ -404,8 +404,8 @@ namespace DAnTE.Inferno
                     AddToList(mdtLabKeyFiles);
                     if (mlstViewJobs.Items.Count > 0)
                     {
-                        this.buttonToggleAll.Enabled = true;
-                        this.buttonClearAll.Enabled = true;
+                        buttonToggleAll.Enabled = true;
+                        buttonClearAll.Enabled = true;
                     }
                     nselected = mlstViewJobs.CheckedIndices.Count;
                     mlblSelected.Text = nselected.ToString() + "/" + mlstViewJobs.Items.Count.ToString() + " selected.";
@@ -514,7 +514,7 @@ namespace DAnTE.Inferno
 
         #endregion
 
-        private void filterBox_TextChanged(object sender, System.EventArgs e)
+        private void filterBox_TextChanged(object sender, EventArgs e)
         {
             if (mtxtBoxfilter.Text.Length == 0)
                 mbtnFilter.Enabled = false;
@@ -551,7 +551,7 @@ namespace DAnTE.Inferno
         }
 
 
-        private void buttonToggleAll_Click(object sender, System.EventArgs e)
+        private void buttonToggleAll_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < mlstViewJobs.Items.Count; i++)
             {
@@ -566,7 +566,7 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void buttonClearAll_Click(object sender, System.EventArgs e)
+        private void buttonClearAll_Click(object sender, EventArgs e)
         {
             mlstViewJobs.Items.Clear();
             wildcardFilter = "";

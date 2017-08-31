@@ -156,9 +156,9 @@ namespace DAnTE.Inferno
             mtxtBoxB.Text = mclsVennPar.x2;
             mtxtBoxC.Text = mclsVennPar.x3;
 
-            this.FactorInfoArray = mclsVennPar.marrFactors;
+            FactorInfoArray = mclsVennPar.marrFactors;
             updateFactorForm();
-            this.DataSetName = mclsVennPar.mstrDatasetName;
+            DataSetName = mclsVennPar.mstrDatasetName;
 
             if (mcmbBoxFactors.Items.Count > 0)
                 mcmbBoxFactors.SelectedIndex = 0;
@@ -189,7 +189,7 @@ namespace DAnTE.Inferno
                     mclsVennPar.x3 = mtxtBoxC.Text;
                 }
                 mclsVennPar.mblPlotFac = mblPlotFactors;
-                mclsVennPar.factor = this.SelectedFactor;
+                mclsVennPar.factor = SelectedFactor;
 
                 return mclsVennPar;
             }
