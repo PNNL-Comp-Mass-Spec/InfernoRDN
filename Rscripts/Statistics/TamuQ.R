@@ -16,6 +16,9 @@
 # Copyright 2009, Battelle Memorial Institute
 # E-mail: thomas.taverner@pnl.gov
 # Website: http://omics.pnl.gov/software
+#
+# Reference: Karpievich, 2009, DOI 10.1093/bioinformatics/btp362
+# https://www.ncbi.nlm.nih.gov/pubmed/?term=19535538
 # -------------------------------------------------------------------------
 #
 
