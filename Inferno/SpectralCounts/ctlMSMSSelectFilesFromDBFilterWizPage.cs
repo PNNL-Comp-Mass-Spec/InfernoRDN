@@ -337,11 +337,14 @@ namespace DAnTE.Inferno
         private void ctlMSMSSelectFilesFromDBFilterWizPage_Load(object sender, EventArgs e)
         {
             mbtnFilter.Focus();
-            if (GetLabkeyProjectNames())
-            {
-                mcmbBoxProjects.Items.AddRange(mstrArrProjects);
+            if (!GetLabkeyProjectNames())
+                return;
+
+            foreach (var project in mstrArrProjects)
+                mcmbBoxProjects.Items.Add(project);
+
+            if (mcmbBoxProjects.Items.Count > 0)
                 mcmbBoxProjects.SelectedIndex = 0;
-            }
         }
 
         private void joblistView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)

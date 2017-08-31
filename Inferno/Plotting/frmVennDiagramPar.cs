@@ -159,7 +159,9 @@ namespace DAnTE.Inferno
             this.FactorInfoArray = mclsVennPar.marrFactors;
             updateFactorForm();
             this.DataSetName = mclsVennPar.mstrDatasetName;
-            this.mcmbBoxFactors.SelectedIndex = 0;
+
+            if (mcmbBoxFactors.Items.Count > 0)
+                mcmbBoxFactors.SelectedIndex = 0;
         }
 
         #region Properties

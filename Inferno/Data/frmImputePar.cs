@@ -17,7 +17,11 @@ namespace DAnTE.Inferno
 
         private void frmImputePar_Load(object sender, EventArgs e)
         {
-            mcmbBoxFactors.SelectedIndex = 0;
+            if (mcmbBoxFactors.Items.Count > 0)
+                mcmbBoxFactors.SelectedIndex = 0;
+
+            var toolTipHelper = new ToolTip();
+            toolTipHelper.SetToolTip(mtxtBoxnPCs, "Number of Principal Components");
         }
 
         private void mbtnOK_Click(object sender, EventArgs e)
@@ -77,7 +81,8 @@ namespace DAnTE.Inferno
             mtxtBoxConst.Text = "1.0";
             mrBtnWKNN.Checked = true;
             mchkBoxNoImpute.Checked = false;
-            mcmbBoxFactors.SelectedIndex = 0;
+            if (mcmbBoxFactors.Items.Count > 0)
+                mcmbBoxFactors.SelectedIndex = 0;
         }
 
         private void mbtnCancel_Click(object sender, EventArgs e)
