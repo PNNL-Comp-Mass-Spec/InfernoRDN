@@ -12,7 +12,7 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")] public string mstrFiltCutoff;
         public string mstrmode;
         public string mstrK;
-        public string mstrNPCs;
+        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")] public string mstrNPCs;
         public string mstrSVDth;
         public string mstrMaxIter;
         public string mstrSubConst;

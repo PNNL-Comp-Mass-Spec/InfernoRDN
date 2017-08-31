@@ -570,7 +570,7 @@ namespace DAnTE.Inferno
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
 
-            if (!ValidateFactorsDefined("Calculate Fold Changes"))
+            if (!ValidateFactorsDefined("calculate fold changes"))
             {
                 return;
             }

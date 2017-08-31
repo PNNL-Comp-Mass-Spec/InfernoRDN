@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.6452; August 31, 2017
+	- Update to .NET 4.6
+	- Obtain R.NET from NuGet
+
 Version 1.1.6449; August 28, 2017
 	- Inform the user of duplicate column names when loading data
 
