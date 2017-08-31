@@ -26,8 +26,8 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            int k = 10, maxIter = 100, npcs = 5;
-            float cutoff = 25.0f, svdthres = 0.01f, constant = 1.0f;
+            float fThreshold;
+            float svdThreshold;
 
             if (mtxtBoxFthres.Text.Length == 0 || mtxtBoxK.Text.Length == 0 || mtxtBoxnPCs.Text.Length == 0 ||
                 mtxtBoxSVDiter.Text.Length == 0 || mtxtBoxSVDthres.Text.Length == 0)
@@ -38,32 +38,62 @@ namespace DAnTE.Inferno
 
             try
             {
-                k = Convert.ToInt16(mtxtBoxK.Text);
-                maxIter = Convert.ToInt16(mtxtBoxSVDiter.Text);
-                npcs = Convert.ToInt16(mtxtBoxnPCs.Text);
-                cutoff = Convert.ToSingle(mtxtBoxFthres.Text, NumberFormatInfo.InvariantInfo);
-                svdthres = Convert.ToSingle(mtxtBoxSVDthres.Text, NumberFormatInfo.InvariantInfo);
-                constant = Convert.ToSingle(mtxtBoxConst.Text, NumberFormatInfo.InvariantInfo);
+                if (!short.TryParse(mtxtBoxK.Text, out _))
+                {
+                    MessageBox.Show("Number of neighbors must be an integer; invalid value: " + mtxtBoxK.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!short.TryParse(mtxtBoxSVDiter.Text, out _))
+                {
+                    MessageBox.Show("SVD iterations must be an integer; invalid value: " + mtxtBoxSVDiter.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!short.TryParse(mtxtBoxnPCs.Text, out _))
+                {
+                    MessageBox.Show("# of PCs (principal components) must be an integer; invalid value: " + mtxtBoxnPCs.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!float.TryParse(mtxtBoxFthres.Text, out fThreshold))
+                {
+                    MessageBox.Show("Imputation threshold must be a number; invalid value: " + mtxtBoxFthres.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!float.TryParse(mtxtBoxSVDthres.Text, out svdThreshold))
+                {
+                    MessageBox.Show("SVD threshold must be a number; invalid value: " + mtxtBoxSVDthres.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!float.TryParse(mtxtBoxConst.Text, out _))
+                {
+                    MessageBox.Show("Substitute constant must be a number; invalid value: " + mtxtBoxConst.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Data type error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Data type error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DialogResult = DialogResult.None;
                 return;
             }
 
-            if ((cutoff < 0 || cutoff > 50) && (!mrBtnMean.Checked || !mrBtnMedian.Checked))
+            if ((fThreshold < 0 || fThreshold > 50) && (!mrBtnMean.Checked || !mrBtnMedian.Checked))
             {
                 DialogResult = DialogResult.None;
-                MessageBox.Show("For best results imputation threshold should be around 20%", "Error",
+                MessageBox.Show("For best results imputation threshold should be around 20% (and must be between 0% and 50%)", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (svdthres < 0 || svdthres >= 1)
+            if (svdThreshold < 0 || svdThreshold >= 1)
             {
                 DialogResult = DialogResult.None;
-                MessageBox.Show("Iteration threshold chosen is not allowed.", "Error", MessageBoxButtons.OK,
+                MessageBox.Show("Iteration threshold chosen is not allowed (must be between 0 and 1)", "Error", MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
                 return;
             }
