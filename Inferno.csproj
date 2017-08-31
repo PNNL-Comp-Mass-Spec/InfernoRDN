@@ -1093,7 +1093,7 @@
 xcopy /y /d "$(ProjectDir)Rscripts\Inferno.RData" "$(TargetDir)"
 rem xcopy /y /d "$(ProjectDir)Rscripts\Inferno_ggplots.RData" "$(TargetDir)"
 xcopy /y /d "$(ProjectDir)Rscripts\Inferno_stdplots.RData" "$(TargetDir)"
-xcopy /y /d "$(ProjectDir)Readme.txt" "$(TargetDir)"
+xcopy /y /d "$(ProjectDir)README.md" "$(TargetDir)"
 xcopy /y /d "$(ProjectDir)InfernoHelp.chm" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

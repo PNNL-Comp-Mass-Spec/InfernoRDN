@@ -28,6 +28,7 @@ Source: ..\bin\Debug\LumenWorks.Framework.IO.dll;           DestDir: {app}
 Source: ..\bin\Debug\RDotNet.dll;                           DestDir: {app}
 Source: ..\bin\Debug\RDotNet.NativeLibrary.dll;             DestDir: {app}
 Source: ..\bin\Debug\DynamicInterop.dll;                    DestDir: {app}
+Source: ..\bin\Debug\extensibility.dll;                     DestDir: {app}
 Source: ..\bin\Debug\ZedGraph.dll;                          DestDir: {app}
 Source: ..\bin\Debug\Inferno.exe;                           DestDir: {app}
 Source: ..\bin\Debug\Inferno.pdb;                           DestDir: {app}
@@ -40,7 +41,7 @@ Source: Images\textdoc.ico;                                 DestDir: {app}
 Source: ..\Resources\delete_16x.ico;                        DestDir: {app}
 Source: ..\Resources\inferno.ico;                           DestDir: {app}
 Source: ..\Resources\inferno_help.ico;                      DestDir: {app}
-Source: ..\Readme.txt;                                      DestDir: {app}
+Source: ..\README.md;                                       DestDir: {app}
 Source: ..\RevisionHistory.txt;                             DestDir: {app}
                                                     
 Source: License.rtf;                                        DestDir: {app}
