@@ -1,4 +1,0 @@
-InfernoRDN uses a fork of the official rdotnet project, incorporating a BugFix for R version "3.2.4 Revised"
-
-See https://github.com/PNNL-Comp-Mass-Spec/rdotnet
-and https://github.com/jmp75/rdotnet
