@@ -1,7 +1,7 @@
 # Written by Ashoka D. Polpitiya
 # for the Department of Energy (PNNL, Richland, WA)
 # Copyright 2007, Battelle Memorial Institute
-# E-mail: ashoka.polpitiya@pnl.gov
+# E-mail: proteomics@pnnl.gov
 # Website: http://omics.pnl.gov/software
 # -------------------------------------------------------------------------
 #

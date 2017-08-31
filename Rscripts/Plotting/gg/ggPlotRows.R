@@ -2,6 +2,7 @@
 # for the Translation Genomics Research Institute (TGen, Phoenix, AZ)
 # Copyright 2010, TGen
 # E-mail: jkirschner@tgen.org
+#         proteomics@pnnl.gov
 #
 # Inspired by code written by Ashoka D. Polpitiya
 # for the Department of Energy (PNNL, Richland, WA)
