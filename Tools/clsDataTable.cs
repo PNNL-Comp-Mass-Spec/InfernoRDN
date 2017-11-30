@@ -662,9 +662,16 @@ namespace DAnTE.Tools
             if (item == null || item == DBNull.Value)
                 return 0;
 
-            double value;
-            if (double.TryParse((string)item, out value))
-                return value;
+            if (item is double doubleValue)
+                return doubleValue;
+
+            if (item is float floatValue)
+                return floatValue;
+
+            if (item is int intValue)
+                return intValue;
+
+            try
 
             return 0;
         }

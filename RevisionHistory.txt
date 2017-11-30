@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.6542; November 29, 2017
+	- Fix data parsing bug when loading data from an Excel file
+
 Version 1.1.6452; August 31, 2017
 	- Update to .NET 4.6
 	- Obtain R.NET from NuGet
