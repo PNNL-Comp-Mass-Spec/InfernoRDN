@@ -648,8 +648,8 @@ namespace DAnTE.Tools
         {
             for (var i = 1; i < row1.ItemArray.Length; i++)
             {
-                var val1 = CDblSafe(row1.ItemArray[i]);
-                var val2 = CDblSafe(row2.ItemArray[i]);
+                var val1 = CDblSafe(row1.ItemArray[i], i);
+                var val2 = CDblSafe(row2.ItemArray[i], i);
                 var val3 = val1 + val2;
                 if (Math.Abs(val3) > double.Epsilon)
                     row1[i] = val3.ToString(CultureInfo.InvariantCulture);
@@ -657,7 +657,7 @@ namespace DAnTE.Tools
             return row1;
         }
 
-        private static double CDblSafe(object item)
+        private double CDblSafe(object item, int rowNumber)
         {
             if (item == null || item == DBNull.Value)
                 return 0;
@@ -672,6 +672,22 @@ namespace DAnTE.Tools
                 return intValue;
 
             try
+            {
+                if (double.TryParse((string)item, out var value))
+                    return value;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    if (double.TryParse(item.ToString(), out var value))
+                        return value;
+                }
+                catch (Exception ex2)
+                {
+                    ReportError(string.Format("Unable to convert item to a double, row {0}", rowNumber));
+                }
+            }
 
             return 0;
         }
