@@ -31,9 +31,15 @@ namespace DAnTE.Inferno
             set => lblProgressMsg.Text = value;
         }
 
+        public string WarningMessage
+        {
+            get => lblWarningMsg.Text;
+            set => lblWarningMsg.Text = value;
+        }
+
         public int PercentComplete
         {
-            get { return pbarProgress.Value; }
+            get => pbarProgress.Value;
             set
             {
                 if (value < pbarProgress.Minimum)
@@ -45,10 +51,25 @@ namespace DAnTE.Inferno
             }
         }
 
+        public void AppendWarningMessage(string message)
+        {
+            if (lblWarningMsg.Text.Contains(message))
+                return;
+
+            if (string.IsNullOrWhiteSpace(lblWarningMsg.Text))
+            {
+                lblWarningMsg.Text = message;
+                return;
+            }
+
+            lblWarningMsg.Text = lblWarningMsg.Text + "; " + message;
+        }
+
         public void Reset(string task)
         {
             Message = task;
             ErrorMessage = string.Empty;
+            WarningMessage = string.Empty;
             PercentComplete = 0;
         }
     }

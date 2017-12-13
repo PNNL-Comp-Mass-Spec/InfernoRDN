@@ -456,6 +456,9 @@ namespace DAnTE.Inferno
             }
 
             var dataLoader = new clsDataTable();
+            dataLoader.OnError += clsDataTable_OnError;
+            dataLoader.OnWarning += clsDataTable_OnWarning;
+            dataLoader.OnProgress += clsDataTable_OnProgress;
 
             //FactorsValid = true;
             var loadedData = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
@@ -533,6 +536,7 @@ namespace DAnTE.Inferno
 
             var dataLoader = new clsDataTable();
             dataLoader.OnError += clsDataTable_OnError;
+            dataLoader.OnWarning += clsDataTable_OnWarning;
             dataLoader.OnProgress += clsDataTable_OnProgress;
 
             switch (mDataSetType)
@@ -556,6 +560,11 @@ namespace DAnTE.Inferno
 
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(mfrmShowProgress.WarningMessage))
+                    {
+                        MessageBox.Show(mfrmShowProgress.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     esetTable.TableName = "AllEset";
@@ -598,11 +607,22 @@ namespace DAnTE.Inferno
                                 success = false;
                             }
 
+                            if (!string.IsNullOrWhiteSpace(mfrmShowProgress.ErrorMessage))
+                            {
+                                MessageBox.Show(mfrmShowProgress.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+
                             if (success)
                             {
                                 AddDataset2HashTable(filteredDataTable);
                                 mRConnector.EvaluateNoReturn("print(dim(Eset))");
                                 mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
+
+                                if (!string.IsNullOrWhiteSpace(mfrmShowProgress.WarningMessage))
+                                {
+                                    MessageBox.Show(mfrmShowProgress.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+
                             }
                         }
                         catch (Exception ex)
@@ -827,6 +847,21 @@ namespace DAnTE.Inferno
                 mfrmShowProgress.ErrorMessage = e.Message;
             }
         }
+
+        void clsDataTable_OnWarning(object sender, MessageEventArgs e)
+        {
+            if (mfrmShowProgress != null)
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new EventHandler<MessageEventArgs>(clsDataTable_OnWarning), sender, e);
+                    return;
+                }
+
+                mfrmShowProgress.AppendWarningMessage(e.Message);
+            }
+        }
+
 
         void clsDataTable_OnProgress(object sender, ProgressEventArgs e)
         {

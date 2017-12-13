@@ -32,13 +32,14 @@ namespace DAnTE.Inferno
             this.pbarProgress = new System.Windows.Forms.ProgressBar();
             this.lblProgressMsg = new System.Windows.Forms.Label();
             this.lblErrorMsg = new System.Windows.Forms.Label();
+            this.lblWarningMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // pbarProgress
             // 
             this.pbarProgress.ForeColor = System.Drawing.Color.LimeGreen;
             this.pbarProgress.Location = new System.Drawing.Point(16, 42);
-            this.pbarProgress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbarProgress.Margin = new System.Windows.Forms.Padding(4);
             this.pbarProgress.Name = "pbarProgress";
             this.pbarProgress.Size = new System.Drawing.Size(540, 25);
             this.pbarProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -67,18 +68,30 @@ namespace DAnTE.Inferno
             this.lblErrorMsg.TabIndex = 2;
             this.lblErrorMsg.Text = "error";
             // 
+            // lblWarningMsg
+            // 
+            this.lblWarningMsg.AutoSize = true;
+            this.lblWarningMsg.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblWarningMsg.Location = new System.Drawing.Point(16, 114);
+            this.lblWarningMsg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblWarningMsg.Name = "lblWarningMsg";
+            this.lblWarningMsg.Size = new System.Drawing.Size(57, 17);
+            this.lblWarningMsg.TabIndex = 3;
+            this.lblWarningMsg.Text = "warning";
+            // 
             // frmShowProgress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 122);
+            this.ClientSize = new System.Drawing.Size(569, 140);
+            this.Controls.Add(this.lblWarningMsg);
             this.Controls.Add(this.lblErrorMsg);
             this.Controls.Add(this.lblProgressMsg);
             this.Controls.Add(this.pbarProgress);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimizeBox = false;
             this.Name = "frmShowProgress";
             this.RightToLeftLayout = true;
@@ -96,5 +109,6 @@ namespace DAnTE.Inferno
         private System.Windows.Forms.ProgressBar pbarProgress;
         private System.Windows.Forms.Label lblProgressMsg;
         private System.Windows.Forms.Label lblErrorMsg;
+        private System.Windows.Forms.Label lblWarningMsg;
     }
 }
