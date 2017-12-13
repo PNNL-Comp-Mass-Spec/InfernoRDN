@@ -27,9 +27,13 @@ namespace DAnTE.Inferno
             else
             {
                 if (originator.Contains("Protein"))
+                {
                     OpenProteinsFile();
+                }
                 else if (originator.Contains("Factor"))
+                {
                     OpenFactorsFile();
+                }
             }
         }
 
@@ -95,7 +99,17 @@ namespace DAnTE.Inferno
 
             if (mstrLoadedfileName != null)
             {
-                DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
+                if (USE_THREADED_LOAD)
+                    DataFileOpenThreaded(mstrLoadedfileName, "Loading Protein Information ...");
+                else
+                {
+                    mfrmShowProgress.Reset("Loading Protein Information ...");
+                    mfrmShowProgress.Show();
+                    var success = OpenFile(mstrLoadedfileName);
+
+                    HandleFileOpenCompleted(!success, success, string.Empty);
+                }
+
             }
         }
 
@@ -116,9 +130,18 @@ namespace DAnTE.Inferno
 
             ShowOpenFileWindow(mMostRecentFileType);
 
-            if (mstrLoadedfileName != null)
-            {
+            if (mstrLoadedfileName == null)
+                return;
+
+            if (USE_THREADED_LOAD)
                 DataFileOpenThreaded(mstrLoadedfileName, "Loading Factor Information ...");
+            else
+            {
+                mfrmShowProgress.Reset("Loading Factors ...");
+                mfrmShowProgress.Show();
+                var success = OpenFile(mstrLoadedfileName);
+
+                HandleFileOpenCompleted(!success, success, string.Empty);
             }
         }
 
