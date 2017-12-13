@@ -24,6 +24,11 @@ namespace DAnTE.Tools
         public event EventHandler<MessageEventArgs> OnError;
 
         /// <summary>
+        /// Used for reporting warnings
+        /// </summary>
+        public event EventHandler<MessageEventArgs> OnWarning;
+
+        /// <summary>
         /// Used for reporting progress
         /// </summary>
         public event EventHandler<ProgressEventArgs> OnProgress;
@@ -32,6 +37,12 @@ namespace DAnTE.Tools
         {
             Console.WriteLine(message);
             OnError?.Invoke(null, new MessageEventArgs(message));
+        }
+
+        private void ReportWarning(string message)
+        {
+            Console.WriteLine(message);
+            OnWarning?.Invoke(null, new MessageEventArgs(message));
         }
 
         private void ReportProgress(float percentComplete)
@@ -519,7 +530,7 @@ namespace DAnTE.Tools
         }
 
         /// <summary>
-        /// Checks for duplicate rows
+        /// Check for and remove duplicate rows
         /// </summary>
         /// <param name="dTable"></param>
         /// <param name="keyColumn">Name of the column with data values that cannot be duplicated (e.g. protein name)</param>
@@ -532,6 +543,7 @@ namespace DAnTE.Tools
         {
             var uniqueKeys = new Dictionary<object, DataRow>();
             var duplicateList = new List<DataRow>();
+            var emptyList = new List<DataRow>();
 
             foreach (DataColumn dC in dTable.Columns)
             {
@@ -545,8 +557,8 @@ namespace DAnTE.Tools
             {
                 if (!ValidRow(thisRow))
                 {
-                    // Empty row; flag it for removal by adding to duplicateList
-                    duplicateList.Add(thisRow);
+                    // Empty row; flag it for removal by adding to emptyList
+                    emptyList.Add(thisRow);
                 }
                 else
                 {
@@ -578,13 +590,49 @@ namespace DAnTE.Tools
                     ReportProgress(percentComplete);
             }
 
-            dTable.AcceptChanges();
+            if (duplicateList.Count > 0)
+            {
+                RemoveRows(dTable, duplicateList, keyColumn, "duplicate");
+            }
 
-            // Remove empty rows and duplicate rows
-            foreach (var dRow in duplicateList)
-                dTable.Rows.Remove(dRow);
+            if (emptyList.Count > 0)
+            {
+                RemoveRows(dTable, emptyList, keyColumn, "empty");
+            }
 
             return dTable;
+        }
+
+        private void RemoveRows(DataTable dTable, IEnumerable<DataRow> rowsToRemove, string keyColumn, string rowType)
+        {
+            var keysRemoved = new List<string>();
+
+            // Remove empty rows and duplicate rows
+            foreach (var item in rowsToRemove)
+            {
+                keysRemoved.Add(item[keyColumn].ToString());
+                dTable.Rows.Remove(item);
+            }
+
+            // Log warning of the form
+            // Removed 3 duplicate rows named: KeyName1, KeyName2, KeyName3
+            // or
+            // Removed 5 empty rows named: KeyName1, KeyName2, KeyName3
+
+            if (keysRemoved.Count == 1)
+            {
+                ReportWarning(string.Format("Removed 1 {0} row named: {1}", rowType, keysRemoved.First()));
+            }
+            else if (keysRemoved.Count <= 10)
+            {
+                ReportWarning(string.Format("Removed {0} {1} rows named: {2}",
+                                            keysRemoved.Count, rowType, string.Join(", ", keysRemoved)));
+            }
+            else
+            {
+                ReportWarning(string.Format("Removed {0} {1} rows named: {2} ...",
+                                            keysRemoved.Count, rowType, string.Join(", ", keysRemoved.Take(10))));
+            }
         }
 
         private void AddDuplicateRow(IDictionary<object, DataRow> uniqueKeys, DataRow thisRow,
