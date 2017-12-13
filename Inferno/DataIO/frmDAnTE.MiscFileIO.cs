@@ -232,7 +232,7 @@ namespace DAnTE.Inferno
 
         /// <summary>
         /// Creates a new datatable with the first column having unique rowIDs and
-        /// multiple columns of data. 
+        /// multiple columns of data.
         /// Checks for and removes any columns with duplicate column names
         /// </summary>
         /// <param name="sourceDataTable"></param>
@@ -280,7 +280,7 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private DataTable ArrangeDataTable(DataTable sourceDataTable, string keyColumnName, string dataColumn)
         {
-            var dataCols = new List<string> {dataColumn};
+            var dataCols = new List<string> { dataColumn };
             return ArrangeDataTable(sourceDataTable, keyColumnName, dataCols);
         }
 
@@ -303,7 +303,7 @@ namespace DAnTE.Inferno
             {
                 if (metdataColumns.Count > 0)
                 {
-                    var allColumns = new List<string> {proteinIdentifierColumn};
+                    var allColumns = new List<string> { proteinIdentifierColumn };
                     allColumns.AddRange(metdataColumns);
 
                     // Table will have more than two columns: rowID and proteinIdentifierColumn, then metdataColumns
@@ -569,7 +569,7 @@ namespace DAnTE.Inferno
 
                     esetTable.TableName = "AllEset";
 
-                    //Select columns
+                    // Select columns
                     var columnSelectionForm = new frmSelectColumns
                     {
                         PopulateListBox = clsDataTable.DataTableColumns(esetTable, false),

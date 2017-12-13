@@ -367,8 +367,7 @@ namespace DAnTE.Inferno
 
                     // Also confirm that we have the Bioconductor qvalue package
                     // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
-                    var appVersionBioconductorCheck =
-                        RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
+                    var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
                     var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
                     var updateRequired = !string.Equals(appVersionBioconductorCheck, appVersionCurrent);

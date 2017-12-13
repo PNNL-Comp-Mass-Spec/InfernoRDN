@@ -23,7 +23,7 @@ namespace DAnTE.Inferno
             }
             else if (e.Cancelled)
             {
-                // Next, handle the case where the user canceled 
+                // Next, handle the case where the user canceled
                 // the operation.
                 openCancelled = true;
             }
@@ -49,7 +49,7 @@ namespace DAnTE.Inferno
 
             if (openCancelled)
             {
-                // Next, handle the case where the user canceled 
+                // Next, handle the case where the user canceled
                 // the operation.
                 Console.WriteLine("Cancelled");
                 return;
