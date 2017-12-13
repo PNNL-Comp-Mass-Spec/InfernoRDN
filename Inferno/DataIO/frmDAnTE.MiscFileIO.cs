@@ -597,9 +597,13 @@ namespace DAnTE.Inferno
                             success = mRConnector.SendTable2RmatrixNumeric("Eset", filteredDataTable);
                             if (mhtDatasets.ContainsKey("Factors"))
                             {
-                                rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-                                mRConnector.EvaluateNoReturn(rcmd);
-                                validFactors = mRConnector.GetSymbolAsBool("FactorsValid");
+                                // Simplistic method looking for exact duplicates:
+                                // rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
+                                // mRConnector.EvaluateNoReturn(rcmd);
+                                // validFactors = mRConnector.GetSymbolAsBool("FactorsValid");
+
+                                // Better method for comparing column names, including notifying the user of missing columns
+                                validFactors = ValidateFactors();
                             }
 
                             if (!validFactors)
@@ -701,6 +705,7 @@ namespace DAnTE.Inferno
                     {
                         return false;
                     }
+
                     if (factorTable.Rows.Count > frmDefFactors.MAX_LEVELS)
                     {
                         MessageBox.Show(
@@ -708,16 +713,65 @@ namespace DAnTE.Inferno
                             "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
+
+                    if (mhtDatasets.ContainsKey("Expressions"))
+                    {
+                        // Check for extra sample names in the factorTable and remove them
+                        // The various calls to R that utilize factors do not work properly when extra columns are present
+
+                        mRConnector.EvaluateNoReturn("esetColNames <- colnames(Eset)");
+                        var esetColNamesFromR = mRConnector.GetSymbolAsStrings("esetColNames");
+                        var esetColNames = new SortedSet<string>();
+                        foreach (var item in esetColNamesFromR.Distinct())
+                            esetColNames.Add(item);
+
+                        var extraFactorCols = new List<string>();
+                        foreach (var factorCol in factorTable.Columns)
+                        {
+                            var factorColName = factorCol.ToString();
+                            if (string.Equals(factorColName, "Factor", StringComparison.CurrentCultureIgnoreCase))
+                                continue;
+
+                            if (!esetColNames.Contains(factorColName))
+                                extraFactorCols.Add(factorColName);
+                        }
+
+                        if (extraFactorCols.Count > 0)
+                        {
+                            foreach (var colToRemove in extraFactorCols)
+                            {
+                                factorTable.Columns.Remove(colToRemove);
+                            }
+
+                            if (extraFactorCols.Count == 1)
+                            {
+                                MessageBox.Show(
+                                    string.Format(
+                                        "Removed 1 unknown sample name from the factors file (did not match any expression column names): {0}",
+                                        extraFactorCols.First()),
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    string.Format(
+                                        "Removed {0} unknown sample names from the factors file (names did not match expression column names): {1}",
+                                        extraFactorCols.Count,
+                                        string.Join(", ", extraFactorCols)),
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+
                     if (mRConnector.SendTable2RmatrixNonNumeric("factors", factorTable))
                     {
                         try
                         {
                             if (mhtDatasets.ContainsKey("Expressions"))
                             {
-                                rcmd = "FactorsValid<-identical(as.array(colnames(factors)),as.array(colnames(Eset)))";
-                                mRConnector.EvaluateNoReturn(rcmd);
-                                validFactors = mRConnector.GetSymbolAsBool("FactorsValid");
+                                validFactors = ValidateFactors();
                             }
+
                             if (!validFactors)
                             {
                                 success = false;
@@ -889,6 +943,43 @@ namespace DAnTE.Inferno
                 case ".xls":
                 case ".xlsx":
                     return true;
+            }
+
+            return false;
+        }
+
+        private bool ValidateFactors()
+        {
+            // Make sure all of the column names in Eset are present in factors
+
+            mRConnector.EvaluateNoReturn("factorColNames <- colnames(factors)");
+            var factorColNamesFromR = mRConnector.GetSymbolAsStrings("factorColNames");
+            var factorColNames = new SortedSet<string>();
+            foreach (var factorCol in factorColNamesFromR.Distinct())
+            {
+                factorColNames.Add(factorCol);
+            }
+
+            mRConnector.EvaluateNoReturn("esetColNames <- colnames(Eset)");
+            var esetColNames = mRConnector.GetSymbolAsStrings("esetColNames");
+
+            var missingColNames = esetColNames.Where(esetCol => !factorColNames.Contains(esetCol)).ToList();
+
+            if (missingColNames.Count == 0)
+                return true;
+
+            if (missingColNames.Count == 1)
+            {
+                MessageBox.Show(
+                    string.Format("Error: factors were missing for data column: {0}", missingColNames.First()),
+                    "Factors Missing", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                MessageBox.Show(
+                    string.Format("Error: factors were missing for the following data columns: {0}",
+                                  string.Join(", ", missingColNames)),
+                    "Factors Missing", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             return false;
