@@ -1,5 +1,10 @@
 InfernoRDN Change Log
 
+Version 1.1.6687; April 23, 2018
+	- Use NumberFormatInfo.InvariantInfo for double.TryParse and float.TryParse
+	- Truncate long error messages reported by the CsvReader
+	- Include TSV files in the file extension list on the open file dialog
+
 Version 1.1.6556; December 13, 2017
 	- Do not use a separate thread to Load Factors or Proteins
 	- Notify the user of empty or duplicate data rows removed when loading the Expressions file
