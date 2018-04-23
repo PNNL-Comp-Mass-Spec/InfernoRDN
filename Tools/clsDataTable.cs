@@ -14,6 +14,8 @@ namespace DAnTE.Tools
     public class clsDataTable
     {
 
+        private const int CSV_ERRORS_TO_SHOW = 4;
+
         private int mCsvErrors;
 
         #region Events
@@ -364,8 +366,23 @@ namespace DAnTE.Tools
         {
             mCsvErrors++;
 
-            if (mCsvErrors < 5)
-                MessageBox.Show(e.Error.Message, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (mCsvErrors > CSV_ERRORS_TO_SHOW)
+                return;
+
+            string errorMessage;
+            var dataIndex = e.Error.Message.IndexOf("Current raw data", StringComparison.OrdinalIgnoreCase);
+
+            if (dataIndex > 0)
+                errorMessage = e.Error.Message.Substring(0, dataIndex);
+            else if (e.Error.Message.Length > 250)
+                errorMessage = e.Error.Message.Substring(0, 250);
+            else
+                errorMessage = e.Error.Message;
+
+            if (errorMessage.StartsWith("The CSV"))
+                MessageBox.Show("The data file" + errorMessage.Substring(7), "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            else
+                MessageBox.Show(errorMessage, "Reader Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         #endregion
