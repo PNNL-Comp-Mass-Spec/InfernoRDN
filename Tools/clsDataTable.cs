@@ -225,16 +225,16 @@ namespace DAnTE.Tools
                     }
 
                     var headers = headerLine.Split(delimiter);
-                    var uniqueHeaqders = new SortedSet<string>();
+                    var uniqueHeaders = new SortedSet<string>();
 
                     foreach (var columnName in headers)
                     {
-                        if (uniqueHeaqders.Contains(columnName))
+                        if (uniqueHeaders.Contains(columnName))
                         {
                             ReportError($"Duplicate column name in header line, column \"{columnName}\"; cannot load data from {filePath}");
                             return null;
                         }
-                        uniqueHeaqders.Add(columnName);
+                        uniqueHeaders.Add(columnName);
                     }
 
                 }
