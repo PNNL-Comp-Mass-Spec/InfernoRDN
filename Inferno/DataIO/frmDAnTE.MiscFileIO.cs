@@ -18,9 +18,10 @@ namespace DAnTE.Inferno
         private enum FileTypeExtension
         {
             Txt = 0,
-            Csv = 1,
-            Xls = 2,
-            Xlsx = 3
+            Tsv = 1,
+            Csv = 2,
+            Xls = 3,
+            Xlsx = 4
         }
 
         private bool DeleteTempFile(string tempfile)
@@ -92,6 +93,7 @@ namespace DAnTE.Inferno
             var fileTypesUsed = new List<FileTypeExtension>
             {
                 FileTypeExtension.Txt,
+                FileTypeExtension.Tsv,
                 FileTypeExtension.Csv,
                 FileTypeExtension.Xls,
                 FileTypeExtension.Xlsx
@@ -194,6 +196,8 @@ namespace DAnTE.Inferno
             {
                 case FileTypeExtension.Txt:
                     return "Tab delimited txt files (*.txt)|*.txt|";
+                case FileTypeExtension.Tsv:
+                    return "TSV files (*.tsv)|*.tsv|";
                 case FileTypeExtension.Csv:
                     return "CSV files (*.csv)|*.csv|";
                 case FileTypeExtension.Xls:
@@ -530,7 +534,7 @@ namespace DAnTE.Inferno
 
             if (!ValidExtension(fExt))
             {
-                MessageBox.Show("Filetype not allowed (must be csv, txt, xls, or xlsx)", "Error!");
+                MessageBox.Show("Filetype not allowed (must be csv, tsv, txt, xls, or xlsx)", "Error!");
                 return false;
             }
 
@@ -939,6 +943,7 @@ namespace DAnTE.Inferno
             switch (fExt.ToLower())
             {
                 case ".csv":
+                case ".tsv":
                 case ".txt":
                 case ".xls":
                 case ".xlsx":

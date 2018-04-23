@@ -184,6 +184,7 @@ namespace DAnTE.Tools
                 case ".csv": // CSV files
                     return LoadDelimitedFile(filePath, ',');
 
+                case ".tsv":
                 case ".txt":
                     return LoadDelimitedFile(filePath, '\t');
 
