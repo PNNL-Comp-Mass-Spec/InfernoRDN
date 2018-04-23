@@ -721,14 +721,14 @@ namespace DAnTE.Tools
 
             try
             {
-                if (double.TryParse((string)item, out var value))
+                if (clsUtilities.ParseDouble((string)item, out var value))
                     return value;
             }
             catch (Exception ex)
             {
                 try
                 {
-                    if (double.TryParse(item.ToString(), out var value))
+                    if (clsUtilities.ParseDouble(item.ToString(), out var value))
                         return value;
                 }
                 catch (Exception ex2)

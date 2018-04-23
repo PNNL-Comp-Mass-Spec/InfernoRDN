@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Threading;
+using DAnTE.Tools;
 using Microsoft.Win32;
 
 namespace DAnTE.Paradiso
@@ -275,10 +276,7 @@ namespace DAnTE.Paradiso
         {
             var sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue(REGVALUE_PB_MILLISECOND_INCREMENT,
                                                                                      "0.0015");
-            double dblResult;
-
-            if (double.TryParse(sPBIncrementPerTimerInterval, System.Globalization.NumberStyles.Float,
-                                System.Globalization.NumberFormatInfo.InvariantInfo, out dblResult))
+            if (clsUtilities.ParseDouble(sPBIncrementPerTimerInterval, out var dblResult))
                 m_dblPBIncrementPerTimerInterval = dblResult;
             else
                 m_dblPBIncrementPerTimerInterval = .0015;
@@ -292,9 +290,7 @@ namespace DAnTE.Paradiso
 
                 foreach (var timeVal in aTimes)
                 {
-                    double dblVal;
-                    if (double.TryParse(timeVal, System.Globalization.NumberStyles.Float,
-                                        System.Globalization.NumberFormatInfo.InvariantInfo, out dblVal))
+                    if (clsUtilities.ParseDouble(timeVal, out var dblVal))
                         m_alPreviousCompletionFraction.Add(dblVal);
                     else
                         m_alPreviousCompletionFraction.Add(1.0);

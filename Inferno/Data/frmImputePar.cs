@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Windows.Forms;
+using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
@@ -56,19 +56,19 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                if (!float.TryParse(mtxtBoxFthres.Text, out fThreshold))
+                if (!clsUtilities.ParseFloat(mtxtBoxFthres.Text, out fThreshold))
                 {
                     MessageBox.Show("Imputation threshold must be a number; invalid value: " + mtxtBoxFthres.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (!float.TryParse(mtxtBoxSVDthres.Text, out svdThreshold))
+                if (!clsUtilities.ParseFloat(mtxtBoxSVDthres.Text, out svdThreshold))
                 {
                     MessageBox.Show("SVD threshold must be a number; invalid value: " + mtxtBoxSVDthres.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (!float.TryParse(mtxtBoxConst.Text, out _))
+                if (!clsUtilities.ParseFloat(mtxtBoxConst.Text, out _))
                 {
                     MessageBox.Show("Substitute constant must be a number; invalid value: " + mtxtBoxConst.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -122,7 +122,7 @@ namespace DAnTE.Inferno
 
         private string SelectedMode()
         {
-            string mode = "mean";
+            var mode = "mean";
 
             if (mtabCImpute.SelectedIndex == 1)
             {
@@ -192,7 +192,6 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem != null)
                 {
                     if (mcmbBoxFactors.SelectedItem.ToString().Equals("<All>"))
@@ -200,11 +199,11 @@ namespace DAnTE.Inferno
                     if (mtabCImpute.SelectedIndex == 1 &&
                         (mrBtnConst.Checked || mrBtnMean.Checked || mrBtnMedian.Checked))
                         return "Factor=1";
-                    idx = mcmbBoxFactors.SelectedIndex;
+                    var idx = mcmbBoxFactors.SelectedIndex;
                     return "Factor=factors[" + idx.ToString() + ",]";
                 }
-                else
-                    return "Factor=1";
+
+                return "Factor=1";
             }
         }
 
@@ -218,8 +217,8 @@ namespace DAnTE.Inferno
                         return "AllData";
                     return mcmbBoxFactors.SelectedItem.ToString();
                 }
-                else
-                    return "AllData";
+
+                return "AllData";
             }
         }
 
@@ -227,16 +226,15 @@ namespace DAnTE.Inferno
         {
             get
             {
-                int idx = 0;
                 if (mcmbBoxFactors.SelectedItem != null)
                 {
                     if (mcmbBoxFactors.SelectedItem.ToString().Equals("<All>"))
                         return -1;
-                    idx = mcmbBoxFactors.SelectedIndex;
+                    var idx = mcmbBoxFactors.SelectedIndex;
                     return idx;
                 }
-                else
-                    return -1;
+
+                return -1;
             }
         }
 
