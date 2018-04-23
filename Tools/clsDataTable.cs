@@ -252,6 +252,14 @@ namespace DAnTE.Tools
                     {
                         var dtOut = new DataTable();
                         dtOut.Load(reader);
+
+                        if (mCsvErrors > CSV_ERRORS_TO_SHOW)
+                        {
+                            MessageBox.Show(
+                                $"{mCsvErrors} lines in the data file had an error",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+
                         return dtOut;
                     }
                     catch (Exception ex)
@@ -270,7 +278,7 @@ namespace DAnTE.Tools
         [Obsolete("Unused")]
         private DataTable LoadDelimitedFileViaGenericParser(string filePath, char delimiter)
         {
-            var delimiters = new List<char> {delimiter};
+            var delimiters = new List<char> { delimiter };
 
             DataTable dtIn;
 
