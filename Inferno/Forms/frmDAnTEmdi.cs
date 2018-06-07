@@ -78,7 +78,7 @@ namespace DAnTE.Inferno
             if (!ConfigParameters())
             {
                 Log(mCustomLoggerEnabled, "Error: Error in reading inferno.conf file.", mCustomLogWriter);
-                startupErrString.Append("* Error in reading inferno.conf file.").AppendLine();
+                startupErrString.AppendLine("* Error in reading inferno.conf file.");
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in reading inferno.conf file.",
                 //    "inferno.conf error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -88,7 +88,7 @@ namespace DAnTE.Inferno
 
             SplashScreen.SetStatus("Initializing Folders...");
 
-            // Initialize folders            
+            // Initialize folders
             var tempFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             var appDataFldrPath = Path.Combine(tempFolderPath, "Inferno");
@@ -105,30 +105,40 @@ namespace DAnTE.Inferno
 
             SplashScreen.SetStatus("Establishing Connection to R...");
             mRConnector = new clsRconnect();
-            if (!mRConnector.initR())
+            var connectionSucceeded = mRConnector.initR();
+
+            if (!connectionSucceeded)
             {
-                startupErrString.Append(string.Format("* R failed to initialize: {0}", mRConnector.Message))
-                    .AppendLine();
+                startupErrString.AppendLine(string.Format("* R failed to initialize: {0}", mRConnector.Message));
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Try again. R failed to initialize for some unknown reason.",
                 //    "R connection failed.", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 Log(mCustomLoggerEnabled, "Error: Connection to R failed.", mCustomLogWriter);
                 //this.Close();
             }
-            System.Threading.Thread.Sleep(10);
-            Log(mCustomLoggerEnabled, "Done Connecting to R.", mCustomLogWriter);
+            else
+            {
+                System.Threading.Thread.Sleep(10);
+                Log(mCustomLoggerEnabled, "Done Connecting to R.", mCustomLogWriter);
+            }
 
             SplashScreen.SetStatus("Initializing R Functions...");
             if (!LoadRfunctions("Inferno.RData"))
             {
-                startupErrString.Append("* Error in sourcing R functions.").AppendLine();
+                if (connectionSucceeded)
+                {
+                    startupErrString.AppendLine("* Error in sourcing R functions.");
+                }
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in sourcing R functions", "Initializing R error",
                 //    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Log(mCustomLoggerEnabled, "Error: Sourcing R functions failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mCustomLoggerEnabled, "Done sourcing R functions.", mCustomLogWriter);
+            else
+            {
+                Log(mCustomLoggerEnabled, "Done sourcing R functions.", mCustomLogWriter);
+            }
 
             SplashScreen.SetStatus("Initializing R Plotting Functions...");
 
@@ -142,17 +152,23 @@ namespace DAnTE.Inferno
 
             if (!LoadRfunctions(mstrPlotFuncFileName))
             {
-                startupErrString.Append("* Error in sourcing R plotting functions.").AppendLine();
+                if (connectionSucceeded)
+                {
+                    startupErrString.AppendLine("* Error in sourcing R plotting functions.");
+                }
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Error in sourcing R plotting functions", "Initializing R error",
                 //    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Log(mCustomLoggerEnabled, "Error: Sourcing R plotting functions failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mCustomLoggerEnabled, "Done sourcing R plotting functions.", mCustomLogWriter);
+            else
+            {
+                Log(mCustomLoggerEnabled, "Done sourcing R plotting functions.", mCustomLogWriter);
+            }
 
             //if (!InitLoadRpackages()) {
-            //  startupErrString.Append("* Error loading key R packages.").AppendLine();
+            //  startupErrString.AppendLine("* Error loading key R packages.");
             //  //SplashScreen.CloseForm();
             //  //MessageBox.Show("Error loading key R packages", "Error loading key R packs",
             //  //    MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -166,7 +182,10 @@ namespace DAnTE.Inferno
             SplashScreen.SetStatus("Checking R version...");
             if (!CheckRVersion("2", "8.0"))
             {
-                startupErrString.Append("* R version is not compatible. Install a more recent version.").AppendLine();
+                if (connectionSucceeded)
+                {
+                    startupErrString.AppendLine("* R version is not compatible. Install a more recent version.");
+                }
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("R version is not compatible." + Environment.NewLine +
                 //    "Please install R version 2.9.x." + Environment.NewLine +
@@ -181,7 +200,11 @@ namespace DAnTE.Inferno
 
             if (!InstallRequiredRPackages())
             {
-                startupErrString.Append("* R failed to install required packages.").AppendLine();
+                if (connectionSucceeded)
+                {
+                    startupErrString.AppendLine("* R failed to install required packages.");
+                }
+
                 //SplashScreen.CloseForm();
                 //MessageBox.Show("Try again. R failed to install required packages." + Environment.NewLine +
                 //    "If this is the first time you run Inferno after installing, check permissions to modify R install folder, else " +
@@ -190,15 +213,18 @@ namespace DAnTE.Inferno
                 Log(mCustomLoggerEnabled, "Error: Loading required R packages failed.", mCustomLogWriter);
                 //this.Close();
             }
-            Log(mCustomLoggerEnabled, "Done loading required R packages.", mCustomLogWriter);
-            System.Threading.Thread.Sleep(10);
+            else
+            {
+                Log(mCustomLoggerEnabled, "Done loading required R packages.", mCustomLogWriter);
+                System.Threading.Thread.Sleep(10);
+            }
 
             SplashScreen.SetStatus("Cleaning up temp files; checking for " + mRTempFilePath.Replace("/", @"\"));
             if (!DeleteTempFile())
             {
                 // This is not a fatal error
                 // Log it, but move on
-                startupErrString.Append("* Error cleaning temp files.").AppendLine();
+                startupErrString.AppendLine("* Error cleaning temp files.");
                 Log(mCustomLoggerEnabled, "Error: Cleaning temp files failed.", mCustomLogWriter);
             }
             System.Threading.Thread.Sleep(10);
