@@ -38,11 +38,18 @@ namespace DAnTE.Tools
                 _rdn.Init("R");
                 return true;
             }
+            catch (NullReferenceException)
+            {
+                var errmsg = @"Unable to connect to R. Confirm that R 3.x is installed by examining directory C:\Program Files\R or C:\Program Files (x86)\R";
+                Console.WriteLine(errmsg);
+                Message = errmsg;
+                return false;
+            }
             catch (Exception e)
             {
                 var errmsg = "R Init failed: " + e.Message;
                 Console.WriteLine(errmsg);
-                Message = e.Message;
+                Message = errmsg;
                 return false;
             }
         }
