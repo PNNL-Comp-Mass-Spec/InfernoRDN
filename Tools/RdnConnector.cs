@@ -12,7 +12,7 @@ namespace DAnTE.Tools
         /// <remarks>
         /// This is an unmanaged DLL.
         /// To access it, we need to reference NuGet package DynamicInterop by Jean-Michel Perraud
-        /// Note that version 0.8.1 of DynamicInterop is not compatible with .NET 4
+        /// The R.NET NuGet package should auto-download the correct version of DynamicInterop.dll (v0.8.1)
         /// </remarks>
         private static REngine _engine;
 
