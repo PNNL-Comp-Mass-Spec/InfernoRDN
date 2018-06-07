@@ -1074,10 +1074,9 @@
     <None Include="Resources\ksysguard.png" />
     <None Include="Resources\open folder.png" />
   </ItemGroup>
+  <!-- R.NET uses DynamicInterop, which it will auto-download from NuGet -->
+  <!-- R.NET 1.7.0 uses DynamicInterop 0.8.1 -->
   <ItemGroup>
-    <PackageReference Include="DynamicInterop">
-      <Version>0.8.1</Version>
-    </PackageReference>
     <PackageReference Include="LumenWorksCsvReader">
       <Version>3.9.1</Version>
     </PackageReference>
