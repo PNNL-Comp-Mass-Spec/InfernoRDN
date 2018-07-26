@@ -76,7 +76,7 @@ QRollup.proteins <- function(Data, ProtInfo, minPresence=50, Top=33, topN=0,
             xPresenceCount <- sum(!is.na(currProtData))
             if (xPresenceCount >= threshold)
             {
-                singlePepProt <- c(PepCount=1,currProtData)
+                singlePepProt <- c(PepCount=1,Score=0,currProtData)
                 singlePepProtData <- rbind(singlePepProtData,singlePepProt)
                 oneHitProtNames[k] <- restIPI[protIndex]
                 k = k + 1
