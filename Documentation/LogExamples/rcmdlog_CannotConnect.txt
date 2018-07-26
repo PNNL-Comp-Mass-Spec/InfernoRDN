@@ -1,0 +1,32 @@
+#-------------------------------
+# Starting Inferno [6.6.18 08:57:20]...
+#-------------------------------
+# Done reading configuration parameters.
+#-------------------------------
+# Done setting folders.
+#-------------------------------
+# Error: Connection to R failed.
+#-------------------------------
+# Done Connecting to R.
+# EvaluateNoReturn ERROR load("C:/Program Files (x86)/InfernoRDN/Inferno.RData") -> Could not connect to R
+#-------------------------------
+# Error: Sourcing R functions failed.
+#-------------------------------
+# Done sourcing R functions.
+# EvaluateNoReturn ERROR load("C:/Program Files (x86)/InfernoRDN/Inferno_stdplots.RData") -> Could not connect to R
+#-------------------------------
+# Error: Sourcing R plotting functions failed.
+#-------------------------------
+# Done sourcing R plotting functions.
+# EvaluateNoReturn ERROR verOK <- RVersionOK(major=2,minor=8.0) -> Could not connect to R
+#-------------------------------
+# Error: R version incompatible.
+# EvaluateNoReturn ERROR installPackages(c('gplots','ellipse','plotrix','car','outliers','fpc','pls','scatterplot3d','MASS','impute','colorspace','nlme','qvalue','e1071','Hmisc','amap','Cairo','ggplot2','class'), repository="http://cran.fhcrc.org/") -> Could not connect to R
+#-------------------------------
+# Exception in InstallRequiredRPackages while installing default packages from http://cran.fhcrc.org/: Could not connect to R
+#-------------------------------
+# Error: Loading required R packages failed.
+#-------------------------------
+# Done loading required R packages.
+#-------------------------------
+# Inferno started.
