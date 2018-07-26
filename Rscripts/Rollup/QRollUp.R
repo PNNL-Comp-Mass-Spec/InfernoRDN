@@ -68,9 +68,9 @@ QRollup.proteins <- function(Data, ProtInfo, minPresence=50, Top=33, topN=0,
     if (oneHitWonders)
     {
         k = 1
-        for (prot in 1:length(restIPI))
+        for (protIndex in 1:length(restIPI))
         {
-            pidx <- which(restIPI[prot]==protIPI)
+            pidx <- which(restIPI[protIndex]==protIPI)
             data_idx <- is.element(row.names(Data),MassTags[pidx[1]])
             currProtData <- Data[data_idx,]
             xPresenceCount <- sum(!is.na(currProtData))
@@ -78,7 +78,7 @@ QRollup.proteins <- function(Data, ProtInfo, minPresence=50, Top=33, topN=0,
             {
                 singlePepProt <- c(PepCount=1,currProtData)
                 singlePepProtData <- rbind(singlePepProtData,singlePepProt)
-                oneHitProtNames[k] <- restIPI[prot]
+                oneHitProtNames[k] <- restIPI[protIndex]
                 k = k + 1
             }
         }
