@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.6780; July 25, 2018
+	- Fix QRollup bug when enabling option "Include One-Hit-Wonders"
+		- Proteins with only a single peptide will now have a score of 0
+
 Version 1.1.6687; April 23, 2018
 	- Use NumberFormatInfo.InvariantInfo for double.TryParse and float.TryParse
 	- Truncate long error messages reported by the CsvReader

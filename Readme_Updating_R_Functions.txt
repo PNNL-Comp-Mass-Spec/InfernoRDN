@@ -5,55 +5,59 @@ in the .RData files in the Rscripts folder.  Note that
 Inferno_ggplots.RData is historical and is no longer used.
 
 1) Start RStudio
+* If previous code was loaded, use "Close All" on the File menu
 
-2) Choose Session, Load Workspace, and open Inferno_stdplots.RData or 
-   Inferno.RData, depending on your needs
+2) On the Session menu, choose "Load Workspace"
+* Open Inferno_stdplots.RData or Inferno.RData
 
-3) The Environment pane lists the available functions, for example plot_hist
+3) The Environment pane lists the available functions, for example plot_hist or QRollup.proteins
 
-4) To view the function body for function plot_hist, go to the console tab, 
-   type "plot_hist", then press Enter
+4) To view the function body for a function go to the console tab, then use View()
+* View(plot_hist)
+* View(QRollup.proteins)
 
-5) Now copy the function body and paste in the R Script tab 
-   (optionally use File, New File, R Script)
-   Example code to copy/paste
-       function(data,
-                ncols = 2,
-          etc.
-       }
+5) Optionally open an existing .R file using "Open file" from the "File" menu
 
 6) After editing the function, you can update the copy stored in the 
-   .RData file by adding the function name and <- like this:
-       plot_hist <-
-       function(data,
-                ncols = 2,
-          etc.
-       }
+.RData file by adding the function name and <- like this:
 
-   Next, click "Source" (for Source the Active Document) and a new 
-   command will run in the console to update the .RData file.
+plot_hist <-
+  function(data,
+           ncols = 2)
+  {
+     etc.
+  }
+
+
+Next, click "Source" (for Source the Active Document) and a new 
+command will run in the console to update the .RData file.
+
+source('~/Projects/_CommunityApplications/InfernoRDN/Rscripts/Rollup/QRollUp.R')
+
 
 7) If you add or remove parameters from the function header, you can 
-   verify that the changes were stored when you "sourced" the script 
-   by hovering your mouse over the function definition column in the 
-   Environment tab and examining the function parameters listed.
+verify that the changes were stored when you "sourced" the script 
+by hovering your mouse over the function definition column in the 
+Environment tab and examining the function parameters listed.
 
-   Changes may also be verified by typing the function name in the console tab
-   again:
-      plot_hist
-   
+Changes may also be verified by typing the function name in the console tab (without parentheses):
+
+plot_hist
+
+
 8) When done updating functions, choose Session, Save Workspace As ...
-   and overwrite the original .RData file that you opened
+and overwrite the original .RData file that you opened.  This runs command
+
+save.image("~/Projects/_CommunityApplications/InfernoRDN/Rscripts/Inferno.RData")
 
 
-== Loading Inferno Files into RStudio ==
+== Loading All InfernoRDN Scripts Into RStudio ==
 
-The .dnt files created by Inferno when you use Save Session are simply 
-R session files. These files can be loaded into RStudio using 
-Session, "Load workspace". This allows you to further analyze the 
-data using R.  
-1) Start RStudio
-2) Use Session, "Load Workspace" and load your .dnt file
-3) Again use "Load Workspace" two more times, loading Inferno.RData 
-   and Inferno_stdplots.RData
+Use the following steps to load every InfernoRDN script into RStudio
+* Start RStudio
+* Under the "Session" menu choose "Load workspace".
+** Select a .dnt file saved from InfernoRDN
+* Use "Load Workspace" two more times
+** Load Inferno.RData 
+** Load Inferno_stdplots.RData
 
