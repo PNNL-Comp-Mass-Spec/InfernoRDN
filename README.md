@@ -21,7 +21,6 @@ It supersedes all previous DAnTE (Data Analysis Tool Extension), DanteR, and Inf
 
 InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R. 
 
-
 ## Installation
 
 1. Download and install R 3.4.4 from
@@ -88,6 +87,18 @@ InfernoRDN uses the following R packages (from https://cran.r-project.org/):
 * Cairo: R graphics device using cairo graphics library
 
 The packages will be installed to either the library folder in `C:\Program Files\R\R-3.x.x\library` or, more likely (due to permissions) to the `R\win-library` folder in your "Documents" or "My Documents" folder.
+
+### R Connectivity Issues after Re-install
+
+If InfernoRDN has problems connecting to R after you re-install InfernoRDN (for example, when running ANOVA), try the following
+* Exit InfernoRDN
+* Navigate to `C:\Users\UserName\AppData\Local\Pacific_Northwest_Nationa` substituting `UserName` with your username
+* Delete any directories that you see there, example names:
+  * `Inferno.exe_Url_2sg0gwzl52pgvsl5ykzc0musjbmtk3m0`
+  * `Inferno.exe_Url_psrpjex41w0dwbl34gci2qitsop3f50e`
+* Start InfernoRDN
+  * The program will likely re-download all of the required R packages, a process that can take several minutes
+* Test the problematic function again
 
 ## Factor Definitions File
 
