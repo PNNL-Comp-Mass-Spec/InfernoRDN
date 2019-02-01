@@ -23,14 +23,11 @@ InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R.
 
 ## Installation
 
-1. Download and install R 3.4.4 from
-   * https://cran.r-project.org/bin/windows/base/old/3.4.4/
-   * Inferno does not work with R 3.5.x due to breaking changes the R developers made
-   * A fix to [R.NET is in progress](https://github.com/jmp75/rdotnet/issues/70) but is not yet available
+1. Download and install R 3.5 or newer
+   * https://cran.r-project.org/bin/windows/base/
 
-2. Download the InfernoRDN installer from either of these sites:
+2. Download the InfernoRDN installer from:
    * https://github.com/PNNL-Comp-Mass-Spec/InfernoRDN/releases
-   * https://omics.pnl.gov/software/infernordn
 
 3. Run the installer, InfernoRDNSetup.exe
 
@@ -62,7 +59,7 @@ InfernoRDN depends on the following:
 1. Windows 7 (or newer) with the .NET 4.6 framework or newer
    * https://www.microsoft.com/en-us/download/details.aspx?id=53344
 
-2. R Statistical Environment, version 3.0 thrugh version 3.4 (not version 3.5.x)
+2. R Statistical Environment, version 3.5 or newer
    * https://cran.r-project.org/bin/windows/base/
 
 ### R Packages

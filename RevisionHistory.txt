@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.6970; January 31, 2019
+	- New RDotNet.dll that supports R 3.5
+		- From rdotnet fork at https://github.com/StatTag/rdotnet
+
 Version 1.1.6780; July 25, 2018
 	- Fix QRollup bug when enabling option "Include One-Hit-Wonders"
 		- Proteins with only a single peptide will now have a score of 0
