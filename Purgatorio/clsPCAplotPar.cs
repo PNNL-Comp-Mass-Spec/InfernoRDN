@@ -6,7 +6,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsPCAplotPar : ICloneable
     {
-        private string rcmd;
+        private string mRCmd;
         public string factor;
         public int factorIdx;
         public string prinComps;
@@ -54,17 +54,17 @@ namespace DAnTE.Purgatorio
             return MemberwiseClone();
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "weights <- plotPCA(" + Rdataset + "[," + datasubset + "]," + "Factor=" +
+                mRCmd = "weights <- plotPCA(" + Rdataset + "[," + datasubset + "]," + "Factor=" +
                        factor + "," + prinComps + ",";
-                rcmd = rcmd + DropLines + "," + Perspective + "," + BiPlot + "," + ShowLabels + "," +
+                mRCmd = mRCmd + DropLines + "," + Perspective + "," + BiPlot + "," + ShowLabels + "," +
                        Screeplot + "," + BiArrows + "," + BiLabels + "," + Type + "," + Stamp +
                        @",file=""" + tempFile + @""")";
 
-                return rcmd;
+                return mRCmd;
             }
         }
 

@@ -4,46 +4,46 @@ namespace DAnTE.Purgatorio
 {
     public class clsImputePar
     {
-        private string rcmd;
+        private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Imputation")]
-        public string Rdataset;
+        public string mRDataset;
 
-        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")] public string mstrFiltCutoff;
-        public string mstrmode;
-        public string mstrK;
-        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")] public string mstrNPCs;
-        public string mstrSVDth;
-        public string mstrMaxIter;
-        public string mstrSubConst;
+        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")] public string mFiltCutoff;
+        public string mImputationMode;
+        public string mK;
+        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")] public string mNPCs;
+        public string mSVDth;
+        public string mMaxIterations;
+        public string mSubConst;
         [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")] public bool mblNoFill;
 
-        private string mstrFactor;
+        private string mFactor;
         public int mintFactorIndex;
 
         public clsImputePar()
         {
             DataSetName = "Eset";
-            mstrFiltCutoff = "20";
-            mstrmode = "mean";
-            mstrK = "10";
-            mstrNPCs = "5";
-            mstrSVDth = "0.01";
-            mstrMaxIter = "100";
-            mstrSubConst = "1";
-            mstrFactor = "";
+            mFiltCutoff = "20";
+            mImputationMode = "mean";
+            mK = "10";
+            mNPCs = "5";
+            mSVDth = "0.01";
+            mMaxIterations = "100";
+            mSubConst = "1";
+            mFactor = "";
             mblNoFill = false;
             mintFactorIndex = 1;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "imputedData <- imputeData(" + Rdataset + "," + mstrFiltCutoff + @",""" + mstrmode + @"""," +
-                       mstrK + "," + mstrNPCs + "," + mstrSVDth + "," + mstrMaxIter + "," + mstrSubConst +
+                mRCmd = "imputedData <- imputeData(" + mRDataset + "," + mFiltCutoff + @",""" + mImputationMode + @"""," +
+                       mK + "," + mNPCs + "," + mSVDth + "," + mMaxIterations + "," + mSubConst +
                        "," + this.Factor + "," + this.NoFill + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 
@@ -52,19 +52,19 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Equals("const"))
-                    return "Sustitute Constant";
-                if (mstrmode.Equals("mean"))
+                if (mImputationMode.Equals("const"))
+                    return "Substitute Constant";
+                if (mImputationMode.Equals("mean"))
                     return "Dataset Mean";
-                if (mstrmode.Equals("median"))
+                if (mImputationMode.Equals("median"))
                     return "Dataset Median";
-                if (mstrmode.Equals("rowmean"))
+                if (mImputationMode.Equals("rowmean"))
                     return "Use Row Mean";
-                if (mstrmode.Equals("knn"))
+                if (mImputationMode.Equals("knn"))
                     return "kNNImpute";
-                if (mstrmode.Equals("knnw"))
+                if (mImputationMode.Equals("knnw"))
                     return "Weighted kNNImpute";
-                if (mstrmode.Equals("svd"))
+                if (mImputationMode.Equals("svd"))
                     return "SVDImpute";
                 else
                     return "None";
@@ -76,8 +76,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Contains("knn"))
-                    return mstrK;
+                if (mImputationMode.Contains("knn"))
+                    return mK;
                 else
                     return "Not applicable";
             }
@@ -88,8 +88,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Contains("svd"))
-                    return mstrNPCs;
+                if (mImputationMode.Contains("svd"))
+                    return mNPCs;
                 else
                     return "Not applicable";
             }
@@ -100,8 +100,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Contains("svd"))
-                    return mstrMaxIter;
+                if (mImputationMode.Contains("svd"))
+                    return mMaxIterations;
                 else
                     return "Not applicable";
             }
@@ -112,8 +112,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Contains("svd"))
-                    return mstrSVDth;
+                if (mImputationMode.Contains("svd"))
+                    return mSVDth;
                 else
                     return "Not applicable";
             }
@@ -124,8 +124,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if (mstrmode.Contains("const"))
-                    return mstrSubConst;
+                if (mImputationMode.Contains("const"))
+                    return mSubConst;
                 else
                     return "Not applicable";
             }
@@ -158,8 +158,8 @@ namespace DAnTE.Purgatorio
 
         public string FactorSelected
         {
-            set => mstrFactor = value;
-            get => mstrFactor;
+            set => mFactor = value;
+            get => mFactor;
         }
 
         [Tools.clsAnalysisAttribute("Selected_Factor", "Imputation")]
@@ -167,8 +167,8 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                if ((mstrmode.Contains("svd")) || (mstrmode.Contains("knn")) || (mstrmode.Contains("rowmean")))
-                    return mstrFactor;
+                if ((mImputationMode.Contains("svd")) || (mImputationMode.Contains("knn")) || (mImputationMode.Contains("rowmean")))
+                    return mFactor;
                 else
                     return "Not applicable";
             }

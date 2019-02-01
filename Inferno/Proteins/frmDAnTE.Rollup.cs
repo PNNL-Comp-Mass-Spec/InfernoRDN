@@ -21,7 +21,7 @@ namespace DAnTE.Inferno
         /// <param name="e"></param>
         private void menuItemRRollup_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateTables(selectedNodeTag, "RRollup"))
             {
@@ -59,9 +59,9 @@ namespace DAnTE.Inferno
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsRRollupPar, "RRollup");
-                    var rcmd = mclsRRollupPar.Rcmd;
+                    var rCmd = mclsRRollupPar.RCommand;
 
-                    m_BackgroundWorker.RunWorkerAsync(rcmd);
+                    m_BackgroundWorker.RunWorkerAsync(rCmd);
                     mfrmShowProgress.Reset("RRollup : Scaling Peptides and Rolling up to Proteins ...");
                     mfrmShowProgress.ShowDialog();
                 }
@@ -78,7 +78,7 @@ namespace DAnTE.Inferno
 
         private void menuItemZRollup_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateTables(selectedNodeTag, "ZRollup"))
             {
@@ -116,7 +116,7 @@ namespace DAnTE.Inferno
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsZRollupPar, "ZRollup");
-                    var rcmd = mclsZRollupPar.Rcmd;
+                    var rcmd = mclsZRollupPar.RCommand;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
                     mfrmShowProgress.Reset("ZRollup: Scaling Peptides and Rolling up to Proteins ...");
@@ -134,7 +134,7 @@ namespace DAnTE.Inferno
 
         private void menuItemQRup_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateTables(selectedNodeTag, "QRollup"))
             {
@@ -172,7 +172,7 @@ namespace DAnTE.Inferno
                 if (dataset != null)
                 {
                     Add2AnalysisHTable(mclsQRollupPar, "QRollup");
-                    var rcmd = mclsQRollupPar.Rcmd;
+                    var rcmd = mclsQRollupPar.RCommand;
 
                     m_BackgroundWorker.RunWorkerAsync(rcmd);
                     mfrmShowProgress.Reset("QRollup: Rolling up to Proteins ...");

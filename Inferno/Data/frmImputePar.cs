@@ -158,13 +158,13 @@ namespace DAnTE.Inferno
         {
             get
             {
-                mclsImputePar.mstrFiltCutoff = CutOff;
-                mclsImputePar.mstrmode = Mode;
-                mclsImputePar.mstrK = K;
-                mclsImputePar.mstrNPCs = nPCs;
-                mclsImputePar.mstrSVDth = SVDthres;
-                mclsImputePar.mstrMaxIter = MaxSteps;
-                mclsImputePar.mstrSubConst = Const;
+                mclsImputePar.mFiltCutoff = CutOff;
+                mclsImputePar.mImputationMode = Mode;
+                mclsImputePar.mK = K;
+                mclsImputePar.mNPCs = nPCs;
+                mclsImputePar.mSVDth = SVDthres;
+                mclsImputePar.mMaxIterations = MaxSteps;
+                mclsImputePar.mSubConst = Const;
                 mclsImputePar.FactorSelected = Factor;
                 mclsImputePar.mintFactorIndex = FactorIndex;
                 mclsImputePar.mblNoFill = NoFill;

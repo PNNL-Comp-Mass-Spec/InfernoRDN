@@ -12,7 +12,7 @@ namespace DAnTE.Inferno
     public enum enmDataType
     {
         /// <summary>
-        /// Flat file of expression data
+        /// Flat file of expression data (expression set)
         /// </summary>
         ESET,
 
@@ -583,10 +583,10 @@ namespace DAnTE.Inferno
                 return false;
             }
 
-            var rcmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
+            var rCmd = "load(file=\"" + dataFilePath.Replace("\\", "/") + "\")";
             try
             {
-                mRConnector.EvaluateNoReturn(rcmd);
+                mRConnector.EvaluateNoReturn(rCmd);
                 vars = mRConnector.GetSymbolAsStrings("vars");
                 mRConnector.EvaluateNoReturn("print(vars)");
             }
@@ -788,14 +788,14 @@ namespace DAnTE.Inferno
                     dataNodeToAdd.mTNode.ContextMenuStrip = mContextMenuTreeV;
 
                 if (dataNodeToAdd.mstrParentNode.Equals("DAnTE"))
-                    ctltreeView.Nodes[0].Nodes.Add(dataNodeToAdd.mTNode);
+                    ctlTreeView.Nodes[0].Nodes.Add(dataNodeToAdd.mTNode);
                 else
                 {
                     var parentNode = (mhtDatasets[dataNodeToAdd.mstrParentNode]).mTNode;
                     parentNode.Nodes.Add(dataNodeToAdd.mTNode);
                 }
-                ctltreeView.ExpandAll();
-                ctltreeView.SelectedNode = dataNodeToAdd.mTNode;
+                ctlTreeView.ExpandAll();
+                ctlTreeView.SelectedNode = dataNodeToAdd.mTNode;
                 statusBarPanelMsg.Text = dataNodeToAdd.mstrMessage;
                 statusBarPanelRowNum.Text = dataNodeToAdd.mDTable.Rows.Count + " Rows/" +
                                             dataNodeToAdd.mDTable.Columns.Count + " Columns.";
@@ -804,7 +804,7 @@ namespace DAnTE.Inferno
             else
             {
                 tn.Tag = dataNodeToAdd;
-                ctltreeView.SelectedNode = tn;
+                ctlTreeView.SelectedNode = tn;
                 NodeSelect(tn);
             }
         }
@@ -880,16 +880,16 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private string Vars2Save()
         {
-            string rcmd = null;
+            string rCmd = null;
             foreach (var item in mhtDatasets)
             {
                 var datasetItem = item.Value;
                 if (!string.IsNullOrWhiteSpace(datasetItem.mstrRProtDatasetName))
-                    rcmd += '"' + datasetItem.mstrRProtDatasetName + '"' + ",";
+                    rCmd += '"' + datasetItem.mstrRProtDatasetName + '"' + ",";
                 else
-                    rcmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
+                    rCmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
             }
-            return rcmd;
+            return rCmd;
         }
 
         /// <summary>
@@ -899,14 +899,14 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private string NumericVars()
         {
-            string rcmd = null;
+            string rCmd = null;
             foreach (var item in mhtDatasets)
             {
                 var datasetItem = item.Value;
                 if (datasetItem.mblIsNumeric)
-                    rcmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
+                    rCmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
             }
-            return rcmd;
+            return rCmd;
         }
 
         /// <summary>
@@ -928,7 +928,7 @@ namespace DAnTE.Inferno
 
         private TreeNode GetNode(string nodeText)
         {
-            var allNodes = ctltreeView.Nodes[0].Nodes;
+            var allNodes = ctlTreeView.Nodes[0].Nodes;
 
             foreach (TreeNode node in allNodes)
             {
@@ -948,7 +948,7 @@ namespace DAnTE.Inferno
         }
 
         /// <summary>
-        /// Deleting each datatable.
+        /// Deleting each DataTable.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -968,18 +968,18 @@ namespace DAnTE.Inferno
         {
             if (mtabControlData.Controls.Count != 0)
             {
-                var currNode = ctltreeView.SelectedNode;
-                var strSelectedNode = currNode.Text;
+                var currentNode = ctlTreeView.SelectedNode;
+                var strSelectedNode = currentNode.Text;
 
-                ctltreeView.Nodes.Remove(currNode);
-                RemoveNodeTree(currNode);
+                ctlTreeView.Nodes.Remove(currentNode);
+                RemoveNodeTree(currentNode);
 
-                if (ctltreeView.Nodes[0].Nodes.Count > 0)
+                if (ctlTreeView.Nodes[0].Nodes.Count > 0)
                 {
-                    var idx = ctltreeView.Nodes[0].Nodes.Count;
-                    ctltreeView.SelectedNode = ctltreeView.Nodes[0].Nodes[idx - 1];
+                    var idx = ctlTreeView.Nodes[0].Nodes.Count;
+                    ctlTreeView.SelectedNode = ctlTreeView.Nodes[0].Nodes[idx - 1];
                 }
-                if (ctltreeView.Nodes[0].Nodes.Count == 0)
+                if (ctlTreeView.Nodes[0].Nodes.Count == 0)
                 {
                     mtabControlData.Controls.RemoveAt(0);
                     Title = "Main";

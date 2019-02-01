@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsQRollupPar
     {
-        private string rcmd;
+        private string mRCmd;
         private readonly string mstrOutFolder = null;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "QRollup")]
@@ -23,13 +23,13 @@ namespace DAnTE.Purgatorio
             DataSetName = "Eset";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "qrollupP <- QRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence + "," +
+                mRCmd = "qrollupP <- QRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence + "," +
                        TopPercn + "," + TopN + "," + Mode + "," + OneHitWonders + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsOneSampleTtestPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Rdataset;
 
         [Tools.clsAnalysisAttribute("Source_DataTable", "OneSample_T_Test")] public string mstrDatasetName;
@@ -14,12 +14,12 @@ namespace DAnTE.Purgatorio
             numDatapts = 3;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "ttest <- Ttest(" + Rdataset + ",thres=" + numDatapts + ")";
-                return rcmd;
+                mRCmd = "ttest <- Ttest(" + Rdataset + ",thres=" + numDatapts + ")";
+                return mRCmd;
             }
         }
     }

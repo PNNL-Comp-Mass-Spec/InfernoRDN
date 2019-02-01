@@ -21,14 +21,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemQQplot_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsQQPar = qqParams.clsQQPar;
-                    var qqPlot = new clsRplotData(clsQQPar.Rcmd, "QQ");
+                    var qqPlot = new clsRplotData(clsQQPar.RCommand, "QQ");
 
                     m_BackgroundWorker.RunWorkerAsync(qqPlot);
                     mfrmShowProgress.Reset("Generating Q-Q Plots ...");
@@ -86,14 +86,14 @@ namespace DAnTE.Inferno
         /// <param name="e"></param>
         private void mnuHistogrms_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -128,7 +128,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsHistPar = histogramParams.clsHistPar;
-                    var histogramPlot = new clsRplotData(clsHistPar.Rcmd, "Hist");
+                    var histogramPlot = new clsRplotData(clsHistPar.RCommand, "Hist");
 
                     m_BackgroundWorker.RunWorkerAsync(histogramPlot);
                     mfrmShowProgress.Reset("Generating Histograms ...");
@@ -146,14 +146,14 @@ namespace DAnTE.Inferno
 
         private void menuItemCorr_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -188,7 +188,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsCorrPar = correlationParams.clsCorrPar;
-                    var correlationPlot = new clsRplotData(mclsCorrPar.Rcmd, "Corr");
+                    var correlationPlot = new clsRplotData(mclsCorrPar.RCommand, "Corr");
 
                     m_BackgroundWorker.RunWorkerAsync(correlationPlot);
                     mfrmShowProgress.Reset("Generating Correlation Plot ...");
@@ -206,14 +206,14 @@ namespace DAnTE.Inferno
 
         private void menuItemBoxPlot_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -255,7 +255,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsBoxPlotPar = boxPlotParams.clsBoxPlotPar;
-                    var boxPlot = new clsRplotData(mclsBoxPlotPar.Rcmd, "Box");
+                    var boxPlot = new clsRplotData(mclsBoxPlotPar.RCommand, "Box");
 
                     m_BackgroundWorker.RunWorkerAsync(boxPlot);
                     mfrmShowProgress.Reset("Generating the Box Plot ...");
@@ -317,14 +317,14 @@ namespace DAnTE.Inferno
 
         private void menuItemMAPlot_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -359,7 +359,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     mclsMApar = maPlotParams.clsMAplotPar;
-                    var maPlot = new clsRplotData(mclsMApar.Rcmd, "MA");
+                    var maPlot = new clsRplotData(mclsMApar.RCommand, "MA");
 
                     m_BackgroundWorker.RunWorkerAsync(maPlot);
                     mfrmShowProgress.Reset("Generating MA Plots ...");
@@ -379,7 +379,7 @@ namespace DAnTE.Inferno
         {
             try
             {
-                var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+                var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
                 if (!ValidateNodeIsSelected(selectedNodeTag))
                 {
@@ -428,7 +428,7 @@ namespace DAnTE.Inferno
 
         private void ctxtMnuItemPlotRows_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
@@ -438,7 +438,7 @@ namespace DAnTE.Inferno
             var plotDisplay = new frmPlotDisplay();
             var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
 
-            if (!ValidateIsPlottable(selectedNodeTag))
+            if (!ValidateIsPlotTable(selectedNodeTag))
             {
                 return;
             }
@@ -491,14 +491,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemVenn_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -536,7 +536,7 @@ namespace DAnTE.Inferno
                 if (res == DialogResult.OK)
                 {
                     vennParameters = vennDiagramParams.clsVennPar;
-                    var vennDiagramPlot = new clsRplotData(vennParameters.Rcmd, "Venn");
+                    var vennDiagramPlot = new clsRplotData(vennParameters.RCommand, "Venn");
 
                     m_BackgroundWorker.RunWorkerAsync(vennDiagramPlot);
                     mfrmShowProgress.Reset("Generating Venn Diagram ...");

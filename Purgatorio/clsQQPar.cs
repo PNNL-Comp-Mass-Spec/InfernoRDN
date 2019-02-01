@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsQQPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Fcol;
         public string Bcol;
         public string Lcol;
@@ -26,7 +26,7 @@ namespace DAnTE.Purgatorio
         public clsQQPar()
         {
             ncolumns = 2;
-            rcmd = "";
+            mRCmd = "";
             datasubset = null;
             Fcol = Settings.Default.qqForeCol;
             Bcol = Settings.Default.qqBkCol;
@@ -47,17 +47,17 @@ namespace DAnTE.Purgatorio
             exprate = "1.0";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "plot_qq(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
-                rcmd = rcmd + RefDistr(reference) + ",wshape=" + wshape + ",wscale=" + wscale + ",degfree=" +
+                mRCmd = "plot_qq(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
+                mRCmd = mRCmd + RefDistr(reference) + ",wshape=" + wshape + ",wscale=" + wscale + ",degfree=" +
                        df + ",exprate=" + exprate + ",";
-                rcmd = rcmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @""","
+                mRCmd = mRCmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @""","
                        + @"colL=""" + Lcol + @""",";
-                rcmd = rcmd + bkground + @",file=""" + tempFile + @""")";
-                return rcmd;
+                mRCmd = mRCmd + bkground + @",file=""" + tempFile + @""")";
+                return mRCmd;
             }
         }
 

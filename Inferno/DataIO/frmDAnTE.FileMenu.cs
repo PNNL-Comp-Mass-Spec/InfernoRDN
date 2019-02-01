@@ -242,7 +242,7 @@ namespace DAnTE.Inferno
                 // Load succeeded (or an exception occurred)
                 if (success)
                 {
-                    ctltreeView.Nodes[0].Nodes.Clear();
+                    ctlTreeView.Nodes[0].Nodes.Clear();
 
                     foreach (var dataset in mhtDatasets)
                     {
@@ -468,7 +468,7 @@ namespace DAnTE.Inferno
         {
             try
             {
-                var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+                var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
                 if (mtabControlData.Controls.Count != 0)
                 {
@@ -544,7 +544,7 @@ namespace DAnTE.Inferno
 
         private void mCtxtMenuSave_Click(object sender, EventArgs e)
         {
-            var selectedTable = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedTable = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!mhtDatasets.ContainsKey("Protein Info"))
             {

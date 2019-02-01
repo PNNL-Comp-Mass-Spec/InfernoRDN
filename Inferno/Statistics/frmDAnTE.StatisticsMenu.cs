@@ -283,7 +283,7 @@ namespace DAnTE.Inferno
 
         private void menuItemANOVA_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateFactorsDefined("use ANOVA"))
             {
@@ -325,7 +325,7 @@ namespace DAnTE.Inferno
 
                     Add2AnalysisHTable(mclsAnovaPar, "ANOVA");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsAnovaPar.Rcmd);
+                    m_BackgroundWorker.RunWorkerAsync(mclsAnovaPar.RCommand);
                     mfrmShowProgress.Reset("Performing ANOVA ...");
                     mfrmShowProgress.ShowDialog();
                 }
@@ -342,7 +342,7 @@ namespace DAnTE.Inferno
         [Obsolete("Unused")]
         private void menuItemTamuQ_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateFactorsDefined("use TamuQ"))
             {
@@ -384,7 +384,7 @@ namespace DAnTE.Inferno
 
                     Add2AnalysisHTable(mclsAnovaPar, "TamuQ");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsTamuQPar.Rcmd);
+                    m_BackgroundWorker.RunWorkerAsync(mclsTamuQPar.RCommand);
                     mfrmShowProgress.Reset("Performing TamuQ ...");
                     mfrmShowProgress.ShowDialog();
                 }
@@ -400,7 +400,7 @@ namespace DAnTE.Inferno
 
         private void menuItemKW_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateFactorsDefined("use the Kruskal-Walis Test"))
             {
@@ -442,7 +442,7 @@ namespace DAnTE.Inferno
 
                     Add2AnalysisHTable(mclsKWpar, "Kruskal-Walis_Test");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsKWpar.Rcmd);
+                    m_BackgroundWorker.RunWorkerAsync(mclsKWpar.RCommand);
                     mfrmShowProgress.Reset("Performing KW test ...");
                     mfrmShowProgress.ShowDialog();
                 }
@@ -458,7 +458,7 @@ namespace DAnTE.Inferno
 
         private void menuItemWilcox_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!t_testPossible() || !mhtDatasets.ContainsKey("Factors"))
             {
@@ -505,7 +505,7 @@ namespace DAnTE.Inferno
 
                     Add2AnalysisHTable(mclsWilcoxPar, "Wilcoxon_Test");
 
-                    m_BackgroundWorker.RunWorkerAsync(mclsWilcoxPar.Rcmd);
+                    m_BackgroundWorker.RunWorkerAsync(mclsWilcoxPar.RCommand);
                     mfrmShowProgress.Reset("Performing Wilcoxon test ...");
                     mfrmShowProgress.ShowDialog();
                 }
@@ -521,7 +521,7 @@ namespace DAnTE.Inferno
 
         private void menuItemShapiroWilks_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
@@ -553,7 +553,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsShapiroWilksPar, "Shapiro-Wilks_Test");
 
-                m_BackgroundWorker.RunWorkerAsync(mclsShapiroWilksPar.Rcmd);
+                m_BackgroundWorker.RunWorkerAsync(mclsShapiroWilksPar.RCommand);
                 mfrmShowProgress.Reset("Performing Shapiro-Wilks test ...");
                 mfrmShowProgress.ShowDialog();
             }
@@ -568,7 +568,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemFC_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateFactorsDefined("calculate fold changes"))
             {
@@ -603,7 +603,7 @@ namespace DAnTE.Inferno
 
             try
             {
-                mRConnector.EvaluateNoReturn(mclsFoldChangePar.Rcmd);
+                mRConnector.EvaluateNoReturn(mclsFoldChangePar.RCommand);
                 if (mRConnector.GetTableFromRmatrix("foldChanges"))
                 {
                     var foldChangeData = mRConnector.DataTable.Copy();
@@ -620,7 +620,7 @@ namespace DAnTE.Inferno
 
         private void menuItemOneSampleTtest_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag))
             {
@@ -652,7 +652,7 @@ namespace DAnTE.Inferno
 
                 Add2AnalysisHTable(mclsOneSampleTtestPar, "T_Test");
 
-                m_BackgroundWorker.RunWorkerAsync(mclsOneSampleTtestPar.Rcmd);
+                m_BackgroundWorker.RunWorkerAsync(mclsOneSampleTtestPar.RCommand);
                 mfrmShowProgress.Reset("Performing One Sample T-test ...");
                 mfrmShowProgress.ShowDialog();
             }
@@ -667,7 +667,7 @@ namespace DAnTE.Inferno
 
         private void ctxtMnuItemFilter_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (ctltabPage == null || selectedNodeTag?.mDTable == null)
             {

@@ -4,7 +4,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsLinRegrnPar
     {
-        private string rcmd;
+        private string mRCmd;
         private string mstrOutFolder;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "LinearRegression")]
@@ -26,13 +26,13 @@ namespace DAnTE.Purgatorio
             mstrOutFolder = @"C:\";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "linregData <- LinReg_normalize(" + Rdataset + "," + this.Factors +
+                mRCmd = "linregData <- LinReg_normalize(" + Rdataset + "," + this.Factors +
                        "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

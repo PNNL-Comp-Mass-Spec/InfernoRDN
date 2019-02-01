@@ -4,7 +4,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsLogTransformPar
     {
-        private string rcmd;
+        private string mRCmd;
         private string mstrLogBase;
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Log")]
         public string Rdataset;
@@ -20,13 +20,13 @@ namespace DAnTE.Purgatorio
             DatasetName = "Expressions";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "logEset <- logTransform(" + Rdataset + "," + this.LogBase_R + "," + this.Bias_R +
+                mRCmd = "logEset <- logTransform(" + Rdataset + "," + this.LogBase_R + "," + this.Bias_R +
                        "," + this.BiasOp_R + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

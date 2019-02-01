@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsShapiroWilksPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "Shapiro-Wilks_Test")] public string mstrDatasetName;
         [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Shapiro-Wilks_Test")] public int numDatapts;
@@ -13,12 +13,12 @@ namespace DAnTE.Purgatorio
             numDatapts = 3;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "swtest <- testShapiroWilks(" + Rdataset + ",thres=" + numDatapts + ")";
-                return rcmd;
+                mRCmd = "swtest <- testShapiroWilks(" + Rdataset + ",thres=" + numDatapts + ")";
+                return mRCmd;
             }
         }
     }

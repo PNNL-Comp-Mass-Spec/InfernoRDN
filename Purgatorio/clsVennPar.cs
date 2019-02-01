@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsVennPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string x1, x2, x3;
         public string labelA, labelB, labelC;
         public string tempFile;
@@ -27,16 +27,16 @@ namespace DAnTE.Purgatorio
             tempFile = "C:/_temp.png";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
                 if (mblPlotFac)
-                    rcmd = "PlotVenn(" + this.FactorLevels + "," + this.ListNames + @",file=""" +
+                    mRCmd = "PlotVenn(" + this.FactorLevels + "," + this.ListNames + @",file=""" +
                            tempFile + @"""," + factor + @",Data=" + Rdataset + @")";
                 else
-                    rcmd = "PlotVenn(" + DataLists + "," + ListNames + @",file=""" + tempFile + @""")";
-                return rcmd;
+                    mRCmd = "PlotVenn(" + DataLists + "," + ListNames + @",file=""" + tempFile + @""")";
+                return mRCmd;
             }
         }
 

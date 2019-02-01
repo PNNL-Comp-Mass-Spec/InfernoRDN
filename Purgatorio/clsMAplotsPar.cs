@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsMAplotsPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string datasubset;
         public string dCol;
         public string lCol;
@@ -38,14 +38,14 @@ namespace DAnTE.Purgatorio
             stamp = false;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "MApairs(" + Rdataset + "[," + datasubset + "]," + this.Stamp + ",";
-                rcmd = rcmd + @"dCol=""" + dCol + @"""," + @"lCol=""" + lCol + @"""," + this.Background + ",";
-                rcmd = rcmd + @"file=""" + tempFile + @""")";
-                return rcmd;
+                mRCmd = "MApairs(" + Rdataset + "[," + datasubset + "]," + this.Stamp + ",";
+                mRCmd = mRCmd + @"dCol=""" + dCol + @"""," + @"lCol=""" + lCol + @"""," + this.Background + ",";
+                mRCmd = mRCmd + @"file=""" + tempFile + @""")";
+                return mRCmd;
             }
         }
 

@@ -6,7 +6,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsBoxPlotPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string datasubset;
         public string color;
         public bool trBkground;
@@ -46,17 +46,17 @@ namespace DAnTE.Purgatorio
         }
 
         [Tools.clsAnalysisAttribute("RBoxPlotCmd", "Plots")]
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "dataBoxPlots(" + Rdataset + "[," + datasubset + "]," + this.FontScale + ",";
-                rcmd = rcmd + @"color=""" + color + @"""," + this.BoxWidth + "," + this.Background +
+                mRCmd = "dataBoxPlots(" + Rdataset + "[," + datasubset + "]," + this.FontScale + ",";
+                mRCmd = mRCmd + @"color=""" + color + @"""," + this.BoxWidth + "," + this.Background +
                        ",Factor=" + factor + "," + this.ShowCount + "," + this.Stamp + ",";
                 if (!outliers)
-                    rcmd = rcmd + "outliers=FALSE,";
-                rcmd = rcmd + @"file=""" + tempFile + @""")";
-                return rcmd;
+                    mRCmd = mRCmd + "outliers=FALSE,";
+                mRCmd = mRCmd + @"file=""" + tempFile + @""")";
+                return mRCmd;
             }
         }
 

@@ -175,7 +175,7 @@ namespace DAnTE.Inferno
             return true;
         }
 
-        private bool ValidateIsPlottable(clsDatasetTreeNode mclsSelected, int minimumColCount = 1)
+        private bool ValidateIsPlotTable(clsDatasetTreeNode mclsSelected, int minimumColCount = 1)
         {
             if (!mclsSelected.mblIsPlottable)
             {
@@ -267,14 +267,14 @@ namespace DAnTE.Inferno
         /// <summary>
         /// What to do when an item from the treeview control is selected
         /// </summary>
-        private void ctltreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void ctlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                ctltreeView.SelectedNode = ctltreeView.GetNodeAt(e.X, e.Y);
+                ctlTreeView.SelectedNode = ctlTreeView.GetNodeAt(e.X, e.Y);
             NodeSelect(e.Node);
         }
 
-        private void ctltreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void ctlTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             NodeSelect(e.Node);
         }

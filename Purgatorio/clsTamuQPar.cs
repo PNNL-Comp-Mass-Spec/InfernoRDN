@@ -4,7 +4,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsTamuQPar
     {
-        private string rcmd;
+        private string mRCmd;
         [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "TAMUimputation")] public readonly bool unbalanced;
         [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "TAMUimputation")] public readonly bool useREML;
         [Tools.clsAnalysisAttribute("Check_Interactions", "TAMUimputation")] public readonly bool interactions;
@@ -24,12 +24,12 @@ namespace DAnTE.Purgatorio
             randomEff = new List<string>();
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "tamuQ <- DoTamuQ(" + Rdataset + "," + FixedEffects + ")";
-                return rcmd;
+                mRCmd = "tamuQ <- DoTamuQ(" + Rdataset + "," + FixedEffects + ")";
+                return mRCmd;
             }
         }
 

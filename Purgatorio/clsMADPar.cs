@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsMADPar
     {
-        private string rcmd;
+        private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "MedianAbsoluteDeviation_Adjustment")]
         public string Rdataset;
@@ -19,12 +19,12 @@ namespace DAnTE.Purgatorio
             mblMeanAdj = false;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "madEset <- adjustMAD(" + Rdataset + "," + this.Factor + "," + this.MeanAdj + ")";
-                return rcmd;
+                mRCmd = "madEset <- adjustMAD(" + Rdataset + "," + this.Factor + "," + this.MeanAdj + ")";
+                return mRCmd;
             }
         }
 

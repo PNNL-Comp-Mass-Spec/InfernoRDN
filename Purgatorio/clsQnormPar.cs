@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsQnormPar
     {
-        private string rcmd;
+        private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Quantile_Normalization")]
         public string Rdataset;
@@ -12,12 +12,12 @@ namespace DAnTE.Purgatorio
             DataSetName = "Eset";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "quaNormEset <- quantileN(" + Rdataset + ")";
-                return rcmd;
+                mRCmd = "quaNormEset <- quantileN(" + Rdataset + ")";
+                return mRCmd;
             }
         }
 

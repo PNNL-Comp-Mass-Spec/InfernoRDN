@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsFoldChangePar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")] public string mstrDatasetName;
         [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")] public string selectedFactor;
@@ -21,13 +21,13 @@ namespace DAnTE.Purgatorio
             mbllogScale = true;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "foldChanges <- calcFoldChanges(" + Rdataset + "," + this.Factor + "," +
+                mRCmd = "foldChanges <- calcFoldChanges(" + Rdataset + "," + this.Factor + "," +
                        this.FactorValue1 + "," + this.FactorValue2 + "," + this.DataScale + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

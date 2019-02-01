@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsWilcoxonPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "Wilcoxon_Test")] public string mstrDatasetName;
         [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "Wilcoxon_Test")] public int numDatapts;
@@ -15,13 +15,13 @@ namespace DAnTE.Purgatorio
             selectedFactor = "";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "wilcoxtest <- DoNonPara(" + Rdataset + @",FixedEffects=""" + selectedFactor +
+                mRCmd = "wilcoxtest <- DoNonPara(" + Rdataset + @",FixedEffects=""" + selectedFactor +
                        @""",thres=" + numDatapts + @",testType=""Wilcox"")";
-                return rcmd;
+                return mRCmd;
             }
         }
     }

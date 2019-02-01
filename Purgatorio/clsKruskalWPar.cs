@@ -4,7 +4,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsKruskalWPar
     {
-        private string rcmd;
+        private string mRCmd;
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Kruskal-Walis Test")]
         public string Rdataset;
         [Tools.clsAnalysisAttribute("Source_DataTable", "Kruskal-Walis_Test")] public string mstrDatasetName;
@@ -20,13 +20,13 @@ namespace DAnTE.Purgatorio
             nF = 0;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "kwtest <- DoNonPara(" + Rdataset + @",FixedEffects=""" + selectedFactor +
+                mRCmd = "kwtest <- DoNonPara(" + Rdataset + @",FixedEffects=""" + selectedFactor +
                        @""",thres=" + numDatapts + @",testType=""KW"")";
-                return rcmd;
+                return mRCmd;
             }
         }
     }

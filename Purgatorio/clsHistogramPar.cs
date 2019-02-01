@@ -10,7 +10,7 @@ namespace DAnTE.Purgatorio
         /// </summary>
         private const string BIN_METHOD_STURGES = "Sturges";
 
-        private string rcmd;
+        private string mRCmd;
         public string Fcol;
         public string Bcol;
         public string bkground;
@@ -37,7 +37,7 @@ namespace DAnTE.Purgatorio
 
             numBins = 11;
             autoBins = true;
-            rcmd = "";
+            mRCmd = "";
             datasubset = null;
 
             // When true, add tick marks
@@ -66,14 +66,14 @@ namespace DAnTE.Purgatorio
             return "cells=" + '"' + binMethod + '"';
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "plot_hist(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
-                rcmd = rcmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @"""," + bkground + ",";
-                rcmd = rcmd + addrug + "," + Bins + "," + Stamp + @",file=""" + tempFile + @""")";
-                return rcmd;
+                mRCmd = "plot_hist(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
+                mRCmd = mRCmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @"""," + bkground + ",";
+                mRCmd = mRCmd + addrug + "," + Bins + "," + Stamp + @",file=""" + tempFile + @""")";
+                return mRCmd;
             }
         }
 

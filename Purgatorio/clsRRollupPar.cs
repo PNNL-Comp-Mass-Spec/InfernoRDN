@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsRRollupPar
     {
-        private string rcmd;
+        private string mRCmd;
         private string mstrOutFolder;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "RRollup")]
@@ -24,15 +24,15 @@ namespace DAnTE.Purgatorio
             mstrOutFolder = @"C:\";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "pScaled1 <- RRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence +
+                mRCmd = "pScaled1 <- RRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence +
                        "," + OneHitWonders + "," + Mode + ",minOverlap=" + mstrOverlap + ",gpvalue=" + mstrGrubsP +
                        ",gminPCount=" + mstrGrubsNum + "," + OutFolder + "," +
                        PlotFlag + "," + MeanCenter + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsCentralTendencyPar
     {
-        private string rcmd;
+        private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "CentralTendency")]
         public string Rdataset;
@@ -19,17 +19,17 @@ namespace DAnTE.Purgatorio
             mstrmethod = "MeanCenter.Sub";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
                 if (mblUseMeanTend)
-                    rcmd = "meanCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
+                    mRCmd = "meanCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
                            this.ZeroCenter + ")";
                 else
-                    rcmd = "medianCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
+                    mRCmd = "medianCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
                            this.ZeroCenter + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

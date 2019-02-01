@@ -4,7 +4,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsAnovaPar
     {
-        private string rcmd;
+        private string mRCmd;
         [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")] public bool unbalanced;
         public bool randomE;
         [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")] public bool useREML;
@@ -28,14 +28,14 @@ namespace DAnTE.Purgatorio
             randomEff = new List<string>();
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "anovaR <- DoAnova(" + Rdataset + ",FixedEffects=" + FixedEffects +
+                mRCmd = "anovaR <- DoAnova(" + Rdataset + ",FixedEffects=" + FixedEffects +
                        ",RandomEffects=" + RandomEffects + ",thres=" + numDatapts + "," +
                        Interactions + "," + Unbalanced + "," + UseREML + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

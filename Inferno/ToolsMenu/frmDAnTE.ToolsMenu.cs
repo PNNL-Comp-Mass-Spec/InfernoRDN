@@ -79,7 +79,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemMissFilt_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
@@ -128,7 +128,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemMergeCols_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {

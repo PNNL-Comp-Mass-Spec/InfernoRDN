@@ -19,14 +19,14 @@ namespace DAnTE.Inferno
 
         private void menuItemPCAPlot_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -75,7 +75,7 @@ namespace DAnTE.Inferno
             if (frmPCA.ShowDialog() == DialogResult.OK)
             {
                 mclsPCApar = frmPCA.clsPCApar;
-                var pcaPlots = new clsRplotData(mclsPCApar.Rcmd, "PCA");
+                var pcaPlots = new clsRplotData(mclsPCApar.RCommand, "PCA");
 
                 m_BackgroundWorker.RunWorkerAsync(pcaPlots);
                 mfrmShowProgress.Reset("Generating PCA Plots ...");
@@ -94,7 +94,7 @@ namespace DAnTE.Inferno
 
         private void mnuItemHeatmap_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
@@ -103,7 +103,7 @@ namespace DAnTE.Inferno
 
             maxRow = selectedNodeTag.mDTable.Rows.Count;
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -163,7 +163,7 @@ namespace DAnTE.Inferno
                 {
                     mclsHeatmapPar = frmHmapParams.clsHmapPar;
                     doClust = frmHmapParams.DoClust;
-                    var heatmapPlot = new clsRplotData(mclsHeatmapPar.Rcmd, "Hmap");
+                    var heatmapPlot = new clsRplotData(mclsHeatmapPar.RCommand, "Hmap");
 
                     Add2AnalysisHTable(mclsHeatmapPar, "Heatmap_Clustering");
 
@@ -183,14 +183,14 @@ namespace DAnTE.Inferno
 
         private void mnuItemPatterns_Click(object sender, EventArgs e)
         {
-            var selectedNodeTag = (clsDatasetTreeNode)ctltreeView.SelectedNode.Tag;
+            var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
             if (!ValidateNodeIsSelected(selectedNodeTag))
             {
                 return;
             }
 
-            if (!ValidateIsPlottable(selectedNodeTag, 2))
+            if (!ValidateIsPlotTable(selectedNodeTag, 2))
             {
                 return;
             }
@@ -228,7 +228,7 @@ namespace DAnTE.Inferno
                         mclsPatternPar = patternDefForm.clsPatternPar;
                         Add2AnalysisHTable(mclsPatternPar, "Pattern_Search");
 
-                        m_BackgroundWorker.RunWorkerAsync(mclsPatternPar.Rcmd);
+                        m_BackgroundWorker.RunWorkerAsync(mclsPatternPar.RCommand);
                         mfrmShowProgress.Reset("Pattern Searching ...");
                         mfrmShowProgress.ShowDialog();
                     }
@@ -253,7 +253,7 @@ namespace DAnTE.Inferno
             var success = true;
             try
             {
-                mRConnector.EvaluateNoReturn(mclsPatternPar.Rcmd);
+                mRConnector.EvaluateNoReturn(mclsPatternPar.RCommand);
                 if (mRConnector.GetTableFromRmatrix("patternData"))
                 {
                     var patternTable = mRConnector.DataTable.Copy();

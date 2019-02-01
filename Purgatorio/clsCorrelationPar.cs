@@ -208,7 +208,7 @@ namespace DAnTE.Purgatorio
             }
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {

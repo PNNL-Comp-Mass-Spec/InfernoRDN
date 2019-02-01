@@ -2,7 +2,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsLoessPar
     {
-        private string rcmd;
+        private string mRCmd;
         private string mstrOutFolder;
 
         [Tools.clsAnalysisAttribute("Span", "LOESS")] public string span;
@@ -26,13 +26,13 @@ namespace DAnTE.Purgatorio
             span = "span=0.2";
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "loessData <- loess_normalize(" + Rdataset + "," + this.Factors +
+                mRCmd = "loessData <- loess_normalize(" + Rdataset + "," + this.Factors +
                        "," + this.Span + "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 

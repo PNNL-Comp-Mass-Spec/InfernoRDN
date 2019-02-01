@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsPatternSearchPar
     {
-        private string rcmd;
+        private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "PatternSearch")]
         public string Rdataset;
@@ -21,12 +21,12 @@ namespace DAnTE.Purgatorio
             nPatterns = 2;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "patternData <- patternSearch(" + Rdataset + "," + Patterns + ")";
-                return rcmd;
+                mRCmd = "patternData <- patternSearch(" + Rdataset + "," + Patterns + ")";
+                return mRCmd;
             }
         }
 

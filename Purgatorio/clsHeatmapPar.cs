@@ -8,7 +8,7 @@ namespace DAnTE.Purgatorio
 {
     public class clsHeatmapPar
     {
-        private string rcmd;
+        private string mRCmd;
         public string Rdataset;
         [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")] public string mstrDatasetName;
         public string mstrFactor;
@@ -83,15 +83,15 @@ namespace DAnTE.Purgatorio
             mdblMinCol = -5;
         }
 
-        public string Rcmd
+        public string RCommand
         {
             get
             {
-                rcmd = "clusterResults <- plotHeatmap(" + Rdataset + "[" + this.DataSubset + @",], file=""" +
+                mRCmd = "clusterResults <- plotHeatmap(" + Rdataset + "[" + this.DataSubset + @",], file=""" +
                        tempFile + @"""," + this.rDendrogram + "," + this.cDendrogram + "," + this.Kmeans +
                        "," + Agglom + "," + Dist + "," + this.RowScale + "," + this.Seed + "," + this.Palette + "," +
                        customCol + "," + this.ColorRange + "," + this.Factor + "," + RowLab + ")";
-                return rcmd;
+                return mRCmd;
             }
         }
 
