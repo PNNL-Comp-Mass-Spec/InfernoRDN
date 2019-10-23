@@ -1086,7 +1086,7 @@
   <!-- R.NET 1.7.0 uses DynamicInterop 0.8.1 -->
   <ItemGroup>
     <PackageReference Include="LumenWorksCsvReader">
-      <Version>3.9.1</Version>
+      <Version>4.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
