@@ -48,7 +48,7 @@ namespace DAnTE.Inferno
         /// <param name="mclsPCA"></param>
         public void PlotPCA(clsPCAplotPar mclsPCA)
         {
-            if (mtabControlData.Controls.Count == 0)
+            if (mDataTab.Controls.Count == 0)
             {
                 return;
             }
@@ -78,8 +78,8 @@ namespace DAnTE.Inferno
                 var pcaPlots = new clsRplotData(mclsPCApar.RCommand, "PCA");
 
                 m_BackgroundWorker.RunWorkerAsync(pcaPlots);
-                mfrmShowProgress.Reset("Generating PCA Plots ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Generating PCA Plots ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading Events
@@ -113,9 +113,9 @@ namespace DAnTE.Inferno
 
             var selectedRowKeys = new List<string>();
 
-            var selectedRows = ((ucDataGridView)ctltabPage.Controls[0]).SelectedRows;
+            var selectedRows = ((ucDataGridView)mExpressionsTab.Controls[0]).SelectedRows;
 
-            //if (((ucDataGridView)this.ctltabPage.Controls[0]).SelectedRows.Count > 1000)
+            //if (((ucDataGridView)this.mExpressionsTab.Controls[0]).SelectedRows.Count > 1000)
             //    MessageBox.Show("Maximum number of rows is set to 1000." + Environment.NewLine +
             //        "Select less than 1000 rows.", "Too many rows to plot",
             //        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -144,7 +144,7 @@ namespace DAnTE.Inferno
 
         public void PlotHeatmap(clsHeatmapPar mclsHmapPar)
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -168,8 +168,8 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsHeatmapPar, "Heatmap_Clustering");
 
                     m_BackgroundWorker.RunWorkerAsync(heatmapPlot);
-                    mfrmShowProgress.Reset("Generating Heatmap ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating Heatmap ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events
@@ -229,8 +229,8 @@ namespace DAnTE.Inferno
                         Add2AnalysisHTable(mclsPatternPar, "Pattern_Search");
 
                         m_BackgroundWorker.RunWorkerAsync(mclsPatternPar.RCommand);
-                        mfrmShowProgress.Reset("Pattern Searching ...");
-                        mfrmShowProgress.ShowDialog();
+                        mProgressForm.Reset("Pattern Searching ...");
+                        mProgressForm.ShowDialog();
                     }
                 }
                 catch (Exception ex)

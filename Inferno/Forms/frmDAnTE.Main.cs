@@ -24,22 +24,22 @@ namespace DAnTE.Inferno
         private IContainer components;
 
         // Tab Page controls
-        private TabControl mtabControlData;
+        private TabControl mDataTab;
 
         // Tab controls for Expressions
-        private TabPage ctltabPage;
+        private TabPage mExpressionsTab;
 
-        private readonly frmShowProgress mfrmShowProgress;
+        private readonly frmShowProgress mProgressForm;
 
         // ReSharper disable once NotAccessedField.Local
         // Used by HandleFileOpenCompleted in Inferno\Events\frmDAnTE.FileIOEvents.cs
         private List<string> mDataSetNames = new List<string>();
 
-        private string[] mstrArrProteins;
-        private string[] mstrArrMassTags;
+        private string[] mProteins;
+        private string[] mMassTags;
 
         // File path of the loaded data, but also used when loading a protein info file or factors file
-        private string mstrLoadedfileName;
+        private string mLoadedFilename;
 
         // File path of the session (.dnt) file
         private string mSessionFile;
@@ -54,7 +54,7 @@ namespace DAnTE.Inferno
         private string mRTempFilePath = "";
         private clsRconnect mRConnector;
 
-        private string mstrFldgTitle;
+        private string mFileDialogTitle;
 
         private enmDataType mDataSetType = enmDataType.ESET;
         private static frmDAnTE m_frmDAnTE;
@@ -102,7 +102,7 @@ namespace DAnTE.Inferno
             };
             mAutoLoadTimer.Tick += mAutoLoadTimer_Tick;
 
-            mfrmShowProgress = new frmShowProgress();
+            mProgressForm = new frmShowProgress();
 
             //Threading -----------------------------------
             m_BackgroundWorker = new BackgroundWorker();

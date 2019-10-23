@@ -11,7 +11,7 @@ namespace DAnTE.Tools
     public class clsRconnect
     {
         private RdnConnector _rdn;
-        private string _rcmd;
+        private string _rCommand;
 
         public string[] RowNames { get; private set; }
 
@@ -24,7 +24,7 @@ namespace DAnTE.Tools
         public clsRconnect()
         {
             Message = null;
-            _rcmd = "";
+            _rCommand = "";
             DataTable = new DataTable();
         }
 
@@ -40,16 +40,16 @@ namespace DAnTE.Tools
             }
             catch (NullReferenceException)
             {
-                var errmsg = @"Unable to connect to R. Confirm that R 3.x is installed by examining directory C:\Program Files\R or C:\Program Files (x86)\R";
-                Console.WriteLine(errmsg);
-                Message = errmsg;
+                var errMsg = @"Unable to connect to R. Confirm that R 3.x is installed by examining directory C:\Program Files\R or C:\Program Files (x86)\R";
+                Console.WriteLine(errMsg);
+                Message = errMsg;
                 return false;
             }
             catch (Exception e)
             {
-                var errmsg = "R Init failed: " + e.Message;
-                Console.WriteLine(errmsg);
-                Message = errmsg;
+                var errMsg = "R Init failed: " + e.Message;
+                Console.WriteLine(errMsg);
+                Message = errMsg;
                 return false;
             }
         }
@@ -61,9 +61,9 @@ namespace DAnTE.Tools
         //  _rdn.SetCharacterOutputDevice(dev);
         //}
 
-        public void EvaluateNoReturn(string rcmd)
+        public void EvaluateNoReturn(string rCommand)
         {
-            _rdn.EvaluateNoReturn(rcmd);
+            _rdn.EvaluateNoReturn(rCommand);
         }
 
         public void SetSymbolCharVector(string name, string[] value)
@@ -98,20 +98,20 @@ namespace DAnTE.Tools
 
         #endregion
 
-        public bool loadR(string table, string filename, bool stripwhite, bool header, string separator)
+        public bool loadR(string table, string filename, bool stripWhite, bool header, string separator)
         {
             try
             {
-                _rcmd = table + "<-loadfile('" + filename +
-                        "',stripwhite=" + stripwhite.ToString().ToUpper() + ",header=" +
+                _rCommand = table + "<-loadfile('" + filename +
+                        "',stripWhite=" + stripWhite.ToString().ToUpper() + ",header=" +
                         header.ToString().ToUpper() + ",separator='" + separator + "')";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rdn.EvaluateNoReturn(_rCommand);
                 return true;
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -122,12 +122,12 @@ namespace DAnTE.Tools
             try
             {
                 DataTable.Clear();
-                _rcmd = "X<-sendmatrix(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Headers<-colnames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "X<-sendmatrix(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Headers<-colnames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
 
                 var matrix = _rdn.GetSymbolAsNumberMatrix("X");
                 var colheaders = _rdn.GetSymbolAsStrings("Headers");
@@ -140,8 +140,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -151,12 +151,12 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "X<-sendmatrix(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Headers<-colnames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "X<-sendmatrix(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Headers<-colnames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
 
                 var matrix = _rdn.GetSymbolAsNumberMatrix("X");
                 var colheaders = _rdn.GetSymbolAsStrings("Headers");
@@ -172,8 +172,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -183,12 +183,12 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "X<-sendmatrix(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Headers<-colnames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "X<-sendmatrix(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Headers<-colnames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
 
                 var matrix = _rdn.GetSymbolAsNumberMatrix("X");
                 var colheaders = _rdn.GetSymbolAsStrings("Headers");
@@ -203,8 +203,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -214,12 +214,12 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "X<-sendmatrix(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Headers<-colnames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "X<-sendmatrix(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Headers<-colnames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
 
                 var matrix = _rdn.GetSymbolAsStringMatrix("X");
                 var colheaders = _rdn.GetSymbolAsStrings("Headers");
@@ -233,8 +233,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -244,12 +244,12 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "X<-sendmatrix(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Headers<-colnames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "X<-sendmatrix(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Headers<-colnames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
 
                 var matrix = _rdn.GetSymbolAsStringMatrix("X");
                 var colheaders = _rdn.GetSymbolAsStrings("Headers");
@@ -263,8 +263,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -274,15 +274,15 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "Rows<-rownames(" + varName + ")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "Rows<-rownames(" + varName + ")";
+                _rdn.EvaluateNoReturn(_rCommand);
                 RowNames = _rdn.GetSymbolAsStrings("Rows");
                 return true;
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -297,8 +297,8 @@ namespace DAnTE.Tools
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -308,20 +308,20 @@ namespace DAnTE.Tools
         /// Store the data table in R; duplicate rows are removed
         /// </summary>
         /// <param name="varName"></param>
-        /// <param name="mDtable"></param>
+        /// <param name="dataTable"></param>
         /// <returns>True if success, otherwise false</returns>
-        public bool SendTable2RmatrixNumeric(string varName, DataTable mDtable)
+        public bool SendTable2RmatrixNumeric(string varName, DataTable dataTable)
         {
             clsRarray rArray;
 
             try
             {
-                rArray = DataTable2Rarray(mDtable, varName);
+                rArray = DataTable2Rarray(dataTable, varName);
             }
             catch (Exception e)
             {
-                var errmsg = string.Format("Error converting {0} using DataTable2Rarray: {1} ", varName, e.Message);
-                Console.WriteLine(errmsg);
+                var errMsg = string.Format("Error converting {0} using DataTable2Rarray: {1} ", varName, e.Message);
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -332,23 +332,23 @@ namespace DAnTE.Tools
                 try
                 {
                     _rdn.SetSymbolNumberMatrix("X", rArray.matrix);
-                    _rcmd = varName + "<- getmatrix(X)";
-                    _rdn.EvaluateNoReturn(_rcmd);
+                    _rCommand = varName + "<- getmatrix(X)";
+                    _rdn.EvaluateNoReturn(_rCommand);
                     _rdn.SetSymbolCharVector("colH", rArray.colHeaders);
                     _rdn.SetSymbolCharVector("rowN", rArray.rowNames);
-                    _rcmd = "colnames(" + varName + ") <- colH";
-                    _rdn.EvaluateNoReturn(_rcmd);
-                    _rcmd = "rownames(" + varName + ") <- rowN";
-                    _rdn.EvaluateNoReturn(_rcmd);
-                    //rcmd = varName + "<- cleanmatrix(" + varName + ")"; // here's where the duplicates are removed
-                    //rdcom.EvaluateNoReturn(rcmd);
+                    _rCommand = "colnames(" + varName + ") <- colH";
+                    _rdn.EvaluateNoReturn(_rCommand);
+                    _rCommand = "rownames(" + varName + ") <- rowN";
+                    _rdn.EvaluateNoReturn(_rCommand);
+                    //rCommand = varName + "<- cleanmatrix(" + varName + ")"; // here's where the duplicates are removed
+                    //rdcom.EvaluateNoReturn(rCommand);
 
                     return true;
                 }
                 catch (Exception e)
                 {
-                    var errmsg = _rcmd + " " + e.Message;
-                    Console.WriteLine(errmsg);
+                    var errMsg = _rCommand + " " + e.Message;
+                    Console.WriteLine(errMsg);
                     Message = e.Message;
                     return false;
                 }
@@ -365,22 +365,22 @@ namespace DAnTE.Tools
                 try
                 {
                     _rdn.SetSymbolCharMatrix("X", rArray.mstrMatrix);
-                    //rcmd = varName + "<- getmatrix(X)";
-                    _rcmd = varName + "<- X";
-                    _rdn.EvaluateNoReturn(_rcmd);
+                    //rCommand = varName + "<- getmatrix(X)";
+                    _rCommand = varName + "<- X";
+                    _rdn.EvaluateNoReturn(_rCommand);
                     _rdn.SetSymbolCharVector("colH", rArray.colHeaders);
                     _rdn.SetSymbolCharVector("rowN", rArray.rowNames);
-                    _rcmd = "colnames(" + varName + ") <- colH";
-                    _rdn.EvaluateNoReturn(_rcmd);
-                    _rcmd = "rownames(" + varName + ") <- rowN";
-                    _rdn.EvaluateNoReturn(_rcmd);
+                    _rCommand = "colnames(" + varName + ") <- colH";
+                    _rdn.EvaluateNoReturn(_rCommand);
+                    _rCommand = "rownames(" + varName + ") <- rowN";
+                    _rdn.EvaluateNoReturn(_rCommand);
 
                     return true;
                 }
                 catch (Exception e)
                 {
-                    var errmsg = _rcmd + " " + e.Message;
-                    Console.WriteLine(errmsg);
+                    var errMsg = _rCommand + " " + e.Message;
+                    Console.WriteLine(errMsg);
                     Message = e.Message;
                     return false;
                 }
@@ -394,14 +394,14 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "source(\"" + filename + "\")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "source(\"" + filename + "\")";
+                _rdn.EvaluateNoReturn(_rCommand);
                 return true;
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -411,14 +411,14 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "load(\"" + filename + "\")";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "load(\"" + filename + "\")";
+                _rdn.EvaluateNoReturn(_rCommand);
                 return true;
             }
             catch (Exception e)
             {
-                var errmsg = _rcmd + " " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = _rCommand + " " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }
@@ -428,17 +428,17 @@ namespace DAnTE.Tools
         {
             try
             {
-                _rcmd = "graphics.off()";
-                _rdn.EvaluateNoReturn(_rcmd);
-                _rcmd = "rm(list=ls(all=TRUE))";
-                _rdn.EvaluateNoReturn(_rcmd);
+                _rCommand = "graphics.off()";
+                _rdn.EvaluateNoReturn(_rCommand);
+                _rCommand = "rm(list=ls(all=TRUE))";
+                _rdn.EvaluateNoReturn(_rCommand);
                 _rdn.Close();
                 return true;
             }
             catch (Exception e)
             {
-                var errmsg = "R Close failed: " + e.Message;
-                Console.WriteLine(errmsg);
+                var errMsg = "R Close failed: " + e.Message;
+                Console.WriteLine(errMsg);
                 Message = e.Message;
                 return false;
             }

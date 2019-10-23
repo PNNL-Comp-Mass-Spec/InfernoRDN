@@ -753,7 +753,7 @@ namespace DAnTE.Inferno
         private void AddDataNode(clsDatasetTreeNode dataNodeToAdd)
         {
             TreeNode tn;
-            if ((mtabControlData.Controls.Count == 0) &&
+            if ((mDataTab.Controls.Count == 0) &&
                 (mhtDatasets.ContainsKey("Expressions") ||
                  mhtDatasets.ContainsKey("Protein Info") ||
                  mhtDatasets.ContainsKey("Factors")))
@@ -761,10 +761,10 @@ namespace DAnTE.Inferno
                 #region Add Controls on tab page
 
                 var dataGridTab = new ucDataGridView();
-                ctltabPage = new TabPage();
-                mtabControlData.Controls.Add(ctltabPage);
-                ctltabPage.Name = "ctltabPageData";
-                ctltabPage.Controls.Add(dataGridTab);
+                mExpressionsTab = new TabPage();
+                mDataTab.Controls.Add(mExpressionsTab);
+                mExpressionsTab.Name = "ctltabPageData";
+                mExpressionsTab.Controls.Add(dataGridTab);
                 dataGridTab.Dock = DockStyle.Fill;
 
                 #endregion
@@ -778,12 +778,12 @@ namespace DAnTE.Inferno
             //dataNodeToAdd.mDTable.rea
             if ((tn = GetNode(dataNodeToAdd.mstrDataText)) == null)
             {
-                ctltabPage.TabIndex = 0;
-                ctltabPage.Text = dataNodeToAdd.mstrDataText;
-                ((ucDataGridView)ctltabPage.Controls[0]).SetDataSource = dataNodeToAdd.mDTable;
+                mExpressionsTab.TabIndex = 0;
+                mExpressionsTab.Text = dataNodeToAdd.mstrDataText;
+                ((ucDataGridView)mExpressionsTab.Controls[0]).SetDataSource = dataNodeToAdd.mDTable;
 
                 if (dataNodeToAdd.mblAddDGridCtxtMnu)
-                    ((ucDataGridView)ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
+                    ((ucDataGridView)mExpressionsTab.Controls[0]).CxMenu = mCntxtMnuGrid;
                 if (dataNodeToAdd.mblAddTVCtxtMnu)
                     dataNodeToAdd.mTNode.ContextMenuStrip = mContextMenuTreeV;
 
@@ -821,15 +821,15 @@ namespace DAnTE.Inferno
             }
 
             var selectedNodeTag = (clsDatasetTreeNode)tn.Tag;
-            if (ctltabPage == null)
+            if (mExpressionsTab == null)
             {
                 return;
             }
 
-            ctltabPage.Text = selectedNodeTag.mstrDataText;
-            ((ucDataGridView)ctltabPage.Controls[0]).SetDataSource = selectedNodeTag.mDTable;
+            mExpressionsTab.Text = selectedNodeTag.mstrDataText;
+            ((ucDataGridView)mExpressionsTab.Controls[0]).SetDataSource = selectedNodeTag.mDTable;
             if (selectedNodeTag.mblAddDGridCtxtMnu)
-                ((ucDataGridView)ctltabPage.Controls[0]).CxMenu = mCntxtMnuGrid;
+                ((ucDataGridView)mExpressionsTab.Controls[0]).CxMenu = mCntxtMnuGrid;
             if (selectedNodeTag.mblAddTVCtxtMnu)
                 tn.ContextMenuStrip = mContextMenuTreeV;
             statusBarPanelMsg.Text = selectedNodeTag.mstrMessage;
@@ -966,7 +966,7 @@ namespace DAnTE.Inferno
 
         private void DeleteCurrentNode()
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 var currentNode = ctlTreeView.SelectedNode;
                 var strSelectedNode = currentNode.Text;
@@ -981,7 +981,7 @@ namespace DAnTE.Inferno
                 }
                 if (ctlTreeView.Nodes[0].Nodes.Count == 0)
                 {
-                    mtabControlData.Controls.RemoveAt(0);
+                    mDataTab.Controls.RemoveAt(0);
                     Title = "Main";
                     Settings.Default.SessionFileName = null;
                     Settings.Default.Save();

@@ -37,9 +37,9 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_SaveSessionCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.Hide();
-            //mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.Hide();
+            //mProgressForm.DialogResult = DialogResult.Cancel;
             this.Focus();
             if (e.Error != null)
             {

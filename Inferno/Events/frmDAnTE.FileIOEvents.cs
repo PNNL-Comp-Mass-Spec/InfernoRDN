@@ -37,7 +37,7 @@ namespace DAnTE.Inferno
 
         public void HandleFileOpenCompleted(bool openCancelled, bool openSuccess, string errorMessage)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
 
             this.Focus();
 
@@ -71,9 +71,9 @@ namespace DAnTE.Inferno
                 }
 
                 AddDataNode(mhtDatasets["Expressions"]);
-                if (!string.IsNullOrWhiteSpace(mstrLoadedfileName))
+                if (!string.IsNullOrWhiteSpace(mLoadedFilename))
                 {
-                    this.Title = "Main - " + Path.GetFileName(mstrLoadedfileName);
+                    this.Title = "Main - " + Path.GetFileName(mLoadedFilename);
                 }
                 mDataSetNames = clsDataTable.DataTableColumns(
                     (mhtDatasets["Expressions"]).mDTable, true);

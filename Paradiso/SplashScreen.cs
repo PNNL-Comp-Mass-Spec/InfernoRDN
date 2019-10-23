@@ -49,10 +49,10 @@ namespace DAnTE.Paradiso
         private int m_iIndex = 1;
         private int m_iActualTicks;
         private List<double> m_alPreviousCompletionFraction;
-        private readonly List<double> m_alActualTimes = new List<double>();
+        private readonly List<double> m_ActualTimes = new List<double>();
 
-        private const string REGVALUE_PB_MILLISECOND_INCREMENT = "Increment";
-        private const string REGVALUE_PB_PERCENTS = "Percents";
+        private const string REG_VALUE_PB_MILLISECOND_INCREMENT = "Increment";
+        private const string REG_VALUE_PB_PERCENTS = "Percents";
 
         //
         private PackageValidationState m_ValidatingPackagesState = PackageValidationState.Initializing;
@@ -254,7 +254,7 @@ namespace DAnTE.Paradiso
                 ReadIncrements();
             }
             var dblMilliseconds = ElapsedMilliSeconds();
-            m_alActualTimes.Add(dblMilliseconds);
+            m_ActualTimes.Add(dblMilliseconds);
             m_dblLastCompletionFraction = m_dblCompletionFraction;
             if (m_alPreviousCompletionFraction != null && m_iIndex < m_alPreviousCompletionFraction.Count)
                 m_dblCompletionFraction = m_alPreviousCompletionFraction[m_iIndex++];
@@ -274,14 +274,14 @@ namespace DAnTE.Paradiso
         // splashscreen from the registry.
         private void ReadIncrements()
         {
-            var sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue(REGVALUE_PB_MILLISECOND_INCREMENT,
+            var sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue(REG_VALUE_PB_MILLISECOND_INCREMENT,
                                                                                      "0.0015");
             if (clsUtilities.ParseDouble(sPBIncrementPerTimerInterval, out var dblResult))
                 m_dblPBIncrementPerTimerInterval = dblResult;
             else
                 m_dblPBIncrementPerTimerInterval = .0015;
 
-            var sPBPreviousPctComplete = RegistryAccess.GetStringRegistryValue(REGVALUE_PB_PERCENTS, "");
+            var sPBPreviousPctComplete = RegistryAccess.GetStringRegistryValue(REG_VALUE_PB_PERCENTS, "");
 
             if (sPBPreviousPctComplete != "")
             {
@@ -315,13 +315,13 @@ namespace DAnTE.Paradiso
                                                                            System.Globalization.NumberFormatInfo
                                                                                .InvariantInfo) + " ";
 
-            RegistryAccess.SetStringRegistryValue(REGVALUE_PB_PERCENTS, sPercent);
+            RegistryAccess.SetStringRegistryValue(REG_VALUE_PB_PERCENTS, sPercent);
 
             if (m_iActualTicks < 1)
                 m_iActualTicks = 1;
 
             m_dblPBIncrementPerTimerInterval = 1.0 / m_iActualTicks;
-            RegistryAccess.SetStringRegistryValue(REGVALUE_PB_MILLISECOND_INCREMENT,
+            RegistryAccess.SetStringRegistryValue(REG_VALUE_PB_MILLISECOND_INCREMENT,
                                                   m_dblPBIncrementPerTimerInterval.ToString("#.000000",
                                                                                             System.Globalization
                                                                                                 .NumberFormatInfo

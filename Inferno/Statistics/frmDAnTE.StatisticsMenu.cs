@@ -326,8 +326,8 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsAnovaPar, "ANOVA");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsAnovaPar.RCommand);
-                    mfrmShowProgress.Reset("Performing ANOVA ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Performing ANOVA ...");
+                    mProgressForm.ShowDialog();
                 }
             }
 
@@ -385,8 +385,8 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsAnovaPar, "TamuQ");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsTamuQPar.RCommand);
-                    mfrmShowProgress.Reset("Performing TamuQ ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Performing TamuQ ...");
+                    mProgressForm.ShowDialog();
                 }
             }
 
@@ -443,8 +443,8 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsKWpar, "Kruskal-Walis_Test");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsKWpar.RCommand);
-                    mfrmShowProgress.Reset("Performing KW test ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Performing KW test ...");
+                    mProgressForm.ShowDialog();
                 }
             }
 
@@ -506,8 +506,8 @@ namespace DAnTE.Inferno
                     Add2AnalysisHTable(mclsWilcoxPar, "Wilcoxon_Test");
 
                     m_BackgroundWorker.RunWorkerAsync(mclsWilcoxPar.RCommand);
-                    mfrmShowProgress.Reset("Performing Wilcoxon test ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Performing Wilcoxon test ...");
+                    mProgressForm.ShowDialog();
                 }
             }
 
@@ -554,8 +554,8 @@ namespace DAnTE.Inferno
                 Add2AnalysisHTable(mclsShapiroWilksPar, "Shapiro-Wilks_Test");
 
                 m_BackgroundWorker.RunWorkerAsync(mclsShapiroWilksPar.RCommand);
-                mfrmShowProgress.Reset("Performing Shapiro-Wilks test ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Performing Shapiro-Wilks test ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading Events
@@ -653,8 +653,8 @@ namespace DAnTE.Inferno
                 Add2AnalysisHTable(mclsOneSampleTtestPar, "T_Test");
 
                 m_BackgroundWorker.RunWorkerAsync(mclsOneSampleTtestPar.RCommand);
-                mfrmShowProgress.Reset("Performing One Sample T-test ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Performing One Sample T-test ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading Events
@@ -669,7 +669,7 @@ namespace DAnTE.Inferno
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
-            if (ctltabPage == null || selectedNodeTag?.mDTable == null)
+            if (mExpressionsTab == null || selectedNodeTag?.mDTable == null)
             {
                 MessageBox.Show("Data not loaded", "Nothing to do");
                 return;
@@ -678,7 +678,7 @@ namespace DAnTE.Inferno
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
-            var currGrid = ((ucDataGridView)ctltabPage.Controls[0]).TableGrid;
+            var currGrid = ((ucDataGridView)mExpressionsTab.Controls[0]).TableGrid;
             var selectedRows = currGrid.SelectedRows;
 
             if (selectedRows.Count < 2)

@@ -149,33 +149,33 @@ namespace DAnTE.Inferno
                 }
             }
 
-            var fdlg = new OpenFileDialog
+            var fileDialog = new OpenFileDialog
             {
-                Title = mstrFldgTitle
+                Title = mFileDialogTitle
             };
 
             if (!string.IsNullOrWhiteSpace(workingFolder))
             {
-                fdlg.InitialDirectory = workingFolder;
+                fileDialog.InitialDirectory = workingFolder;
             }
             else
             {
-                fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
 
-            fdlg.Filter = filter;
-            fdlg.FilterIndex = 1;
-            fdlg.RestoreDirectory = false;
-            if (fdlg.ShowDialog() == DialogResult.OK)
+            fileDialog.Filter = filter;
+            fileDialog.FilterIndex = 1;
+            fileDialog.RestoreDirectory = false;
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                mstrLoadedfileName = fdlg.FileName;
+                mLoadedFilename = fileDialog.FileName;
 
-                var fiDataFile = new FileInfo(mstrLoadedfileName);
+                var fiDataFile = new FileInfo(mLoadedFilename);
                 if (!fiDataFile.Exists)
                 {
                     return;
                 }
-                mstrLoadedfileName = fiDataFile.FullName;
+                mLoadedFilename = fiDataFile.FullName;
 
                 if (fiDataFile.Directory != null)
                     workingFolder = fiDataFile.Directory.FullName;
@@ -187,7 +187,7 @@ namespace DAnTE.Inferno
                 RegistryAccess.SetStringRegistryValue(WORKING_FOLDER, workingFolder);
             }
             else
-                mstrLoadedfileName = null;
+                mLoadedFilename = null;
         }
 
         private string GetFilterSpec(FileTypeExtension fileType)
@@ -213,9 +213,9 @@ namespace DAnTE.Inferno
         {
             var workingFolder = Settings.Default.WorkingFolder;
 
-            var fdlg = new SaveFileDialog
+            var fileDialog = new SaveFileDialog
             {
-                Title = mstrFldgTitle,
+                Title = mFileDialogTitle,
                 InitialDirectory = workingFolder ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Filter = filter,
                 FilterIndex = 1,
@@ -223,15 +223,15 @@ namespace DAnTE.Inferno
             };
 
 
-            if (fdlg.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                mstrLoadedfileName = fdlg.FileName;
-                workingFolder = Path.GetDirectoryName(mstrLoadedfileName);
+                mLoadedFilename = fileDialog.FileName;
+                workingFolder = Path.GetDirectoryName(mLoadedFilename);
                 Settings.Default.WorkingFolder = workingFolder;
                 Settings.Default.Save();
             }
             else
-                mstrLoadedfileName = null;
+                mLoadedFilename = null;
         }
 
         /// <summary>
@@ -299,18 +299,18 @@ namespace DAnTE.Inferno
         /// <param name="rowID"></param>
         /// <returns></returns>
         private DataTable LoadProtColumns(DataTable sourceDataTable, string proteinIdentifierColumn, string rowID,
-                                          List<string> metdataColumns)
+                                          IReadOnlyCollection<string> metaDataColumns)
         {
             DataTable proteinDataTable;
 
             try
             {
-                if (metdataColumns.Count > 0)
+                if (metaDataColumns.Count > 0)
                 {
                     var allColumns = new List<string> { proteinIdentifierColumn };
-                    allColumns.AddRange(metdataColumns);
+                    allColumns.AddRange(metaDataColumns);
 
-                    // Table will have more than two columns: rowID and proteinIdentifierColumn, then metdataColumns
+                    // Table will have more than two columns: rowID and proteinIdentifierColumn, then metaDataColumns
                     // ProteinID, ProteinMetadata, and rowID (the key column name in the Eset table)
                     proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, allColumns);
                 }
@@ -327,21 +327,21 @@ namespace DAnTE.Inferno
                 proteinDataTable.Columns[0].ColumnName = "Row_ID";
 
                 // Generate parallel lists of Protein names and MassTagIDs (aka Eset row identifiers)
-                mstrArrProteins = clsDataTable.DataColumn2strArray(sourceDataTable, proteinIdentifierColumn);
-                mstrArrMassTags = clsDataTable.DataColumn2strArray(sourceDataTable, rowID);
+                mProteins = clsDataTable.DataColumn2strArray(sourceDataTable, proteinIdentifierColumn);
+                mMassTags = clsDataTable.DataColumn2strArray(sourceDataTable, rowID);
 
                 try
                 {
                     // Push the data into R, storing as table ProtInfo, with MassTagID in the first column and ProteinIdentifier in the second column
-                    // Currently mDTProts is not used for this, instead mstrArrProteins and mstrArrMassTags are used
+                    // Currently mDTProts is not used for this, instead mProteins and mMassTags are used
 
-                    mRConnector.SetSymbolCharVector("proteinIdentifierColumn", mstrArrProteins);
-                    mRConnector.SetSymbolCharVector("MassTags", mstrArrMassTags);
+                    mRConnector.SetSymbolCharVector("proteinIdentifierColumn", mProteins);
+                    mRConnector.SetSymbolCharVector("MassTags", mMassTags);
 
                     // Add any protein metadata
                     var rCmdAddon = new StringBuilder();
 
-                    foreach (var proteinMetadataColName in metdataColumns)
+                    foreach (var proteinMetadataColName in metaDataColumns)
                     {
                         var metadataRows = clsDataTable.DataColumn2strArray(sourceDataTable, proteinMetadataColName);
 
@@ -447,7 +447,7 @@ namespace DAnTE.Inferno
             var dTselectedEset1 = new DataTable();
 
             // check that the file exists before opening it
-            if (!File.Exists(mstrLoadedfileName))
+            if (!File.Exists(mLoadedFilename))
             {
                 return dTselectedEset1;
             }
@@ -465,7 +465,7 @@ namespace DAnTE.Inferno
             dataLoader.OnProgress += clsDataTable_OnProgress;
 
             //FactorsValid = true;
-            var loadedData = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+            var loadedData = dataLoader.LoadFile2DataTableFastCSVReader(mLoadedFilename);
             if (loadedData == null)
             {
                 return null;
@@ -519,9 +519,9 @@ namespace DAnTE.Inferno
                 return false;
             }
 
-            if (!string.Equals(mstrLoadedfileName, filePath))
+            if (!string.Equals(mLoadedFilename, filePath))
             {
-                mstrLoadedfileName = filePath;
+                mLoadedFilename = filePath;
             }
 
             var fExt = Path.GetExtension(filePath);
@@ -551,24 +551,24 @@ namespace DAnTE.Inferno
 
                     validFactors = true;
 
-                    mfrmShowProgress.Reset("Loading data");
+                    mProgressForm.Reset("Loading data");
 
-                    var esetTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var esetTable = dataLoader.LoadFile2DataTableFastCSVReader(mLoadedFilename);
                     if (esetTable == null)
                     {
                         string errorMessage;
-                        if (string.IsNullOrWhiteSpace(mfrmShowProgress.ErrorMessage))
+                        if (string.IsNullOrWhiteSpace(mProgressForm.ErrorMessage))
                             errorMessage = "Unknown load error";
                         else
-                            errorMessage = "Load error: " + mfrmShowProgress.ErrorMessage;
+                            errorMessage = "Load error: " + mProgressForm.ErrorMessage;
 
                         MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(mfrmShowProgress.WarningMessage))
+                    if (!string.IsNullOrWhiteSpace(mProgressForm.WarningMessage))
                     {
-                        MessageBox.Show(mfrmShowProgress.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(mProgressForm.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     esetTable.TableName = "AllEset";
@@ -615,9 +615,9 @@ namespace DAnTE.Inferno
                                 success = false;
                             }
 
-                            if (!string.IsNullOrWhiteSpace(mfrmShowProgress.ErrorMessage))
+                            if (!string.IsNullOrWhiteSpace(mProgressForm.ErrorMessage))
                             {
-                                MessageBox.Show(mfrmShowProgress.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                MessageBox.Show(mProgressForm.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
 
                             if (success)
@@ -626,9 +626,9 @@ namespace DAnTE.Inferno
                                 mRConnector.EvaluateNoReturn("print(dim(Eset))");
                                 mRConnector.EvaluateNoReturn("cat(\"Expressions loaded.\n\")");
 
-                                if (!string.IsNullOrWhiteSpace(mfrmShowProgress.WarningMessage))
+                                if (!string.IsNullOrWhiteSpace(mProgressForm.WarningMessage))
                                 {
-                                    MessageBox.Show(mfrmShowProgress.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show(mProgressForm.WarningMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
                             }
@@ -662,7 +662,7 @@ namespace DAnTE.Inferno
 
                     #region Load Protein Info
 
-                    var proteinInfoTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var proteinInfoTable = dataLoader.LoadFile2DataTableFastCSVReader(mLoadedFilename);
                     if (proteinInfoTable == null)
                     {
                         return false;
@@ -704,7 +704,7 @@ namespace DAnTE.Inferno
                     #region Load Factors
 
                     validFactors = true;
-                    var factorTable = dataLoader.LoadFile2DataTableFastCSVReader(mstrLoadedfileName);
+                    var factorTable = dataLoader.LoadFile2DataTableFastCSVReader(mLoadedFilename);
                     if (factorTable == null)
                     {
                         return false;
@@ -861,7 +861,7 @@ namespace DAnTE.Inferno
         public void OpenSessionCheckExisting(string sessionFilePath, bool useThreadedLoad)
         {
             var doLoad = true;
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
 
             {
                 doLoad = (MessageBox.Show("If you load a saved session, current data will be lost. Continue?",
@@ -894,7 +894,7 @@ namespace DAnTE.Inferno
 
         void clsDataTable_OnError(object sender, MessageEventArgs e)
         {
-            if (mfrmShowProgress != null)
+            if (mProgressForm != null)
             {
                 if (InvokeRequired)
                 {
@@ -902,13 +902,13 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                mfrmShowProgress.ErrorMessage = e.Message;
+                mProgressForm.ErrorMessage = e.Message;
             }
         }
 
         void clsDataTable_OnWarning(object sender, MessageEventArgs e)
         {
-            if (mfrmShowProgress != null)
+            if (mProgressForm != null)
             {
                 if (InvokeRequired)
                 {
@@ -916,14 +916,14 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                mfrmShowProgress.AppendWarningMessage(e.Message);
+                mProgressForm.AppendWarningMessage(e.Message);
             }
         }
 
 
         void clsDataTable_OnProgress(object sender, ProgressEventArgs e)
         {
-            if (mfrmShowProgress != null)
+            if (mProgressForm != null)
             {
                 if (InvokeRequired)
                 {
@@ -931,7 +931,7 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                mfrmShowProgress.PercentComplete = (int)e.PercentComplete;
+                mProgressForm.PercentComplete = (int)e.PercentComplete;
             }
         }
 

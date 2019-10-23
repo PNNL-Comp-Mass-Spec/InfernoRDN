@@ -8,15 +8,15 @@ namespace DAnTE.Inferno
 {
     public partial class frmAnalysisSummary : Form
     {
-        private List<clsAnalysisObject> marrAnalyses = new List<clsAnalysisObject>();
-        private string mstrFileName;
+        private List<clsAnalysisObject> mAnalyses = new List<clsAnalysisObject>();
+        private string mFileName;
 
-        private readonly string mstrTime;
+        private readonly string mTime;
 
         public frmAnalysisSummary()
         {
             InitializeComponent();
-            mstrTime = DateTime.Now.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
+            mTime = DateTime.Now.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
         }
 
 
@@ -25,7 +25,7 @@ namespace DAnTE.Inferno
             mlstViewSummary.Columns.Add("Parameter", 200, HorizontalAlignment.Left);
             mlstViewSummary.Columns.Add("Value", 350, HorizontalAlignment.Left);
 
-            foreach (var analysis in marrAnalyses)
+            foreach (var analysis in mAnalyses)
             {
                 var o = analysis.AnalysisObject;
                 var strKey = analysis.Operation;
@@ -91,10 +91,10 @@ namespace DAnTE.Inferno
         private MetaData FillSummaryXML()
         {
             var metaData = new MetaData("DAnTE_Analysis");
-            metaData.SetValue("DataFile", mstrFileName);
-            metaData.SetValue("Time", mstrTime);
+            metaData.SetValue("DataFile", mFileName);
+            metaData.SetValue("Time", mTime);
 
-            foreach (var analysis in marrAnalyses)
+            foreach (var analysis in mAnalyses)
             {
                 var o = analysis.AnalysisObject;
                 var strKey = analysis.Operation;
@@ -156,8 +156,8 @@ namespace DAnTE.Inferno
         private void frmAnalysisSummary_Load(object sender, EventArgs e)
         {
             FillSummaryListView();
-            mlblTime.Text = mstrTime;
-            mlblDataFile.Text = mstrFileName;
+            mlblTime.Text = mTime;
+            mlblDataFile.Text = mFileName;
         }
 
 
@@ -183,19 +183,19 @@ namespace DAnTE.Inferno
                 using (System.IO.TextWriter streamWriter = new System.IO.StreamWriter(fileName))
                 {
                     CsvWriter.WriteListViewToStream(streamWriter, mlstViewSummary,
-                                                    mstrFileName, false);
+                                                    mFileName, false);
                 }
             }
         }
 
-        private string GetSaveFileName(string mstrFldgTitle, string filter)
+        private string GetSaveFileName(string fileDialogTitle, string filter)
         {
             var workingFolder = Settings.Default.WorkingFolder;
             string fileName;
 
-            var fdlg = new SaveFileDialog
+            var fileDialog = new SaveFileDialog
             {
-                Title = mstrFldgTitle,
+                Title = fileDialogTitle,
                 InitialDirectory = workingFolder ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Filter = filter,
                 FilterIndex = 1,
@@ -203,9 +203,9 @@ namespace DAnTE.Inferno
             };
 
 
-            if (fdlg.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                fileName = fdlg.FileName;
+                fileName = fileDialog.FileName;
                 workingFolder = System.IO.Path.GetDirectoryName(fileName);
                 Settings.Default.WorkingFolder = workingFolder;
                 Settings.Default.Save();
@@ -220,12 +220,12 @@ namespace DAnTE.Inferno
 
         public List<clsAnalysisObject> SummaryArrayList
         {
-            set => marrAnalyses = value;
+            set => mAnalyses = value;
         }
 
         public string DataFileName
         {
-            set => mstrFileName = value;
+            set => mFileName = value;
         }
 
         #endregion

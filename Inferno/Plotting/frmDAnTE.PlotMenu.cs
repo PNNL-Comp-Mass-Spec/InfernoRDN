@@ -48,7 +48,7 @@ namespace DAnTE.Inferno
             // this will be called from the plot forms.
             // thus the reason to be public
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -66,8 +66,8 @@ namespace DAnTE.Inferno
                     var qqPlot = new clsRplotData(clsQQPar.RCommand, "QQ");
 
                     m_BackgroundWorker.RunWorkerAsync(qqPlot);
-                    mfrmShowProgress.Reset("Generating Q-Q Plots ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating Q-Q Plots ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events
@@ -113,7 +113,7 @@ namespace DAnTE.Inferno
             // this will be called from the plot forms.
             // thus the reason to be public
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -131,8 +131,8 @@ namespace DAnTE.Inferno
                     var histogramPlot = new clsRplotData(clsHistPar.RCommand, "Hist");
 
                     m_BackgroundWorker.RunWorkerAsync(histogramPlot);
-                    mfrmShowProgress.Reset("Generating Histograms ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating Histograms ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events
@@ -173,7 +173,7 @@ namespace DAnTE.Inferno
             // this will be called from the plot forms.
             // thus the reason to be public
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -191,8 +191,8 @@ namespace DAnTE.Inferno
                     var correlationPlot = new clsRplotData(mclsCorrPar.RCommand, "Corr");
 
                     m_BackgroundWorker.RunWorkerAsync(correlationPlot);
-                    mfrmShowProgress.Reset("Generating Correlation Plot ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating Correlation Plot ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events
@@ -240,7 +240,7 @@ namespace DAnTE.Inferno
             // this will be called from the plot forms.
             // thus the reason to be public
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading events
 
@@ -258,8 +258,8 @@ namespace DAnTE.Inferno
                     var boxPlot = new clsRplotData(mclsBoxPlotPar.RCommand, "Box");
 
                     m_BackgroundWorker.RunWorkerAsync(boxPlot);
-                    mfrmShowProgress.Reset("Generating the Box Plot ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating the Box Plot ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading events
@@ -344,7 +344,7 @@ namespace DAnTE.Inferno
             // this will be called from the plot forms.
             // thus the reason to be public
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -362,8 +362,8 @@ namespace DAnTE.Inferno
                     var maPlot = new clsRplotData(mclsMApar.RCommand, "MA");
 
                     m_BackgroundWorker.RunWorkerAsync(maPlot);
-                    mfrmShowProgress.Reset("Generating MA Plots ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating MA Plots ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events
@@ -386,7 +386,7 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
+                var currGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
 
                 var startTime = DateTime.UtcNow;
 
@@ -436,7 +436,7 @@ namespace DAnTE.Inferno
             }
 
             var plotDisplay = new frmPlotDisplay();
-            var currGrid = ((ucDataGridView)this.ctltabPage.Controls[0]).TableGrid;
+            var currGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
 
             if (!ValidateIsPlotTable(selectedNodeTag))
             {
@@ -522,7 +522,7 @@ namespace DAnTE.Inferno
 
         public void PlotVenn(clsVennPar vennParameters)
         {
-            if (mtabControlData.Controls.Count != 0)
+            if (mDataTab.Controls.Count != 0)
             {
                 #region Hook Threading Events
 
@@ -539,8 +539,8 @@ namespace DAnTE.Inferno
                     var vennDiagramPlot = new clsRplotData(vennParameters.RCommand, "Venn");
 
                     m_BackgroundWorker.RunWorkerAsync(vennDiagramPlot);
-                    mfrmShowProgress.Reset("Generating Venn Diagram ...");
-                    mfrmShowProgress.ShowDialog();
+                    mProgressForm.Reset("Generating Venn Diagram ...");
+                    mProgressForm.ShowDialog();
                 }
 
                 #region Unhook Threading Events

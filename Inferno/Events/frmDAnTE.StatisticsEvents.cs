@@ -10,7 +10,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_ANOVACompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             Focus();
             if (e.Error != null)
             {
@@ -69,8 +69,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_TamuQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var tamuQPlotDisplay = new frmQQplotDisplay(mclsQQPar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -103,7 +103,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_TamuQCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             Focus();
             if (e.Error != null)
             {

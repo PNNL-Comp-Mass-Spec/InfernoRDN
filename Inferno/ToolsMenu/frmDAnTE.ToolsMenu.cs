@@ -171,8 +171,8 @@ namespace DAnTE.Inferno
 
                 var rcmd = "mergedData <- mergeColumns(" + dataset + "," + factor + "," + pmode + ")";
                 m_BackgroundWorker.RunWorkerAsync(rcmd);
-                mfrmShowProgress.Reset("Merging Columns ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Merging Columns ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -207,7 +207,7 @@ namespace DAnTE.Inferno
             var frmSummary = new frmAnalysisSummary
             {
                 SummaryArrayList = marrAnalysisObjects,
-                DataFileName = mstrLoadedfileName
+                DataFileName = mLoadedFilename
             };
             frmSummary.ShowDialog();
         }

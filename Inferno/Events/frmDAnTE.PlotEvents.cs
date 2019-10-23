@@ -13,8 +13,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_QQPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var qqPlotOptions = new frmQQplotDisplay(mclsQQPar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {
@@ -50,8 +50,8 @@ namespace DAnTE.Inferno
         {
             var histogramPlotOptions = new frmHistDisplay(mclsHistPar);
 
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {
@@ -86,8 +86,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_CorrPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var correlationPlotOptions = new frmCorrDisplay(mclsCorrPar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {
@@ -122,8 +122,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_BoxPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var boxPlotOptions = new frmBoxPlotDisplay(mclsBoxPlotPar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {
@@ -148,8 +148,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_MAplotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var maPlotOptions = new frmMAplotDisplay(mclsMApar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {
@@ -174,8 +174,8 @@ namespace DAnTE.Inferno
         void m_BackgroundWorker_VennCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var vennDiagramsOptions = new frmVennDisplay(mclsVennPar);
-            mfrmShowProgress.Hide();
-            mfrmShowProgress.DialogResult = DialogResult.Cancel;
+            mProgressForm.Hide();
+            mProgressForm.DialogResult = DialogResult.Cancel;
 
             if (e.Error != null)
             {

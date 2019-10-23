@@ -10,7 +10,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_Log2Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -65,7 +65,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_LowessCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -100,7 +100,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_LinRegCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -135,7 +135,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_MeanCCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -172,7 +172,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_QuantileCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -207,7 +207,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_MADCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -242,7 +242,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_ImputeCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {
@@ -277,7 +277,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_MergeCCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mfrmShowProgress.Hide();
+            mProgressForm.Hide();
             this.Focus();
             if (e.Error != null)
             {

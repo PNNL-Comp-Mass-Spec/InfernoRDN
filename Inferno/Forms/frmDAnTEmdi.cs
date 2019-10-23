@@ -11,12 +11,13 @@ using DAnTE.Tools;
 
 namespace DAnTE.Inferno
 {
+    // ReSharper disable once IdentifierTypo
     public partial class frmDAnTEmdi : Form
     {
         // Note that this registry key gets deleted when the program is Uninstalled
         // See Inno Setup file inferno_setup.iss
         // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
-        private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
+        private const string REG_VALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
         public readonly string mSessionFile;
 
@@ -29,13 +30,14 @@ namespace DAnTE.Inferno
         private readonly string mRTempFilePath;
 
         private string mRepository; // = @"http://lib.stat.cmu.edu/R/CRAN";
-        private string mRpackList;
+        private string mRPackageList;
 
-        private bool mInstallRpacks;
-        private bool mUpdateRpacks;
+        private bool mInstallRPackages;
+        private bool mUpdateRPackages;
 
         private readonly clsRconnect mRConnector;
 
+        // ReSharper disable once IdentifierTypo
         public frmDAnTEmdi(string danteFilePath, string customLogFilePath)
         {
             mSessionFile = danteFilePath;
@@ -92,13 +94,13 @@ namespace DAnTE.Inferno
             // Initialize folders
             var tempFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            var appDataFldrPath = Path.Combine(tempFolderPath, "Inferno");
-            if (!Directory.Exists(appDataFldrPath))
+            var appDataDirectoryPath = Path.Combine(tempFolderPath, "Inferno");
+            if (!Directory.Exists(appDataDirectoryPath))
             {
-                Directory.CreateDirectory(appDataFldrPath);
+                Directory.CreateDirectory(appDataDirectoryPath);
             }
 
-            mRTempFilePath = appDataFldrPath.Replace(@"\", "/") + "/_temp.png";
+            mRTempFilePath = appDataDirectoryPath.Replace(@"\", "/") + "/_temp.png";
             mhelpProviderDAnTE.HelpNamespace = Path.Combine(Application.StartupPath, "InfernoHelp.chm");
 
             System.Threading.Thread.Sleep(10);
@@ -124,7 +126,7 @@ namespace DAnTE.Inferno
             }
 
             SplashScreen.SetStatus("Initializing R Functions...");
-            if (!LoadRfunctions("Inferno.RData"))
+            if (!LoadRFunctions("Inferno.RData"))
             {
                 if (connectionSucceeded)
                 {
@@ -143,15 +145,15 @@ namespace DAnTE.Inferno
 
             SplashScreen.SetStatus("Initializing R Plotting Functions...");
 
-            var usePlotgg = Settings.Default.useGG;
-            string mstrPlotFuncFileName;
+            var useGGPlot = Settings.Default.useGG;
+            string plotFuncFileName;
 
-            if (usePlotgg)
-                mstrPlotFuncFileName = "Inferno_ggplots.RData";
+            if (useGGPlot)
+                plotFuncFileName = "Inferno_ggplots.RData";
             else
-                mstrPlotFuncFileName = "Inferno_stdplots.RData";
+                plotFuncFileName = "Inferno_stdplots.RData";
 
-            if (!LoadRfunctions(mstrPlotFuncFileName))
+            if (!LoadRFunctions(plotFuncFileName))
             {
                 if (connectionSucceeded)
                 {
@@ -168,16 +170,16 @@ namespace DAnTE.Inferno
                 Log(mCustomLoggerEnabled, "Done sourcing R plotting functions.", mCustomLogWriter);
             }
 
-            //if (!InitLoadRpackages()) {
+            //if (!InitLoadRPackages()) {
             //  startupErrString.AppendLine("* Error loading key R packages.");
             //  //SplashScreen.CloseForm();
             //  //MessageBox.Show("Error loading key R packages", "Error loading key R packs",
             //  //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //  Log(mblLog, "Error: Loading key R packages failed.", logwriter);
+            //  Log(mblLog, "Error: Loading key R packages failed.", logWriter);
             //  //this.Close();
             //}
-            //Log(mblLog, "Done loading key R packages.", logwriter);
-            ////InitLoadRpackages();
+            //Log(mblLog, "Done loading key R packages.", logWriter);
+            ////InitLoadRPackages();
             System.Threading.Thread.Sleep(10);
 
             SplashScreen.SetStatus("Checking R version...");
@@ -299,18 +301,18 @@ namespace DAnTE.Inferno
             }
             //Else the configuration parameters have been read.
             mRepository = engine["Repository"].Val;
-            mRpackList = engine["Rpackages"].Val;
+            mRPackageList = engine["Rpackages"].Val;
             //RfilesPath = engine["Rfolder"].Val;
 
             if (engine["InstallRpacks"].Val.Equals("true"))
-                mInstallRpacks = true;
+                mInstallRPackages = true;
             else
-                mInstallRpacks = false;
+                mInstallRPackages = false;
 
             if (engine["UpdateRpacks"].Val.Equals("true"))
-                mUpdateRpacks = true;
+                mUpdateRPackages = true;
             else
-                mUpdateRpacks = false;
+                mUpdateRPackages = false;
 
             return true;
         }
@@ -319,11 +321,11 @@ namespace DAnTE.Inferno
         /// Load the RData file from root folder
         /// </summary>
         /// <returns></returns>
-        private bool LoadRfunctions(string rdatafile)
+        private bool LoadRFunctions(string rDataFile)
         {
             bool success;
 
-            var rDataFilePath = Application.StartupPath.Replace("\\", "/") + "/" + rdatafile;
+            var rDataFilePath = Application.StartupPath.Replace("\\", "/") + "/" + rDataFile;
             try
             {
                 success = mRConnector.loadRData(rDataFilePath);
@@ -336,24 +338,24 @@ namespace DAnTE.Inferno
             return success;
         }
 
-        private bool CheckRVersion(string mstrMajor, string mstrMinor)
+        private bool CheckRVersion(string majorVersion, string minorVersion)
         {
-            bool mblresult;
+            bool success;
 
             try
             {
-                var rcmd = @"verOK <- RVersionOK(major=" + mstrMajor + ",minor=" + mstrMinor + ")";
-                mRConnector.EvaluateNoReturn(rcmd);
+                var rCommand = @"verOK <- RVersionOK(major=" + majorVersion + ",minor=" + minorVersion + ")";
+                mRConnector.EvaluateNoReturn(rCommand);
                 ////object rout = rConnector.GetSymbol("verOK");
-                ////mblresult = (bool)rout;
-                mblresult = mRConnector.GetSymbolAsBool("verOK");
+                ////success = (bool)rout;
+                success = mRConnector.GetSymbolAsBool("verOK");
             }
             catch (Exception ex)
             {
-                mblresult = false;
+                success = false;
                 Console.WriteLine("Exception thrown: " + ex.Message, "Error!");
             }
-            return mblresult;
+            return success;
         }
 
         private static double GetVersionDifferenceHours(IList<string> oldVersion, IList<string> newVersion)
@@ -385,17 +387,17 @@ namespace DAnTE.Inferno
 
             try
             {
-                if (mInstallRpacks)
+                if (mInstallRPackages)
                 {
                     currentTask = "installing default packages from " + mRepository;
 
                     var installPackagesCommand = @"install.packages(c(" + mRPackageList + @"), repos=""" + mRepository + @""")";
                     mRConnector.EvaluateNoReturn(installPackagesCommand);
 
-                    // Also confirm that we have the Bioconductor qvalue package
+                    // Also confirm that we have additional packages from Bioconductor
                     // Check the registry for the most recent version of this program that has installed Bioconductor, qvalue, and impute
                     // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
-                    var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
+                    var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REG_VALUE_BIOCONDUCTOR_VERSION_CHECK, "");
                     var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
                     var updateRequired = !string.Equals(appVersionBioconductorCheck, appVersionCurrent);
@@ -412,7 +414,7 @@ namespace DAnTE.Inferno
                             if (versionDifferenceHours < 8)
                             {
                                 updateRequired = false;
-                                mUpdateRpacks = false;
+                                mUpdateRPackages = false;
                             }
                         }
                     }
@@ -420,22 +422,22 @@ namespace DAnTE.Inferno
                     if (updateRequired)
                     {
                         currentTask = "installing BiocManager from https://cran.revolutionanalytics.com/";
-                        rcommand = @"install.packages(""BiocManager"", repos='https://cran.revolutionanalytics.com/')";
-                        mRConnector.EvaluateNoReturn(rcommand);
+                        var installBiocManager = @"install.packages(""BiocManager"", repos='https://cran.revolutionanalytics.com/')";
+                        mRConnector.EvaluateNoReturn(installBiocManager);
 
                         currentTask = "installing qvalue and impute from Bioconductor";
-                        rcommand = @"BiocManager::install(c(""qvalue"", ""impute""), update = TRUE, ask = FALSE)";
-                        mRConnector.EvaluateNoReturn(rcommand);
+                        var installBioconductorPackages = @"BiocManager::install(c(""qvalue"", ""impute""), update = TRUE, ask = FALSE)";
+                        mRConnector.EvaluateNoReturn(installBioconductorPackages);
 
-                        RegistryAccess.SetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, appVersionCurrent);
+                        RegistryAccess.SetStringRegistryValue(REG_VALUE_BIOCONDUCTOR_VERSION_CHECK, appVersionCurrent);
                     }
                 }
 
-                if (mUpdateRpacks)
+                if (mUpdateRPackages)
                 {
                     currentTask = "updating packages using " + mRepository;
-                    var rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
-                    mRConnector.EvaluateNoReturn(rcommand);
+                    var updatePackages = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                    mRConnector.EvaluateNoReturn(updatePackages);
                 }
 
                 return true;
@@ -450,42 +452,42 @@ namespace DAnTE.Inferno
 
         private bool UpdateRPackages()
         {
-            bool mblresult;
+            bool result;
 
             try
             {
-                var rcommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
-                mRConnector.EvaluateNoReturn(rcommand);
+                var rCommand = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                mRConnector.EvaluateNoReturn(rCommand);
 
-                mblresult = true;
+                result = true;
             }
             catch (Exception ex)
             {
-                mblresult = false;
+                result = false;
                 Console.WriteLine("Exception thrown: " + ex.Message, "Error!");
             }
-            return mblresult;
+            return result;
         }
 
-        //private bool InitLoadRpackages()
+        //private bool InitLoadRPackages()
         //{
-        //  string rcommand;
-        //  bool mblresult = true;
+        //  string rCommand;
+        //  bool result = true;
 
         //  try {
         //    /* //-//
-        //            rcommand = @"require(rcom)";
-        //            rConnector.EvaluateNoReturn(rcommand);
-        //            rcommand = @"require(rscproxy)";
-        //            rConnector.EvaluateNoReturn(rcommand);
+        //            rCommand = @"require(rcom)";
+        //            rConnector.EvaluateNoReturn(rCommand);
+        //            rCommand = @"require(rscproxy)";
+        //            rConnector.EvaluateNoReturn(rCommand);
         //    */
-        //    mblresult = true;
+        //    result = true;
         //  }
         //  catch (Exception ex) {
-        //    mblresult = false;
+        //    result = false;
         //    Console.WriteLine("Exception thrown: " + ex.Message, "Error!");
         //  }
-        //  return mblresult;
+        //  return result;
         //}
 
         private bool DeleteTempFile()
@@ -601,7 +603,7 @@ namespace DAnTE.Inferno
 
         // No longer used (only used on Windows XP and 2000)
         /*
-        private bool RunRlogs()
+        private bool RunRLogs()
         {
             bool mblRunOK = false;
 
@@ -660,17 +662,17 @@ namespace DAnTE.Inferno
 
         private void mnuItemResource_Click(object sender, EventArgs e)
         {
-            if (!LoadRfunctions("Inferno.RData"))
-                MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
+            if (!LoadRFunctions("Inferno.RData"))
+                MessageBox.Show("Error occurred while Re-sourcing. Changes may not be effective", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             //else
             //    statusBarPanelMsg.Text = "R functions re-sourced.";
         }
 
-        private void mnuItemggplots_Click(object sender, EventArgs e)
+        private void mnuItemGGPlots_Click(object sender, EventArgs e)
         {
-            if (!LoadRfunctions("Inferno_ggplots.RData"))
-                MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
+            if (!LoadRFunctions("Inferno_ggplots.RData"))
+                MessageBox.Show("Error occurred while Re-sourcing. Changes may not be effective", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Settings.Default.useGG = true;
@@ -678,8 +680,8 @@ namespace DAnTE.Inferno
 
         private void mnuItemStdPlots_Click(object sender, EventArgs e)
         {
-            if (!LoadRfunctions("Inferno_stdplots.RData"))
-                MessageBox.Show("Error ocurred while Re-sourcing. Changes may not be effective", "Error",
+            if (!LoadRFunctions("Inferno_stdplots.RData"))
+                MessageBox.Show("Error occurred while Re-sourcing. Changes may not be effective", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Settings.Default.useGG = false;
@@ -702,6 +704,7 @@ namespace DAnTE.Inferno
             aboutForm.ShowDialog();
         }
 
+        // ReSharper disable once IdentifierTypo
         private void frmDAnTEmdi_Load(object sender, EventArgs e)
         {
             StartMain(mSessionFile);

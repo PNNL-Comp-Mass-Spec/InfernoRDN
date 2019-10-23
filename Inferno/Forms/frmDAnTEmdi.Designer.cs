@@ -149,7 +149,7 @@ namespace DAnTE.Inferno
 			this.mnuItemggplots.Name = "mnuItemggplots";
 			this.mnuItemggplots.Size = new System.Drawing.Size(223, 24);
 			this.mnuItemggplots.Text = "Use \'ggplot2\' R Plots";
-			this.mnuItemggplots.Click += new System.EventHandler(this.mnuItemggplots_Click);
+			this.mnuItemggplots.Click += new System.EventHandler(this.mnuItemGGPlots_Click);
 			// 
 			// mnuWindow
 			// 

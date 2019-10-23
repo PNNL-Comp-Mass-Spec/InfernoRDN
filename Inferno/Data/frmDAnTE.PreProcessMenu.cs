@@ -59,8 +59,8 @@ namespace DAnTE.Inferno
                 var rCmd = mLogTransformParams.RCommand;
 
                 m_BackgroundWorker.RunWorkerAsync(rCmd);
-                mfrmShowProgress.Reset("Calculating Log Expressions ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Calculating Log Expressions ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -125,8 +125,8 @@ namespace DAnTE.Inferno
                 var rCmd = mLoessParams.RCommand;
 
                 m_BackgroundWorker.RunWorkerAsync(rCmd);
-                mfrmShowProgress.Reset("LOESS Normalizing Data ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("LOESS Normalizing Data ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -196,8 +196,8 @@ namespace DAnTE.Inferno
             rCmd = mQuantileNormalizationParams.RCommand;
 
             m_BackgroundWorker.RunWorkerAsync(rCmd);
-            mfrmShowProgress.Reset("Quantile Normalizing ...");
-            mfrmShowProgress.ShowDialog();
+            mProgressForm.Reset("Quantile Normalizing ...");
+            mProgressForm.ShowDialog();
 
             #region Unhook Threading events
 
@@ -259,8 +259,8 @@ namespace DAnTE.Inferno
                 else
                     message = "Median Centering Data ...";
 
-                mfrmShowProgress.Reset(message);
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset(message);
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -325,8 +325,8 @@ namespace DAnTE.Inferno
                 var rCmd = mMADParams.RCommand;
 
                 m_BackgroundWorker.RunWorkerAsync(rCmd);
-                mfrmShowProgress.Reset("MAD Adjusting Data ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("MAD Adjusting Data ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -387,8 +387,8 @@ namespace DAnTE.Inferno
                 var rCmd = mLinearRegressionParams.RCommand;
 
                 m_BackgroundWorker.RunWorkerAsync(rCmd);
-                mfrmShowProgress.Reset("Linear Regressing Data ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Linear Regressing Data ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events
@@ -454,8 +454,8 @@ namespace DAnTE.Inferno
                 var rCmd = mImputationParams.RCommand;
 
                 m_BackgroundWorker.RunWorkerAsync(rCmd);
-                mfrmShowProgress.Reset("Imputing Data ...");
-                mfrmShowProgress.ShowDialog();
+                mProgressForm.Reset("Imputing Data ...");
+                mProgressForm.ShowDialog();
             }
 
             #region Unhook Threading events

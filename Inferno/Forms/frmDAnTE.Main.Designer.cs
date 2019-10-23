@@ -194,7 +194,7 @@ namespace DAnTE.Inferno
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuItemFilterUsingSelectedRowIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.mtabControlData = new System.Windows.Forms.TabControl();
+            this.mDataTab = new System.Windows.Forms.TabControl();
             this.splitterVert = new System.Windows.Forms.Splitter();
             this.ctlTreeView = new System.Windows.Forms.TreeView();
             this.mImListTreeView = new System.Windows.Forms.ImageList(this.components);
@@ -861,7 +861,7 @@ namespace DAnTE.Inferno
             //
             // panel1
             //
-            this.panel1.Controls.Add(this.mtabControlData);
+            this.panel1.Controls.Add(this.mDataTab);
             this.panel1.Controls.Add(this.splitterVert);
             this.panel1.Controls.Add(this.ctlTreeView);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -870,14 +870,14 @@ namespace DAnTE.Inferno
             this.panel1.Size = new System.Drawing.Size(762, 410);
             this.panel1.TabIndex = 0;
             //
-            // mtabControlData
+            // mDataTab
             //
-            this.mtabControlData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtabControlData.Location = new System.Drawing.Point(314, 0);
-            this.mtabControlData.Name = "mtabControlData";
-            this.mtabControlData.SelectedIndex = 0;
-            this.mtabControlData.Size = new System.Drawing.Size(448, 410);
-            this.mtabControlData.TabIndex = 2;
+            this.mDataTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mDataTab.Location = new System.Drawing.Point(314, 0);
+            this.mDataTab.Name = "mDataTab";
+            this.mDataTab.SelectedIndex = 0;
+            this.mDataTab.Size = new System.Drawing.Size(448, 410);
+            this.mDataTab.TabIndex = 2;
             //
             // splitterVert
             //
