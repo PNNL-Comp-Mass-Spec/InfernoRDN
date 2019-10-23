@@ -505,22 +505,11 @@ namespace DAnTE.Paradiso
         public static void SetStringRegistryValue(string key, string stringValue)
         {
             var rkSoftware = Registry.CurrentUser.OpenSubKey(SOFTWARE_KEY, true);
-            if (rkSoftware == null)
-            {
-                return;
-            }
 
-            var rkCompany = rkSoftware.CreateSubKey(COMPANY_NAME);
-            if (rkCompany == null)
-            {
-                return;
-            }
+            var rkCompany = rkSoftware?.CreateSubKey(COMPANY_NAME);
 
-            var rkApplication = rkCompany.CreateSubKey(APPLICATION_NAME);
-            if (rkApplication != null)
-            {
-                rkApplication.SetValue(key, stringValue);
-            }
+            var rkApplication = rkCompany?.CreateSubKey(APPLICATION_NAME);
+            rkApplication?.SetValue(key, stringValue);
         }
     }
 }
