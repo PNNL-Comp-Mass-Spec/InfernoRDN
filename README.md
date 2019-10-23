@@ -67,6 +67,7 @@ InfernoRDN depends on the following:
 InfernoRDN uses the following R packages (from https://cran.r-project.org/):
 * amap: Another Multidimensional Analysis Package
 * car: Companion to Applied Regression
+* lattice: Linear and Nonlinear Mixed Effects Models
 * nlme: Linear and Nonlinear Mixed Effects Models
 * outliers: Tests for outliers
 * fpc: Fixed point clusters, clusterwise regression and discriminant plots
