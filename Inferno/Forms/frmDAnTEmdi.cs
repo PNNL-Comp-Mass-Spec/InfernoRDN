@@ -13,8 +13,9 @@ namespace DAnTE.Inferno
 {
     public partial class frmDAnTEmdi : Form
     {
-        // Note that this key gets deleted when the program is Uninstalled
+        // Note that this registry key gets deleted when the program is Uninstalled
         // See Inno Setup file inferno_setup.iss
+        // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
         private const string REGVALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
         public readonly string mSessionFile;
@@ -392,7 +393,8 @@ namespace DAnTE.Inferno
                     mRConnector.EvaluateNoReturn(installPackagesCommand);
 
                     // Also confirm that we have the Bioconductor qvalue package
-                    // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
+                    // Check the registry for the most recent version of this program that has installed Bioconductor, qvalue, and impute
+                    // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
                     var appVersionBioconductorCheck = RegistryAccess.GetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, "");
                     var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
@@ -417,12 +419,12 @@ namespace DAnTE.Inferno
 
                     if (updateRequired)
                     {
-                        currentTask = "installing Bioconductor from http://bioconductor.org/biocLite.R";
-                        rcommand = @"source(""http://bioconductor.org/biocLite.R"")";
+                        currentTask = "installing BiocManager from https://cran.revolutionanalytics.com/";
+                        rcommand = @"install.packages(""BiocManager"", repos='https://cran.revolutionanalytics.com/')";
                         mRConnector.EvaluateNoReturn(rcommand);
 
-                        currentTask = "installing qvalue from Bioconductor";
-                        rcommand = @"biocLite(""qvalue"", suppressUpdates=TRUE)";
+                        currentTask = "installing qvalue and impute from Bioconductor";
+                        rcommand = @"BiocManager::install(c(""qvalue"", ""impute""), update = TRUE, ask = FALSE)";
                         mRConnector.EvaluateNoReturn(rcommand);
 
                         RegistryAccess.SetStringRegistryValue(REGVALUE_BIOCONDUCTOR_VERSION_CHECK, appVersionCurrent);
