@@ -354,7 +354,7 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
+                    MessageBox.Show("Error occurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
                                     MessageBoxIcon.Error);
                 }
 
@@ -420,7 +420,7 @@ namespace DAnTE.Inferno
                 }
                 else
                 {
-                    MessageBox.Show("Error ocurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
+                    MessageBox.Show("Error occurred. Most likely while talking to R", "Error", MessageBoxButtons.OK,
                                     MessageBoxIcon.Error);
                 }
 

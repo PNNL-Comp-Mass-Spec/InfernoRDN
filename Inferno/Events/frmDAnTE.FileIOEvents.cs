@@ -57,7 +57,7 @@ namespace DAnTE.Inferno
 
             if (!openSuccess)
             {
-                MessageBox.Show("Either you cancelled the operation or an error ocurred." +
+                MessageBox.Show("Either you cancelled the operation or an error occurred." +
                                 " Hint: check if the factor and dataset columns match.",
                                 " Try again...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
