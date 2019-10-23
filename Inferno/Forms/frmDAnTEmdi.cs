@@ -360,16 +360,11 @@ namespace DAnTE.Inferno
 
         private static double GetVersionDifferenceHours(IList<string> oldVersion, IList<string> newVersion)
         {
-            int daysOld;
-            int daysNew;
-
-            if (int.TryParse(oldVersion[2], out daysOld) &&
-                int.TryParse(newVersion[2], out daysNew))
+            if (int.TryParse(oldVersion[2], out var daysOld) &&
+                int.TryParse(newVersion[2], out var daysNew))
             {
-                int secondsOld;
-                int secondsNew;
-                if (int.TryParse(oldVersion[3], out secondsOld) &&
-                    int.TryParse(newVersion[3], out secondsNew))
+                if (int.TryParse(oldVersion[3], out var secondsOld) &&
+                    int.TryParse(newVersion[3], out var secondsNew))
                 {
                     var versionDifferenceHours = (daysNew + secondsNew / 86400.0) * 24 -
                                                  (daysOld + secondsOld / 86400.0) * 24;
@@ -714,8 +709,7 @@ namespace DAnTE.Inferno
         {
             var item = sender as ToolStripItem;
 
-            var enumVal = item?.Tag as string;
-            if (enumVal != null)
+            if (item?.Tag is string enumVal)
             {
                 LayoutMdi((MdiLayout)Enum.Parse(typeof(MdiLayout), enumVal));
             }
