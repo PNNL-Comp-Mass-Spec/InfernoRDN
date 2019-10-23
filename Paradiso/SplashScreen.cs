@@ -309,11 +309,11 @@ namespace DAnTE.Paradiso
         {
             var sPercent = "";
             var dblElapsedMilliseconds = ElapsedMilliSeconds();
-            for (var i = 0; i < m_alActualTimes.Count; i++)
+            foreach (var timeVal in m_ActualTimes)
                 sPercent +=
-                    (m_alActualTimes[i] / dblElapsedMilliseconds).ToString("0.####",
-                                                                           System.Globalization.NumberFormatInfo
-                                                                               .InvariantInfo) + " ";
+                    (timeVal / dblElapsedMilliseconds).ToString("0.####",
+                                                          System.Globalization.NumberFormatInfo
+                                                              .InvariantInfo) + " ";
 
             RegistryAccess.SetStringRegistryValue(REG_VALUE_PB_PERCENTS, sPercent);
 
