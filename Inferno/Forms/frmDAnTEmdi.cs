@@ -388,8 +388,8 @@ namespace DAnTE.Inferno
                 {
                     currentTask = "installing default packages from " + mRepository;
 
-                    var rcommand = @"installPackages(c(" + mRpackList + @"), repository=""" + mRepository + @""")";
-                    mRConnector.EvaluateNoReturn(rcommand);
+                    var installPackagesCommand = @"install.packages(c(" + mRPackageList + @"), repos=""" + mRepository + @""")";
+                    mRConnector.EvaluateNoReturn(installPackagesCommand);
 
                     // Also confirm that we have the Bioconductor qvalue package
                     // Check the registry for the most recent version of this program that has installed bioconductor and qvalue
