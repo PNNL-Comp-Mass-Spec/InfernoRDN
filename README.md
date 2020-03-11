@@ -112,10 +112,65 @@ Each subsequent row of the factor file is a new factor name, then the factor val
 The following shows example rows of a factor definitions file (tab-separated). 
 There are 6 datasets and two factors (Time and Temperature) defined for each dataset.
 
-Factor | P10A | P10B | P11A | P11B | P12A | P12B
------- | ---- | ---- | ---- | ---- | ---- | ----
-Time | 0 | 0 | 5 | 5 | 10 | 10
-Temperature | Hot | Cold | Hot | Cold | Hot | Cold
+| Factor      | P10A | P10B | P11A | P11B | P12A | P12B |
+|-------------|------|------|------|------|------|------|
+| Time        | 0    | 0    | 5    | 5    | 10   | 10   |
+| Temperature | Hot  | Cold | Hot  | Cold | Hot  | Cold |
+
+## Data Files
+
+Inferno saves data as R Session files, with a .dnt extension.  These files can be opened with 
+[RStudio](https://rstudio.com/) for custom data analysis.
+
+### Importing InfernoRDN Data Into RStudio
+
+* Create a .dnt file inside InfernoRDN using File, Save Session
+* Rename the .dnt file to have extension .rdata
+* Start R Studio
+* Choose File, Open File
+* Select the .rdata flie
+* Answer "Yes" to the question "Do you want to load the R data file "~/Path/DataFile.rdata" into the global environment?"
+
+The environment tab should now show one or more data matrices
+
+| Variable Name | Description |
+|---------------|-------------|
+| Eset          | Expression data (primary data loaded into InfernoRDN)     |
+| logEset       | Log transformed data                                      |
+| ProtInfo      | Protein to peptide mapping (provided your input data file had a Protein name column) |
+| qrollupP      | Created by QRollup                                        |
+| 
+
+### Running InfernoRDN Methods Inside RStudio
+
+* Inside RStudio, choose File, Open File
+* Select the desired R script, e.g. <code>Rscripts\Rollup\QRollUp.R</code>
+* A new tab should appear with the .R file
+  * Click the Source button, which will run a command like this in the Console
+```R
+source('~/Projects/_CommunityApplications/InfernoRDN/Rscripts/Rollup/QRollUp.R')
+```
+* Repeat for any additional required files
+  * For example QRollUp.R uses RollupScore.R
+* Manually call a method, e.g.
+```R
+QRollup.proteins(Eset, ProtInfo, 30, 0, 3, FALSE, FALSE)
+```
+* View data
+```R
+View(Eset)
+View(oneHitProtNames)
+```
+
+## Loading All InfernoRDN Scripts Into RStudio
+
+Use the following steps to load every InfernoRDN script into RStudio
+* Start RStudio
+* Under the "Session" menu choose "Load workspace".
+  * Select a .dnt file saved from InfernoRDN
+* Use "Load Workspace" two more times
+  * Load Inferno.RData 
+  * Load Inferno_stdplots.RData
 
 ## Manuscript
 
