@@ -114,9 +114,9 @@ namespace DAnTE.Paradiso
             this.lblTimeRemaining = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
+            //
             // lblStatus
-            // 
+            //
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold,
                                                           System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -127,9 +127,9 @@ namespace DAnTE.Paradiso
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "xx";
             this.lblStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-            // 
+            //
             // pnlStatus
-            // 
+            //
             this.pnlStatus.BackColor = System.Drawing.Color.Transparent;
             this.pnlStatus.Location = new System.Drawing.Point(18, 387);
             this.pnlStatus.Name = "pnlStatus";
@@ -137,9 +137,9 @@ namespace DAnTE.Paradiso
             this.pnlStatus.TabIndex = 1;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             this.pnlStatus.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-            // 
+            //
             // lblTimeRemaining
-            // 
+            //
             this.lblTimeRemaining.BackColor = System.Drawing.Color.Transparent;
             this.lblTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F,
                                                                  System.Drawing.FontStyle.Bold,
@@ -151,13 +151,13 @@ namespace DAnTE.Paradiso
             this.lblTimeRemaining.TabIndex = 2;
             this.lblTimeRemaining.Text = "Time remaining";
             this.lblTimeRemaining.DoubleClick += new System.EventHandler(this.SplashScreen_DoubleClick);
-            // 
+            //
             // timer1
-            // 
+            //
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
+            //
             // SplashScreen
-            // 
+            //
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
             this.BackColor = System.Drawing.Color.LightGray;
             this.BackgroundImage = global::DAnTE.Properties.Resources.InfernoSplash21;
@@ -179,7 +179,7 @@ namespace DAnTE.Paradiso
 
         // ************* Static Methods *************** //
 
-        // A static method to create the thread and 
+        // A static method to create the thread and
         // launch the SplashScreen.
         public static void ShowSplashScreen()
         {
@@ -234,7 +234,7 @@ namespace DAnTE.Paradiso
                 ms_frmSplash.SetReferenceInternal();
         }
 
-        // Static method called from the initializing application to 
+        // Static method called from the initializing application to
         // give the splash screen reference points.  Not needed if
         // you are using a lot of status strings.
         public static void SetReferencePoint()
@@ -262,7 +262,7 @@ namespace DAnTE.Paradiso
                 m_dblCompletionFraction = (m_iIndex > 0) ? 1 : 0;
         }
 
-        // Utility function to return elapsed Milliseconds since the 
+        // Utility function to return elapsed Milliseconds since the
         // SplashScreen was launched.
         private double ElapsedMilliSeconds()
         {

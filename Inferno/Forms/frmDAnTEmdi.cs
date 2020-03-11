@@ -72,9 +72,10 @@ namespace DAnTE.Inferno
 
             SplashScreen.ShowSplashScreen();
             Application.DoEvents();
+            var appVersionCurrent = clsRCmdLog.GetProgramVersion();
 
-            Log(mCustomLoggerEnabled, string.Format("Starting Inferno [{0}]...", DateTime.Now), mCustomLogWriter);
-            SplashScreen.SetStatus(string.Format("Starting Inferno [{0}]...", DateTime.Now));
+            Log(mCustomLoggerEnabled, string.Format("Starting Inferno v{0} [{1}]...", appVersionCurrent, DateTime.Now), mCustomLogWriter);
+            SplashScreen.SetStatus(string.Format("Starting Inferno v{0} [{1}]...", appVersionCurrent, DateTime.Now));
             System.Threading.Thread.Sleep(100);
             SplashScreen.SetStatus("Reading Configuration Parameters...");
 
