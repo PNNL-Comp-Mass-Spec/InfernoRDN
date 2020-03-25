@@ -1,5 +1,8 @@
 InfernoRDN Change Log
 
+Version 1.1.7389; March 25, 2020
+	- Build the installer using InnoSetup 6
+
 Version 1.1.7234; October 22, 2019
 	- Use install.packages instead of installPackages
 	- Install BiocManager from https://cran.revolutionanalytics.com/ instead of Bioconductor
