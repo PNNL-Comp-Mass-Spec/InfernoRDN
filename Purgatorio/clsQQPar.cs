@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using DAnTE.Properties;
 
+// ReSharper disable IdentifierTypo
+// ReSharper disable StringLiteralTypo
+
 namespace DAnTE.Purgatorio
 {
     public class clsQQPar

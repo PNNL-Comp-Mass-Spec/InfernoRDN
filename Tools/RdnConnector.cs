@@ -158,7 +158,7 @@ namespace DAnTE.Tools
 
         /// <summary>
         /// Returns 2D string array from given R.Net CharacterMatrix
-        /// (this is a patch beause  RDotNet.CharacterMatrix.GetArrayFast is not implemented)
+        /// (this is a patch because RDotNet.CharacterMatrix.GetArrayFast is not implemented)
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>

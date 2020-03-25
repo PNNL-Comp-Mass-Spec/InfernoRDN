@@ -68,6 +68,7 @@ namespace DAnTE.Inferno
         {
             mLoadedFilename = filePath;
 
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (USE_THREADED_LOAD)
                 DataFileOpenThreaded(mLoadedFilename, "Loading Expressions ...");
             else
@@ -99,6 +100,7 @@ namespace DAnTE.Inferno
 
             if (mLoadedFilename != null)
             {
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 if (USE_THREADED_LOAD)
                     DataFileOpenThreaded(mLoadedFilename, "Loading Protein Information ...");
                 else
@@ -133,6 +135,7 @@ namespace DAnTE.Inferno
             if (mLoadedFilename == null)
                 return;
 
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (USE_THREADED_LOAD)
                 DataFileOpenThreaded(mLoadedFilename, "Loading Factor Information ...");
             else

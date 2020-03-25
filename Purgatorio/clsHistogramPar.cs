@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DAnTE.Properties;
 
+// ReSharper disable IdentifierTypo
 namespace DAnTE.Purgatorio
 {
     public class clsHistogramPar

@@ -3,6 +3,9 @@ using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
 
+// ReSharper disable StringLiteralTypo
+// ReSharper disable IdentifierTypo
+
 namespace DAnTE.Tools
 {
     /// <summary>

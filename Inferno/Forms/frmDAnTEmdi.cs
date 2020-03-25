@@ -14,8 +14,8 @@ namespace DAnTE.Inferno
     // ReSharper disable once IdentifierTypo
     public partial class frmDAnTEmdi : Form
     {
-        // Note that this registry key gets deleted when the program is Uninstalled
-        // See Inno Setup file inferno_setup.iss
+        // Note that this registry key gets deleted when the program is uninstalled (though only for the user who installed the program)
+        // See InnoSetup file inferno_setup.iss
         // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
         private const string REG_VALUE_BIOCONDUCTOR_VERSION_CHECK = "BioconductorCheckLatestInfernoVersion";
 
@@ -288,6 +288,9 @@ namespace DAnTE.Inferno
             var confPath = Path.Combine(Application.StartupPath, "inferno.conf");
             var engine = new Engine(confPath);
 
+            // ReSharper disable StringLiteralTypo
+            // ReSharper disable CommentTypo
+
             engine.AddParameter(new Parameter("Repository", ParameterType.REQUIRED));
             engine.AddParameter(new Parameter("Rpackages", ParameterType.REQUIRED));
             //engine.AddParameter(new Parameter("Rfolder", ParameterType.OPTIONAL, "NONE"));
@@ -314,6 +317,9 @@ namespace DAnTE.Inferno
                 mUpdateRPackages = true;
             else
                 mUpdateRPackages = false;
+
+            // ReSharper restore CommentTypo
+            // ReSharper restore StringLiteralTypo
 
             return true;
         }
