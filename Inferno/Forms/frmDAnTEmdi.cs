@@ -391,9 +391,10 @@ namespace DAnTE.Inferno
             {
                 if (mInstallRPackages)
                 {
-                    currentTask = "installing default packages from " + mRepository;
-
+                    // installing default packages from http://cran.fhcrc.org/
                     var installPackagesCommand = @"install.packages(c(" + mRPackageList + @"), repos=""" + mRepository + @""")";
+                    currentTask = string.Format("installing default packages from {0}; command {1}", mRepository, installPackagesCommand);
+
                     mRConnector.EvaluateNoReturn(installPackagesCommand);
 
                     // Also confirm that we have additional packages from Bioconductor
@@ -423,12 +424,14 @@ namespace DAnTE.Inferno
 
                     if (updateRequired)
                     {
-                        currentTask = "installing BiocManager from https://cran.revolutionanalytics.com/";
                         var installBiocManager = @"install.packages(""BiocManager"", repos='https://cran.revolutionanalytics.com/')";
+                        currentTask = string.Format("installing BiocManager from https://cran.revolutionanalytics.com/; command {0}", installBiocManager);
+
                         mRConnector.EvaluateNoReturn(installBiocManager);
 
-                        currentTask = "installing qvalue and impute from Bioconductor";
                         var installBioconductorPackages = @"BiocManager::install(c(""qvalue"", ""impute""), update = TRUE, ask = FALSE)";
+                        currentTask = string.Format("installing qvalue and impute from Bioconductor; command {0}", installBioconductorPackages);
+
                         mRConnector.EvaluateNoReturn(installBioconductorPackages);
 
                         RegistryAccess.SetStringRegistryValue(REG_VALUE_BIOCONDUCTOR_VERSION_CHECK, appVersionCurrent);
@@ -437,8 +440,10 @@ namespace DAnTE.Inferno
 
                 if (mUpdateRPackages)
                 {
-                    currentTask = "updating packages using " + mRepository;
+                    // updating packages using http://cran.fhcrc.org/
                     var updatePackages = @"update.packages(checkBuilt=TRUE, ask=FALSE,repos=""" + mRepository + @""")";
+                    currentTask = string.Format("updating packages using {0}; command {1}", mRepository, updatePackages);
+
                     mRConnector.EvaluateNoReturn(updatePackages);
                 }
 
@@ -745,7 +750,7 @@ namespace DAnTE.Inferno
             else
             {
                 var fExt = Path.GetExtension(s[0]);
-                if (fExt == null || !fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
+                if (fExt == null || !fExt.Equals(".dnt", StringComparison.OrdinalIgnoreCase))
                 {
                     MessageBox.Show("Only .dnt files can be opened via drag/drop here", "Unsupported file type",
                                     MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -15,7 +15,7 @@ namespace DAnTE.Inferno
     {
         #region Other Variables
 
-        public const string PROGRAM_DATE = "October 22, 2019";
+        public const string PROGRAM_DATE = "March 25, 2020";
 
         public const int SUGGESTED_DATASETS_TO_SELECT = 30;
         public const int MAX_DATASETS_TO_SELECT = 60;
