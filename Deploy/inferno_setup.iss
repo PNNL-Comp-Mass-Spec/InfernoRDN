@@ -1,5 +1,5 @@
 ; This is an Inno Setup configuration file
-; http://www.jrsoftware.org/isinfo.php
+; https://jrsoftware.org/isinfo.php
 
 #define ApplicationVersion GetFileVersion('..\bin\Debug\Inferno.exe')
 
@@ -89,28 +89,34 @@ AppPublisher=Pacific Northwest National Laboratory
 AppPublisherURL=http://omics.pnl.gov/software
 AppSupportURL=http://omics.pnl.gov/software
 AppUpdatesURL=http://omics.pnl.gov/software
-DefaultDirName={pf}\InfernoRDN
+ArchitecturesAllowed=x64 x86
+ArchitecturesInstallIn64BitMode=x64
+DefaultDirName={autopf}\InfernoRDN
 DefaultGroupName=InfernoRDN
 AppCopyright=© PNNL and TGEN
 LicenseFile=.\License.rtf
-PrivilegesRequired=poweruser
+PrivilegesRequired=admin
 OutputBaseFilename=InfernoRDNSetup
+; The following is set to "no" to silence the warning about updating a used-based registry key (in HKCU)
+UsedUserAreasWarning=no
 VersionInfoVersion={#ApplicationVersion}
 VersionInfoCompany=PNNL
 VersionInfoDescription=InfernoRDN for Proteomics
 VersionInfoCopyright=PNNL
-DisableFinishedPage=true
+DisableFinishedPage=yes
+DisableWelcomePage=no
 ShowLanguageDialog=no
-SetupIconFile=..\Deploy\Images\infernoSetup.ico
+SetupIconFile=.\Images\infernoSetup.ico
 InfoBeforeFile=.\readme.rtf
-ChangesAssociations=true
-WizardImageFile=..\Deploy\Images\InfernoSetupSideImage.bmp
-WizardSmallImageFile=..\Deploy\Images\InfernoSetupSmallImage.bmp
+ChangesAssociations=yes
+WizardImageFile=.\Images\InfernoSetupSideImage.bmp
+WizardSmallImageFile=.\Images\InfernoSetupSmallImage.bmp
+WizardStyle=modern
 InfoAfterFile=.\postinstall.rtf
-EnableDirDoesntExistWarning=true
-AlwaysShowDirOnReadyPage=true
+EnableDirDoesntExistWarning=no
+AlwaysShowDirOnReadyPage=yes
 UninstallDisplayIcon={app}\dante_setup.ico
-ShowTasksTreeLines=true
+ShowTasksTreeLines=yes
 OutputDir=.\Output
 [Registry]
 ;Root: HKCR; Subkey: .dnt; ValueType: string; ValueName: ; ValueData: DAnTEFile; Flags: uninsdeletevalue
