@@ -61,6 +61,10 @@ InfernoRDN depends on the following:
 
 2. R Statistical Environment, version 3.5 or newer
    * https://cran.r-project.org/bin/windows/base/
+   
+3. Bioconductor
+   * This should get installed automatically by InfernoRDN
+   * You may need to manually upgrade Bioconductor, using the steps outlined at https://bioconductor.org/install/
 
 ### R Packages
 
@@ -139,7 +143,7 @@ The environment tab should now show one or more data matrices
 | logEset       | Log transformed data                                      |
 | ProtInfo      | Protein to peptide mapping (provided your input data file had a Protein name column) |
 | qrollupP      | Created by QRollup                                        |
-| 
+
 
 ### Running InfernoRDN Methods Inside RStudio
 
