@@ -16,7 +16,7 @@ namespace DAnTE.Purgatorio
         public string Bcol;
         public string bkground;
         public string addrug;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public string datasubset;
         public int ncolumns;
@@ -51,7 +51,7 @@ namespace DAnTE.Purgatorio
             if (Bcol == "")
                 Bcol = "#5FAE27";
             bkground = "bkground=\"white\"";
-            Rdataset = "";
+            RDataset = "";
             mstrDatasetName = "";
             tempFile = "C:/_temp.png";
             stamp = false;
@@ -71,7 +71,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "plot_hist(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
+                mRCmd = "plot_hist(" + RDataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
                 mRCmd = mRCmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @"""," + bkground + ",";
                 mRCmd = mRCmd + addrug + "," + Bins + "," + Stamp + @",file=""" + tempFile + @""")";
                 return mRCmd;

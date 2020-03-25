@@ -42,12 +42,12 @@ namespace DAnTE.Inferno
 
                     #region Eset
 
-                    datasetNode.mTNode = new TreeNode("Expressions", 1, 2);
-                    datasetNode.mstrDataText = "Expressions";
-                    datasetNode.mstrMessage = "Expression values selected.";
-                    datasetNode.mstrRdatasetName = "Eset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Expressions", 1, 2);
+                    datasetNode.DataText = "Expressions";
+                    datasetNode.Message = "Expression values selected.";
+                    datasetNode.RDatasetName = "Eset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Expressions"))
                         mhtDatasets["Expressions"] = datasetNode;
                     else
@@ -63,15 +63,15 @@ namespace DAnTE.Inferno
 
                     #region ProtInfo
 
-                    datasetNode.mTNode = new TreeNode("Protein Info", 3, 4);
-                    datasetNode.mstrDataText = "Protein Info";
-                    datasetNode.mstrMessage = "Protein Info selected.";
-                    datasetNode.mstrRdatasetName = "ProtInfo";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Protein Info", 3, 4);
+                    datasetNode.DataText = "Protein Info";
+                    datasetNode.Message = "Protein Info selected.";
+                    datasetNode.RDatasetName = "ProtInfo";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Protein Info"))
                         mhtDatasets["Protein Info"] = datasetNode;
                     else
@@ -84,15 +84,15 @@ namespace DAnTE.Inferno
 
                     #region Factors
 
-                    datasetNode.mTNode = new TreeNode("Factors", 3, 4);
-                    datasetNode.mstrDataText = "Factors";
-                    datasetNode.mstrMessage = "Factors selected.";
-                    datasetNode.mstrRdatasetName = "factors";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Factors", 3, 4);
+                    datasetNode.DataText = "Factors";
+                    datasetNode.Message = "Factors selected.";
+                    datasetNode.RDatasetName = "factors";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Factors"))
                         mhtDatasets["Factors"] = datasetNode;
                     else
@@ -107,12 +107,12 @@ namespace DAnTE.Inferno
 
                     #region logEset
 
-                    datasetNode.mTNode = new TreeNode("Log Expressions", 1, 2);
-                    datasetNode.mstrDataText = "Log Expressions";
-                    datasetNode.mstrMessage = "Log Expressions selected.";
-                    datasetNode.mstrRdatasetName = "logEset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Log Expressions", 1, 2);
+                    datasetNode.DataText = "Log Expressions";
+                    datasetNode.Message = "Log Expressions selected.";
+                    datasetNode.RDatasetName = "logEset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Log Expressions"))
                         mhtDatasets["Log Expressions"] = datasetNode;
                     else
@@ -125,12 +125,12 @@ namespace DAnTE.Inferno
 
                     #region loessData
 
-                    datasetNode.mTNode = new TreeNode("LOESS Data", 1, 2);
-                    datasetNode.mstrDataText = "LOESS Data";
-                    datasetNode.mstrMessage = "LOESS Data selected.";
-                    datasetNode.mstrRdatasetName = "loessData";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("LOESS Data", 1, 2);
+                    datasetNode.DataText = "LOESS Data";
+                    datasetNode.Message = "LOESS Data selected.";
+                    datasetNode.RDatasetName = "loessData";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("LOESS Data"))
                         mhtDatasets["LOESS Data"] = datasetNode;
                     else
@@ -143,12 +143,12 @@ namespace DAnTE.Inferno
 
                     #region quaNormEset
 
-                    datasetNode.mTNode = new TreeNode("Quantile Normalized", 1, 2);
-                    datasetNode.mstrDataText = "Quantile Normalized";
-                    datasetNode.mstrMessage = "Quantile normalized data selected.";
-                    datasetNode.mstrRdatasetName = "quaNormEset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Quantile Normalized", 1, 2);
+                    datasetNode.DataText = "Quantile Normalized";
+                    datasetNode.Message = "Quantile normalized data selected.";
+                    datasetNode.RDatasetName = "quaNormEset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Quantile Normalized"))
                         mhtDatasets["Quantile Normalized"] = datasetNode;
                     else
@@ -161,12 +161,12 @@ namespace DAnTE.Inferno
 
                     #region MeanCEset
 
-                    datasetNode.mTNode = new TreeNode("Mean Centered", 1, 2);
-                    datasetNode.mstrDataText = "Mean Centered";
-                    datasetNode.mstrMessage = "Mean centered data selected.";
-                    datasetNode.mstrRdatasetName = "meanCEset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Mean Centered", 1, 2);
+                    datasetNode.DataText = "Mean Centered";
+                    datasetNode.Message = "Mean centered data selected.";
+                    datasetNode.RDatasetName = "meanCEset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Mean Centered"))
                         mhtDatasets["Mean Centered"] = datasetNode;
                     else
@@ -179,12 +179,12 @@ namespace DAnTE.Inferno
 
                     #region MedianCEset
 
-                    datasetNode.mTNode = new TreeNode("Median Centered", 1, 2);
-                    datasetNode.mstrDataText = "Median Centered";
-                    datasetNode.mstrMessage = "Median centered data selected.";
-                    datasetNode.mstrRdatasetName = "medianCEset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Median Centered", 1, 2);
+                    datasetNode.DataText = "Median Centered";
+                    datasetNode.Message = "Median centered data selected.";
+                    datasetNode.RDatasetName = "medianCEset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Median Centered"))
                         mhtDatasets["Median Centered"] = datasetNode;
                     else
@@ -197,12 +197,12 @@ namespace DAnTE.Inferno
 
                     #region madEset
 
-                    datasetNode.mTNode = new TreeNode("MAD Adjusted", 1, 2);
-                    datasetNode.mstrDataText = "MAD Adjusted";
-                    datasetNode.mstrMessage = "MAD Adjusted data selected.";
-                    datasetNode.mstrRdatasetName = "madEset";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("MAD Adjusted", 1, 2);
+                    datasetNode.DataText = "MAD Adjusted";
+                    datasetNode.Message = "MAD Adjusted data selected.";
+                    datasetNode.RDatasetName = "madEset";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("MAD Adjusted"))
                         mhtDatasets["MAD Adjusted"] = datasetNode;
                     else
@@ -215,12 +215,12 @@ namespace DAnTE.Inferno
 
                     #region linregData
 
-                    datasetNode.mTNode = new TreeNode("Linear Regressed", 1, 2);
-                    datasetNode.mstrDataText = "Linear Regressed";
-                    datasetNode.mstrMessage = "Linear Regressed Data selected.";
-                    datasetNode.mstrRdatasetName = "linregData";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Linear Regressed", 1, 2);
+                    datasetNode.DataText = "Linear Regressed";
+                    datasetNode.Message = "Linear Regressed Data selected.";
+                    datasetNode.RDatasetName = "linregData";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Linear Regressed"))
                         mhtDatasets["Linear Regressed"] = datasetNode;
                     else
@@ -233,12 +233,12 @@ namespace DAnTE.Inferno
 
                     #region imputedData
 
-                    datasetNode.mTNode = new TreeNode("Imputed Data", 1, 2);
-                    datasetNode.mstrDataText = "Imputed Data";
-                    datasetNode.mstrMessage = "Imputed Data selected.";
-                    datasetNode.mstrRdatasetName = "imputedData";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
+                    datasetNode.TNode = new TreeNode("Imputed Data", 1, 2);
+                    datasetNode.DataText = "Imputed Data";
+                    datasetNode.Message = "Imputed Data selected.";
+                    datasetNode.RDatasetName = "imputedData";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
                     if (mhtDatasets.ContainsKey("Imputed Data"))
                         mhtDatasets["Imputed Data"] = datasetNode;
                     else
@@ -251,14 +251,14 @@ namespace DAnTE.Inferno
 
                     #region mergedData
 
-                    datasetNode.mTNode = new TreeNode("Merged Data", 1, 2);
-                    datasetNode.mstrDataText = "Merged Data";
-                    datasetNode.mstrMessage = "Merged Data selected.";
-                    datasetNode.mstrRdatasetName = "mergedData";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Merged Data", 1, 2);
+                    datasetNode.DataText = "Merged Data";
+                    datasetNode.Message = "Merged Data selected.";
+                    datasetNode.RDatasetName = "mergedData";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Merged Data"))
                         mhtDatasets["Merged Data"] = datasetNode;
                     else
@@ -271,14 +271,14 @@ namespace DAnTE.Inferno
 
                     #region pData11 (RRollup)
 
-                    datasetNode.mTNode = new TreeNode("RRollup", 1, 2);
-                    datasetNode.mstrDataText = "RRollup";
-                    datasetNode.mstrMessage = "RRollup selected.";
-                    datasetNode.mstrRdatasetName = "pData11";
-                    datasetNode.mstrRProtDatasetName = @"pScaled1"",""pData1";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("RRollup", 1, 2);
+                    datasetNode.DataText = "RRollup";
+                    datasetNode.Message = "RRollup selected.";
+                    datasetNode.RDatasetName = "pData11";
+                    datasetNode.RProteinDatasetName = @"pScaled1"",""pData1";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("RRollup"))
                         mhtDatasets["RRollup"] = datasetNode;
                     else
@@ -291,13 +291,13 @@ namespace DAnTE.Inferno
 
                     #region sData1 (RRollup)
 
-                    datasetNode.mTNode = new TreeNode("ScaledData", 1, 2);
-                    datasetNode.mstrDataText = "ScaledData";
-                    datasetNode.mstrMessage = "Scaled data selected.";
-                    datasetNode.mstrRdatasetName = "sData1";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
-                    datasetNode.mstrParentNode = "RRollup";
+                    datasetNode.TNode = new TreeNode("ScaledData", 1, 2);
+                    datasetNode.DataText = "ScaledData";
+                    datasetNode.Message = "Scaled data selected.";
+                    datasetNode.RDatasetName = "sData1";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
+                    datasetNode.ParentNode = "RRollup";
                     if (mhtDatasets.ContainsKey("ScaledData"))
                         mhtDatasets["ScaledData"] = datasetNode;
                     else
@@ -310,13 +310,13 @@ namespace DAnTE.Inferno
 
                     #region orData1 (RRollup)
 
-                    datasetNode.mTNode = new TreeNode("OutliersRemoved", 1, 2);
-                    datasetNode.mstrDataText = "OutliersRemoved";
-                    datasetNode.mstrMessage = "Outliers removed data selected.";
-                    datasetNode.mstrRdatasetName = "orData1";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
-                    datasetNode.mstrParentNode = "RRollup";
+                    datasetNode.TNode = new TreeNode("OutliersRemoved", 1, 2);
+                    datasetNode.DataText = "OutliersRemoved";
+                    datasetNode.Message = "Outliers removed data selected.";
+                    datasetNode.RDatasetName = "orData1";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
+                    datasetNode.ParentNode = "RRollup";
                     if (mhtDatasets.ContainsKey("OutliersRemoved"))
                         mhtDatasets["OutliersRemoved"] = datasetNode;
                     else
@@ -329,14 +329,14 @@ namespace DAnTE.Inferno
 
                     #region pData2 (ZRollup)
 
-                    datasetNode.mTNode = new TreeNode("ZRollup", 1, 2);
-                    datasetNode.mstrDataText = "ZRollup";
-                    datasetNode.mstrMessage = "ZRollup selected.";
-                    datasetNode.mstrRdatasetName = "pData22";
-                    datasetNode.mstrRProtDatasetName = @"pScaled2"",""pData2";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("ZRollup", 1, 2);
+                    datasetNode.DataText = "ZRollup";
+                    datasetNode.Message = "ZRollup selected.";
+                    datasetNode.RDatasetName = "pData22";
+                    datasetNode.RProteinDatasetName = @"pScaled2"",""pData2";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("ZRollup"))
                         mhtDatasets["ZRollup"] = datasetNode;
                     else
@@ -349,14 +349,14 @@ namespace DAnTE.Inferno
 
                     #region QRollupP1
 
-                    datasetNode.mTNode = new TreeNode("QRollup", 1, 2);
-                    datasetNode.mstrDataText = "QRollup";
-                    datasetNode.mstrMessage = "QRollup selected.";
-                    datasetNode.mstrRdatasetName = "qrollupP1";
-                    datasetNode.mstrRProtDatasetName = "qrollupP";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("QRollup", 1, 2);
+                    datasetNode.DataText = "QRollup";
+                    datasetNode.Message = "QRollup selected.";
+                    datasetNode.RDatasetName = "qrollupP1";
+                    datasetNode.RProteinDatasetName = "qrollupP";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("QRollup"))
                         mhtDatasets["QRollup"] = datasetNode;
                     else
@@ -369,15 +369,15 @@ namespace DAnTE.Inferno
 
                     #region PCA weights
 
-                    datasetNode.mTNode = new TreeNode("PCA Weights", 3, 4);
-                    datasetNode.mstrDataText = "PCA Weights";
-                    datasetNode.mstrMessage = "PCA Weights selected.";
-                    datasetNode.mstrRdatasetName = "PCAweights";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("PCA Weights", 3, 4);
+                    datasetNode.DataText = "PCA Weights";
+                    datasetNode.Message = "PCA Weights selected.";
+                    datasetNode.RDatasetName = "PCAweights";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("PCA Weights"))
                         mhtDatasets["PCA Weights"] = datasetNode;
                     else
@@ -390,15 +390,15 @@ namespace DAnTE.Inferno
 
                     #region PCA weights
 
-                    datasetNode.mTNode = new TreeNode("PLS Weights", 3, 4);
-                    datasetNode.mstrDataText = "PLS Weights";
-                    datasetNode.mstrMessage = "PLS Weights selected.";
-                    datasetNode.mstrRdatasetName = "PLSweights";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("PLS Weights", 3, 4);
+                    datasetNode.DataText = "PLS Weights";
+                    datasetNode.Message = "PLS Weights selected.";
+                    datasetNode.RDatasetName = "PLSweights";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("PLS Weights"))
                         mhtDatasets["PLS Weights"] = datasetNode;
                     else
@@ -411,15 +411,15 @@ namespace DAnTE.Inferno
 
                     #region PCA weights
 
-                    datasetNode.mTNode = new TreeNode("Heatmap Clusters", 3, 4);
-                    datasetNode.mstrDataText = "Heatmap Clusters";
-                    datasetNode.mstrMessage = "Heatmap Clusters selected.";
-                    datasetNode.mstrRdatasetName = "clusterResults";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Heatmap Clusters", 3, 4);
+                    datasetNode.DataText = "Heatmap Clusters";
+                    datasetNode.Message = "Heatmap Clusters selected.";
+                    datasetNode.RDatasetName = "clusterResults";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Heatmap Clusters"))
                         mhtDatasets["Heatmap Clusters"] = datasetNode;
                     else
@@ -432,15 +432,15 @@ namespace DAnTE.Inferno
 
                     #region p-values
 
-                    datasetNode.mTNode = new TreeNode("p-Values", 3, 4);
-                    datasetNode.mstrDataText = "p-Values";
-                    datasetNode.mstrMessage = "p-Values selected.";
-                    datasetNode.mstrRdatasetName = "pvalues";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("p-Values", 3, 4);
+                    datasetNode.DataText = "p-Values";
+                    datasetNode.Message = "p-Values selected.";
+                    datasetNode.RDatasetName = "pvalues";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("p-Values"))
                         mhtDatasets["p-Values"] = datasetNode;
                     else
@@ -453,15 +453,15 @@ namespace DAnTE.Inferno
 
                     #region yimputed
 
-                    datasetNode.mTNode = new TreeNode("Imputed Values", 1, 2);
-                    datasetNode.mstrDataText = "Imputed Values";
-                    datasetNode.mstrMessage = "Imputed Values selected.";
-                    datasetNode.mstrRdatasetName = "yimputed";
-                    datasetNode.mblAddDGridCtxtMnu = true;
-                    datasetNode.mblAddTVCtxtMnu = true;
-                    datasetNode.mblIsNumeric = true;
-                    datasetNode.mblIsPlottable = true;
-                    datasetNode.mblRollupPossible = true;
+                    datasetNode.TNode = new TreeNode("Imputed Values", 1, 2);
+                    datasetNode.DataText = "Imputed Values";
+                    datasetNode.Message = "Imputed Values selected.";
+                    datasetNode.RDatasetName = "yimputed";
+                    datasetNode.AddDGridContextMenu = true;
+                    datasetNode.AddTVContextMenu = true;
+                    datasetNode.IsNumeric = true;
+                    datasetNode.IsPlotTable = true;
+                    datasetNode.RollupPossible = true;
                     if (mhtDatasets.ContainsKey("Imputed Values"))
                         mhtDatasets["Imputed Values"] = datasetNode;
                     else
@@ -474,16 +474,16 @@ namespace DAnTE.Inferno
 
                     #region Unused data for ANOVA
 
-                    datasetNode.mTNode = new TreeNode("Unused Data", 3, 4);
-                    datasetNode.mstrDataText = "Unused Data";
-                    datasetNode.mstrMessage = "Unused Data selected.";
-                    datasetNode.mstrRdatasetName = "notused";
-                    datasetNode.mstrParentNode = "p-Values";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = true;
-                    datasetNode.mblIsPlottable = true;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Unused Data", 3, 4);
+                    datasetNode.DataText = "Unused Data";
+                    datasetNode.Message = "Unused Data selected.";
+                    datasetNode.RDatasetName = "notused";
+                    datasetNode.ParentNode = "p-Values";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = true;
+                    datasetNode.IsPlotTable = true;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Unused Data"))
                         mhtDatasets["Unused Data"] = datasetNode;
                     else
@@ -496,15 +496,15 @@ namespace DAnTE.Inferno
 
                     #region Fold Changes
 
-                    datasetNode.mTNode = new TreeNode("Fold Changes", 3, 4);
-                    datasetNode.mstrDataText = "Fold Changes";
-                    datasetNode.mstrMessage = "Fold Changes selected.";
-                    datasetNode.mstrRdatasetName = "foldChanges";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Fold Changes", 3, 4);
+                    datasetNode.DataText = "Fold Changes";
+                    datasetNode.Message = "Fold Changes selected.";
+                    datasetNode.RDatasetName = "foldChanges";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Fold Changes"))
                         mhtDatasets["Fold Changes"] = datasetNode;
                     else
@@ -517,15 +517,15 @@ namespace DAnTE.Inferno
 
                     #region Pattern Search
 
-                    datasetNode.mTNode = new TreeNode("Pattern Corr", 3, 4);
-                    datasetNode.mstrDataText = "Pattern Corr";
-                    datasetNode.mstrMessage = "Pattern Correlations selected.";
-                    datasetNode.mstrRdatasetName = "patternData";
-                    datasetNode.mblAddDGridCtxtMnu = false;
-                    datasetNode.mblAddTVCtxtMnu = false;
-                    datasetNode.mblIsNumeric = false;
-                    datasetNode.mblIsPlottable = false;
-                    datasetNode.mblRollupPossible = false;
+                    datasetNode.TNode = new TreeNode("Pattern Corr", 3, 4);
+                    datasetNode.DataText = "Pattern Corr";
+                    datasetNode.Message = "Pattern Correlations selected.";
+                    datasetNode.RDatasetName = "patternData";
+                    datasetNode.AddDGridContextMenu = false;
+                    datasetNode.AddTVContextMenu = false;
+                    datasetNode.IsNumeric = false;
+                    datasetNode.IsPlotTable = false;
+                    datasetNode.RollupPossible = false;
                     if (mhtDatasets.ContainsKey("Pattern Corr"))
                         mhtDatasets["Pattern Corr"] = datasetNode;
                     else
@@ -542,12 +542,12 @@ namespace DAnTE.Inferno
                     {
                         var setNum = dataTableNameInR.Substring(12);
                         var nodeTxt = "Filtered Data" + setNum;
-                        datasetNode.mTNode = new TreeNode(nodeTxt, 1, 2);
-                        datasetNode.mstrDataText = nodeTxt;
-                        datasetNode.mstrMessage = "Filtered Data selected.";
-                        datasetNode.mstrRdatasetName = dataTableNameInR;
-                        datasetNode.mblAddDGridCtxtMnu = true;
-                        datasetNode.mblAddTVCtxtMnu = false;
+                        datasetNode.TNode = new TreeNode(nodeTxt, 1, 2);
+                        datasetNode.DataText = nodeTxt;
+                        datasetNode.Message = "Filtered Data selected.";
+                        datasetNode.RDatasetName = dataTableNameInR;
+                        datasetNode.AddDGridContextMenu = true;
+                        datasetNode.AddTVContextMenu = false;
                         if (mhtDatasets.ContainsKey(nodeTxt))
                             mhtDatasets[nodeTxt] = datasetNode;
                         else
@@ -593,7 +593,7 @@ namespace DAnTE.Inferno
             catch (Exception ex)
             {
                 LastSessionLoadError = ex.Message;
-                if (!LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.CurrentCultureIgnoreCase))
+                if (!LastSessionLoadError.StartsWith("Value cannot be null", StringComparison.OrdinalIgnoreCase))
                     MessageBox.Show("R access failed loading file " + fiDatafile.FullName + ": " + ex.Message, "Error!");
 
                 return false;
@@ -746,7 +746,7 @@ namespace DAnTE.Inferno
 
         /// <summary>
         /// Add a node to the TreeView
-        /// Node Tag points to all the information related to theat node
+        /// Node Tag points to all the information related to that node
         /// in a class of type 'clsDatasetTreeNode'
         /// </summary>
         /// <param name="mdataNode"></param>
@@ -776,30 +776,30 @@ namespace DAnTE.Inferno
             }
 
             //dataNodeToAdd.mDTable.rea
-            if ((tn = GetNode(dataNodeToAdd.mstrDataText)) == null)
+            if ((tn = GetNode(dataNodeToAdd.DataText)) == null)
             {
                 mExpressionsTab.TabIndex = 0;
-                mExpressionsTab.Text = dataNodeToAdd.mstrDataText;
+                mExpressionsTab.Text = dataNodeToAdd.DataText;
                 ((ucDataGridView)mExpressionsTab.Controls[0]).SetDataSource = dataNodeToAdd.mDTable;
 
-                if (dataNodeToAdd.mblAddDGridCtxtMnu)
+                if (dataNodeToAdd.AddDGridContextMenu)
                     ((ucDataGridView)mExpressionsTab.Controls[0]).CxMenu = mCntxtMnuGrid;
-                if (dataNodeToAdd.mblAddTVCtxtMnu)
-                    dataNodeToAdd.mTNode.ContextMenuStrip = mContextMenuTreeV;
+                if (dataNodeToAdd.AddTVContextMenu)
+                    dataNodeToAdd.TNode.ContextMenuStrip = mContextMenuTreeV;
 
-                if (dataNodeToAdd.mstrParentNode.Equals("DAnTE"))
-                    ctlTreeView.Nodes[0].Nodes.Add(dataNodeToAdd.mTNode);
+                if (dataNodeToAdd.ParentNode.Equals("DAnTE"))
+                    ctlTreeView.Nodes[0].Nodes.Add(dataNodeToAdd.TNode);
                 else
                 {
-                    var parentNode = (mhtDatasets[dataNodeToAdd.mstrParentNode]).mTNode;
-                    parentNode.Nodes.Add(dataNodeToAdd.mTNode);
+                    var parentNode = (mhtDatasets[dataNodeToAdd.ParentNode]).TNode;
+                    parentNode.Nodes.Add(dataNodeToAdd.TNode);
                 }
                 ctlTreeView.ExpandAll();
-                ctlTreeView.SelectedNode = dataNodeToAdd.mTNode;
-                statusBarPanelMsg.Text = dataNodeToAdd.mstrMessage;
+                ctlTreeView.SelectedNode = dataNodeToAdd.TNode;
+                statusBarPanelMsg.Text = dataNodeToAdd.Message;
                 statusBarPanelRowNum.Text = dataNodeToAdd.mDTable.Rows.Count + " Rows/" +
                                             dataNodeToAdd.mDTable.Columns.Count + " Columns.";
-                dataNodeToAdd.mTNode.Tag = dataNodeToAdd;
+                dataNodeToAdd.TNode.Tag = dataNodeToAdd;
             }
             else
             {
@@ -826,13 +826,13 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            mExpressionsTab.Text = selectedNodeTag.mstrDataText;
+            mExpressionsTab.Text = selectedNodeTag.DataText;
             ((ucDataGridView)mExpressionsTab.Controls[0]).SetDataSource = selectedNodeTag.mDTable;
-            if (selectedNodeTag.mblAddDGridCtxtMnu)
+            if (selectedNodeTag.AddDGridContextMenu)
                 ((ucDataGridView)mExpressionsTab.Controls[0]).CxMenu = mCntxtMnuGrid;
-            if (selectedNodeTag.mblAddTVCtxtMnu)
+            if (selectedNodeTag.AddTVContextMenu)
                 tn.ContextMenuStrip = mContextMenuTreeV;
-            statusBarPanelMsg.Text = selectedNodeTag.mstrMessage;
+            statusBarPanelMsg.Text = selectedNodeTag.Message;
             statusBarPanelRowNum.Text = selectedNodeTag.mDTable.Rows.Count + " Rows/" +
                                         selectedNodeTag.mDTable.Columns.Count + " Columns.";
             //mDTselected = mdataNode.mDTable;
@@ -853,7 +853,7 @@ namespace DAnTE.Inferno
             {
                 var datasetName = dataset.Key;
                 var datasetTable = dataset.Value;
-                if (datasetTable.mblIsNumeric)
+                if (datasetTable.IsNumeric)
                     datasetNames.Add(datasetName);
             }
             return datasetNames;
@@ -867,7 +867,7 @@ namespace DAnTE.Inferno
         public string CorrespondingRdataset(string selected)
         {
             if (mhtDatasets.ContainsKey(selected))
-                return (mhtDatasets[selected]).mstrRdatasetName;
+                return (mhtDatasets[selected]).RDatasetName;
 
             return "Eset";
         }
@@ -884,10 +884,10 @@ namespace DAnTE.Inferno
             foreach (var item in mhtDatasets)
             {
                 var datasetItem = item.Value;
-                if (!string.IsNullOrWhiteSpace(datasetItem.mstrRProtDatasetName))
-                    rCmd += '"' + datasetItem.mstrRProtDatasetName + '"' + ",";
+                if (!string.IsNullOrWhiteSpace(datasetItem.RProteinDatasetName))
+                    rCmd += '"' + datasetItem.RProteinDatasetName + '"' + ",";
                 else
-                    rCmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
+                    rCmd += '"' + datasetItem.RDatasetName + '"' + ",";
             }
             return rCmd;
         }
@@ -903,8 +903,8 @@ namespace DAnTE.Inferno
             foreach (var item in mhtDatasets)
             {
                 var datasetItem = item.Value;
-                if (datasetItem.mblIsNumeric)
-                    rCmd += '"' + datasetItem.mstrRdatasetName + '"' + ",";
+                if (datasetItem.IsNumeric)
+                    rCmd += '"' + datasetItem.RDatasetName + '"' + ",";
             }
             return rCmd;
         }

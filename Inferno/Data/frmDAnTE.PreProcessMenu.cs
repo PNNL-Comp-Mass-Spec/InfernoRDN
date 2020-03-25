@@ -44,8 +44,8 @@ namespace DAnTE.Inferno
 
             mLogTransformParams = new Purgatorio.clsLogTransformPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DatasetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DatasetName = selectedNodeTag.DataText
             };
 
             var logTransformParams = new frmLogPar(mLogTransformParams);
@@ -104,13 +104,13 @@ namespace DAnTE.Inferno
 
             mLoessParams = new Purgatorio.clsLoessPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var loessParams = new frmLOESSPar(mLoessParams)
             {
-                DataSetName = selectedNodeTag.mstrDataText
+                DataSetName = selectedNodeTag.DataText
             };
 
             var factorTable = mhtDatasets["Factors"];
@@ -160,7 +160,7 @@ namespace DAnTE.Inferno
             }
 
             // check if there's enough complete data to do Quantile normalization
-            var rCmd = "qnOK <- IsCompleteData(" + selectedNodeTag.mstrRdatasetName + ")";
+            var rCmd = "qnOK <- IsCompleteData(" + selectedNodeTag.RDatasetName + ")";
             try
             {
                 mRConnector.EvaluateNoReturn(rCmd);
@@ -187,12 +187,12 @@ namespace DAnTE.Inferno
 
             mQuantileNormalizationParams = new Purgatorio.clsQnormPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             Add2AnalysisHTable(mQuantileNormalizationParams, "Quantile_Normalization");
-            //rCmd = "quaNormEset <- quantileN(" + mclsSelected.mstrRdatasetName + ")";
+            //rCmd = "quaNormEset <- quantileN(" + selectedNode.RDatasetName + ")";
             rCmd = mQuantileNormalizationParams.RCommand;
 
             m_BackgroundWorker.RunWorkerAsync(rCmd);
@@ -235,13 +235,13 @@ namespace DAnTE.Inferno
 
             mMeanCenteringParams = new Purgatorio.clsCentralTendencyPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var meanCenterParams = new frmMeanCenterPar(mMeanCenteringParams)
             {
-                DataSetName = selectedNodeTag.mstrDataText
+                DataSetName = selectedNodeTag.DataText
             };
 
             if (meanCenterParams.ShowDialog() == DialogResult.OK)
@@ -299,13 +299,13 @@ namespace DAnTE.Inferno
 
             mMADParams = new Purgatorio.clsMADPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var madParams = new frmMADPar(mMADParams)
             {
-                DataSetName = selectedNodeTag.mstrDataText
+                DataSetName = selectedNodeTag.DataText
             };
             if (mhtDatasets.ContainsKey("Factors"))
             {
@@ -370,8 +370,8 @@ namespace DAnTE.Inferno
 
             mLinearRegressionParams = new Purgatorio.clsLinRegrnPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var factorTable = mhtDatasets["Factors"];
@@ -427,13 +427,13 @@ namespace DAnTE.Inferno
 
             mImputationParams = new Purgatorio.clsImputePar
             {
-                mRDataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                mRDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var imputeParams = new frmImputePar(mImputationParams)
             {
-                DataSetName = selectedNodeTag.mstrDataText
+                DataSetName = selectedNodeTag.DataText
             };
 
             if (mhtDatasets.ContainsKey("Factors"))

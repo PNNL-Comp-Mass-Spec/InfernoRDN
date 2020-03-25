@@ -8,7 +8,7 @@ namespace DAnTE.Purgatorio
         private string mstrOutFolder;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "LinearRegression")]
-        public string Rdataset;
+        public string RDataset;
 
         public bool mblPlot;
         public int mintFactorIndex;
@@ -30,7 +30,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "linregData <- LinReg_normalize(" + Rdataset + "," + this.Factors +
+                mRCmd = "linregData <- LinReg_normalize(" + RDataset + "," + this.Factors +
                        "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
                 return mRCmd;
             }

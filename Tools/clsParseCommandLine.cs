@@ -126,7 +126,7 @@ namespace FileProcessor
                     {
                         intMatchCount = (from validItem in lstValidParameters
                                          where
-                                             string.Equals(validItem, itemKey, StringComparison.CurrentCultureIgnoreCase)
+                                             string.Equals(validItem, itemKey, StringComparison.OrdinalIgnoreCase)
                                          select validItem).Count();
                     }
 
@@ -261,7 +261,7 @@ namespace FileProcessor
                 }
 
                 if (strCmdLine.IndexOf(chSwitchStartChar + "?", StringComparison.Ordinal) > 0 ||
-                    strCmdLine.ToLower().IndexOf(chSwitchStartChar + "help", StringComparison.CurrentCultureIgnoreCase) >
+                    strCmdLine.ToLower().IndexOf(chSwitchStartChar + "help", StringComparison.OrdinalIgnoreCase) >
                     0)
                 {
                     mShowHelp = true;
@@ -501,7 +501,7 @@ namespace FileProcessor
                 }
 
                 var result = (from item in mSwitches
-                              where string.Equals(item.Key, strKey, StringComparison.CurrentCultureIgnoreCase)
+                              where string.Equals(item.Key, strKey, StringComparison.OrdinalIgnoreCase)
                               select item).ToList();
 
                 if (result.Count > 0)

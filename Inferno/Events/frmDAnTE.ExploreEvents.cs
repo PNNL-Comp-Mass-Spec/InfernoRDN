@@ -10,7 +10,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_PCAPlotCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            var pcaPlotDisplay = new frmPCAPlotDisplay(mclsPCApar);
+            var pcaPlotDisplay = new frmPCAPlotDisplay(mPCAOptions);
             mProgressForm.Hide();
             mProgressForm.DialogResult = DialogResult.Cancel;
             if (e.Error != null)
@@ -74,7 +74,7 @@ namespace DAnTE.Inferno
 
         void m_BackgroundWorker_HeatMapCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            var heatmapDisplay = new frmHeatmapDisplay(mclsHeatmapPar);
+            var heatmapDisplay = new frmHeatmapDisplay(mHeatmapOptions);
             mProgressForm.Hide();
             mProgressForm.DialogResult = DialogResult.Cancel;
 
@@ -95,7 +95,7 @@ namespace DAnTE.Inferno
                 heatmapDisplay.MdiParent = m_frmDAnTE.MdiParent;
                 heatmapDisplay.Title = "Heatmap";
                 heatmapDisplay.Show();
-                if (doClust)
+                if (mDoClustering)
                 {
                     if (mhtDatasets.ContainsKey("Heatmap Clusters"))
                         AddDataNode(mhtDatasets["Heatmap Clusters"]);
@@ -107,12 +107,12 @@ namespace DAnTE.Inferno
         {
             var arg = (clsRplotData)e.Argument;
             var rcmd = arg.mstrRcmd;
-            var plotname = arg.mstrPlotName;
+            var plotName = arg.mstrPlotName;
 
             try
             {
                 mRConnector.EvaluateNoReturn(rcmd);
-                if (doClust)
+                if (mDoClustering)
                     if (mRConnector.GetTableFromRvector("clusterResults"))
                     {
                         var clusterResultTable = mRConnector.DataTable.Copy();
@@ -120,7 +120,7 @@ namespace DAnTE.Inferno
                         AddDataset2HashTable(clusterResultTable);
                     }
                 mRConnector.EvaluateNoReturn("cat(\"Heatmap done.\n\")");
-                var heatmapResult = new clsPlotResult(LoadImage(mRTempFilePath), plotname);
+                var heatmapResult = new clsPlotResult(LoadImage(mRTempFilePath), plotName);
                 e.Result = heatmapResult;
             }
             catch (Exception ex)
@@ -142,13 +142,13 @@ namespace DAnTE.Inferno
             }
             else if (e.Cancelled)
             {
-                // Next, handle the case where the user canceled 
+                // Next, handle the case where the user canceled
                 // the operation.
                 Console.WriteLine("Pattern Search Cancelled");
             }
             else
             {
-                // Finally, handle the case where the operation 
+                // Finally, handle the case where the operation
                 // succeeded.
                 if ((bool)e.Result)
                 {

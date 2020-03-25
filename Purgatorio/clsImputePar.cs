@@ -9,14 +9,21 @@ namespace DAnTE.Purgatorio
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Imputation")]
         public string mRDataset;
 
-        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")] public string mFiltCutoff;
+        [Tools.clsAnalysisAttribute("ImputeThreshold", "Imputation")]
+        public string mFiltCutoff;
+
         public string mImputationMode;
         public string mK;
-        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")] public string mNPCs;
+
+        [Tools.clsAnalysisAttribute("Number_of_PrincipalComponents", "Imputation")]
+        public string mNPCs;
+
         public string mSVDth;
         public string mMaxIterations;
         public string mSubConst;
-        [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")] public bool mblNoFill;
+
+        [Tools.clsAnalysisAttribute("NoFilling_Below_Threshold", "Imputation")]
+        public bool mblNoFill;
 
         private string mFactor;
         public int mintFactorIndex;

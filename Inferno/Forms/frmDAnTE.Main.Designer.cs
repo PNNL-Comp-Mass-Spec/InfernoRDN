@@ -47,7 +47,7 @@ namespace DAnTE.Inferno
         private ToolStripMenuItem menuItemRollupRef;
         private ToolStripMenuItem menuItemRollupMedStDev;
         private ToolStripMenuItem menuItemQRup;
-        private ToolStripMenuItem mnuHistogrms;
+        private ToolStripMenuItem mnuHistograms;
         private ToolStripMenuItem menuItemLinReg;
         private HelpProvider mhelpProviderDAnTE;
         private ToolStripMenuItem menuItemImputeMissing;
@@ -93,7 +93,7 @@ namespace DAnTE.Inferno
         private ToolStripButton mtBtnHeatmap;
         private ToolStripMenuItem mnuItemSaveSessionAs;
         private ContextMenuStrip mCntxtMnuGrid;
-        private ToolStripMenuItem ctxtMnuItemPlotRows;
+        private ToolStripMenuItem contextMenuItemPlotRows;
         private ToolStripMenuItem mnuItemQQplot;
         private ToolStripButton toolStripButton1;
         private ToolStripMenuItem mnuItemNormal;
@@ -155,7 +155,7 @@ namespace DAnTE.Inferno
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemImputeMissing = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPlot = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuHistogrms = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHistograms = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemQQplot = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCorr = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemBoxPlot = new System.Windows.Forms.ToolStripMenuItem();
@@ -248,12 +248,12 @@ namespace DAnTE.Inferno
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.mhelpProviderDAnTE = new System.Windows.Forms.HelpProvider();
             this.mCntxtMnuGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ctxtMnuItemPlotRows = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuItemPlotRows = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxtMnuItemFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuItemFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxtMnuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxtMnuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStripDAnTE.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mContextMenuTreeV.SuspendLayout();
@@ -517,7 +517,7 @@ namespace DAnTE.Inferno
             // menuItemPlot
             //
             this.menuItemPlot.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuHistogrms,
+            this.mnuHistograms,
             this.mnuItemQQplot,
             this.menuItemCorr,
             this.menuItemBoxPlot,
@@ -531,14 +531,14 @@ namespace DAnTE.Inferno
             this.menuItemPlot.Size = new System.Drawing.Size(47, 24);
             this.menuItemPlot.Text = "P&lot";
             //
-            // mnuHistogrms
+            // mnuHistograms
             //
-            this.mnuHistogrms.Image = ((System.Drawing.Image)(resources.GetObject("mnuHistogrms.Image")));
-            this.mnuHistogrms.MergeIndex = 0;
-            this.mnuHistogrms.Name = "mnuHistogrms";
-            this.mnuHistogrms.Size = new System.Drawing.Size(202, 26);
-            this.mnuHistogrms.Text = "&Histograms";
-            this.mnuHistogrms.Click += new System.EventHandler(this.mnuHistogrms_Click);
+            this.mnuHistograms.Image = ((System.Drawing.Image)(resources.GetObject("mnuHistograms.Image")));
+            this.mnuHistograms.MergeIndex = 0;
+            this.mnuHistograms.Name = "mnuHistograms";
+            this.mnuHistograms.Size = new System.Drawing.Size(202, 26);
+            this.mnuHistograms.Text = "&Histograms";
+            this.mnuHistograms.Click += new System.EventHandler(this.mnuHistograms_Click);
             //
             // mnuItemQQplot
             //
@@ -599,7 +599,7 @@ namespace DAnTE.Inferno
             this.mnuItemPlotSelectedRows.Name = "mnuItemPlotSelectedRows";
             this.mnuItemPlotSelectedRows.Size = new System.Drawing.Size(202, 26);
             this.mnuItemPlotSelectedRows.Text = "Plot &selected rows";
-            this.mnuItemPlotSelectedRows.Click += new System.EventHandler(this.ctxtMnuItemPlotRows_Click);
+            this.mnuItemPlotSelectedRows.Click += new System.EventHandler(this.contextMenuItemPlotRows_Click);
             //
             // menuItemRollUp
             //
@@ -857,7 +857,7 @@ namespace DAnTE.Inferno
             this.mnuItemFilterUsingSelectedRowIDs.Name = "mnuItemFilterUsingSelectedRowIDs";
             this.mnuItemFilterUsingSelectedRowIDs.Size = new System.Drawing.Size(267, 26);
             this.mnuItemFilterUsingSelectedRowIDs.Text = "&Filter using selected RowIDs";
-            this.mnuItemFilterUsingSelectedRowIDs.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
+            this.mnuItemFilterUsingSelectedRowIDs.Click += new System.EventHandler(this.contextMenuItemFilter_Click);
             //
             // panel1
             //
@@ -1236,7 +1236,7 @@ namespace DAnTE.Inferno
             this.mtBtnHist.Name = "mtBtnHist";
             this.mtBtnHist.Size = new System.Drawing.Size(24, 24);
             this.mtBtnHist.Text = "Histograms";
-            this.mtBtnHist.Click += new System.EventHandler(this.mnuHistogrms_Click);
+            this.mtBtnHist.Click += new System.EventHandler(this.mnuHistograms_Click);
             //
             // toolStripButton1
             //
@@ -1452,52 +1452,52 @@ namespace DAnTE.Inferno
             //
             this.mCntxtMnuGrid.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.mCntxtMnuGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxtMnuItemPlotRows,
+            this.contextMenuItemPlotRows,
             this.toolStripSeparator13,
-            this.ctxtMnuItemFilter,
+            this.contextMenuItemFilter,
             this.toolStripSeparator19,
-            this.ctxtMnuItemCopySelected,
-            this.ctxtMnuItemCopyAll});
+            this.contextMenuItemCopySelected,
+            this.contextMenuItemCopyAll});
             this.mCntxtMnuGrid.Name = "mCntxtMnuGrid";
             this.mCntxtMnuGrid.Size = new System.Drawing.Size(314, 140);
             //
-            // ctxtMnuItemPlotRows
+            // contextMenuItemPlotRows
             //
-            this.ctxtMnuItemPlotRows.Name = "ctxtMnuItemPlotRows";
-            this.ctxtMnuItemPlotRows.Size = new System.Drawing.Size(313, 24);
-            this.ctxtMnuItemPlotRows.Text = "Plot Selected Rows";
-            this.ctxtMnuItemPlotRows.Click += new System.EventHandler(this.ctxtMnuItemPlotRows_Click);
+            this.contextMenuItemPlotRows.Name = "contextMenuItemPlotRows";
+            this.contextMenuItemPlotRows.Size = new System.Drawing.Size(313, 24);
+            this.contextMenuItemPlotRows.Text = "Plot Selected Rows";
+            this.contextMenuItemPlotRows.Click += new System.EventHandler(this.contextMenuItemPlotRows_Click);
             //
             // toolStripSeparator13
             //
             this.toolStripSeparator13.Name = "toolStripSeparator13";
             this.toolStripSeparator13.Size = new System.Drawing.Size(310, 6);
             //
-            // ctxtMnuItemFilter
+            // contextMenuItemFilter
             //
-            this.ctxtMnuItemFilter.Name = "ctxtMnuItemFilter";
-            this.ctxtMnuItemFilter.Size = new System.Drawing.Size(313, 24);
-            this.ctxtMnuItemFilter.Text = "Filter Based on Selected RowIDs";
-            this.ctxtMnuItemFilter.Click += new System.EventHandler(this.ctxtMnuItemFilter_Click);
+            this.contextMenuItemFilter.Name = "contextMenuItemFilter";
+            this.contextMenuItemFilter.Size = new System.Drawing.Size(313, 24);
+            this.contextMenuItemFilter.Text = "Filter Based on Selected RowIDs";
+            this.contextMenuItemFilter.Click += new System.EventHandler(this.contextMenuItemFilter_Click);
             //
             // toolStripSeparator19
             //
             this.toolStripSeparator19.Name = "toolStripSeparator19";
             this.toolStripSeparator19.Size = new System.Drawing.Size(310, 6);
             //
-            // ctxtMnuItemCopySelected
+            // contextMenuItemCopySelected
             //
-            this.ctxtMnuItemCopySelected.Name = "ctxtMnuItemCopySelected";
-            this.ctxtMnuItemCopySelected.Size = new System.Drawing.Size(313, 24);
-            this.ctxtMnuItemCopySelected.Text = "Copy to clipboard (Ctrl+C)";
-            this.ctxtMnuItemCopySelected.Click += new System.EventHandler(this.ctxtMnuItemCopySelected_Click);
+            this.contextMenuItemCopySelected.Name = "contextMenuItemCopySelected";
+            this.contextMenuItemCopySelected.Size = new System.Drawing.Size(313, 24);
+            this.contextMenuItemCopySelected.Text = "Copy to clipboard (Ctrl+C)";
+            this.contextMenuItemCopySelected.Click += new System.EventHandler(this.contextMenuItemCopySelected_Click);
             //
-            // ctxtMnuItemCopyAll
+            // contextMenuItemCopyAll
             //
-            this.ctxtMnuItemCopyAll.Name = "ctxtMnuItemCopyAll";
-            this.ctxtMnuItemCopyAll.Size = new System.Drawing.Size(313, 24);
-            this.ctxtMnuItemCopyAll.Text = "Copy all to clipboard";
-            this.ctxtMnuItemCopyAll.Click += new System.EventHandler(this.ctxtMnuItemCopyAll_Click);
+            this.contextMenuItemCopyAll.Name = "contextMenuItemCopyAll";
+            this.contextMenuItemCopyAll.Size = new System.Drawing.Size(313, 24);
+            this.contextMenuItemCopyAll.Text = "Copy all to clipboard";
+            this.contextMenuItemCopyAll.Click += new System.EventHandler(this.contextMenuItemCopyAll_Click);
             //
             // frmDAnTE
             //
@@ -1561,7 +1561,7 @@ namespace DAnTE.Inferno
         private ToolStripSeparator toolStripSeparator18;
         private ToolStripMenuItem mnuShowRCommandLog;
         private ToolStripSeparator toolStripSeparator19;
-        private ToolStripMenuItem ctxtMnuItemCopySelected;
-        private ToolStripMenuItem ctxtMnuItemCopyAll;
+        private ToolStripMenuItem contextMenuItemCopySelected;
+        private ToolStripMenuItem contextMenuItemCopyAll;
     }
 }

@@ -10,7 +10,7 @@ namespace DAnTE.Inferno
     public partial class frmPlotProteinRollup : Form
     {
         private string tempFile = "deleteme.png";
-        private string datasetname, Rdataset = "pData2";
+        private string datasetname, RDataset = "pData2";
         private string plotCommand = "plotScaleData";
         private string[] proteinList;
         private clsRconnect rConnector;
@@ -44,7 +44,7 @@ namespace DAnTE.Inferno
 
             if (protein != null)
             {
-                var rcmd = plotCommand + "(" + Rdataset + ", IPI=\"" + protein + "\",";
+                var rcmd = plotCommand + "(" + RDataset + ", IPI=\"" + protein + "\",";
                 rcmd = rcmd + "Data=" + Dataset + "," + ShowDataLabels + @",file=""" + tempFile + @""")";
 
                 try
@@ -93,8 +93,8 @@ namespace DAnTE.Inferno
             switch (datasetname)
             {
                 case ("QRollup"):
-                    Rdataset = "qrollupP";
-                    if (rConnector.GetRowNamesFromRmatrix(Rdataset))
+                    RDataset = "qrollupP";
+                    if (rConnector.GetRowNamesFromRmatrix(RDataset))
                     {
                         proteinList = rConnector.RowNames;
                         plotCommand = "plotScaleData.QRup";
@@ -102,27 +102,27 @@ namespace DAnTE.Inferno
                     }
                     break;
                 case ("ZRollup"):
-                    Rdataset = "pData2"; // Use this to get the row names
-                    if (rConnector.GetRowNamesFromRmatrix(Rdataset))
+                    RDataset = "pData2"; // Use this to get the row names
+                    if (rConnector.GetRowNamesFromRmatrix(RDataset))
                     {
                         proteinList = rConnector.RowNames;
                         plotCommand = "plotScaleData";
                         pListOK = true;
                     }
-                    Rdataset = "pScaled2"; //Now set to what's used for plotting in R
+                    RDataset = "pScaled2"; //Now set to what's used for plotting in R
                     break;
                 case ("RRollup"):
-                    Rdataset = "pData1"; // Use this to get the row names
-                    if (rConnector.GetRowNamesFromRmatrix(Rdataset))
+                    RDataset = "pData1"; // Use this to get the row names
+                    if (rConnector.GetRowNamesFromRmatrix(RDataset))
                     {
                         proteinList = rConnector.RowNames;
                         plotCommand = "plotRefRUpData";
                         pListOK = true;
                     }
-                    Rdataset = "pScaled1"; //Now set to what's used for plotting in R
+                    RDataset = "pScaled1"; //Now set to what's used for plotting in R
                     break;
                 case ("None<raw>"):
-                    Rdataset = "NULL"; // Use this to get the row names
+                    RDataset = "NULL"; // Use this to get the row names
                     try
                     {
                         rConnector.EvaluateNoReturn("ProtNames<-unique(ProtInfo[,2])");

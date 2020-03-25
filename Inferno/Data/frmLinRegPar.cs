@@ -18,7 +18,7 @@ namespace DAnTE.Inferno
 
         private void mbtnOK_Click(object sender, EventArgs e)
         {
-            bool outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
+            var outfolderOK = Directory.Exists(mtxtBoxFolder.Text);
             if (mchkBoxPlot.Checked && !outfolderOK)
                 MessageBox.Show("Invalid Folder name", "Error!", MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
@@ -50,8 +50,8 @@ namespace DAnTE.Inferno
         private void mbtnSelectFolder_Click(object sender, EventArgs e)
         {
             string folderName = null;
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            var folderBrowserDialog1 = new FolderBrowserDialog();
+            var result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
                 folderName = folderBrowserDialog1.SelectedPath;
@@ -85,7 +85,7 @@ namespace DAnTE.Inferno
                 mclsLinReg.FactorSelected = Factor;
                 mclsLinReg.Reference_pub = Reference;
 
-                //mclsLinRegPar.Rdataset = mclsSelected.mstrRdatasetName;
+                //mclsLinRegPar.RDataset = selectedNode.RDatasetName;
                 //mclsLinRegPar.DataSetName = mlblDataName.Text;
                 //mclsLinRegPar.marrFactors = clsDataTable.DataTableRows(factorTable.mDTable);
 

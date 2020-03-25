@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
         private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "CentralTendency")]
-        public string Rdataset;
+        public string RDataset;
 
         public bool mblUseMeanTend;
         [Tools.clsAnalysisAttribute("Zero_Center_Data", "CentralTendency")] public bool mblCenterZero;
@@ -24,10 +24,10 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (mblUseMeanTend)
-                    mRCmd = "meanCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
+                    mRCmd = "meanCEset <- " + mstrmethod + "(" + RDataset + "," + this.UseTendency + "," +
                            this.ZeroCenter + ")";
                 else
-                    mRCmd = "medianCEset <- " + mstrmethod + "(" + Rdataset + "," + this.UseTendency + "," +
+                    mRCmd = "medianCEset <- " + mstrmethod + "(" + RDataset + "," + this.UseTendency + "," +
                            this.ZeroCenter + ")";
                 return mRCmd;
             }

@@ -10,7 +10,7 @@ namespace DAnTE.Purgatorio
     {
         string rcmd;
         public string datasubset;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public bool plotHist;
         public int RplotType;
@@ -36,7 +36,7 @@ namespace DAnTE.Purgatorio
         {
             rcmd = "";
             datasubset = null;
-            Rdataset = "";
+            RDataset = "";
             mstrDatasetName = "";
             plotHist = true;
             RplotType = 2;
@@ -215,7 +215,7 @@ namespace DAnTE.Purgatorio
                 var Rfunction = RplotFunc;
                 var commandBuilder = new StringBuilder();
 
-                commandBuilder.Append(Rfunction + "(" + Rdataset + "[," + datasubset + "]," + Background + ",");
+                commandBuilder.Append(Rfunction + "(" + RDataset + "[," + datasubset + "]," + Background + ",");
                 commandBuilder.Append(Stamp + @",file=""" + tempFile + "\"");
 
                 if (Rfunction.Equals("plotHeatmapCorr"))

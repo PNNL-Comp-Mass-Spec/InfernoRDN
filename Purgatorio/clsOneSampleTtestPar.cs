@@ -3,14 +3,17 @@ namespace DAnTE.Purgatorio
     public class clsOneSampleTtestPar
     {
         private string mRCmd;
-        public string Rdataset;
+        public string RDataset;
 
-        [Tools.clsAnalysisAttribute("Source_DataTable", "OneSample_T_Test")] public string mstrDatasetName;
-        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "OneSample_T_Test")] public int numDatapts;
+        [Tools.clsAnalysisAttribute("Source_DataTable", "OneSample_T_Test")]
+        public string mstrDatasetName;
+
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "OneSample_T_Test")]
+        public int numDatapts;
 
         public clsOneSampleTtestPar()
         {
-            Rdataset = "Eset";
+            RDataset = "Eset";
             numDatapts = 3;
         }
 
@@ -18,7 +21,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "ttest <- Ttest(" + Rdataset + ",thres=" + numDatapts + ")";
+                mRCmd = "ttest <- Ttest(" + RDataset + ",thres=" + numDatapts + ")";
                 return mRCmd;
             }
         }

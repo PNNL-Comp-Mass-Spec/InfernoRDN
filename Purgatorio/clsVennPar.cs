@@ -14,7 +14,7 @@ namespace DAnTE.Purgatorio
         public List<string> marrDatasets;
         public Dictionary<string, clsDatasetTreeNode> mhtDatasets;
         public string mstrDatasetName;
-        public string Rdataset;
+        public string RDataset;
         public bool mblPlotFac = false;
 
         public clsVennPar()
@@ -33,7 +33,7 @@ namespace DAnTE.Purgatorio
             {
                 if (mblPlotFac)
                     mRCmd = "PlotVenn(" + this.FactorLevels + "," + this.ListNames + @",file=""" +
-                           tempFile + @"""," + factor + @",Data=" + Rdataset + @")";
+                           tempFile + @"""," + factor + @",Data=" + RDataset + @")";
                 else
                     mRCmd = "PlotVenn(" + DataLists + "," + ListNames + @",file=""" + tempFile + @""")";
                 return mRCmd;
@@ -56,12 +56,12 @@ namespace DAnTE.Purgatorio
             get
             {
                 if (x3 != "")
-                    return "x1=" + mhtDatasets[x1].mstrRdatasetName +
-                           ", x2=" + mhtDatasets[x2].mstrRdatasetName +
-                           ", x3=" + mhtDatasets[x3].mstrRdatasetName;
+                    return "x1=" + mhtDatasets[x1].RDatasetName +
+                           ", x2=" + mhtDatasets[x2].RDatasetName +
+                           ", x3=" + mhtDatasets[x3].RDatasetName;
                 else
-                    return "x1=" + mhtDatasets[x1].mstrRdatasetName +
-                           ", x2=" + mhtDatasets[x2].mstrRdatasetName;
+                    return "x1=" + mhtDatasets[x1].RDatasetName +
+                           ", x2=" + mhtDatasets[x2].RDatasetName;
             }
         }
 

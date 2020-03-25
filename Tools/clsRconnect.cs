@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
@@ -388,8 +389,8 @@ namespace DAnTE.Tools
                     return false;
                 }
             }
-            else
-                return false;
+
+            return false;
         }
 
         [Obsolete("Unused")]
@@ -447,7 +448,7 @@ namespace DAnTE.Tools
             }
         }
 
-        private static void CopyMatrixDataToTable(double[,] matrix, DataTable dataTable, string[] rowNames)
+        private static void CopyMatrixDataToTable(double[,] matrix, DataTable dataTable, IReadOnlyList<string> rowNames)
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
             {
@@ -505,7 +506,7 @@ namespace DAnTE.Tools
 
             CopyMatrixDataToTable(matrix, dataTable, rowNames);
 
-            // return clsDataTable.ClearZeros(mdatatable);
+            // return clsDataTable.ClearZeros(datatable);
 
             return dataTable;
         }
@@ -573,7 +574,7 @@ namespace DAnTE.Tools
                 }
                 dataTable.Rows.Add(dataRow);
             }
-            //return clsDataTable.ClearZeros(mdatatable);
+            //return clsDataTable.ClearZeros(datatable);
             return dataTable;
         }
 
@@ -612,7 +613,7 @@ namespace DAnTE.Tools
                 }
                 dataTable.Rows.Add(dataRow);
             }
-            //return clsDataTable.ClearZeros(mdatatable);
+            //return clsDataTable.ClearZeros(datatable);
             return dataTable;
         }
 
@@ -642,7 +643,7 @@ namespace DAnTE.Tools
 
             CopyMatrixDataToTable(matrix, dataTable, rowNames);
 
-            // return clsDataTable.ClearZeros(mdatatable);
+            // return clsDataTable.ClearZeros(datatable);
 
             return dataTable;
         }
@@ -653,7 +654,7 @@ namespace DAnTE.Tools
             var rowNames = new string[mTable.Rows.Count];
             var colHeaders = new string[mTable.Columns.Count - 1];
             var rArray = new clsRarray();
-            var typerror = false;
+            var typeError = false;
 
             //DataColumnCollection columnHeaders = mTable.Columns ;
             for (var col = 0; col < mTable.Columns.Count; col++)
@@ -689,7 +690,7 @@ namespace DAnTE.Tools
                                                            cellValue, varName);
                                 MessageBox.Show(errMsg, "Loading error", MessageBoxButtons.OK,
                                                 MessageBoxIcon.Error);
-                                typerror = true;
+                                typeError = true;
                             }
                         }
                         else
@@ -699,15 +700,15 @@ namespace DAnTE.Tools
                         }
                     }
 
-                    if (typerror)
+                    if (typeError)
                         break;
                 }
 
-                if (typerror)
+                if (typeError)
                     break;
             }
 
-            if (typerror)
+            if (typeError)
                 return rArray;
 
             rArray.rowNames = rowNames;

@@ -5,12 +5,21 @@ namespace DAnTE.Purgatorio
     public class clsTamuQPar
     {
         private string mRCmd;
-        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "TAMUimputation")] public readonly bool unbalanced;
-        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "TAMUimputation")] public readonly bool useREML;
-        [Tools.clsAnalysisAttribute("Check_Interactions", "TAMUimputation")] public readonly bool interactions;
+        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "TAMUimputation")]
+        public readonly bool unbalanced;
+
+        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "TAMUimputation")]
+        public readonly bool useREML;
+
+        [Tools.clsAnalysisAttribute("Check_Interactions", "TAMUimputation")]
+        public readonly bool interactions;
+
         //[Tools.clsAnalysisAttribute("Dataset(R)", "TAMUimputation")]
-        public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "TAMUimputation")] public string mstrDatasetName;
+        public string RDataset;
+
+        [Tools.clsAnalysisAttribute("Source_DataTable", "TAMUimputation")]
+        public string mstrDatasetName;
+
         public List<string> fixedEff;
         private readonly List<string> randomEff;
 
@@ -19,7 +28,7 @@ namespace DAnTE.Purgatorio
             unbalanced = false;
             useREML = false;
             interactions = false;
-            Rdataset = "Eset";
+            RDataset = "Eset";
             fixedEff = new List<string>();
             randomEff = new List<string>();
         }
@@ -28,7 +37,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "tamuQ <- DoTamuQ(" + Rdataset + "," + FixedEffects + ")";
+                mRCmd = "tamuQ <- DoTamuQ(" + RDataset + "," + FixedEffects + ")";
                 return mRCmd;
             }
         }

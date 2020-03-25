@@ -4,7 +4,7 @@
  * File Name:	  Engine.cs
  * Version:		  1.0, 24-AUG-2K3
  * Author:		  Frank "Olorin" Rizzi, fkh1000@yahoo.com
- * 
+ *
  * Copyright:	  This code belongs to the CFGLite project.
  *				  All of the code in the CFGLite project is
  *				  provided "as-is", for non-commercial purpose.
@@ -21,9 +21,9 @@
  *				  If you intend to use this code in any commercial
  *				  application, you must contact the author and
  *				  receive proper authorization.
- * 
+ *
  * Contact:		  Frank "Olorin" Rizzi: fkh1000@yahoo.com
- * 
+ *
  * History:
  * v.1.0		  24-AUG-2K3
  *				  First Draft, by FR.

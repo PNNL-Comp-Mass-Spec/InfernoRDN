@@ -19,7 +19,6 @@ namespace DAnTE.Inferno
             mTime = DateTime.Now.ToString("G", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
         }
 
-
         private void FillSummaryListView()
         {
             mlstViewSummary.Columns.Add("Parameter", 200, HorizontalAlignment.Left);
@@ -165,20 +164,20 @@ namespace DAnTE.Inferno
         {
             var fileName = GetSaveFileName("Select a file to save summary",
                                            "XML files (*.xml)|*.xml|Tab delimited txt files (*.txt)|*.txt");
-            var fExt = System.IO.Path.GetExtension(fileName);
+            var fileExtension = System.IO.Path.GetExtension(fileName);
 
-            if (fileName == null || fExt == null)
+            if (fileName == null)
             {
                 return;
             }
 
-            if (fExt.Equals(".xml", StringComparison.CurrentCultureIgnoreCase))
+            if (fileExtension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
             {
                 var metaDataXML = FillSummaryXML();
                 metaDataXML?.WriteFile(fileName);
             }
 
-            if (fExt.Equals(".txt", StringComparison.CurrentCultureIgnoreCase))
+            if (fileExtension.Equals(".txt", StringComparison.OrdinalIgnoreCase))
             {
                 using (System.IO.TextWriter streamWriter = new System.IO.StreamWriter(fileName))
                 {

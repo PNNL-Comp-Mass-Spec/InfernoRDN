@@ -6,16 +6,32 @@ namespace DAnTE.Purgatorio
         private string mstrOutFolder;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "RRollup")]
-        public string Rdataset;
+        public string RDataset;
 
-        [Tools.clsAnalysisAttribute("PlotResults", "RRollup")] public bool mblPlot;
-        [Tools.clsAnalysisAttribute("Minimum_Presence", "RRollup")] public string mstrMinPresence;
-        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "RRollup")] public bool mblOneHits;
-        [Tools.clsAnalysisAttribute("Exclude_threshold", "RRollup")] public string mstrOverlap;
-        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "RRollup")] public string mstrGrubsNum;
-        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "RRollup")] public string mstrGrubsP;
-        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "RRollup")] public bool mblModeMean;
-        [Tools.clsAnalysisAttribute("MeanCenter", "RRollup")] public bool mblDoCentering;
+        [Tools.clsAnalysisAttribute("PlotResults", "RRollup")]
+        public bool mblPlot;
+
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "RRollup")]
+        public string mstrMinPresence;
+
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "RRollup")]
+        public bool mblOneHits;
+
+        [Tools.clsAnalysisAttribute("Exclude_threshold", "RRollup")]
+        public string mstrOverlap;
+
+        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "RRollup")]
+        public string mstrGrubsNum;
+
+        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "RRollup")]
+        public string mstrGrubsP;
+
+        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "RRollup")]
+        public bool mblModeMean;
+
+        [Tools.clsAnalysisAttribute("MeanCenter", "RRollup")]
+        public bool mblDoCentering;
+
 
         public clsRRollupPar()
         {
@@ -28,7 +44,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "pScaled1 <- RRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence +
+                mRCmd = "pScaled1 <- RRollup.proteins(" + RDataset + ",ProtInfo,minPresence=" + mstrMinPresence +
                        "," + OneHitWonders + "," + Mode + ",minOverlap=" + mstrOverlap + ",gpvalue=" + mstrGrubsP +
                        ",gminPCount=" + mstrGrubsNum + "," + OutFolder + "," +
                        PlotFlag + "," + MeanCenter + ")";

@@ -261,7 +261,7 @@ namespace DAnTE.Inferno
                     var message = "Error loading session file";
 
                     if (LastSessionLoadError.StartsWith("Value cannot be null",
-                                                        StringComparison.CurrentCultureIgnoreCase))
+                                                        StringComparison.OrdinalIgnoreCase))
                     {
                         message +=
                             ". Try loading the file again -- in some cases the first load attempt fails, but the second load attempt succeeds.";
@@ -312,7 +312,6 @@ namespace DAnTE.Inferno
 
                 var success = true;
 
-                //SaveFileDialog saveFdlg = new SaveFileDialog();
                 var rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
 
                 rcmd = rcmd + Vars2Save();
@@ -382,7 +381,7 @@ namespace DAnTE.Inferno
                 #endregion
 
                 var success = true;
-                //SaveFileDialog saveFdlg = new SaveFileDialog();
+
                 var rcmd = "vars<-c(\"dummy\","; // dummy to make vars an array of strings always
 
                 rcmd = rcmd + Vars2Save();
@@ -475,19 +474,19 @@ namespace DAnTE.Inferno
 
                 if (mDataTab.Controls.Count != 0)
                 {
-                    var saveFdlg = new SaveFileDialog
+                    var saveDialog = new SaveFileDialog
                     {
                         Filter = "CSV files (*.csv)|*.csv|Tab delimited TXT files (*.txt)|*.txt|All files (*.*)|*.*",
                         FilterIndex = 1,
                         RestoreDirectory = true
                     };
 
-                    if (saveFdlg.ShowDialog() != DialogResult.OK)
+                    if (saveDialog.ShowDialog() != DialogResult.OK)
                     {
                         return;
                     }
 
-                    var outputFile = new FileInfo(saveFdlg.FileName);
+                    var outputFile = new FileInfo(saveDialog.FileName);
 
                     using (
                         var writer =
@@ -565,14 +564,14 @@ namespace DAnTE.Inferno
 
             var outputFile = new FileInfo(mLoadedFilename);
 
-            if (mhtDatasets.ContainsKey(selectedTable.mstrDataText))
+            if (mhtDatasets.ContainsKey(selectedTable.DataText))
             {
                 SaveTableWithProteinIDs(selectedTable, outputFile);
             }
             else
             {
                 // Match not found; this is unexpected; export the data using R
-                var rcmd = "SaveWithProts(Data=" + selectedTable.mstrRdatasetName + ",filename=\"" +
+                var rcmd = "SaveWithProts(Data=" + selectedTable.RDatasetName + ",filename=\"" +
                            mLoadedFilename.Replace("\\", "/") + "\")";
                 try
                 {
@@ -585,12 +584,12 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void SaveTableWithProteinIDs(clsDatasetTreeNode selectedTable, FileInfo outputFile)
+        private void SaveTableWithProteinIDs(clsDatasetTreeNode selectedTable, FileSystemInfo outputFile)
         {
             try
             {
                 // Write out the current dataset, but with the the protein info included
-                var currentDataset = mhtDatasets[selectedTable.mstrDataText];
+                var currentDataset = mhtDatasets[selectedTable.DataText];
                 var proteinDataset = mhtDatasets["Protein Info"];
 
                 // Store the proteins in a dictionary so that we can quickly lookup the info
@@ -616,8 +615,7 @@ namespace DAnTE.Inferno
                     if (string.IsNullOrWhiteSpace(rowID) || string.IsNullOrWhiteSpace(proteinID))
                         continue;
 
-                    List<clsProteinInfo> proteinsForRow;
-                    if (proteinList.TryGetValue(rowID, out proteinsForRow))
+                    if (proteinList.TryGetValue(rowID, out var proteinsForRow))
                     {
                         proteinsForRow.Add(proteinInfo);
                     }
@@ -663,8 +661,7 @@ namespace DAnTE.Inferno
                     foreach (DataRow row in currentDataset.mDTable.Rows)
                     {
                         var rowID = row[0].ToString();
-                        List<clsProteinInfo> proteinsForRow;
-                        if (!proteinList.TryGetValue(rowID, out proteinsForRow))
+                        if (!proteinList.TryGetValue(rowID, out var proteinsForRow))
                         {
                             proteinsForRow = new List<clsProteinInfo>
                             {

@@ -10,7 +10,7 @@ namespace DAnTE.Purgatorio
         public string dCol;
         public string lCol;
         public bool trBkground;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public string tempFile;
         public bool stamp;
@@ -42,7 +42,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "MApairs(" + Rdataset + "[," + datasubset + "]," + this.Stamp + ",";
+                mRCmd = "MApairs(" + RDataset + "[," + datasubset + "]," + this.Stamp + ",";
                 mRCmd = mRCmd + @"dCol=""" + dCol + @"""," + @"lCol=""" + lCol + @"""," + this.Background + ",";
                 mRCmd = mRCmd + @"file=""" + tempFile + @""")";
                 return mRCmd;

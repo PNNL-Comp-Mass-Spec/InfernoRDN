@@ -28,7 +28,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;
+            var dataset = selectedNodeTag.RDatasetName;
 
             #region Hook Threading events
 
@@ -39,8 +39,8 @@ namespace DAnTE.Inferno
 
             mclsRRollupPar = new Purgatorio.clsRRollupPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText,
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText,
                 OutFolder_pub = Settings.Default.WorkingFolder
             };
 
@@ -85,7 +85,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;
+            var dataset = selectedNodeTag.RDatasetName;
 
             #region Hook Threading events
 
@@ -96,8 +96,8 @@ namespace DAnTE.Inferno
 
             mclsZRollupPar = new Purgatorio.clsZRollupPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText,
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText,
                 OutFolder_pub = Settings.Default.WorkingFolder
             };
 
@@ -141,7 +141,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;
+            var dataset = selectedNodeTag.RDatasetName;
 
             #region Hook Threading events
 
@@ -152,8 +152,8 @@ namespace DAnTE.Inferno
 
             mclsQRollupPar = new Purgatorio.clsQRollupPar
             {
-                Rdataset = selectedNodeTag.mstrRdatasetName,
-                DataSetName = selectedNodeTag.mstrDataText
+                RDataset = selectedNodeTag.RDatasetName,
+                DataSetName = selectedNodeTag.DataText
             };
 
             var qRollupParams = new frmQRollupPar(mclsQRollupPar);
@@ -306,7 +306,7 @@ namespace DAnTE.Inferno
             return success;
         }
 
-        private bool ValidateTables(clsDatasetTreeNode mclsSelected, string rollupMode)
+        private bool ValidateTables(clsDatasetTreeNode selectedNode, string rollupMode)
         {
             if (!ValidateExpressionsLoaded("use " + rollupMode))
             {
@@ -320,7 +320,7 @@ namespace DAnTE.Inferno
                 return false;
             }
 
-            if (!mclsSelected.mblRollupPossible)
+            if (!selectedNode.RollupPossible)
             {
                 MessageBox.Show("Selected table does not have peptide data that can be rolled up to the protein level",
                                 "Error");

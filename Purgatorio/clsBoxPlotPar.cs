@@ -10,7 +10,7 @@ namespace DAnTE.Purgatorio
         public string datasubset;
         public string color;
         public bool trBkground;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public string factor;
         public int factorIdx;
@@ -50,7 +50,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "dataBoxPlots(" + Rdataset + "[," + datasubset + "]," + this.FontScale + ",";
+                mRCmd = "dataBoxPlots(" + RDataset + "[," + datasubset + "]," + this.FontScale + ",";
                 mRCmd = mRCmd + @"color=""" + color + @"""," + this.BoxWidth + "," + this.Background +
                        ",Factor=" + factor + "," + this.ShowCount + "," + this.Stamp + ",";
                 if (!outliers)

@@ -6,17 +6,28 @@ namespace DAnTE.Purgatorio
     public class clsFoldChangePar
     {
         private string mRCmd;
-        public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")] public string mstrDatasetName;
-        [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")] public string selectedFactor;
-        [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")] public string selectedfVal1;
-        [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")] public string selectedfVal2;
-        [Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")] public bool mbllogScale;
+        public string RDataset;
+
+        [Tools.clsAnalysisAttribute("Source_DataTable", "FoldChange")]
+        public string mstrDatasetName;
+
+        [Tools.clsAnalysisAttribute("Selected_Factor", "FoldChange")]
+        public string selectedFactor;
+
+        [Tools.clsAnalysisAttribute("First_Factor_Value", "FoldChange")]
+        public string selectedfVal1;
+
+        [Tools.clsAnalysisAttribute("Second_Factor_Value", "FoldChange")]
+        public string selectedfVal2;
+
+        [Tools.clsAnalysisAttribute("Data_in_Log_Scale", "FoldChange")]
+        public bool mbllogScale;
+
         public List<clsFactorInfo> marrFactors;
 
         public clsFoldChangePar()
         {
-            Rdataset = "Eset";
+            RDataset = "Eset";
             selectedFactor = "";
             mbllogScale = true;
         }
@@ -25,7 +36,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "foldChanges <- calcFoldChanges(" + Rdataset + "," + this.Factor + "," +
+                mRCmd = "foldChanges <- calcFoldChanges(" + RDataset + "," + this.Factor + "," +
                        this.FactorValue1 + "," + this.FactorValue2 + "," + this.DataScale + ")";
                 return mRCmd;
             }

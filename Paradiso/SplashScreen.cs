@@ -90,10 +90,7 @@ namespace DAnTE.Paradiso
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -253,7 +250,7 @@ namespace DAnTE.Paradiso
                 m_dtStart = DateTime.Now;
                 ReadIncrements();
             }
-            var dblMilliseconds = ElapsedMilliSeconds();
+            var dblMilliseconds = ElapsedMilliseconds();
             m_ActualTimes.Add(dblMilliseconds);
             m_dblLastCompletionFraction = m_dblCompletionFraction;
             if (m_alPreviousCompletionFraction != null && m_iIndex < m_alPreviousCompletionFraction.Count)
@@ -264,14 +261,14 @@ namespace DAnTE.Paradiso
 
         // Utility function to return elapsed Milliseconds since the
         // SplashScreen was launched.
-        private double ElapsedMilliSeconds()
+        private double ElapsedMilliseconds()
         {
             var ts = DateTime.Now - m_dtStart;
             return ts.TotalMilliseconds;
         }
 
         // Function to read the checkpoint intervals from the previous invocation of the
-        // splashscreen from the registry.
+        // splash screen from the registry.
         private void ReadIncrements()
         {
             var sPBIncrementPerTimerInterval = RegistryAccess.GetStringRegistryValue(REG_VALUE_PB_MILLISECOND_INCREMENT,
@@ -308,7 +305,7 @@ namespace DAnTE.Paradiso
         private void StoreIncrements()
         {
             var sPercent = "";
-            var dblElapsedMilliseconds = ElapsedMilliSeconds();
+            var dblElapsedMilliseconds = ElapsedMilliseconds();
             foreach (var timeVal in m_ActualTimes)
                 sPercent +=
                     (timeVal / dblElapsedMilliseconds).ToString("0.####",
@@ -435,7 +432,7 @@ namespace DAnTE.Paradiso
         }
 
         // Paint the portion of the panel invalidated during the tick event.
-        private void pnlStatus_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void pnlStatus_Paint(object sender, PaintEventArgs e)
         {
             if (!m_bFirstLaunch && e.ClipRectangle.Width > 0 && m_iActualTicks > 1)
             {
@@ -454,7 +451,7 @@ namespace DAnTE.Paradiso
         }
 
         // Close the form if they double click on it.
-        private void SplashScreen_DoubleClick(object sender, System.EventArgs e)
+        private void SplashScreen_DoubleClick(object sender, EventArgs e)
         {
             CloseForm();
         }

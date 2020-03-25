@@ -8,7 +8,7 @@ namespace DAnTE.Purgatorio
         [Tools.clsAnalysisAttribute("Span", "LOESS")] public string span;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "LOESS")]
-        public string Rdataset;
+        public string RDataset;
 
         public bool mblPlot;
         public int mintFactorIndex;
@@ -30,7 +30,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "loessData <- loess_normalize(" + Rdataset + "," + this.Factors +
+                mRCmd = "loessData <- loess_normalize(" + RDataset + "," + this.Factors +
                        "," + this.Span + "," + this.PlotFlag + "," + this.Reference + "," + this.OutFolder + ")";
                 return mRCmd;
             }

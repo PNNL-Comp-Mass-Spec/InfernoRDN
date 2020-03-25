@@ -7,12 +7,12 @@ namespace DAnTE.Inferno
 {
     public partial class frmImputePar : Form
     {
-        readonly Purgatorio.clsImputePar mclsImputePar;
+        readonly Purgatorio.clsImputePar mImputeOptions;
 
-        public frmImputePar(Purgatorio.clsImputePar mclsImpute)
+        public frmImputePar(Purgatorio.clsImputePar imputeOptions)
         {
             InitializeComponent();
-            mclsImputePar = mclsImpute;
+            mImputeOptions = imputeOptions;
         }
 
         private void frmImputePar_Load(object sender, EventArgs e)
@@ -158,18 +158,18 @@ namespace DAnTE.Inferno
         {
             get
             {
-                mclsImputePar.mFiltCutoff = CutOff;
-                mclsImputePar.mImputationMode = Mode;
-                mclsImputePar.mK = K;
-                mclsImputePar.mNPCs = nPCs;
-                mclsImputePar.mSVDth = SVDthres;
-                mclsImputePar.mMaxIterations = MaxSteps;
-                mclsImputePar.mSubConst = Const;
-                mclsImputePar.FactorSelected = Factor;
-                mclsImputePar.mintFactorIndex = FactorIndex;
-                mclsImputePar.mblNoFill = NoFill;
+                mImputeOptions.mFiltCutoff = CutOff;
+                mImputeOptions.mImputationMode = Mode;
+                mImputeOptions.mK = K;
+                mImputeOptions.mNPCs = nPCs;
+                mImputeOptions.mSVDth = SVDthres;
+                mImputeOptions.mMaxIterations = MaxSteps;
+                mImputeOptions.mSubConst = Const;
+                mImputeOptions.FactorSelected = Factor;
+                mImputeOptions.mintFactorIndex = FactorIndex;
+                mImputeOptions.mblNoFill = NoFill;
 
-                return mclsImputePar;
+                return mImputeOptions;
             }
         }
 

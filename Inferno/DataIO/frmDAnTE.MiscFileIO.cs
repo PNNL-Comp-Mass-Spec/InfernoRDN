@@ -24,17 +24,17 @@ namespace DAnTE.Inferno
             Xlsx = 4
         }
 
-        private bool DeleteTempFile(string tempfile)
+        private bool DeleteTempFile(string tempFile)
         {
             var ok = true;
-            tempfile = tempfile.Replace("/", @"\");
+            tempFile = tempFile.Replace("/", @"\");
 
-            if (File.Exists(tempfile))
+            if (File.Exists(tempFile))
             {
                 try
                 {
                     mRConnector.EvaluateNoReturn("graphics.off()");
-                    File.Delete(tempfile);
+                    File.Delete(tempFile);
                 }
                 catch (Exception ex)
                 {
@@ -56,7 +56,7 @@ namespace DAnTE.Inferno
 
             foreach (var enumName in Enum.GetNames(typeof(FileTypeExtension)))
             {
-                if (string.Equals(enumName, fileExtension, StringComparison.CurrentCultureIgnoreCase))
+                if (string.Equals(enumName, fileExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     var enumValue = (FileTypeExtension)Enum.Parse(typeof(FileTypeExtension), enumName);
                     return enumValue;
@@ -71,17 +71,17 @@ namespace DAnTE.Inferno
         /// </summary>
         private Image LoadImage(string tempFile)
         {
-            Image currImg;
+            Image currentImage;
             using (var fs = new FileStream(tempFile, FileMode.Open,
                                            FileAccess.Read, FileShare.ReadWrite))
             {
                 var img = Image.FromStream(fs);
                 fs.Close();
-                currImg = img.Clone() as Image;
+                currentImage = img.Clone() as Image;
                 img.Dispose();
                 File.Delete(tempFile);
             }
-            return currImg;
+            return currentImage;
         }
 
         /// <summary>
@@ -444,18 +444,18 @@ namespace DAnTE.Inferno
             //bool success = true;
             //bool FactorsValid = true;
 
-            var dTselectedEset1 = new DataTable();
+            var dtSelectedEset1 = new DataTable();
 
             // check that the file exists before opening it
             if (!File.Exists(mLoadedFilename))
             {
-                return dTselectedEset1;
+                return dtSelectedEset1;
             }
 
             var fExt = Path.GetExtension(filename);
             if (!ValidExtension(fExt))
             {
-                MessageBox.Show("Filetype not allowed.", "Error!");
+                MessageBox.Show("File type not allowed.", "Error!");
                 return null;
             }
 
@@ -485,8 +485,8 @@ namespace DAnTE.Inferno
                 var dataCols = columnSelectionForm.DataColumns.ToList();
                 try
                 {
-                    dTselectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols); // create the datatable
-                    dTselectedEset1.TableName = "Eset";
+                    dtSelectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols); // create the datatable
+                    dtSelectedEset1.TableName = "Eset";
                 }
                 catch (Exception ex)
                 {
@@ -496,7 +496,7 @@ namespace DAnTE.Inferno
                     return null;
                 }
             }
-            return dTselectedEset1;
+            return dtSelectedEset1;
         }
 
 
@@ -534,7 +534,7 @@ namespace DAnTE.Inferno
 
             if (!ValidExtension(fExt))
             {
-                MessageBox.Show("Filetype not allowed (must be csv, tsv, txt, xls, or xlsx)", "Error!");
+                MessageBox.Show("File type not allowed (must be csv, tsv, txt, xls, or xlsx)", "Error!");
                 return false;
             }
 
@@ -733,7 +733,7 @@ namespace DAnTE.Inferno
                         foreach (var factorCol in factorTable.Columns)
                         {
                             var factorColName = factorCol.ToString();
-                            if (string.Equals(factorColName, "Factor", StringComparison.CurrentCultureIgnoreCase))
+                            if (string.Equals(factorColName, "Factor", StringComparison.OrdinalIgnoreCase))
                                 continue;
 
                             if (!esetColNames.Contains(factorColName))
@@ -838,13 +838,13 @@ namespace DAnTE.Inferno
                         factorValues.Add(factorValuesFromR[0]);
                     }
 
-                    var currFactorInfo = new clsFactorInfo
+                    var currentFactorInfo = new clsFactorInfo
                     {
                         SetFvals = factorValues,
                         mstrFactor = factorNames[numF]
                     };
 
-                    marrFactorInfo.Add(currFactorInfo);
+                    marrFactorInfo.Add(currentFactorInfo);
                 }
             }
             catch (Exception ex)

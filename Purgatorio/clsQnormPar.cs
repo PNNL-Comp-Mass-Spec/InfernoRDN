@@ -5,7 +5,7 @@ namespace DAnTE.Purgatorio
         private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Quantile_Normalization")]
-        public string Rdataset;
+        public string RDataset;
 
         public clsQnormPar()
         {
@@ -16,7 +16,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "quaNormEset <- quantileN(" + Rdataset + ")";
+                mRCmd = "quaNormEset <- quantileN(" + RDataset + ")";
                 return mRCmd;
             }
         }

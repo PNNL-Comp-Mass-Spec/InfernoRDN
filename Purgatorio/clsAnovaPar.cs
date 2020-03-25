@@ -5,14 +5,25 @@ namespace DAnTE.Purgatorio
     public class clsAnovaPar
     {
         private string mRCmd;
-        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")] public bool unbalanced;
+        [Tools.clsAnalysisAttribute("Check_for_Unbalance_Data", "ANOVA")]
+        public bool unbalanced;
         public bool randomE;
-        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")] public bool useREML;
-        [Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")] public bool interactions;
+
+        [Tools.clsAnalysisAttribute("Use_Restricted_Maximum_Likelihood", "ANOVA")]
+        public bool useREML;
+
+        [Tools.clsAnalysisAttribute("Check_Interactions", "ANOVA")]
+        public bool interactions;
+
         //[Tools.clsAnalysisAttribute("Dataset(R)", "ANOVA")]
-        public string Rdataset;
-        [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")] public string mstrDatasetName;
-        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")] public int numDatapts;
+        public string RDataset;
+
+        [Tools.clsAnalysisAttribute("Source_DataTable", "ANOVA")]
+        public string mstrDatasetName;
+
+        [Tools.clsAnalysisAttribute("Minimum_Datapoints_Needed", "ANOVA")]
+        public int numDatapts;
+
         public List<string> fixedEff;
         public List<string> randomEff;
 
@@ -22,7 +33,7 @@ namespace DAnTE.Purgatorio
             randomE = false;
             useREML = false;
             interactions = false;
-            Rdataset = "Eset";
+            RDataset = "Eset";
             numDatapts = 3;
             fixedEff = new List<string>();
             randomEff = new List<string>();
@@ -32,7 +43,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "anovaR <- DoAnova(" + Rdataset + ",FixedEffects=" + FixedEffects +
+                mRCmd = "anovaR <- DoAnova(" + RDataset + ",FixedEffects=" + FixedEffects +
                        ",RandomEffects=" + RandomEffects + ",thres=" + numDatapts + "," +
                        Interactions + "," + Unbalanced + "," + UseREML + ")";
                 return mRCmd;

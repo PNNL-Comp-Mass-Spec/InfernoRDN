@@ -8,9 +8,11 @@ namespace DAnTE.Purgatorio
         private string mRCmd;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "PatternSearch")]
-        public string Rdataset;
+        public string RDataset;
 
-        [Tools.clsAnalysisAttribute("Number_of_Patterns", "PatternSearch")] public int nPatterns;
+        [Tools.clsAnalysisAttribute("Number_of_Patterns", "PatternSearch")]
+        public int nPatterns;
+
         public Dictionary<string, List<double>> mhtVectorPatterns;
         public string mstrDatasetName;
         public List<string> Datasets = new List<string>();
@@ -25,7 +27,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "patternData <- patternSearch(" + Rdataset + "," + Patterns + ")";
+                mRCmd = "patternData <- patternSearch(" + RDataset + "," + Patterns + ")";
                 return mRCmd;
             }
         }

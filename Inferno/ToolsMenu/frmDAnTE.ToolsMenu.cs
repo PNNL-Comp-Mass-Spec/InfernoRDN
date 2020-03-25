@@ -29,7 +29,7 @@ namespace DAnTE.Inferno
             if (anovaParams.ShowDialog() == DialogResult.OK)
             {
                 var column = anovaParams.SelectedColumn + 1;
-                var datasetNameInR = (mhtDatasets[anovaParams.Dataset]).mstrRdatasetName;
+                var datasetNameInR = (mhtDatasets[anovaParams.Dataset]).RDatasetName;
                 var thres = anovaParams.Thres.ToString(CultureInfo.InvariantCulture);
                 string ltgt;
                 if (anovaParams.LessThan)
@@ -91,11 +91,11 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;
+            var dataset = selectedNodeTag.RDatasetName;
 
             var missingValueParams = new frmMissingFilter
             {
-                DataSetName = selectedNodeTag.mstrDataText
+                DataSetName = selectedNodeTag.DataText
             };
 
             if (missingValueParams.ShowDialog() != DialogResult.OK)
@@ -135,7 +135,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var dataset = selectedNodeTag.mstrRdatasetName;
+            var dataset = selectedNodeTag.RDatasetName;
 
             if (!ValidateExpressionsLoaded("merge columns"))
             {
@@ -162,7 +162,7 @@ namespace DAnTE.Inferno
             var mergeColumnsParams = new frmMergeColsPar();
             var factorTable = mhtDatasets["Factors"];
             mergeColumnsParams.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
-            mergeColumnsParams.DataSetName = selectedNodeTag.mstrDataText;
+            mergeColumnsParams.DataSetName = selectedNodeTag.DataText;
 
             if (mergeColumnsParams.ShowDialog() == DialogResult.OK)
             {

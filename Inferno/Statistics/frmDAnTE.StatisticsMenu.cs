@@ -20,13 +20,13 @@ namespace DAnTE.Inferno
         private clsShapiroWilksPar mclsShapiroWilksPar;
         private clsFoldChangePar mclsFoldChangePar;
         private clsOneSampleTtestPar mclsOneSampleTtestPar;
-        string Rdataset;
+        string RDataset;
 
         #region Private Methods
 
         /// <summary>
-        /// Extract Factor information from a datatable 
-        /// to an arraylist of clsDatasetInfo type.
+        /// Extract Factor information from a datatable
+        /// to a list of clsDatasetInfo type.
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="factorsLoaded"></param>
@@ -46,8 +46,8 @@ namespace DAnTE.Inferno
                         var dataRow = dt.Rows[k];
                         if (i == 0)
                         {
-                            var factorname = dataRow.ItemArray[i].ToString();
-                            factorList.Add(factorname);
+                            var factorName = dataRow.ItemArray[i].ToString();
+                            factorList.Add(factorName);
                         }
                         var currFactor = new Factor(factorList[k], dataRow.ItemArray[i + 1].ToString());
                         dsetItem.marrFactorAssnmnts.Add(currFactor);
@@ -153,7 +153,7 @@ namespace DAnTE.Inferno
             foreach (var strKey in mhtDatasets.Keys)
             {
                 var currentNode = (mhtDatasets[strKey]);
-                if (currentNode.mblIsNumeric)
+                if (currentNode.IsNumeric)
                 {
                     expTable = currentNode.mDTable;
                     foreach (var colName in itemsToRemove)
@@ -182,8 +182,8 @@ namespace DAnTE.Inferno
 
             foreach (var index in newIndexOrder)
             {
-                var currVal = index + 1;
-                newOrderCommand.Append(currVal + ",");
+                var currentVal = index + 1;
+                newOrderCommand.Append(currentVal + ",");
             }
 
             // Remove the trailing comma, then add the closing parenthesis and a double quote
@@ -303,10 +303,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsAnovaPar = new clsAnovaPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsAnovaPar.Rdataset = Rdataset;
-            mclsAnovaPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsAnovaPar.RDataset = RDataset;
+            mclsAnovaPar.mstrDatasetName = selectedNodeTag.DataText;
             var factorTable = mhtDatasets["Factors"];
             clsDataTable.DataTableRows(factorTable.mDTable);
 
@@ -362,10 +362,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsTamuQPar = new clsTamuQPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsTamuQPar.Rdataset = Rdataset;
-            mclsTamuQPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsTamuQPar.RDataset = RDataset;
+            mclsTamuQPar.mstrDatasetName = selectedNodeTag.DataText;
             var factorTable = mhtDatasets["Factors"];
             clsDataTable.DataTableRows(factorTable.mDTable);
 
@@ -420,10 +420,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsKWpar = new clsKruskalWPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsKWpar.Rdataset = Rdataset;
-            mclsKWpar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsKWpar.RDataset = RDataset;
+            mclsKWpar.mstrDatasetName = selectedNodeTag.DataText;
             var factorTable = mhtDatasets["Factors"];
             clsDataTable.DataTableRows(factorTable.mDTable);
 
@@ -481,10 +481,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsWilcoxPar = new clsWilcoxonPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsWilcoxPar.Rdataset = Rdataset;
-            mclsWilcoxPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsWilcoxPar.RDataset = RDataset;
+            mclsWilcoxPar.mstrDatasetName = selectedNodeTag.DataText;
             var factorTable = mhtDatasets["Factors"];
             clsDataTable.DataTableRows(factorTable.mDTable);
 
@@ -536,10 +536,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsShapiroWilksPar = new clsShapiroWilksPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsShapiroWilksPar.Rdataset = Rdataset;
-            mclsShapiroWilksPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsShapiroWilksPar.RDataset = RDataset;
+            mclsShapiroWilksPar.mstrDatasetName = selectedNodeTag.DataText;
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag, true))
             {
@@ -586,9 +586,9 @@ namespace DAnTE.Inferno
             }
 
             mclsFoldChangePar = new clsFoldChangePar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
-            mclsFoldChangePar.Rdataset = Rdataset;
-            mclsFoldChangePar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            RDataset = selectedNodeTag.RDatasetName;
+            mclsFoldChangePar.RDataset = RDataset;
+            mclsFoldChangePar.mstrDatasetName = selectedNodeTag.DataText;
             mclsFoldChangePar.marrFactors = marrFactorInfo;
 
             var foldChangeParams = new frmFoldChangePar(mclsFoldChangePar);
@@ -635,10 +635,10 @@ namespace DAnTE.Inferno
             #endregion
 
             mclsOneSampleTtestPar = new clsOneSampleTtestPar();
-            Rdataset = selectedNodeTag.mstrRdatasetName;
+            RDataset = selectedNodeTag.RDatasetName;
 
-            mclsOneSampleTtestPar.Rdataset = Rdataset;
-            mclsOneSampleTtestPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsOneSampleTtestPar.RDataset = RDataset;
+            mclsOneSampleTtestPar.mstrDatasetName = selectedNodeTag.DataText;
 
             if (!ValidateDataMatrixTableSelected(selectedNodeTag, true))
             {
@@ -665,7 +665,7 @@ namespace DAnTE.Inferno
             #endregion
         }
 
-        private void ctxtMnuItemFilter_Click(object sender, EventArgs e)
+        private void contextMenuItemFilter_Click(object sender, EventArgs e)
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
@@ -709,7 +709,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            var datasetNameInR = (mhtDatasets[rowFilterParams.Dataset]).mstrRdatasetName;
+            var datasetNameInR = (mhtDatasets[rowFilterParams.Dataset]).RDatasetName;
 
             mintFilterTblNum++;
             var filtTableName = "filteredData" + mintFilterTblNum;

@@ -129,9 +129,9 @@ namespace DAnTE.Inferno
                     continue;
 
                 int extidx;
-                if ((extidx = datasetName.IndexOf("_out.txt", StringComparison.CurrentCultureIgnoreCase)) == -1)
-                    if ((extidx = datasetName.IndexOf("_out.zip", StringComparison.CurrentCultureIgnoreCase)) == -1)
-                        extidx = datasetName.IndexOf("_syn.txt", StringComparison.CurrentCultureIgnoreCase);
+                if ((extidx = datasetName.IndexOf("_out.txt", StringComparison.OrdinalIgnoreCase)) == -1)
+                    if ((extidx = datasetName.IndexOf("_out.zip", StringComparison.OrdinalIgnoreCase)) == -1)
+                        extidx = datasetName.IndexOf("_syn.txt", StringComparison.OrdinalIgnoreCase);
 
                 if (extidx != -1)
                     datasetName = datasetName.Substring(0, extidx);
@@ -150,7 +150,7 @@ namespace DAnTE.Inferno
 
             foreach (var f in dir.GetFiles())
             {
-                if (!Path.GetExtension(f.Name).Equals(".out", StringComparison.CurrentCultureIgnoreCase))
+                if (!Path.GetExtension(f.Name).Equals(".out", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -211,12 +211,12 @@ namespace DAnTE.Inferno
             var dir = new DirectoryInfo(mstrAnalysisFolder);
             foreach (var f in dir.GetFiles())
             {
-                if (!f.Name.EndsWith("_syn.txt", StringComparison.CurrentCultureIgnoreCase))
+                if (!f.Name.EndsWith("_syn.txt", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
 
-                var dName = f.Name.Substring(0, f.Name.IndexOf("_syn.txt", StringComparison.CurrentCultureIgnoreCase));
+                var dName = f.Name.Substring(0, f.Name.IndexOf("_syn.txt", StringComparison.OrdinalIgnoreCase));
                 if (datasetNames.Contains(dName))
                     successfulDataSets.Add(dName);
             }
@@ -339,7 +339,7 @@ namespace DAnTE.Inferno
 
             foreach (var sourcePath in marrFilePaths)
             {
-                if (!(sourcePath.EndsWith("_syn.txt", StringComparison.CurrentCultureIgnoreCase)))
+                if (!(sourcePath.EndsWith("_syn.txt", StringComparison.OrdinalIgnoreCase)))
                     runPeptideFileExtractor = true;
 
                 var sourceFName = Path.GetFileName(sourcePath);

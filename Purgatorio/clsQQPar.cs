@@ -13,7 +13,7 @@ namespace DAnTE.Purgatorio
         public string Bcol;
         public string Lcol;
         public string bkground;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public string datasubset;
         public int ncolumns;
@@ -40,7 +40,7 @@ namespace DAnTE.Purgatorio
             if (Lcol == "")
                 Lcol = "#FF0000";
             bkground = "bkground=\"white\"";
-            Rdataset = "";
+            RDataset = "";
             mstrDatasetName = "";
             tempFile = "C:/_temp.png";
             reference = 0;
@@ -54,7 +54,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "plot_qq(" + Rdataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
+                mRCmd = "plot_qq(" + RDataset + "[," + datasubset + "],ncols=" + ncolumns.ToString() + ",";
                 mRCmd = mRCmd + RefDistr(reference) + ",wshape=" + wshape + ",wscale=" + wscale + ",degfree=" +
                        df + ",exprate=" + exprate + ",";
                 mRCmd = mRCmd + @"colF=""" + Fcol + @"""," + @"colB=""" + Bcol + @""","

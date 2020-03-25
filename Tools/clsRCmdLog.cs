@@ -8,46 +8,24 @@ namespace DAnTE.Tools
 {
     public static class clsRCmdLog
     {
-        private static bool _cmdLogEnabled = true;
-        private static bool _commentLogEnabled = true;
-
         // log file
         //private static readonly string LogPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
         private static readonly string LogPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string LogAppPath = Path.Combine(LogPath, "Inferno");
-        private static string LogFilePath = Path.Combine(LogAppPath, "rcmdlog.txt");
-        private static TextWriter _logwriter;
+        private static TextWriter _logWriter;
 
         // for stack tracing
-        private static bool _traceEnabled = true;
-        private static int _traceFramesToShow = 4;
         private const int TraceStartingFrame = 3; // we don't care about internal details
 
-        public static string CurrentLogFilePath => LogFilePath;
+        public static string CurrentLogFilePath { get; private set; } = Path.Combine(LogAppPath, "rcmdlog.txt");
 
-        public static int TraceFramesToShow
-        {
-            get => _traceFramesToShow;
-            set => _traceFramesToShow = value;
-        }
+        public static int TraceFramesToShow { get; set; } = 4;
 
-        public static bool EnableTrace
-        {
-            get => _traceEnabled;
-            set => _traceEnabled = value;
-        }
+        public static bool EnableTrace { get; set; } = true;
 
-        public static bool EnableCommentLog
-        {
-            get => _commentLogEnabled;
-            set => _commentLogEnabled = value;
-        }
+        public static bool EnableCommentLog { get; set; } = true;
 
-        public static bool EnableCmdLog
-        {
-            get => _cmdLogEnabled;
-            set => _cmdLogEnabled = value;
-        }
+        public static bool EnableCmdLog { get; set; } = true;
 
         public static void Init()
         {
@@ -69,7 +47,7 @@ namespace DAnTE.Tools
 
                     if (!File.Exists(newFilePath))
                     {
-                        LogFilePath = newFilePath;
+                        CurrentLogFilePath = newFilePath;
                         break;
                     }
                 }
@@ -82,7 +60,7 @@ namespace DAnTE.Tools
 
         private static void EstablishLogWriter()
         {
-            if (_logwriter == null)
+            if (_logWriter == null)
             {
                 if (!Directory.Exists(LogAppPath))
                 {
@@ -90,7 +68,7 @@ namespace DAnTE.Tools
                 }
                 else
                 {
-                    var fiLogFile = new FileInfo(LogFilePath);
+                    var fiLogFile = new FileInfo(CurrentLogFilePath);
 
                     try
                     {
@@ -110,7 +88,7 @@ namespace DAnTE.Tools
                     }
                 }
 
-                _logwriter = File.AppendText(LogFilePath);
+                _logWriter = File.AppendText(CurrentLogFilePath);
             }
         }
 
@@ -122,14 +100,14 @@ namespace DAnTE.Tools
 
         public static void LogOperation(string message)
         {
-            if (_cmdLogEnabled)
+            if (EnableCmdLog)
             {
                 EstablishLogWriter();
-                if (_logwriter != null)
+                if (_logWriter != null)
                 {
-                    _logwriter.WriteLine("#-------------------------------");
-                    _logwriter.WriteLine("# {0}", message);
-                    _logwriter.Flush();
+                    _logWriter.WriteLine("#-------------------------------");
+                    _logWriter.WriteLine("# {0}", message);
+                    _logWriter.Flush();
                 }
             }
             Console.WriteLine("# --- {0}", message);
@@ -137,15 +115,15 @@ namespace DAnTE.Tools
 
         public static void LogRCommand(string rcmd)
         {
-            var trace = (_traceEnabled) ? "\n" + GetCallingSequence() : "";
-            if (_cmdLogEnabled)
+            var trace = (EnableTrace) ? "\n" + GetCallingSequence() : "";
+            if (EnableCmdLog)
             {
                 EstablishLogWriter();
-                if (_logwriter != null)
+                if (_logWriter != null)
                 {
-                    _logwriter.WriteLine(trace);
-                    _logwriter.WriteLine(rcmd);
-                    _logwriter.Flush();
+                    _logWriter.WriteLine(trace);
+                    _logWriter.WriteLine(rcmd);
+                    _logWriter.Flush();
                 }
             }
             Console.WriteLine(trace);
@@ -154,13 +132,13 @@ namespace DAnTE.Tools
 
         public static void LogRComment(string comment)
         {
-            if (_commentLogEnabled)
+            if (EnableCommentLog)
             {
                 EstablishLogWriter();
-                if (_logwriter != null)
+                if (_logWriter != null)
                 {
-                    _logwriter.WriteLine("# {0}", comment);
-                    _logwriter.Flush();
+                    _logWriter.WriteLine("# {0}", comment);
+                    _logWriter.Flush();
                 }
             }
             Console.WriteLine("# {0}", comment);

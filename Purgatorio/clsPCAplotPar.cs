@@ -21,7 +21,7 @@ namespace DAnTE.Purgatorio
         public bool threeD;
         public bool pca;
         public bool stamp;
-        public string Rdataset;
+        public string RDataset;
         public string mstrDatasetName;
         public string tempFile;
         public string datasubset;
@@ -58,7 +58,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "weights <- plotPCA(" + Rdataset + "[," + datasubset + "]," + "Factor=" +
+                mRCmd = "weights <- plotPCA(" + RDataset + "[," + datasubset + "]," + "Factor=" +
                        factor + "," + prinComps + ",";
                 mRCmd = mRCmd + DropLines + "," + Perspective + "," + BiPlot + "," + ShowLabels + "," +
                        Screeplot + "," + BiArrows + "," + BiLabels + "," + Type + "," + Stamp +

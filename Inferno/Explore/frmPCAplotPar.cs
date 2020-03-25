@@ -11,13 +11,13 @@ namespace DAnTE.Inferno
     {
         private const int MAX = frmDAnTE.MAX_DATASETS_TO_SELECT;
 
-        private readonly clsPCAplotPar mclsPCApar;
+        private readonly clsPCAplotPar mPCAOptions;
         private List<string> marrDatasets = new List<string>();
         private List<string> marrFactorList = new List<string>();
 
-        public frmPCAplotPar(clsPCAplotPar mclsPCA)
+        public frmPCAplotPar(clsPCAplotPar pcaOptions)
         {
-            mclsPCApar = mclsPCA;
+            mPCAOptions = pcaOptions;
             InitializeComponent();
         }
 
@@ -102,28 +102,28 @@ namespace DAnTE.Inferno
             mcmbBoxX.DataSource = PrincipalComponents();
             mcmbBoxY.DataSource = PrincipalComponents();
             mcmbBoxZ.DataSource = PrincipalComponents();
-            mcmbBoxY.SelectedIndex = mclsPCApar.pcy;
-            mcmbBoxX.SelectedIndex = mclsPCApar.pcx;
-            mcmbBoxZ.SelectedIndex = mclsPCApar.pcz;
+            mcmbBoxY.SelectedIndex = mPCAOptions.pcy;
+            mcmbBoxX.SelectedIndex = mPCAOptions.pcx;
+            mcmbBoxZ.SelectedIndex = mPCAOptions.pcz;
 
             mchkBoxBiLines.Enabled = mchkBoxBiPlot.Checked;
             mchkBoxBiLabels.Enabled = mchkBoxBiPlot.Checked;
 
-            mchkBoxBiLines.Checked = mclsPCApar.arrows;
-            mchkBoxBiLabels.Checked = mclsPCApar.biplotL;
-            mchkBoxBiPlot.Checked = mclsPCApar.biplot;
-            mchkBoxDropLines.Checked = mclsPCApar.dropLines;
-            mchkBoxLabels.Checked = mclsPCApar.labels;
-            mchkBoxPersp.Checked = mclsPCApar.persp;
-            mchkBoxScree.Checked = mclsPCApar.screeplot;
-            mrbtn3D.Checked = mclsPCApar.threeD;
-            mcmbBoxFactors.SelectedIndex = mclsPCApar.factorIdx;
-            mrBtnPCA.Checked = mclsPCApar.pca;
-            mrBtnPLS.Checked = !(mclsPCApar.pca);
-            DataSetName = mclsPCApar.mstrDatasetName;
-            mchkBoxStamp.Checked = mclsPCApar.stamp;
-            PopulateListView = mclsPCApar.Datasets;
-            SelectedDatasets = mclsPCApar.CheckedDatasets;
+            mchkBoxBiLines.Checked = mPCAOptions.arrows;
+            mchkBoxBiLabels.Checked = mPCAOptions.biplotL;
+            mchkBoxBiPlot.Checked = mPCAOptions.biplot;
+            mchkBoxDropLines.Checked = mPCAOptions.dropLines;
+            mchkBoxLabels.Checked = mPCAOptions.labels;
+            mchkBoxPersp.Checked = mPCAOptions.persp;
+            mchkBoxScree.Checked = mPCAOptions.screeplot;
+            mrbtn3D.Checked = mPCAOptions.threeD;
+            mcmbBoxFactors.SelectedIndex = mPCAOptions.factorIdx;
+            mrBtnPCA.Checked = mPCAOptions.pca;
+            mrBtnPLS.Checked = !(mPCAOptions.pca);
+            DataSetName = mPCAOptions.mstrDatasetName;
+            mchkBoxStamp.Checked = mPCAOptions.stamp;
+            PopulateListView = mPCAOptions.Datasets;
+            SelectedDatasets = mPCAOptions.CheckedDatasets;
 
             if (marrFactorList.Count == 1)
                 mrBtnPLS.Enabled = false;
@@ -131,30 +131,30 @@ namespace DAnTE.Inferno
 
         #region Properties
 
-        public clsPCAplotPar clsPCApar
+        public clsPCAplotPar PCAOptions
         {
             get
             {
-                mclsPCApar.datasubset = "c(" + Selected + ")";
-                mclsPCApar.arrows = BiArrows;
-                mclsPCApar.biplot = BiPlot;
-                mclsPCApar.biplotL = BiLabels;
-                mclsPCApar.dropLines = DropLines;
-                mclsPCApar.factor = Factor;
-                mclsPCApar.factorIdx = FactorIdx;
-                mclsPCApar.labels = ShowLabels;
-                mclsPCApar.pcx = PCx;
-                mclsPCApar.pcy = PCy;
-                mclsPCApar.pcz = PCz;
-                mclsPCApar.persp = Perspective;
-                mclsPCApar.prinComps = PrincipalComps;
-                mclsPCApar.screeplot = Screeplot;
-                mclsPCApar.threeD = ThreeD;
-                mclsPCApar.pca = PCA;
-                mclsPCApar.stamp = mchkBoxStamp.Checked;
-                mclsPCApar.CheckedDatasets = SelectedDatasets;
+                mPCAOptions.datasubset = "c(" + Selected + ")";
+                mPCAOptions.arrows = BiArrows;
+                mPCAOptions.biplot = BiPlot;
+                mPCAOptions.biplotL = BiLabels;
+                mPCAOptions.dropLines = DropLines;
+                mPCAOptions.factor = Factor;
+                mPCAOptions.factorIdx = FactorIdx;
+                mPCAOptions.labels = ShowLabels;
+                mPCAOptions.pcx = PCx;
+                mPCAOptions.pcy = PCy;
+                mPCAOptions.pcz = PCz;
+                mPCAOptions.persp = Perspective;
+                mPCAOptions.prinComps = PrincipalComps;
+                mPCAOptions.screeplot = Screeplot;
+                mPCAOptions.threeD = ThreeD;
+                mPCAOptions.pca = PCA;
+                mPCAOptions.stamp = mchkBoxStamp.Checked;
+                mPCAOptions.CheckedDatasets = SelectedDatasets;
 
-                return mclsPCApar;
+                return mPCAOptions;
             }
         }
 

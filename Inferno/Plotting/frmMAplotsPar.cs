@@ -19,9 +19,9 @@ namespace DAnTE.Inferno
         private bool mWarnedTooManyDatasets;
         private bool mPopulating;
 
-        public frmMAplotsPar(clsMAplotsPar clsMApar)
+        public frmMAplotsPar(clsMAplotsPar plotOptions)
         {
-            mclsMApar = clsMApar;
+            mclsMApar = plotOptions;
             InitializeComponent();
         }
 

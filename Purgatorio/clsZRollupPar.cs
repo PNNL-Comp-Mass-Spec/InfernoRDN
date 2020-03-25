@@ -6,14 +6,25 @@ namespace DAnTE.Purgatorio
         private string mstrOutFolder;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "ZRollup")]
-        public string Rdataset;
+        public string RDataset;
 
-        [Tools.clsAnalysisAttribute("PlotResults", "ZRollup")] public bool mblPlot;
-        [Tools.clsAnalysisAttribute("Minimum_Presence", "ZRollup")] public string mstrMinPresence;
-        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "ZRollup")] public bool mblOneHits;
-        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "ZRollup")] public string mstrGrubsNum;
-        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "ZRollup")] public string mstrGrubsP;
-        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "ZRollup")] public bool mblModeMean;
+        [Tools.clsAnalysisAttribute("PlotResults", "ZRollup")]
+        public bool mblPlot;
+
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "ZRollup")]
+        public string mstrMinPresence;
+
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "ZRollup")]
+        public bool mblOneHits;
+
+        [Tools.clsAnalysisAttribute("MinRequired_for_GrubbsTest", "ZRollup")]
+        public string mstrGrubsNum;
+
+        [Tools.clsAnalysisAttribute("p_value_for_GrubbsTest", "ZRollup")]
+        public string mstrGrubsP;
+
+        [Tools.clsAnalysisAttribute("Rollup_as_Mean", "ZRollup")]
+        public bool mblModeMean;
 
         public clsZRollupPar()
         {
@@ -26,7 +37,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "pScaled2 <- ZRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence +
+                mRCmd = "pScaled2 <- ZRollup.proteins(" + RDataset + ",ProtInfo,minPresence=" + mstrMinPresence +
                        "," + this.Mode + ",gpvalue=" + mstrGrubsP + ",gminPCount=" + mstrGrubsNum + "," +
                        this.PlotFlag + "," + this.OutFolder + "," + this.OneHitWonders + ")";
                 return mRCmd;

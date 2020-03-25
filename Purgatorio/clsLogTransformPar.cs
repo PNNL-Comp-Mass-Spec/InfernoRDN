@@ -7,7 +7,7 @@ namespace DAnTE.Purgatorio
         private string mRCmd;
         private string mstrLogBase;
         //[Tools.clsAnalysisAttribute("Dataset(R)", "Log")]
-        public string Rdataset;
+        public string RDataset;
         private double mdblBias;
         private string mstrBiasOp;
 
@@ -16,7 +16,7 @@ namespace DAnTE.Purgatorio
             mstrLogBase = "Log2";
             mdblBias = 1;
             mstrBiasOp = "Multiplicative";
-            Rdataset = "Eset";
+            RDataset = "Eset";
             DatasetName = "Expressions";
         }
 
@@ -24,7 +24,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "logEset <- logTransform(" + Rdataset + "," + this.LogBase_R + "," + this.Bias_R +
+                mRCmd = "logEset <- logTransform(" + RDataset + "," + this.LogBase_R + "," + this.Bias_R +
                        "," + this.BiasOp_R + ")";
                 return mRCmd;
             }

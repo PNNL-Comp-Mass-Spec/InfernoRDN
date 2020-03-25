@@ -9,15 +9,26 @@ namespace DAnTE.Purgatorio
     public class clsHeatmapPar
     {
         private string mRCmd;
-        public string Rdataset;
-        [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")] public string mstrDatasetName;
+        public string RDataset;
+
+        [clsAnalysisAttribute("Source_DataTable", "Heatmap_Clustering")]
+        public string mstrDatasetName;
+
         public string mstrFactor;
         public int mintFactorIndex; // 1,2,3,...
         public string tempFile;
-        [clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")] public bool rowClust;
-        [clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")] public bool colClust;
-        [clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")] public bool hclust;
-        [clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")] public bool rowScale;
+        [clsAnalysisAttribute("Cluster_Rows", "Heatmap_Clustering")]
+        public bool rowClust;
+
+        [clsAnalysisAttribute("Cluster_Datasets", "Heatmap_Clustering")]
+        public bool colClust;
+
+        [clsAnalysisAttribute("Hierarchical_Clustering", "Heatmap_Clustering")]
+        public bool hclust;
+
+        [clsAnalysisAttribute("Scale_Rows", "Heatmap_Clustering")]
+        public bool rowScale;
+
         public int agglomeration;
         public int distance;
         public int k;
@@ -51,7 +62,7 @@ namespace DAnTE.Purgatorio
                 highC = clsHexColorUtil.ColorToHex(Color.FromKnownColor(KnownColor.Red));
             }
             customCol = @"customColors=c(""" + lowC + @""",""" + midC + @""",""" + highC + @""")";
-            Rdataset = "Eset";
+            RDataset = "Eset";
             gridSelect = false;
             customSelect = true;
             rowsSelected = false;
@@ -70,7 +81,7 @@ namespace DAnTE.Purgatorio
             colClust = false;
             hclust = true;
             agglomeration = 1; //0:single, 1:Complete, 2:Average, 3:McQuitty, 4:Ward 5:Median, 6:Centroid
-            distance = 0; //0:Euclidean, 1:Maximum, 2:Manhattan, 3:Canberra, 4:Binary, 5:Pearson, 6:Correlation, 
+            distance = 0; //0:Euclidean, 1:Maximum, 2:Manhattan, 3:Canberra, 4:Binary, 5:Pearson, 6:Correlation,
             //7:Spearman, 8:Kendall
             k = 5;
             fixSeed = false;
@@ -87,7 +98,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "clusterResults <- plotHeatmap(" + Rdataset + "[" + this.DataSubset + @",], file=""" +
+                mRCmd = "clusterResults <- plotHeatmap(" + RDataset + "[" + this.DataSubset + @",], file=""" +
                        tempFile + @"""," + this.rDendrogram + "," + this.cDendrogram + "," + this.Kmeans +
                        "," + Agglom + "," + Dist + "," + this.RowScale + "," + this.Seed + "," + this.Palette + "," +
                        customCol + "," + this.ColorRange + "," + this.Factor + "," + RowLab + ")";

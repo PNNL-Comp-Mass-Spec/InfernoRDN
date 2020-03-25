@@ -28,12 +28,9 @@ namespace DAnTE.Tools
 
         private static void KillEngine()
         {
-            if (_engine != null)
-            {
-                // you should always dispose of the REngine properly.
-                // After disposing of the engine, you cannot reinitialize nor reuse it
-                _engine.Dispose();
-            }
+            // you should always dispose of the REngine properly.
+            // After disposing of the engine, you cannot reinitialize nor reuse it
+            _engine?.Dispose();
         }
 
         public void Init(string s)

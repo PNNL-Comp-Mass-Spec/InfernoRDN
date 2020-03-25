@@ -6,17 +6,24 @@ namespace DAnTE.Purgatorio
         private readonly string mstrOutFolder = null;
 
         //[Tools.clsAnalysisAttribute("Dataset(R)", "QRollup")]
-        public string Rdataset;
+        public string RDataset;
 
-        [Tools.clsAnalysisAttribute("Minimum_Presence", "QRollup")] public string mstrMinPresence;
-        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "QRollup")] public bool mblOneHits;
+        [Tools.clsAnalysisAttribute("Minimum_Presence", "QRollup")]
+        public string mstrMinPresence;
+
+        [Tools.clsAnalysisAttribute("Include_OneHitWonders", "QRollup")]
+        public bool mblOneHits;
 
         public bool mblModeMean;
-        [Tools.clsAnalysisAttribute("Top_percentage", "QRollup")] public string mstrTop;
 
-        [Tools.clsAnalysisAttribute("Top_Number_of_peptides", "QRollup")] public string mstrTopN;
+        [Tools.clsAnalysisAttribute("Top_percentage", "QRollup")]
+        public string mstrTop;
 
-        [Tools.clsAnalysisAttribute("Use_Top_Number_of_peptides", "QRollup")] public bool mblUseTopN;
+        [Tools.clsAnalysisAttribute("Top_Number_of_peptides", "QRollup")]
+        public string mstrTopN;
+
+        [Tools.clsAnalysisAttribute("Use_Top_Number_of_peptides", "QRollup")]
+        public bool mblUseTopN;
 
         public clsQRollupPar()
         {
@@ -27,7 +34,7 @@ namespace DAnTE.Purgatorio
         {
             get
             {
-                mRCmd = "qrollupP <- QRollup.proteins(" + Rdataset + ",ProtInfo,minPresence=" + mstrMinPresence + "," +
+                mRCmd = "qrollupP <- QRollup.proteins(" + RDataset + ",ProtInfo,minPresence=" + mstrMinPresence + "," +
                        TopPercn + "," + TopN + "," + Mode + "," + OneHitWonders + ")";
                 return mRCmd;
             }

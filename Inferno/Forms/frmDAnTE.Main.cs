@@ -63,7 +63,7 @@ namespace DAnTE.Inferno
         private frmDAnTEmdi m_frmDAnTEmdi;
         private ToolStripMenuItem mnuItemMissFilt;
         private ToolStripMenuItem mnuItemFC;
-        private ToolStripMenuItem ctxtMnuItemFilter;
+        private ToolStripMenuItem contextMenuItemFilter;
         private ToolStripSeparator toolStripSeparator13;
 
         private readonly Dictionary<string, clsDatasetTreeNode> mhtDatasets =
@@ -175,21 +175,21 @@ namespace DAnTE.Inferno
             return true;
         }
 
-        private bool ValidateIsPlotTable(clsDatasetTreeNode mclsSelected, int minimumColCount = 1)
+        private bool ValidateIsPlotTable(clsDatasetTreeNode selectedNode, int minimumColCount = 1)
         {
-            if (!mclsSelected.mblIsPlottable)
+            if (!selectedNode.IsPlotTable)
             {
                 MessageBox.Show(
-                    "Table '" + mclsSelected.mstrDataText +
+                    "Table '" + selectedNode.DataText +
                     "' does not contain data that can be plotted.  Please select a different table from the list",
                     "Invalid table");
                 return false;
             }
 
-            if (minimumColCount > 1 && mclsSelected.mDTable.Columns.Count < minimumColCount)
+            if (minimumColCount > 1 && selectedNode.mDTable.Columns.Count < minimumColCount)
             {
                 MessageBox.Show(
-                    "Table '" + mclsSelected.mstrDataText + "' cannot be plotted; it must have at least " +
+                    "Table '" + selectedNode.DataText + "' cannot be plotted; it must have at least " +
                     minimumColCount + " columns of data", "Not enough columns");
                 return false;
             }
@@ -208,24 +208,24 @@ namespace DAnTE.Inferno
             return true;
         }
 
-        private bool ValidateDataMatrixTableSelected(clsDatasetTreeNode mclsSelected, bool checkColumnCount = false)
+        private bool ValidateDataMatrixTableSelected(clsDatasetTreeNode selectedItems, bool checkColumnCount = false)
         {
-            if (mclsSelected == null)
+            if (selectedItems == null)
             {
                 MessageBox.Show("Please select a numeric data table from the list", "Invalid table");
                 return false;
             }
 
-            if (mclsSelected.mDTable == null)
+            if (selectedItems.mDTable == null)
             {
                 MessageBox.Show("Please select a numeric data table from the list", "Invalid table");
                 return false;
             }
 
-            if (!mclsSelected.mblIsNumeric)
+            if (!selectedItems.IsNumeric)
             {
                 MessageBox.Show(
-                    "Table '" + mclsSelected.mstrDataText +
+                    "Table '" + selectedItems.DataText +
                     "' does not contain a matrix of numeric data.  Please select a different table from the list",
                     "Invalid table");
                 return false;
@@ -233,10 +233,10 @@ namespace DAnTE.Inferno
 
             if (checkColumnCount)
             {
-                var numCols = mclsSelected.mDTable.Columns.Count - 1;
+                var numCols = selectedItems.mDTable.Columns.Count - 1;
                 if (numCols <= 0)
                 {
-                    MessageBox.Show("Table '" + mclsSelected.mstrDataText + "' must have at least 2 columns of data",
+                    MessageBox.Show("Table '" + selectedItems.DataText + "' must have at least 2 columns of data",
                                     "Invalid table");
                     return false;
                 }
@@ -265,7 +265,7 @@ namespace DAnTE.Inferno
         }
 
         /// <summary>
-        /// What to do when an item from the treeview control is selected
+        /// What to do when an item from the TreeView control is selected
         /// </summary>
         private void ctlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -306,11 +306,11 @@ namespace DAnTE.Inferno
 
                 if (!fileTypeError)
                 {
-                    if (fExt.Equals(".dnt", StringComparison.CurrentCultureIgnoreCase))
+                    if (fExt.Equals(".dnt", StringComparison.OrdinalIgnoreCase))
                     {
                         OpenSessionCheckExisting(s[0], USE_THREADED_LOAD);
                     }
-                    else if (fExt.Equals(".csv", StringComparison.CurrentCultureIgnoreCase))
+                    else if (fExt.Equals(".csv", StringComparison.OrdinalIgnoreCase))
                     {
                         mDataSetType = enmDataType.ESET;
 
@@ -393,7 +393,7 @@ namespace DAnTE.Inferno
                 var mp = (frmDAnTEmdi)Application.OpenForms["frmDAnTEmdi"];
                 if (mp != null)
                 {
-                    ToolStripManager.RevertMerge(mp.mToolStripMDI); //toolstrip reference to parent toolstrip
+                    ToolStripManager.RevertMerge(mp.mToolStripMDI); //tool strip reference to parent tool strip
                     ToolStripManager.Merge(mtoolStripDAnTE, mp.mToolStripMDI);
                 }
             }

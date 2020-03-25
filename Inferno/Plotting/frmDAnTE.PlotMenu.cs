@@ -34,12 +34,12 @@ namespace DAnTE.Inferno
             }
 
             mclsQQPar = new clsQQPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsQQPar.tempFile = mRTempFilePath;
-            mclsQQPar.Rdataset = datasetNameInR;
+            mclsQQPar.RDataset = datasetNameInR;
             mclsQQPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsQQPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsQQPar.mstrDatasetName = selectedNodeTag.DataText;
 
             PlotQQ(mclsQQPar);
         }
@@ -84,7 +84,7 @@ namespace DAnTE.Inferno
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void mnuHistogrms_Click(object sender, EventArgs e)
+        private void mnuHistograms_Click(object sender, EventArgs e)
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
@@ -99,12 +99,12 @@ namespace DAnTE.Inferno
             }
 
             mclsHistPar = new clsHistogramPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsHistPar.tempFile = mRTempFilePath;
-            mclsHistPar.Rdataset = datasetNameInR;
+            mclsHistPar.RDataset = datasetNameInR;
             mclsHistPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsHistPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsHistPar.mstrDatasetName = selectedNodeTag.DataText;
 
             PlotHistograms(mclsHistPar);
         }
@@ -159,12 +159,12 @@ namespace DAnTE.Inferno
             }
 
             mclsCorrPar = new clsCorrelationPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsCorrPar.tempFile = mRTempFilePath;
-            mclsCorrPar.Rdataset = datasetNameInR;
+            mclsCorrPar.RDataset = datasetNameInR;
             mclsCorrPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsCorrPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsCorrPar.mstrDatasetName = selectedNodeTag.DataText;
 
             PlotCorrelation(mclsCorrPar);
         }
@@ -219,12 +219,12 @@ namespace DAnTE.Inferno
             }
 
             mclsBoxPlotPar = new clsBoxPlotPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsBoxPlotPar.tempFile = mRTempFilePath;
-            mclsBoxPlotPar.Rdataset = datasetNameInR;
+            mclsBoxPlotPar.RDataset = datasetNameInR;
             mclsBoxPlotPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsBoxPlotPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsBoxPlotPar.mstrDatasetName = selectedNodeTag.DataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
                 var factorDataset = mhtDatasets["Factors"];
@@ -330,17 +330,17 @@ namespace DAnTE.Inferno
             }
 
             mclsMApar = new clsMAplotsPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsMApar.tempFile = mRTempFilePath;
-            mclsMApar.Rdataset = datasetNameInR;
+            mclsMApar.RDataset = datasetNameInR;
             mclsMApar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsMApar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsMApar.mstrDatasetName = selectedNodeTag.DataText;
 
             PlotMA(mclsMApar);
         }
 
-        public void PlotMA(clsMAplotsPar clsMApar)
+        public void PlotMA(clsMAplotsPar plotOptions)
             // this will be called from the plot forms.
             // thus the reason to be public
         {
@@ -353,7 +353,7 @@ namespace DAnTE.Inferno
 
                 #endregion
 
-                var maPlotParams = new frmMAplotsPar(clsMApar);
+                var maPlotParams = new frmMAplotsPar(plotOptions);
 
                 var res = maPlotParams.ShowDialog();
                 if (res == DialogResult.OK)
@@ -386,16 +386,16 @@ namespace DAnTE.Inferno
                     return;
                 }
 
-                var currGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
+                var currentGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
 
                 var startTime = DateTime.UtcNow;
 
                 if (copyAll)
-                    currGrid.SelectAll();
+                    currentGrid.SelectAll();
 
-                var selectedRowCount = currGrid.SelectedRows.Count;
+                var selectedRowCount = currentGrid.SelectedRows.Count;
 
-                var dataToCopy = currGrid.GetClipboardContent();
+                var dataToCopy = currentGrid.GetClipboardContent();
                 if (dataToCopy != null)
                     Clipboard.SetDataObject(dataToCopy);
 
@@ -414,19 +414,19 @@ namespace DAnTE.Inferno
             }
         }
 
-        private void ctxtMnuItemCopyAll_Click(object sender, EventArgs e)
+        private void contextMenuItemCopyAll_Click(object sender, EventArgs e)
         {
             const bool copyAll = true;
             CopyDataGridRowsToClipboard(copyAll);
         }
 
-        private void ctxtMnuItemCopySelected_Click(object sender, EventArgs e)
+        private void contextMenuItemCopySelected_Click(object sender, EventArgs e)
         {
             const bool copyAll = false;
             CopyDataGridRowsToClipboard(copyAll);
         }
 
-        private void ctxtMnuItemPlotRows_Click(object sender, EventArgs e)
+        private void contextMenuItemPlotRows_Click(object sender, EventArgs e)
         {
             var selectedNodeTag = (clsDatasetTreeNode)ctlTreeView.SelectedNode.Tag;
 
@@ -436,18 +436,18 @@ namespace DAnTE.Inferno
             }
 
             var plotDisplay = new frmPlotDisplay();
-            var currGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
+            var currentGrid = ((ucDataGridView)this.mExpressionsTab.Controls[0]).TableGrid;
 
             if (!ValidateIsPlotTable(selectedNodeTag))
             {
                 return;
             }
 
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
             var selectedRowData = new StringBuilder();
             selectedRowData.Append("c(");
 
-            var selectedRows = GetSelectedRows(currGrid);
+            var selectedRows = GetSelectedRows(currentGrid);
             if (selectedRows.Count < 1)
             {
                 MessageBox.Show("No rows have been selected", "Nothing to plot");
@@ -504,14 +504,14 @@ namespace DAnTE.Inferno
             }
 
             mclsVennPar = new clsVennPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             mclsVennPar.tempFile = mRTempFilePath;
-            mclsVennPar.Rdataset = datasetNameInR;
+            mclsVennPar.RDataset = datasetNameInR;
             mclsVennPar.mhtDatasets = mhtDatasets;
             mclsVennPar.marrDatasets = AvailableDataSources();
 
-            mclsVennPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mclsVennPar.mstrDatasetName = selectedNodeTag.DataText;
             if (mhtDatasets.ContainsKey("Factors"))
             {
                 mclsVennPar.marrFactors = marrFactorInfo;

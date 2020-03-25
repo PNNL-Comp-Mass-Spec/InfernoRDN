@@ -9,11 +9,11 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
-        clsPCAplotPar mclsPCApar;
-        clsHeatmapPar mclsHeatmapPar;
+        clsPCAplotPar mPCAOptions;
+        clsHeatmapPar mHeatmapOptions;
         clsPatternSearchPar mclsPatternPar;
 
-        bool doClust;
+        bool mDoClustering;
 
         #region Explore Menu items
 
@@ -31,22 +31,22 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            mclsPCApar = new clsPCAplotPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            mPCAOptions = new clsPCAplotPar();
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
-            mclsPCApar.tempFile = mRTempFilePath;
-            mclsPCApar.Rdataset = datasetNameInR;
-            mclsPCApar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
-            mclsPCApar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            mPCAOptions.tempFile = mRTempFilePath;
+            mPCAOptions.RDataset = datasetNameInR;
+            mPCAOptions.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
+            mPCAOptions.mstrDatasetName = selectedNodeTag.DataText;
 
-            PlotPCA(mclsPCApar);
+            PlotPCA(mPCAOptions);
         }
 
         /// <summary>
         /// This will be called from the plot forms. thus the reason to be public
         /// </summary>
         /// <param name="mclsPCA"></param>
-        public void PlotPCA(clsPCAplotPar mclsPCA)
+        public void PlotPCA(clsPCAplotPar pcaPlottingOptions)
         {
             if (mDataTab.Controls.Count == 0)
             {
@@ -60,11 +60,11 @@ namespace DAnTE.Inferno
 
             #endregion
 
-            var frmPCA = new frmPCAplotPar(mclsPCA);
+            var frmPCA = new frmPCAplotPar(pcaPlottingOptions);
             if (mhtDatasets.ContainsKey("Factors"))
             {
                 var factorTable = mhtDatasets["Factors"];
-                if ((factorTable.mDTable.Columns.Count - 1) == mclsPCA.Datasets.Count)
+                if (factorTable.mDTable.Columns.Count - 1 == pcaPlottingOptions.Datasets.Count)
                     frmPCA.PopulateFactorComboBox = clsDataTable.DataTableRows(factorTable.mDTable);
                 else
                     frmPCA.PopulateFactorComboBox = null;
@@ -74,8 +74,8 @@ namespace DAnTE.Inferno
 
             if (frmPCA.ShowDialog() == DialogResult.OK)
             {
-                mclsPCApar = frmPCA.clsPCApar;
-                var pcaPlots = new clsRplotData(mclsPCApar.RCommand, "PCA");
+                mPCAOptions = frmPCA.PCAOptions;
+                var pcaPlots = new clsRplotData(mPCAOptions.RCommand, "PCA");
 
                 m_BackgroundWorker.RunWorkerAsync(pcaPlots);
                 mProgressForm.Reset("Generating PCA Plots ...");
@@ -108,8 +108,8 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            mclsHeatmapPar = new clsHeatmapPar();
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
+            mHeatmapOptions = new clsHeatmapPar();
+            var datasetNameInR = selectedNodeTag.RDatasetName;
 
             var selectedRowKeys = new List<string>();
 
@@ -126,23 +126,23 @@ namespace DAnTE.Inferno
                 selectedRowKeys.Add(row.Cells[0].Value.ToString());
             }
 
-            mclsHeatmapPar.tempFile = mRTempFilePath;
-            mclsHeatmapPar.Rdataset = datasetNameInR;
-            mclsHeatmapPar.mstrDatasetName = selectedNodeTag.mstrDataText;
-            mclsHeatmapPar.SelectedRows = selectedRowKeys;
+            mHeatmapOptions.tempFile = mRTempFilePath;
+            mHeatmapOptions.RDataset = datasetNameInR;
+            mHeatmapOptions.mstrDatasetName = selectedNodeTag.DataText;
+            mHeatmapOptions.SelectedRows = selectedRowKeys;
 
             if (mhtDatasets.ContainsKey("Factors"))
             {
                 var factorTable = mhtDatasets["Factors"];
-                mclsHeatmapPar.Factors = clsDataTable.DataTableRows(factorTable.mDTable);
+                mHeatmapOptions.Factors = clsDataTable.DataTableRows(factorTable.mDTable);
             }
             else
-                mclsHeatmapPar.Factors = null;
+                mHeatmapOptions.Factors = null;
 
-            PlotHeatmap(mclsHeatmapPar);
+            PlotHeatmap(mHeatmapOptions);
         }
 
-        public void PlotHeatmap(clsHeatmapPar mclsHmapPar)
+        public void PlotHeatmap(clsHeatmapPar heatmapOptions)
         {
             if (mDataTab.Controls.Count != 0)
             {
@@ -153,19 +153,19 @@ namespace DAnTE.Inferno
 
                 #endregion
 
-                var frmHmapParams = new frmHeatMapPar(mclsHmapPar)
+                var frmHeatmapParams = new frmHeatMapPar(heatmapOptions)
                 {
                     maxRowCount = maxRow
                 };
 
-                var res = frmHmapParams.ShowDialog();
+                var res = frmHeatmapParams.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    mclsHeatmapPar = frmHmapParams.clsHmapPar;
-                    doClust = frmHmapParams.DoClust;
-                    var heatmapPlot = new clsRplotData(mclsHeatmapPar.RCommand, "Hmap");
+                    mHeatmapOptions = frmHeatmapParams.clsHmapPar;
+                    mDoClustering = frmHeatmapParams.DoClust;
+                    var heatmapPlot = new clsRplotData(mHeatmapOptions.RCommand, "Hmap");
 
-                    Add2AnalysisHTable(mclsHeatmapPar, "Heatmap_Clustering");
+                    Add2AnalysisHTable(mHeatmapOptions, "Heatmap_Clustering");
 
                     m_BackgroundWorker.RunWorkerAsync(heatmapPlot);
                     mProgressForm.Reset("Generating Heatmap ...");
@@ -204,9 +204,9 @@ namespace DAnTE.Inferno
 
             mclsPatternPar = new clsPatternSearchPar();
 
-            var datasetNameInR = selectedNodeTag.mstrRdatasetName;
-            mclsPatternPar.Rdataset = datasetNameInR;
-            mclsPatternPar.mstrDatasetName = selectedNodeTag.mstrDataText;
+            var datasetNameInR = selectedNodeTag.RDatasetName;
+            mclsPatternPar.RDataset = datasetNameInR;
+            mclsPatternPar.mstrDatasetName = selectedNodeTag.DataText;
             mclsPatternPar.Datasets = clsDataTable.DataTableColumns(selectedNodeTag.mDTable, datasetNameInR);
 
             var patternCount = DAnTE.ExtraControls.InputBox.Show("How many patterns (1 ~ 6)?", "Number", "2");
