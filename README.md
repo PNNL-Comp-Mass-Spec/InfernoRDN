@@ -23,25 +23,35 @@ InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R.
 
 ## Installation
 
-1. Download and install R 3.5 or newer
+1. Download and install R 3.6 or newer
    * https://cran.r-project.org/bin/windows/base/
-
+   * Works with R 4.0
+   
 2. Download the InfernoRDN installer from:
    * https://github.com/PNNL-Comp-Mass-Spec/InfernoRDN/releases
 
 3. Run the installer, InfernoRDNSetup.exe
 
 4. Start InfernoRDN using the Start Menu or desktop shortcut
+   * You may need to run InfernoRDN as an administrator; see step 6 below
 
 5. The InfernoRDN splash screen will appear and status messages will be shown
-   * If a Dialog box appears asking "Would you like to use a personal library"
+   * If a Dialog box appears asking "Would you like to use a personal library?"
     you should answer Yes to that question, and Yes to the next question
     regarding the folder to use for the personal library
    * Following this, several Bioconductor packages will be downloaded
 
-6. Test loading a data file	
+6. Diagnosing Startup or Plotting Errors
+   * If the program shows you the message "R failed to install the packages", try running InfernoRDN as an administrator
+     * Right click the shortcut to InfernoRDN and choose "Run as Administrator"
+     * Alternatively, navigate to `C:\Program Files\InfernoRDN`, right click Inferno.exe and choose "Run as administrator"
+   * When diagnosing errors, examine the newest rcmd log file at `%AppData%\Inferno`
+     * For example, `C:\Users\d3l243\AppData\Roaming\Inferno\rcmdlog.txt`
+     * or `C:\Users\d3l243\AppData\Roaming\Inferno\rcmdlog5.txt`
+
+7. Test loading a data file	
    * Choose File, Open, Expression File
-   * Navigate to "C:\Program Files (x86)\InfernoRDN\Sample_Data_Files"
+   * Navigate to `C:\Program Files\InfernoRDN\Sample_Data_Files`
    * Select SampleInput4DAnTE.csv and click Open
    * Choose column Mass_Tag_ID then click the ">>" button to the left (and just below) "Unique Row ID"
    * Enable checkbox "Protein ID"
@@ -49,7 +59,7 @@ InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R.
    * Select data columns P10A through P19B then click the ">>" button to the left (and below) "Data Columns" 
    * Click OK
 
-7. Test the plotting
+8. Test the plotting
    * Choose Plot, Correlation
    * Enable checkbox Toggle All, then click OK
 
@@ -59,7 +69,7 @@ InfernoRDN depends on the following:
 1. Windows 7 (or newer) with the .NET 4.6 framework or newer
    * https://www.microsoft.com/en-us/download/details.aspx?id=53344
 
-2. R Statistical Environment, version 3.5 or newer
+2. R Statistical Environment, version 3.6 or newer
    * https://cran.r-project.org/bin/windows/base/
    
 3. Bioconductor
@@ -94,7 +104,9 @@ The packages will be installed to either the library folder in `C:\Program Files
 
 If InfernoRDN has problems connecting to R after you re-install InfernoRDN (for example, when running ANOVA), try the following
 * Exit InfernoRDN
-* Navigate to `C:\Users\UserName\AppData\Local\Pacific_Northwest_Nationa` substituting `UserName` with your username
+* Navigate to `%LocalAppData%\Pacific_Northwest_Nationa`
+  * For example, `C:\Users\d3l243\AppData\Local\Pacific_Northwest_Nationa`
+  * Yes, the directory name is truncated (it does not end in `l`)
 * Delete any directories that you see there, example names:
   * `Inferno.exe_Url_2sg0gwzl52pgvsl5ykzc0musjbmtk3m0`
   * `Inferno.exe_Url_psrpjex41w0dwbl34gci2qitsop3f50e`
