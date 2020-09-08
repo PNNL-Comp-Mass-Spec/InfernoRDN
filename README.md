@@ -2,7 +2,7 @@
 
 InfernoRDN can perform various downstream analyses on large scale datasets from proteomics and microarrays.
 
-Among many features of InfernoRDN are:
+Some of the features included with InfernoRDN:
 * A set of diagnostic plots (Histograms, boxplots, correlation plots, qq-plots, peptide-protein rollup plots, MA plots, PCA plots, etc).
 * Log transforming.
 * Rolling up to proteins (3 methods are available).
@@ -23,9 +23,9 @@ InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R.
 
 ## Installation
 
-1. Download and install R 3.6 or newer
+1. Download and install the latest version of R 4.x
    * https://cran.r-project.org/bin/windows/base/
-   * Works with R 4.0
+   * If you prefer R 3.x, you must have R 3.6 or newer
    
 2. Download the InfernoRDN installer from:
    * https://github.com/PNNL-Comp-Mass-Spec/InfernoRDN/releases
@@ -205,8 +205,8 @@ TGen, Phoenix, AZ, USA.
 Copyright 2007, 2014, Battelle Memorial Institute.  All Rights Reserved.\
 Copyright 2010, Translational Genomics Research Institute.  All Rights Reserved.
 
-E-mail: matthew.monroe@pnnl.gov or ashoka@tgen.org\
-Website: http://omics.pnl.gov/software/InfernoRDN
+E-mail: proteomics@pnnl.gov or ashoka@tgen.org\
+Website: https://github.com/PNNL-Comp-Mass-Spec/InfernoRDN
 
 ## License
 
