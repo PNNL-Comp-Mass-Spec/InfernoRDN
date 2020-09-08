@@ -184,7 +184,7 @@ namespace DAnTE.Inferno
             System.Threading.Thread.Sleep(10);
 
             SplashScreen.SetStatus("Checking R version...");
-            if (!CheckRVersion("2", "8.0"))
+            if (!CheckRVersion("3", "6.0"))
             {
                 if (connectionSucceeded)
                 {
@@ -345,6 +345,12 @@ namespace DAnTE.Inferno
             return success;
         }
 
+        /// <summary>
+        /// Confirm that the installed version of R is majorVersion.minorVersion or newer
+        /// </summary>
+        /// <param name="majorVersion"></param>
+        /// <param name="minorVersion"></param>
+        /// <returns></returns>
         private bool CheckRVersion(string majorVersion, string minorVersion)
         {
             bool success;
