@@ -14,6 +14,8 @@ namespace DAnTE.Tools
     /// </summary>
     public class clsRconnect
     {
+        // Ignore Spelling: sendmatrix, colnames, rownames, loadfile, getmatrix, cleanmatrix
+
         private RdnConnector _rdn;
         private string _rCommand;
 
@@ -60,9 +62,9 @@ namespace DAnTE.Tools
 
         #region R_Interface
 
-        //public void SetCharacterOutputDevice(StatConnectorCommonLib.IStatConnectorCharacterDevice dev)
+        //public void SetCharacterOutputDevice(StatConnectorCommonLib.IStatConnectorCharacterDevice device)
         //{
-        //  _rdn.SetCharacterOutputDevice(dev);
+        //  _rdn.SetCharacterOutputDevice(device);
         //}
 
         public void EvaluateNoReturn(string rCommand)
@@ -506,7 +508,7 @@ namespace DAnTE.Tools
 
             CopyMatrixDataToTable(matrix, dataTable, rowNames);
 
-            // return clsDataTable.ClearZeros(datatable);
+            // return clsDataTable.ClearZeros(dataTable);
 
             return dataTable;
         }
@@ -574,7 +576,7 @@ namespace DAnTE.Tools
                 }
                 dataTable.Rows.Add(dataRow);
             }
-            //return clsDataTable.ClearZeros(datatable);
+            //return clsDataTable.ClearZeros(dataTable);
             return dataTable;
         }
 
@@ -613,7 +615,7 @@ namespace DAnTE.Tools
                 }
                 dataTable.Rows.Add(dataRow);
             }
-            //return clsDataTable.ClearZeros(datatable);
+            //return clsDataTable.ClearZeros(dataTable);
             return dataTable;
         }
 
@@ -643,7 +645,7 @@ namespace DAnTE.Tools
 
             CopyMatrixDataToTable(matrix, dataTable, rowNames);
 
-            // return clsDataTable.ClearZeros(datatable);
+            // return clsDataTable.ClearZeros(dataTable);
 
             return dataTable;
         }

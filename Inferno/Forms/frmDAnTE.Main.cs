@@ -49,7 +49,7 @@ namespace DAnTE.Inferno
         private bool mAutoLoadSessionFile;
         private DateTime mAutoLoadScheduledTime;
 
-        // This is a linux-style path that is used by R to save .png files
+        // This is a Linux-style path that is used by R to save .png files
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
         private string mRTempFilePath = "";
         private clsRconnect mRConnector;

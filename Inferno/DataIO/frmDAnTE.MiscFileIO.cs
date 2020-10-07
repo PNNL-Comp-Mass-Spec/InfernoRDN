@@ -15,6 +15,8 @@ namespace DAnTE.Inferno
 {
     partial class frmDAnTE
     {
+        // Ignore Spelling: txt, Eset, Prot, Prots, csv, tsv, xls, xlsx, rcmd, colnames, rownames, fVals, nfVals
+
         private enum FileTypeExtension
         {
             Txt = 0,
@@ -235,7 +237,7 @@ namespace DAnTE.Inferno
         }
 
         /// <summary>
-        /// Creates a new datatable with the first column having unique rowIDs and
+        /// Creates a new data table with the first column having unique rowIDs and
         /// multiple columns of data.
         /// Checks for and removes any columns with duplicate column names
         /// </summary>
@@ -290,7 +292,7 @@ namespace DAnTE.Inferno
 
 
         /// <summary>
-        /// Rearrange the protein info columns in a datatable,
+        /// Rearrange the protein info columns in a data table,
         /// then send it to R and 'clean' it.
         /// Finally get the 'cleaned' data back
         /// </summary>
@@ -485,7 +487,7 @@ namespace DAnTE.Inferno
                 var dataCols = columnSelectionForm.DataColumns.ToList();
                 try
                 {
-                    dtSelectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols); // create the datatable
+                    dtSelectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols); // create the expression set data table
                     dtSelectedEset1.TableName = "Eset";
                 }
                 catch (Exception ex)
@@ -919,7 +921,6 @@ namespace DAnTE.Inferno
                 mProgressForm.AppendWarningMessage(e.Message);
             }
         }
-
 
         void clsDataTable_OnProgress(object sender, ProgressEventArgs e)
         {

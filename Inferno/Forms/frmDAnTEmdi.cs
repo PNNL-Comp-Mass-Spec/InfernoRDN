@@ -14,6 +14,8 @@ namespace DAnTE.Inferno
     // ReSharper disable once IdentifierTypo
     public partial class frmDAnTEmdi : Form
     {
+        // Ignore Spelling: InnoSetup, Bioconductor, Rpacks, Rpackages, Rfolder, Rfiles, Bioc, repos, qvalue, verOK
+
         // Note that this registry key gets deleted when the program is uninstalled (though only for the user who installed the program)
         // See InnoSetup file inferno_setup.iss
         // Location in the registry: HKEY_CURRENT_USER\Software\PNNL\Inferno
@@ -25,7 +27,7 @@ namespace DAnTE.Inferno
         private readonly bool mCustomLoggerEnabled;
         private static bool mCustomLogSeparatorAdded;
 
-        // This is a linux-style path that is used by R to save .png files
+        // This is a Linux-style path that is used by R to save .png files
         // For example: C:/Users/username/AppData/Roaming/Inferno/_temp.png
         private readonly string mRTempFilePath;
 
@@ -176,10 +178,10 @@ namespace DAnTE.Inferno
             //  //SplashScreen.CloseForm();
             //  //MessageBox.Show("Error loading key R packages", "Error loading key R packs",
             //  //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //  Log(mblLog, "Error: Loading key R packages failed.", logWriter);
+            //  Log(mCustomLoggerEnabled, "Error: Loading key R packages failed.", logWriter);
             //  //this.Close();
             //}
-            //Log(mblLog, "Done loading key R packages.", logWriter);
+            //Log(mCustomLoggerEnabled, "Done loading key R packages.", logWriter);
             ////InitLoadRPackages();
             System.Threading.Thread.Sleep(10);
 
