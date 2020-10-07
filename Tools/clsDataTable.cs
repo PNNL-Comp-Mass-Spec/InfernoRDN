@@ -588,7 +588,7 @@ namespace DAnTE.Tools
 
             if (duplicateList.Count > 0)
             {
-                RemoveRows(dTable, duplicateList, keyColumn, "duplicate");
+                RemoveRows(dTable, duplicateList, keyColumn, "duplicate", "Note that abundance values for duplicate rows were summed.");
             }
 
             if (emptyList.Count > 0)
@@ -599,7 +599,12 @@ namespace DAnTE.Tools
             return dTable;
         }
 
-        private void RemoveRows(DataTable dTable, IEnumerable<DataRow> rowsToRemove, string keyColumn, string rowType)
+        private void RemoveRows(
+            DataTable dTable,
+            IEnumerable<DataRow> rowsToRemove,
+            string keyColumn,
+            string rowType,
+            string additionalMessage = "")
         {
             var keysRemoved = new List<string>();
 
@@ -628,6 +633,11 @@ namespace DAnTE.Tools
             {
                 ReportWarning(string.Format("Removed {0} {1} rows named: {2} ...",
                                             keysRemoved.Count, rowType, string.Join(", ", keysRemoved.Take(10))));
+            }
+
+            if (!string.IsNullOrWhiteSpace(additionalMessage))
+            {
+                ReportWarning(additionalMessage);
             }
         }
 

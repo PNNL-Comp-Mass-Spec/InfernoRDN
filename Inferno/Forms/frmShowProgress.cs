@@ -62,7 +62,7 @@ namespace DAnTE.Inferno
                 return;
             }
 
-            lblWarningMsg.Text = lblWarningMsg.Text + "; " + message;
+            lblWarningMsg.Text = lblWarningMsg.Text + "\n\n" + message;
         }
 
         public void Reset(string task)
