@@ -798,24 +798,25 @@ namespace DAnTE.Tools
         }
 
         /// <summary>
-        /// Get the DataTable column names to an list
+        /// Get the DataTable column names as a list
         /// </summary>
-        public static List<string> DataTableColumns(DataTable dt, bool dataonly)
+        /// <param name="dt"></param>
+        /// <param name="dataOnly">When true, do not include the first column name (the key column)</param>
+        /// <returns></returns>
+        public static List<string> DataTableColumns(DataTable dt, bool dataOnly)
         {
             var columnNames = new List<string>();
             var i = 0;
             foreach (DataColumn column in dt.Columns)
             {
-                if (dataonly)
+                if (dataOnly)
                 {
-                    //Ignore MassTag column
-                    //if (i != 0 || !column.ColumnName.Equals("PepCount"))
-                    if (i != 0)
-                        columnNames.Add(column.ColumnName);
                     i++;
+                    if (i == 1)
+                        continue;
                 }
-                else
-                    columnNames.Add(column.ColumnName);
+
+                columnNames.Add(column.ColumnName);
             }
             return columnNames;
         }
