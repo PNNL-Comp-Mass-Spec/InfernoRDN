@@ -451,9 +451,9 @@ namespace DAnTE.Tools
         [Obsolete("Unused")]
         private DataTable ReplaceMissingStr(DataTable dt)
         {
-            var Nrows = dt.Rows.Count;
+            var rowCount = dt.Rows.Count;
 
-            for (var row = 0; row < Nrows; row++)
+            for (var row = 0; row < rowCount; row++)
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 
@@ -477,9 +477,9 @@ namespace DAnTE.Tools
         [Obsolete("Unused")]
         private DataTable ReplaceMissing(DataTable dt)
         {
-            var Nrows = dt.Rows.Count;
+            var rowCount = dt.Rows.Count;
 
-            for (var row = 0; row < Nrows; row++)
+            for (var row = 0; row < rowCount; row++)
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 
@@ -503,9 +503,9 @@ namespace DAnTE.Tools
         [Obsolete("Unused")]
         private DataTable ClearNulls(DataTable dt)
         {
-            var Nrows = dt.Rows.Count;
+            var rowCount = dt.Rows.Count;
 
-            for (var row = 0; row < Nrows; row++)
+            for (var row = 0; row < rowCount; row++)
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 

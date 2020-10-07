@@ -42,18 +42,18 @@ namespace DAnTE.Inferno
 
         private static bool AppUpdatesAvailableInternal()
         {
-            var filelocation = @"\\floyd\Software\Inferno\";
-            var currver = Application.ProductVersion;
+            const string fileLocation = @"\\floyd\Software\Inferno\";
+            var currentVersion = Application.ProductVersion;
 
-            if (Directory.Exists(filelocation))
+            if (Directory.Exists(fileLocation))
             {
-                var folders = Directory.GetDirectories(filelocation);
+                var folders = Directory.GetDirectories(fileLocation);
                 foreach (var f in folders)
                 {
                     if (f.Contains("Ver_"))
                     {
                         var fname = f.Substring(f.IndexOf("_", StringComparison.Ordinal) + 1).Trim();
-                        if (fname.Equals(currver))
+                        if (fname.Equals(currentVersion))
                             return false;
                         else
                             return true;
@@ -159,7 +159,7 @@ namespace DAnTE.Inferno
                     return false;
                 }
 
-                // Query objParseCommandLine to see if various parameters are present						
+                // Query objParseCommandLine to see if various parameters are present
 
                 if (objParseCommandLine.NonSwitchParameterCount > 0)
                     mDanteFilePath = objParseCommandLine.RetrieveNonSwitchParameter(0);
