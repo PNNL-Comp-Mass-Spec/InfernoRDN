@@ -452,13 +452,11 @@ namespace DAnTE.Tools
         private DataTable ReplaceMissingStr(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
-            //DataTable outDtable = new DataTable();
 
             for (var row = 0; row < Nrows; row++)
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 
-                //DataRow workRow = dt.Rows[row] ;
                 var obj = new object[colCount];
                 for (var col = 0; col < colCount; col++)
                 {
@@ -470,7 +468,6 @@ namespace DAnTE.Tools
                         obj[col] = s;
                     }
                 }
-                //outDtable.Rows.Add(obj);
                 dt.Rows[row].ItemArray = obj;
             }
             dt.AcceptChanges();
@@ -481,15 +478,12 @@ namespace DAnTE.Tools
         private DataTable ReplaceMissing(DataTable dt)
         {
             var Nrows = dt.Rows.Count;
-            //DataTable outDtable = new DataTable();
 
             for (var row = 0; row < Nrows; row++)
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 
-                //DataRow workRow = dt.Rows[row] ;
                 var obj = new object[colCount];
-                //obj = new string[colCount];
 
                 for (var col = 0; col < colCount; col++)
                 {
@@ -500,7 +494,6 @@ namespace DAnTE.Tools
                         obj[col] = DBNull.Value;
                     }
                 }
-                //outDtable.Rows.Add(obj);
                 dt.Rows[row].ItemArray = obj;
             }
             dt.AcceptChanges();
@@ -516,7 +509,6 @@ namespace DAnTE.Tools
             {
                 var colCount = dt.Rows[row].ItemArray.Length;
 
-                //DataRow workRow = dt.Rows[row] ;
                 var obj = new object[colCount];
                 for (var col = 0; col < colCount; col++)
                 {
@@ -531,28 +523,6 @@ namespace DAnTE.Tools
             }
             dt.AcceptChanges();
             return dt;
-        }
-
-        [Obsolete("Unused")]
-        private void RemoveDuplicateRows(DataTable dTable, string colName)
-        {
-            var hTable = new Dictionary<object, string>();
-            var duplicateList = new List<DataRow>();
-
-            foreach (DataRow drow in dTable.Rows)
-            {
-                try
-                {
-                    hTable.Add(drow[colName], string.Empty);
-                }
-                catch
-                {
-                    duplicateList.Add(drow);
-                }
-            }
-
-            foreach (var dRow in duplicateList)
-                dTable.Rows.Remove(dRow);
         }
 
         /// <summary>

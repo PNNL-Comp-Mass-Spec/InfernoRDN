@@ -616,43 +616,6 @@ namespace DAnTE.Inferno
             }
         }
 
-        // No longer used (only used on Windows XP and 2000)
-        /*
-        private bool RunRLogs()
-        {
-            bool mblRunOK = false;
-
-            //Platform plt = GetPlatform();
-            //if (plt == Platform.X86)
-            //    mblRunOK = true;
-
-            // Get OperatingSystem information from the system namespace.
-            System.OperatingSystem osInfo = System.Environment.OSVersion;
-
-            // Determine the platform.
-            switch (osInfo.Platform)
-            {
-                // Platform is Windows NT 3.51, Windows NT 4.0, Windows 2000,
-                // or Windows XP.
-                case System.PlatformID.Win32NT:
-
-                    switch (osInfo.Version.Major)
-                    {
-                        case 5:
-                            if ((osInfo.Version.Minor == 0) || (osInfo.Version.Minor == 1))
-                                mblRunOK = true; // 2000 or XP
-                            else
-                                mblRunOK = false; // 64bit, Server2003
-                            break;
-                        case 6:
-                            mblRunOK = false; //Vista, Server2008, Windows7
-                            break;
-                    } break;
-            }
-            return mblRunOK;
-            //return true;
-        }
-        */
 
         #endregion
 
