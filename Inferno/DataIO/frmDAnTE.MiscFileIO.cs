@@ -242,54 +242,74 @@ namespace DAnTE.Inferno
         /// Checks for and removes any columns with duplicate column names
         /// </summary>
         /// <param name="sourceDataTable"></param>
-        /// <param name="keyColumnName"></param>
-        /// <param name="DataCols"></param>
+        /// <param name="keyColumnName">Column with the unique identifier for each row</param>
+        /// <param name="dataCols">
+        /// When loadingProteinToPeptideMapInfo is false, these are columns with data (one per dataset)
+        /// When loadingProteinToPeptideMapInfo is true, this should be the protein name column, plus optionally protein metadata columns
+        /// </param>
+        /// <param name="loadingProteinToPeptideMapInfo">False when we first read the file; true when reading it again to load the protein to peptide mapping</param>
+        /// <remarks>
+        /// Multiple rows can have the same unique identifier only if there is an accession column (aka protein)
+        /// Now two rows should have the same accession and unique identifier
+        /// </remarks>
         /// <returns></returns>
-        private DataTable ArrangeDataTable(DataTable sourceDataTable, string keyColumnName, IEnumerable<string> dataCols)
+        private DataTable ArrangeDataTable(
+            DataTable sourceDataTable,
+            string keyColumnName,
+            IList<string> dataCols,
+            bool loadingProteinToPeptideMapInfo)
         {
             var dtEset = sourceDataTable.Copy();
             var columns = dtEset.Columns;
 
             // Clone dataCols so that we can sort it
-            var sortedColumns = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            var sortedDataColumns = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var item in dataCols)
             {
-                sortedColumns.Add(item);
+                sortedDataColumns.Add(item);
             }
 
-            var columnsToRemove = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            var columnsToRemove = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (DataColumn column in columns)
             {
-                if (sortedColumns.Contains(column.ColumnName) || column.ColumnName.Equals(keyColumnName))
+                if (!string.IsNullOrWhiteSpace(keyColumnName) && column.ColumnName.Equals(keyColumnName))
+                {
+                    continue;
+                }
+
+                if (sortedDataColumns.Contains(column.ColumnName))
                     continue;
 
                 if (!columnsToRemove.Contains(column.ColumnName))
                     columnsToRemove.Add(column.ColumnName);
             }
 
+            // Remove columns that are not data columns or the key column
             foreach (var s in columnsToRemove)
             {
                 dtEset.Columns.Remove(s);
             }
 
+            if (loadingProteinToPeptideMapInfo)
+            {
+                var proteinColumnName = dataCols.First();
+                if (dtEset.Columns[proteinColumnName].Ordinal > 0)
+                {
+                    dtEset.Columns[proteinColumnName].SetOrdinal(0);
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(keyColumnName) && dtEset.Columns[keyColumnName].Ordinal > 0)
+                {
+                    // Rearrange the data so that the key column is first
+                    dtEset.Columns[keyColumnName].SetOrdinal(0);
+                }
+            }
+
             return dtEset;
         }
-
-        /// <summary>
-        /// Overloaded method of the above to create a table with only two columns.
-        /// Checks for and removes any columns with duplicate column names
-        /// </summary>
-        /// <param name="sourceDataTable"></param>
-        /// <param name="keyColumnName"></param>
-        /// <param name="dataColumn"></param>
-        /// <returns></returns>
-        private DataTable ArrangeDataTable(DataTable sourceDataTable, string keyColumnName, string dataColumn)
-        {
-            var dataCols = new List<string> { dataColumn };
-            return ArrangeDataTable(sourceDataTable, keyColumnName, dataCols);
-        }
-
 
         /// <summary>
         /// Rearrange the protein info columns in a data table,
@@ -307,19 +327,19 @@ namespace DAnTE.Inferno
 
             try
             {
+                var dataColumns = new List<string> { proteinIdentifierColumn };
                 if (metaDataColumns.Count > 0)
                 {
-                    var allColumns = new List<string> { proteinIdentifierColumn };
-                    allColumns.AddRange(metaDataColumns);
+                    dataColumns.AddRange(metaDataColumns);
 
                     // Table will have more than two columns: rowID and proteinIdentifierColumn, then metaDataColumns
                     // ProteinID, ProteinMetadata, and rowID (the key column name in the Eset table)
-                    proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, allColumns);
+                    proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, dataColumns, true);
                 }
                 else
                 {
                     // Table will have two columns: rowID and proteinIdentifierColumn
-                    proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, proteinIdentifierColumn);
+                    proteinDataTable = ArrangeDataTable(sourceDataTable, rowID, dataColumns, true);
                 }
 
 
@@ -487,7 +507,7 @@ namespace DAnTE.Inferno
                 var dataCols = columnSelectionForm.DataColumns.ToList();
                 try
                 {
-                    dtSelectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols); // create the expression set data table
+                    dtSelectedEset1 = ArrangeDataTable(loadedData, rowID, dataCols, false); // create the expression set data table
                     dtSelectedEset1.TableName = "Eset";
                 }
                 catch (Exception ex)
@@ -588,7 +608,7 @@ namespace DAnTE.Inferno
                         var dataCols = columnSelectionForm.DataColumns.ToList();
                         try
                         {
-                            var filteredDataTable = ArrangeDataTable(esetTable, rowID, dataCols);
+                            var filteredDataTable = ArrangeDataTable(esetTable, rowID, dataCols, false);
 
                             // Rename the first column from MassTagID (or whatever the user-supplied name is) to Row_ID
                             filteredDataTable.Columns[0].ColumnName = "Row_ID";
