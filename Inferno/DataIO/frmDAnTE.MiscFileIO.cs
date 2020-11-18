@@ -740,6 +740,14 @@ namespace DAnTE.Inferno
                         return false;
                     }
 
+                    if (factorTable.Columns.Count == 0)
+                    {
+                        MessageBox.Show(
+                            "Factors file is empty; nothing to load",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return false;
+                    }
+
                     if (mhtDatasets.ContainsKey("Expressions"))
                     {
                         // Check for extra sample names in the factorTable and remove them
