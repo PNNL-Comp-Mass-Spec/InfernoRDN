@@ -224,7 +224,7 @@ namespace DAnTE.Tools
                         return null;
                     }
 
-                    var headers = headerLine.Split(delimiter);
+                    var headers = headerLine.TrimEnd(delimiter).Split(delimiter);
                     var uniqueHeaders = new SortedSet<string>();
 
                     foreach (var columnName in headers)
