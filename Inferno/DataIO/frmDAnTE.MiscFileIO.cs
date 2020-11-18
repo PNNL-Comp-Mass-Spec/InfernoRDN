@@ -293,6 +293,7 @@ namespace DAnTE.Inferno
 
             if (loadingProteinToPeptideMapInfo)
             {
+                // Assure that the protein name column is the first column
                 var proteinColumnName = dataCols.First();
                 if (dtEset.Columns[proteinColumnName].Ordinal > 0)
                 {
@@ -301,6 +302,7 @@ namespace DAnTE.Inferno
             }
             else
             {
+                // Assure that the unique key column is the first column
                 if (!string.IsNullOrWhiteSpace(keyColumnName) && dtEset.Columns[keyColumnName].Ordinal > 0)
                 {
                     // Rearrange the data so that the key column is first
@@ -784,6 +786,11 @@ namespace DAnTE.Inferno
 
                             return false;
                         }
+
+                        // Assure that the factor column is the first column
+                        if (factorTable.Columns[factorColumnName].Ordinal > 0)
+                        {
+                            factorTable.Columns[factorColumnName].SetOrdinal(0);
                         }
 
                         foreach (DataColumn factorCol in factorTable.Columns)
