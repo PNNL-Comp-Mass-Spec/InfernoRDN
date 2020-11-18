@@ -780,7 +780,10 @@ namespace DAnTE.Inferno
                                 string.Format(
                                     "The first column of the factors file must be named Factor or Factors; your file has {0}",
                                     factorTable.Columns[0].ColumnName),
-                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            return false;
+                        }
                         }
 
                         foreach (DataColumn factorCol in factorTable.Columns)
