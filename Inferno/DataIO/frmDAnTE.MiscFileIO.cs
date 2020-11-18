@@ -760,14 +760,36 @@ namespace DAnTE.Inferno
                             esetColNames.Add(item);
 
                         var extraFactorCols = new List<string>();
-                        foreach (var factorCol in factorTable.Columns)
+                        var factorColumnName = string.Empty;
+
+                        foreach (var factorNameToFind in new List<string> { "Factor", "Factors" })
                         {
-                            var factorColName = factorCol.ToString();
-                            if (string.Equals(factorColName, "Factor", StringComparison.OrdinalIgnoreCase))
+                            foreach (DataColumn factorCol in factorTable.Columns)
+                            {
+                                if (string.Equals(factorCol.ColumnName, factorNameToFind, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    factorColumnName = factorNameToFind;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(factorColumnName))
+                        {
+                            MessageBox.Show(
+                                string.Format(
+                                    "The first column of the factors file must be named Factor or Factors; your file has {0}",
+                                    factorTable.Columns[0].ColumnName),
+                                "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                        foreach (DataColumn factorCol in factorTable.Columns)
+                        {
+                            if (string.Equals(factorCol.ColumnName, factorColumnName, StringComparison.OrdinalIgnoreCase))
                                 continue;
 
-                            if (!esetColNames.Contains(factorColName))
-                                extraFactorCols.Add(factorColName);
+                            if (!esetColNames.Contains(factorCol.ColumnName))
+                                extraFactorCols.Add(factorCol.ColumnName);
                         }
 
                         if (extraFactorCols.Count > 0)
@@ -834,6 +856,7 @@ namespace DAnTE.Inferno
 
                     break;
             }
+
             return success;
         }
 
