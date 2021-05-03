@@ -46,7 +46,7 @@ namespace DAnTE.Tools
             }
             catch (NullReferenceException)
             {
-                var errMsg = @"Unable to connect to R. Confirm that R 3.x is installed by examining directory C:\Program Files\R or C:\Program Files (x86)\R";
+                var errMsg = @"Unable to connect to R. Confirm that R 4.x is installed by examining directory C:\Program Files\R or C:\Program Files (x86)\R";
                 Console.WriteLine(errMsg);
                 Message = errMsg;
                 return false;
