@@ -42,7 +42,11 @@ InfernoRDN uses R.NET (https://github.com/jmp75/rdotnet) to communicate with R.
    * Following this, several Bioconductor packages will be downloaded
 
 6. Diagnosing Startup or Plotting Errors
-   * If the program shows you the message "R failed to install the packages", try running InfernoRDN as an administrator
+   * If you see the error message "R failed to install required packages", try manually installing the packages
+     * See section "Manual Package Installation" below
+     * After installing the packages, use the commands in the "Package Verification" section
+     * Provided you can manually load the packages with the `library()` command, you can likely ignore the "R failed" message shown when InfernoRDN starts
+   * Alternatively, you could try running InfernoRDN as an administrator, but this shouldn't be required
      * Right click the shortcut to InfernoRDN and choose "Run as Administrator"
      * Alternatively, navigate to `C:\Program Files\InfernoRDN`, right click Inferno.exe and choose "Run as administrator"
    * When diagnosing errors, examine the newest rcmd log file at `%AppData%\Inferno`
@@ -87,8 +91,6 @@ InfernoRDN uses the following R packages (from https://cran.r-project.org/):
 * fpc: Fixed point clusters, clusterwise regression and discriminant plots
 * pls: Partial Least Squares Regression (PLSR) and Principal Component Regression (PCR)
 * MASS: Main Package of Venables and Ripley's MASS
-* impute: Imputation for microarray data
-* qvalue: Q-value estimation for false discovery rate control
 * e1071: Misc Functions of the Department of Statistics (e1071), TU Wien
 * ggplot2: Various R programming tools for plotting data
 * ellipse: Functions for drawing ellipses and ellipse-like confidence regions
@@ -98,7 +100,60 @@ InfernoRDN uses the following R packages (from https://cran.r-project.org/):
 * Hmisc: Harrell Miscellaneous
 * Cairo: R graphics device using cairo graphics library
 
+Legacy packages (not available for R 3.x or 4.x)
+* impute: Imputation for microarray data
+* qvalue: Q-value estimation for false discovery rate control
+
 The packages will be installed to either the library folder in `C:\Program Files\R\R-3.x.x\library` or, more likely (due to permissions) to the `R\win-library` folder in your "Documents" or "My Documents" folder.
+
+### Manual Package Installation
+
+Start R by double clicking R.exe, for example at
+`C:\Program Files\R\R-4.1.1\bin\R.exe`
+
+Run this command:
+```{r}
+install.packages(c("amap", "car", "lattice", "nlme", "outliers", "fpc", "pls", "MASS", "impute", "qvalue", "e1071", "ggplot2", "ellipse", "plotrix", "scatterplot3d", "colorspace", "jpeg", "Hmisc", "Cairo"), repos='https://cran.revolutionanalytics.com/')
+```
+
+Answer "yes" if prompted with:
+* Would you like to use a personal library instead?
+
+Answer "yes" if prompted with:
+* Would you like to create a personal library?
+
+Answer "No" when prompted with:
+* Do you want to install from sources the packages which need compilation?
+
+Note that package impute is available in e1071
+
+### Package Verification
+
+Start R.exe, as described above
+
+Run these commands:
+```{r}
+# View installed packages
+installed.packages()
+
+# Confirm that packages can be loaded
+library(amap)
+library(car)
+library(lattice)
+library(nlme)
+library(outliers)
+library(fpc)
+library(pls)
+library(MASS)
+library(e1071)
+library(ggplot2)
+library(ellipse)
+library(plotrix)
+library(scatterplot3d)
+library(colorspace)
+library(Hmisc)
+library(Cairo)
+```
 
 ### R Connectivity Issues after Re-install
 
