@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtensionMethods;
 
-// This class can be used to parse the text following the program name when a 
+// This class can be used to parse the text following the program name when a
 //  program is started from the command line
 //
 // -------------------------------------------------------------------------------
 // Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
 // Program started November 8, 2003
 
-// E-mail: matthew.monroe@pnl.gov or matt@alchemistmatt.com
-// Website: http://panomics.pnnl.gov/ or http://www.sysbio.org/resources/staff/
+// E-mail: matthew.monroe@pnl.gov or proteomics@pnnl.gov
+// Website: jaitly@pnl.gov or proteomics@pnnl.gov
 // -------------------------------------------------------------------------------
-// 
+//
 // Last modified October 23, 2015
 
 namespace FileProcessor
@@ -109,7 +109,7 @@ namespace FileProcessor
 
             try
             {
-                // Find items in mSwitches whose keys are not in lstValidParameters)		
+                // Find items in mSwitches whose keys are not in lstValidParameters)
 
                 foreach (var item in mSwitches)
                 {
