@@ -1,0 +1,4 @@
+# Jekyll configuration
+name: InfernoRDN
+description: InfernoRDN can perform various downstream data analysis, data reduction, and data comparison tasks including normalization, hypothesis testing, clustering, and heatmap generation.
+url: https://pnnl-comp-mass-spec.github.io/InfernoRDN/
