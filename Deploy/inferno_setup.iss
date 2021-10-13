@@ -18,39 +18,42 @@ Name: "{app}\Sample_Data_Files"
 ; Application files
 ; R scripts
 ; Icon, readme, help, config and license files
-Source: ..\bin\Debug\InfernoHelp.chm;                       DestDir: {app}
-Source: ..\bin\Debug\inferno.conf;                          DestDir: {app}
+Source: ..\bin\Debug\Inferno.exe;                           DestDir: {app}
 Source: ..\bin\Debug\Inferno.exe.config;                    DestDir: {app}
+Source: ..\bin\Debug\Inferno.pdb;                           DestDir: {app}
+Source: ..\bin\Debug\DynamicInterop.dll;                    DestDir: {app}
+Source: ..\bin\Debug\extensibility.dll;                     DestDir: {app}
 Source: ..\bin\Debug\ICSharpCode.SharpZipLib.dll;           DestDir: {app}
+Source: ..\bin\Debug\inferno.conf;                          DestDir: {app}
+Source: ..\bin\Debug\Inferno.RData;                         DestDir: {app}
+Source: ..\bin\Debug\Inferno_stdplots.RData;                DestDir: {app}
+Source: ..\bin\Debug\InfernoHelp.chm;                       DestDir: {app}
 Source: ..\bin\Debug\InputBox.dll;                          DestDir: {app}
 Source: ..\bin\Debug\Interop.IasHelperLib.dll;              DestDir: {app}
 Source: ..\bin\Debug\LumenWorks.Framework.IO.dll;           DestDir: {app}
-Source: ..\bin\Debug\RDotNet.dll;                           DestDir: {app}
-Source: ..\bin\Debug\RDotNet.NativeLibrary.dll;             DestDir: {app}
-Source: ..\bin\Debug\DynamicInterop.dll;                    DestDir: {app}
-Source: ..\bin\Debug\extensibility.dll;                     DestDir: {app}
-Source: ..\bin\Debug\ZedGraph.dll;                          DestDir: {app}
-Source: ..\bin\Debug\Inferno.exe;                           DestDir: {app}
-Source: ..\bin\Debug\Inferno.pdb;                           DestDir: {app}
 Source: ..\bin\Debug\LumenWorks.Framework.IO.pdb;           DestDir: {app}
-Source: ..\bin\Debug\Inferno.RData;                         DestDir: {app}
-Source: ..\bin\Debug\Inferno_stdplots.RData;                DestDir: {app}
+Source: ..\bin\Debug\Microsoft.Win32.Registry.dll;          DestDir: {app}
+Source: ..\bin\Debug\PRISM.dll;                             DestDir: {app}
+Source: ..\bin\Debug\RDotNet.dll;                           DestDir: {app}
+Source: ..\bin\Debug\System.Security.AccessControl.dll;     DestDir: {app}
+Source: ..\bin\Debug\System.Security.Principal.Windows.dll; DestDir: {app}
+Source: ..\bin\Debug\ZedGraph.dll;                          DestDir: {app}
 Source: ..\bin\Debug\ZedGraph.xml;                          DestDir: {app}
-                                                             
+
 Source: Images\textdoc.ico;                                 DestDir: {app}
 Source: ..\Resources\delete_16x.ico;                        DestDir: {app}
 Source: ..\Resources\inferno.ico;                           DestDir: {app}
 Source: ..\Resources\inferno_help.ico;                      DestDir: {app}
 Source: ..\README.md;                                       DestDir: {app}
 Source: ..\RevisionHistory.txt;                             DestDir: {app}
-                                                    
+
 Source: License.rtf;                                        DestDir: {app}
 Source: readme.rtf;                                         DestDir: {app}
 
 Source: ..\Documentation\RollupMethods_InfernoRDN.pdf;                   DestDir: {app}\Documentation
 Source: ..\Documentation\InfernoRDN_Overview.pdf;                        DestDir: {app}\Documentation
 Source: ..\Documentation\InfernoRDN_Step_by_step_Instructions.pdf;       DestDir: {app}\Documentation
-                                                                     
+
 Source: ..\Sample_Input_Files\FactorDefinitionExample.txt;               DestDir: {app}\Sample_Data_Files
 Source: ..\Sample_Input_Files\heatmap_SomeMissingData.csv;               DestDir: {app}\Sample_Data_Files
 Source: ..\Sample_Input_Files\SampleInput4DAnTE.csv;                     DestDir: {app}\Sample_Data_Files
