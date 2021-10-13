@@ -373,7 +373,7 @@ namespace DAnTE.Inferno
         /// <returns></returns>
         private bool CopyUnzipMSMSOutFiles()
         {
-            var step = marrFilePaths.Count != 0 ? 30 / marrFilePaths.Count : 30; // Progressbar upto 30%
+            var step = marrFilePaths.Count != 0 ? 30 / marrFilePaths.Count : 30; // Progress bar up to 30%
 
             foreach (var sourcePath in marrFilePaths)
             {
