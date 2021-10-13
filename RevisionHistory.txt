@@ -1,5 +1,9 @@
 InfernoRDN Change Log
 
+Version 1.1.7995; October 12, 2021
+	- Update to .NET 4.8
+	- Obtain R.NET, PRISM-Library, and SharpZipLib from NuGet
+
 Version 1.1.7556; September 8, 2020
 	- Require R 3.6 or newer
 	- Update documentation to mention that R 4.0 or newer works.
