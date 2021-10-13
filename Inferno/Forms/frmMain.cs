@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using FileProcessor;
 
 namespace DAnTE.Inferno
 {
@@ -100,22 +99,22 @@ namespace DAnTE.Inferno
 
             try
             {
-                var objParseCommandLine = new clsParseCommandLine();
+                var commandLineParser = new PRISM.clsParseCommandLine();
                 var success = false;
 
-                if (objParseCommandLine.ParseCommandLine())
+                if (commandLineParser.ParseCommandLine())
                 {
-                    if (SetOptionsUsingCommandLineParameters(objParseCommandLine))
+                    if (SetOptionsUsingCommandLineParameters(commandLineParser))
                         success = true;
                 }
                 else
                 {
-                    if (objParseCommandLine.ParameterCount + objParseCommandLine.NonSwitchParameterCount == 0 &&
-                        !objParseCommandLine.NeedToShowHelp)
+                    if (commandLineParser.ParameterCount + commandLineParser.NonSwitchParameterCount == 0 &&
+                        !commandLineParser.NeedToShowHelp)
                         success = true;
                 }
 
-                if (!success || objParseCommandLine.NeedToShowHelp)
+                if (!success || commandLineParser.NeedToShowHelp)
                 {
                     var syntaxMessage = "Supported command line switches are /F and /L \n" +
                                         "Use '/F FilePath.dnt' to load a data file \n" +
@@ -138,7 +137,7 @@ namespace DAnTE.Inferno
                 Application.Run(danteMDI);
         }
 
-        private static bool SetOptionsUsingCommandLineParameters(clsParseCommandLine objParseCommandLine)
+        private static bool SetOptionsUsingCommandLineParameters(PRISM.clsParseCommandLine commandLineParser)
         {
             // Returns True if no problems; otherwise, returns false
             var lstValidParameters = new List<string> {"F", "L"};
@@ -146,27 +145,27 @@ namespace DAnTE.Inferno
             try
             {
                 // Make sure no invalid parameters are present
-                if (objParseCommandLine.InvalidParametersPresent(lstValidParameters))
+                if (commandLineParser.InvalidParametersPresent(lstValidParameters))
                 {
                     var badArguments = new List<string>();
-                    foreach (var item in objParseCommandLine.InvalidParameters(lstValidParameters))
+                    foreach (var item in commandLineParser.InvalidParameters(lstValidParameters))
                     {
                         badArguments.Add("/" + item);
                     }
 
-                    ShowErrorMessage("Invalid commmand line parameters", badArguments);
+                    ShowErrorMessage("Invalid command line parameters", badArguments);
 
                     return false;
                 }
 
-                // Query objParseCommandLine to see if various parameters are present
+                // Query commandLineParser to see if various parameters are present
 
-                if (objParseCommandLine.NonSwitchParameterCount > 0)
-                    mDanteFilePath = objParseCommandLine.RetrieveNonSwitchParameter(0);
+                if (commandLineParser.NonSwitchParameterCount > 0)
+                    mDanteFilePath = commandLineParser.RetrieveNonSwitchParameter(0);
 
-                if (!ParseParameter(objParseCommandLine, "F", "a session file path", ref mDanteFilePath)) return false;
+                if (!ParseParameter(commandLineParser, "F", "a session file path", ref mDanteFilePath)) return false;
 
-                if (!ParseParameter(objParseCommandLine, "L", "a log file path", ref mLogFilePath)) return false;
+                if (!ParseParameter(commandLineParser, "L", "a log file path", ref mLogFilePath)) return false;
 
                 return true;
             }
@@ -179,13 +178,13 @@ namespace DAnTE.Inferno
         }
 
         private static bool ParseParameter(
-            clsParseCommandLine objParseCommandLine,
+            PRISM.clsParseCommandLine commandLineParser,
             string parameterName,
             string description,
             ref string targetVariable)
         {
             string value;
-            if (objParseCommandLine.RetrieveValueForParameter(parameterName, out value))
+            if (commandLineParser.RetrieveValueForParameter(parameterName, out value))
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {

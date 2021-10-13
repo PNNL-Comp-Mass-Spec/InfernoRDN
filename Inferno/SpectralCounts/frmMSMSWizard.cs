@@ -51,9 +51,9 @@ namespace DAnTE.Inferno
         {
             InitializeComponent();
             Init();
-            // 
+            //
             // backgroundWorker1
-            // 
+            //
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.DoWork += this.backgroundWorker1_DoWork;
             this.backgroundWorker1.RunWorkerCompleted += this.backgroundWorker1_RunWorkerCompleted;
@@ -65,9 +65,9 @@ namespace DAnTE.Inferno
             rConnector = rconn;
             InitializeComponent();
             Init();
-            // 
+            //
             // backgroundWorker1
-            // 
+            //
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.DoWork += this.backgroundWorker1_DoWork;
             this.backgroundWorker1.RunWorkerCompleted += this.backgroundWorker1_RunWorkerCompleted;
