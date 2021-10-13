@@ -208,7 +208,7 @@ namespace DAnTE.Inferno
             {
                 if (connectionSucceeded)
                 {
-                    startupErrString.AppendLine("* R failed to install required packages.");
+                    startupErrString.AppendLine("* R failed to install required packages (this may not be a fatal error)");
                 }
 
                 //SplashScreen.CloseForm();
