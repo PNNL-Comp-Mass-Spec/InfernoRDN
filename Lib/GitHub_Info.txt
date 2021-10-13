@@ -1,8 +1,0 @@
-RDotNet.dll, RDotNet.NativeLibrary.dll, and DynamicInterop.dll
-are built from the repositories hosted on GitHub at
-https://github.com/StatTag/rdotnet
-https://github.com/StatTag/dynamic-interop-dll
-
-These were forked from 
-https://github.com/jmp75/rdotnet
-https://github.com/jmp75/dynamic-interop-dll
